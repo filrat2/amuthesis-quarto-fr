@@ -1,15 +1,48 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
 # Materiały {#sec-materialy}
 
-Celem tego rozdziału jest przedstawienie użytych w pracy danych.
-Należy wyjaśnić jakie dane zostały użyte, jakiego są one rodzaju, dla jakiego okresu zostały pobrane/stworzone, co one zawierają, etc.
+## Zdjęcia satelitarne {#sec-satellite-imagery}
 
-W tym rozdziale warto dodać ryciny i tabele przedstawiające użyte dane.
+Sentinel-2 to druga misja Komisji Europejskiej realizowana operacyjnie przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
+Misja Sentinel-2 zapewnia dostęp do obrazów satelitarnych w trzynastu zakresach spektralnych, rozdzielczość przestrzenna w zależności od rejestrowanego kanału to 10, 20 lub 60 m. 
+Rozdzielczość czasowa satelitów Sentinel-2 wynosi pięć dni nad równikiem oraz wzrasta wraz ze wzrostem szerokości geograficznej do dwóch dni na średnich szerokościach geograficznych [@hejmanowska_2020_dane].
 
-Zwróć uwagę, że poniższe bloki kodu mają parametr `#| echo: false`; oznacza to, że będą one niewidoczne w wynikowym pliku PDF.
-Każdy z bloków kodu musi mieć unikalną nazwę; w przypadku rycin powinna się ona rozpoczynać od prefiksu `fig-`.
-Dodanie podpisu pod rycinę odbywa się używając parametru `#| fig-cap:`.
-Następnie do tej ryciny można się odnieść używając operatora `[-@]`.
-Przykładowo, odniesienie się do pierwszej ryciny wymaga wpisania `[-@fig-rycina1]` (Rycina [-@fig-rycina1]).
+```{r tabela1, echo=FALSE}
+#| label: tbl-tabela1
+#| echo: false
+#| tbl-cap: "Kanały spektralne satelitów Sentinel-2"
+df = data.frame(
+  a = c("BO1","B02","B03","B04","B05","B06","B07","B08","B8A","B09","B10","B11","B12"),
+  b = c(letters[1:13]),
+  c = c(letters[1:13]),
+  d = c(letters[1:13]),
+  e = c(letters[1:13])
+)
+colnames(df) = c("Kanał", "Nazwa kanału", "Centralna długość fali [nm]", "Zakres spektralny [nm]", "Rozdzielczość przestrzenna [m]")
+knitr::kable(df, booktabs = TRUE) |> 
+  kableExtra::column_spec(1, width = "2cm") |>  
+  kableExtra::column_spec(2, width = "2cm") |>
+  kableExtra::column_spec(3, width = "2cm") |> 
+  kableExtra::column_spec(4, width = "2cm") |> 
+  kableExtra::column_spec(5, width = "2cm")
+```
+
+Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur (kanał 1 (443 nm) do korekcji wpływu aerozoli, kanał 9 (940 nm) do
+korekcji wpływu pary wodnej oraz kanał 10 (1375 nm) do wykrywania chmur typu cirrus) [@drusch_2012_sen2GMES].
+
+Uzupełnić tabelę 3.1.
+Napisać o rozmiarach kafla (100 km x 100 km).
+Produkty L2A - wyjaśnić, napisać jakie korekcje zawiera ten produkt (cytowanie Sen2Cor).
+Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
+Złączenie kanałów w wielokanałowy raster.
+Opisać pozostałe czynności wykonane z tymi danymi. 
+
+Indeksy spektralne???
 
 ```{r}
 #| label: fig-rycina1
@@ -18,9 +51,6 @@ Przykładowo, odniesienie się do pierwszej ryciny wymaga wpisania `[-@fig-rycin
 plot(1, 4)
 ```
 
-Podobnie wygląda odnoszenie się do plików graficznych. 
-Tutaj wewnątrz bloku kodu należy użyć funkcji `knitr::include_graphics()` (Rycina [-@fig-rycina2]).
-Dodatkowo możliwa jest zmiana rozmiary obrazka używając parametrów takich jak `#| out-width:` i `#| out-height:`.
 
 ```{r}
 #| label: fig-rycina2
@@ -29,18 +59,4 @@ Dodatkowo możliwa jest zmiana rozmiary obrazka używając parametrów takich ja
 #| out-width: "100%"
 #| out-height: 300px
 knitr::include_graphics("figures/rcookies.png")
-```
-
-Odnoszenie się do tabel odbywa się poprzez operator `[-@]` wraz z prefiksem `tbl-`.
-Natomiast tworzenie podpisu nad tabelą ma miejsce używając parametru `#| tbl-cap:`. 
-Dodatkowo możliwe jest użycie pakietu **kableExtra** [@R-kableExtra] do określenia szerokości kolumn (Tabela [-@tbl-tabela1]).
-
-```{r tabela1, echo=FALSE}
-#| label: tbl-tabela1
-#| echo: false
-#| tbl-cap: "Moja pierwsza tabela"
-df = data.frame(a = 1:5, b = letters[1:5])
-knitr::kable(df, booktabs = TRUE) |> 
-  kableExtra::column_spec(1, width = "2cm") |>  
-  kableExtra::column_spec(2, width = "4cm")
 ```
