@@ -2,16 +2,16 @@ project:
   type: book
   output-dir: docs
 
-title: "Mój tytuł"
+title: "Wykrywanie farm fotowoltaicznych na podstawie danych teledetekcyjnych"
 titleeng: "My title"
 degreetype: "Praca inżynierska" #"Engineer's thesis"
-author: "Imię Nazwisko"
+author: "Filip Ratajszczak"
 major: "Geoinformacja" #"Geoinformation"
-albumid: "000000"
-year: "2023"
+albumid: "461791"
+year: "2024"
 
 book:
-  output-file: "imienazwisko"
+  output-file: "filip-ratajszczak"
   chapters:
     - index.qmd
     #- 00-oswiadczenie.qmd
