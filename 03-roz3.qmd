@@ -43,8 +43,21 @@ Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 za
 Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
 Złączenie kanałów w wielokanałowy raster.
 Opisać pozostałe czynności wykonane z tymi danymi.
-
 Indeksy spektralne???
+
+## Ortofotomapa i mozaiki zdjęć satelitarnych {#sec-mosaics}
+
+Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
+W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np. w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics]. 
+Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles). Ortomozaiki te są wykonywane na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar, Airbus czy Planet.
+Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) wynosi wynosi poniżej 1 m, np. 30-60 cm dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft. 
+Niewiele jednak wiadomo na temat dat wykonania zdjęć satelitarnych na całym świecie, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics]. 
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z kwartalną i miesięczną częstotliwością. Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu [@planet-basemaps-product-specifications.pdf]. 
+Wybrane mapy bazowe są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, które minimalizują wpływ czynników atmosferycznych.
+
+## OpenStreetMap {#sec-osm}
+
+## Próbki treningowe i testowe {#sec-samples}
 
 ```{r}
 #| label: fig-rycina1
