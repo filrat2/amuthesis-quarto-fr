@@ -148,11 +148,32 @@ jest odnośnik w pliku PDF.
 Sentinel-2 to druga misja Komisji Europejskiej realizowana operacyjnie
 przez Europejską Agencję Kosmiczną (ang. \emph{European Space Agency},
 ESA) w ramach programu Copernicus. Misja Sentinel-2 zapewnia dostęp do
-obrazów satelitarnych w trzynastu zakresach spektralnych, rozdzielczość
-przestrzenna w zależności od rejestrowanego kanału to 10, 20 lub 60 m.
-Rozdzielczość czasowa satelitów Sentinel-2 wynosi pięć dni nad równikiem
-oraz wzrasta wraz ze wzrostem szerokości geograficznej do dwóch dni na
-średnich szerokościach geograficznych \autocite{hejmanowska_2020_dane}.
+obrazów satelitarnych w trzynastu zakresach spektralnych, których
+rozdzielczość przestrzenna w zależności od rejestrowanego kanału to 10,
+20 lub 60 m. Rozdzielczość czasowa satelitów Sentinel-2 wynosi pięć dni
+nad równikiem oraz wzrasta wraz ze wzrostem szerokości geograficznej do
+dwóch dni na średnich szerokościach geograficznych
+\autocite{hejmanowska_2020_dane}.
+
+Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
+poziomach przetworzenia, jednak produkty najczęściej używane przy
+tworzeniu map pokrycia terenu i użytkowania ziemi (ang. \emph{Land
+Use/Land Cover}, LULC) to produkty 1C (współczynnik odbicia na poziomie
+górnej części atmosfery; ang. \emph{Top-of-Atmospheric reflectance},
+TOA) oraz 2A (współczynnik odbicia od powierzchni Ziemi; ang.
+\emph{Bottom-of-Atmospheric reflectance}, BOA)
+\autocite{phiri_2020_sentinel2}.
+
+Produkty poziomu 1C to dane po korekcjach radiometrycznych i
+geometrycznych, udostępniane jako sceny o powierzchni 100
+km\textsuperscript{2} (100 x 100 km) w projekcji UTM/WGS84.
+\autocite{esa_2015_sentinel2handbook}. Zapewnienie poprawnej
+eksploatacji danych dla zastosowań związanych z terenami lądowymi wymaga
+dokładnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych
+\autocite{main-knorn_2017_Sen2Cor}. Poziom 2A powstaje poprzez
+zastosowanie dodatkowej korekcji atmosferycznej dla produktu 1C
+wykorzystując procesor korekcji atmosferycznej Sen2Cor
+\autocite{main-knorn_2017_Sen2Cor}.
 
 \hypertarget{tbl-tabela1}{}
 \begin{table}
