@@ -145,34 +145,35 @@ jest odnośnik w pliku PDF.
 \hypertarget{sec-satellite-imagery}{%
 \section{Zdjęcia satelitarne}\label{sec-satellite-imagery}}
 
-Sentinel-2 to druga misja Komisji Europejskiej realizowana operacyjnie
-przez Europejską Agencję Kosmiczną (ang. \emph{European Space Agency},
-ESA) w ramach programu Copernicus. Misja Sentinel-2 zapewnia dostęp do
-obrazów satelitarnych w trzynastu zakresach spektralnych, których
-rozdzielczość przestrzenna w zależności od rejestrowanego kanału to 10,
-20 lub 60 m. Rozdzielczość czasowa satelitów Sentinel-2 wynosi pięć dni
-nad równikiem oraz wzrasta wraz ze wzrostem szerokości geograficznej do
-dwóch dni na średnich szerokościach geograficznych
+Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest
+operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang.
+\emph{European Space Agency}, ESA) w ramach programu Copernicus. Celem
+tej misji jest dostarczanie obrazów satelitarnych, obejmujących
+trzynaście zakresów spektralnych o różnych rozdzielczościach
+przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
+Rozdzielczość czasowa misji Sentinel-2 wynosi pięć dni nad równikiem i
+zwiększa się wraz ze wzrostem szerokości geograficznej, osiągając dwa
+dni na średnich szerokościach geograficznych
 \autocite{hejmanowska_2020_dane}.
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
-poziomach przetworzenia, jednak produkty najczęściej używane przy
-tworzeniu map pokrycia terenu i użytkowania ziemi (ang. \emph{Land
-Use/Land Cover}, LULC) to produkty 1C (współczynnik odbicia na poziomie
-górnej części atmosfery; ang. \emph{Top-of-Atmospheric reflectance},
-TOA) oraz 2A (współczynnik odbicia od powierzchni Ziemi; ang.
+poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map
+pokrycia terenu i użytkowania ziemi (ang. \emph{Land Use/Land Cover},
+LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części
+atmosfery; ang. \emph{Top-of-Atmospheric reflectance}, TOA) oraz 2A
+(współczynnik odbicia na powierzchni Ziemi; ang.
 \emph{Bottom-of-Atmospheric reflectance}, BOA)
 \autocite{phiri_2020_sentinel2}.
 
-Produkty poziomu 1C to dane po korekcjach radiometrycznych i
-geometrycznych, udostępniane jako sceny o powierzchni 100
-km\textsuperscript{2} (100 x 100 km) w projekcji UTM/WGS84.
-\autocite{esa_2015_sentinel2handbook}. Zapewnienie poprawnej
-eksploatacji danych dla zastosowań związanych z terenami lądowymi wymaga
-dokładnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych
-\autocite{main-knorn_2017_Sen2Cor}. Poziom 2A powstaje poprzez
-zastosowanie dodatkowej korekcji atmosferycznej dla produktu 1C
-wykorzystując procesor korekcji atmosferycznej Sen2Cor
+Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i
+geometrycznym, prezentowane jako sceny o powierzchni 100
+km\textsuperscript{2} (100 x 100 km) w projekcji UTM/WGS84
+\autocite{esa_2015_sentinel2handbook}. Skuteczne wykorzystanie tych
+danych w zastosowaniach związanych z terenami lądowymi wymaga
+precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów
+atmosferycznych \autocite{main-knorn_2017_Sen2Cor}. Produkty poziomu 2A
+powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla
+danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 \autocite{main-knorn_2017_Sen2Cor}.
 
 \hypertarget{tbl-tabela1}{}
@@ -180,25 +181,25 @@ wykorzystując procesor korekcji atmosferycznej Sen2Cor
 \caption{\label{tbl-tabela1}Kanały spektralne satelitów Sentinel-2 }\tabularnewline
 
 \centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{4cm}>{\raggedleft\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedleft\arraybackslash}p{2cm}}
 \toprule
 Kanał & Nazwa kanału & Centralna długość fali [nm] & Zakres spektralny [nm] & Rozdzielczość przestrzenna [m]\\
 \midrule
-BO1 & a & a & a & a\\
-B02 & b & b & b & b\\
-B03 & c & c & c & c\\
-B04 & d & d & d & d\\
-B05 & e & e & e & e\\
+BO1 & Coastal Aerosol & 443 & 433–453 & 60\\
+B02 & Blue & 490 & 458–523 & 10\\
+B03 & Green & 560 & 543–578 & 10\\
+B04 & Red & 665 & 650–680 & 10\\
+B05 & Vegetation RedEdge & 705 & 698–713 & 20\\
 \addlinespace
-B06 & f & f & f & f\\
-B07 & g & g & g & g\\
-B08 & h & h & h & h\\
-B8A & i & i & i & i\\
-B09 & j & j & j & j\\
+B06 & Vegetation RedEdge & 740 & 733–748 & 20\\
+B07 & Vegetation RedEdge & 783 & 773–793 & 20\\
+B08 & NIR & 842 & 785–900 & 10\\
+B8A & NIR & 865 & 855–875 & 20\\
+B09 & Water Vapour & 945 & 935–955 & 60\\
 \addlinespace
-B10 & k & k & k & k\\
-B11 & l & l & l & l\\
-B12 & m & m & m & m\\
+B10 & Cirrus & 1375 & 1360–1390 & 60\\
+B11 & SWIR & 1610 & 1565–1655 & 20\\
+B12 & SWIR & 2190 & 2100–2280 & 20\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -206,15 +207,15 @@ B12 & m & m & m & m\\
 Z dostępnych kanałów spektralnych (Tabela \ref{tbl-tabela1})
 wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości
 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji
-chmur (kanał 1 (443 nm) do korekcji wpływu aerozoli, kanał 9 (940 nm) do
-korekcji wpływu pary wodnej oraz kanał 10 (1375 nm) do wykrywania chmur
-typu cirrus) \autocite{drusch_2012_sen2GMES}.
+chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940
+nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania
+chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
 
-Uzupełnić tabelę 3.1. Napisać o rozmiarach kafla (100 km x 100 km).
-Produkty L2A - wyjaśnić, napisać jakie korekcje zawiera ten produkt
-(cytowanie Sen2Cor). Resampling kanałów w rozdzielczości 20 m do 10 m
-(metoda=bilinear). Złączenie kanałów w wielokanałowy raster. Opisać
-pozostałe czynności wykonane z tymi danymi.
+Uzupełnić tabelę 3.1.
+
+Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
+Złączenie kanałów w wielokanałowy raster. Opisać pozostałe czynności
+wykonane z tymi danymi.
 
 Indeksy spektralne???
 

@@ -8,14 +8,15 @@ editor:
 
 ## Zdjęcia satelitarne {#sec-satellite-imagery}
 
-Sentinel-2 to druga misja Komisji Europejskiej realizowana operacyjnie przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
-Misja Sentinel-2 zapewnia dostęp do obrazów satelitarnych w trzynastu zakresach spektralnych, których rozdzielczość przestrzenna w zależności od rejestrowanego kanału to 10, 20 lub 60 m.
-Rozdzielczość czasowa satelitów Sentinel-2 wynosi pięć dni nad równikiem oraz wzrasta wraz ze wzrostem szerokości geograficznej do dwóch dni na średnich szerokościach geograficznych [@hejmanowska_2020_dane].
+Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
+Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
+Rozdzielczość czasowa misji Sentinel-2 wynosi pięć dni nad równikiem i zwiększa się wraz ze wzrostem szerokości geograficznej, osiągając dwa dni na średnich szerokościach geograficznych [@hejmanowska_2020_dane].
 
-Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, jednak produkty najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) to produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia od powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
+Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia na powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
 
-Produkty poziomu 1C to dane po korekcjach radiometrycznych i geometrycznych, udostępniane jako sceny o powierzchni 100 km^2^ (100 x 100 km) w projekcji UTM/WGS84. [@esa_2015_sentinel2handbook]. Zapewnienie poprawnej eksploatacji danych dla zastosowań związanych z terenami lądowymi wymaga dokładnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych [@main-knorn_2017_Sen2Cor].
-Poziom 2A powstaje poprzez zastosowanie dodatkowej korekcji atmosferycznej dla produktu 1C wykorzystując procesor korekcji atmosferycznej Sen2Cor [@main-knorn_2017_Sen2Cor].
+Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i geometrycznym, prezentowane jako sceny o powierzchni 100 km^2^ (100 x 100 km) w projekcji UTM/WGS84 [@esa_2015_sentinel2handbook].
+Skuteczne wykorzystanie tych danych w zastosowaniach związanych z terenami lądowymi wymaga precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych [@main-knorn_2017_Sen2Cor].
+Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor [@main-knorn_2017_Sen2Cor].
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela1
@@ -23,25 +24,22 @@ Poziom 2A powstaje poprzez zastosowanie dodatkowej korekcji atmosferycznej dla p
 #| tbl-cap: "Kanały spektralne satelitów Sentinel-2"
 df = data.frame(
   a = c("BO1","B02","B03","B04","B05","B06","B07","B08","B8A","B09","B10","B11","B12"),
-  b = c(letters[1:13]),
-  c = c(letters[1:13]),
-  d = c(letters[1:13]),
-  e = c(letters[1:13])
+  b = c("Coastal Aerosol","Blue","Green","Red","Vegetation RedEdge","Vegetation RedEdge","Vegetation RedEdge","NIR","NIR","Water Vapour","Cirrus","SWIR","SWIR"),
+  c = c(443,490,560,665,705,740,783,842,865,945,1375,1610,2190),
+  d = c("433–453","458–523","543–578","650–680","698–713","733–748","773–793","785–900","855–875","935–955","1360–1390","1565–1655","2100–2280"),
+  e = c(60,10,10,10,20,20,20,10,20,60,60,20,20)
 )
 colnames(df) = c("Kanał", "Nazwa kanału", "Centralna długość fali [nm]", "Zakres spektralny [nm]", "Rozdzielczość przestrzenna [m]")
 knitr::kable(df, booktabs = TRUE) |> 
-  kableExtra::column_spec(1, width = "2cm") |>  
-  kableExtra::column_spec(2, width = "2cm") |>
+  kableExtra::column_spec(1, width = "1.5cm") |>  
+  kableExtra::column_spec(2, width = "4cm") |>
   kableExtra::column_spec(3, width = "2cm") |> 
   kableExtra::column_spec(4, width = "2cm") |> 
   kableExtra::column_spec(5, width = "2cm")
 ```
 
-Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur (kanał 1 (443 nm) do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej oraz kanał 10 (1375 nm) do wykrywania chmur typu cirrus) [@drusch_2012_sen2GMES].
+Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
 
-Uzupełnić tabelę 3.1.
-Napisać o rozmiarach kafla (100 km x 100 km).
-Produkty L2A - wyjaśnić, napisać jakie korekcje zawiera ten produkt (cytowanie Sen2Cor).
 Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
 Złączenie kanałów w wielokanałowy raster.
 Opisać pozostałe czynności wykonane z tymi danymi.
