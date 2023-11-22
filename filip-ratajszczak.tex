@@ -228,28 +228,29 @@ produktów pokrycia terenu \autocite{lesiv_2018_sat_imagery_mosaics}. Do
 stworzenie zbioru danych testowych i treningowych wykorzystano
 ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet
 Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
-Ortomozaiki te są wykonywane na podstawie komercyjnych zdjęć
-satelitarnych wykonywanych przez podmioty takie jak Maxar, Airbus czy
-Planet. Ortofotomapa udostępniana przez GUGiK charakteryzuje się
-rozdzielczością przestrzenną 25 cm, rozdzielczość przestrzenna
-wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps)
-wynosi wynosi poniżej 1 m, np. 30-60 cm dla mozaiki Bing Aerial
-udostępnianej przez firmę Microsoft. Niewiele jednak wiadomo na temat
-dat wykonania zdjęć satelitarnych na całym świecie, które posłużyły do
-stworzenia konkretnej mozaiki zobrazowań satelitarnych
+Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych
+wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy
+Planet Labs. Ortofotomapa udostępniana przez GUGiK charakteryzuje się
+rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna
+wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest
+wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę
+Microsoft wynosi ona 30-60 cm. Często jednak nie jest możliwie ustalenie
+dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia
+konkretnej mozaiki zobrazowań satelitarnych
 \autocite{lesiv_2018_sat_imagery_mosaics}. Mozaika tworzona przez Planet
 na podstawie zdjęć satelitarnych wykonywanych przez konstelację
 satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną
 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych
-produktów jest tworzona z kwartalną i miesięczną częstotliwością.
+produktów jest tworzona z miesięczną oraz kwartalną częstotliwością.
 Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie
 zbioru danych testowych i treningowych na konkretny okres czasu
-\autocite{planet-basemaps-product-specifications.pdf}. Wybrane mapy
-bazowe są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu,
-który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale
-czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć
-wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
-przestrzennie, które minimalizują wpływ czynników atmosferycznych.
+\autocite{planet-basemaps-product-specifications.pdf}. Mozaiki Planet
+Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu
+algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym
+przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie
+tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
+przestrzennie, a także charakteryzują się zminimalizowanym wpływem
+czynników atmosferycznych.
 
 \hypertarget{sec-osm}{%
 \section{OpenStreetMap}\label{sec-osm}}
