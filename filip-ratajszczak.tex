@@ -145,6 +145,12 @@ jest odnośnik w pliku PDF.
 \hypertarget{sec-satellite-imagery}{%
 \section{Zdjęcia satelitarne}\label{sec-satellite-imagery}}
 
+\hypertarget{sec-sentinel1}{%
+\subsection{Sentinel-1}\label{sec-sentinel1}}
+
+\hypertarget{sec-sentinel2}{%
+\subsection{Senitnel-2}\label{sec-sentinel2}}
+
 Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest
 operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang.
 \emph{European Space Agency}, ESA) w ramach programu Copernicus. Celem
@@ -185,7 +191,7 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 \toprule
 Kanał & Nazwa kanału & Centralna długość fali [nm] & Zakres spektralny [nm] & Rozdzielczość przestrzenna [m]\\
 \midrule
-BO1 & Coastal Aerosol & 443 & 433–453 & 60\\
+B01 & Coastal Aerosol & 443 & 433–453 & 60\\
 B02 & Blue & 490 & 458–523 & 10\\
 B03 & Green & 560 & 543–578 & 10\\
 B04 & Red & 665 & 650–680 & 10\\
@@ -211,9 +217,11 @@ chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940
 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania
 chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
 
-Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
-Złączenie kanałów w wielokanałowy raster. Opisać pozostałe czynności
-wykonane z tymi danymi. Indeksy spektralne???
+\hypertarget{indeksy-spektralne--}{%
+\subsection{Indeksy spektralne - ???}\label{indeksy-spektralne--}}
+
+\hypertarget{tekstury-obrazu--}{%
+\subsection{Tekstury obrazu - ???}\label{tekstury-obrazu--}}
 
 \hypertarget{sec-mosaics}{%
 \section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
@@ -250,13 +258,83 @@ algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym
 przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie
 tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
 przestrzennie, a także charakteryzują się zminimalizowanym wpływem
-czynników atmosferycznych.
+czynników
+atmosferycznych\autocite[??]{planet-basemaps-product-specifications.pdf}.
 
-\hypertarget{sec-osm}{%
-\section{OpenStreetMap}\label{sec-osm}}
+?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach
+satelitarnych i scenie Sentinel-2 (kompozycja RGB)
+
+\hypertarget{sec-processing}{%
+\section{Przygotowanie danych}\label{sec-processing}}
+
+Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
+Złączenie kanałów w wielokanałowy raster. Opisać pozostałe czynności
+wykonane z tymi danymi.
+
+?rycina - schemat przygotowania danych ?rycina - workflow Sentinel-1
 
 \hypertarget{sec-samples}{%
 \section{Próbki treningowe i testowe}\label{sec-samples}}
+
+\hypertarget{sec-machine-learning}{%
+\section{Uczenie maszynowe}\label{sec-machine-learning}}
+
+Klasyfikacja obrazów w teledetekcji polega na grupowaniu komórek w
+niewielkie zestawy klas, aby komórki w tych samych klasach miały podobne
+właściwości \autocite{ismail_2009_classification}. Istnieje wiele
+różnych metod klasyfikacji danych teledetekcyjnych. Stosunkowo nowymi
+podejściami wykorzystywanymi w tym kontekście są metody oparte na
+sztucznej inteligencji, takie jak uczenie maszynowe (ang. \emph{Machine
+Learning}, ML) lub uczenie głębokie (ang. \emph{Deep Learning}, DL)
+\autocite{hejmanowska_2020_dane}.
+
+Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący
+się na opracowywaniu algorytmów i modeli statystycznych zapewniających
+systemom komputerowym możliwość automatycznego uczenia się z danych i
+wykonywania określonych zadań bez konieczności bezpośredniego
+programowania. W przypadku skomplikowanych i złożonych zestawów danych
+nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć
+poprawnych informacji po wizualnym przejrzeniu danych
+\autocite{mahesh_2019_ml}. Uczenie maszynowe jest wykorzystywane do
+uczenia maszyn efektywnego przetwarzania danych
+\autocite{sindayigaya_2022_ml}. Algorytmy uczenia maszynowego można
+podzielić na cztery główne podejścia: uczenie nienadzorowane (ang.
+\emph{unsupervised learning}), uczenie nadzorowane (ang.
+\emph{supervised learning}), uczenie częściowo nadzorowane (ang.
+\emph{semi-supervised learning}) oraz uczenie przez wzmacnianie (uczenie
+posiłkowane, ang. \emph{reinforcement learning})
+\autocite{sarker_2021_ml}.
+
+W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów
+uczenia maszynowego do klasyfikacji obrazów satelitarnych
+\autocite{sheykhmousa_2020_svm_vs_rf}, zazwyczaj wykorzystujące techniki
+klasyfikacji bez nadzoru i klasyfikacji nadzorowanej
+\autocite{ismail_2009_classification}.
+
+Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez
+konieczności ingerencji człowieka. Uczenie bez nadzoru jest powszechnie
+stosowane do eksploracji danych, ekstrakcji cech generatywnych,
+identyfikacji istotnych trendów i struktur oraz grupowania wyników. Ta
+technika uczenia maszynowego jest najczęściej używana do grupowania
+(klastowania), redukcji wielowymiarowości (redukcji cech) oraz
+identyfikacji skojarzeń i relacji \autocite{sarker_2021_ml}.
+
+Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane
+treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi. Proces
+uczenia nadzorowanego zachodzi, gdy określone cele mają zostać
+osiągnięte na podstawie konkretnego zestawu danych wejściowych
+(treningowych). Dwa główne typy uczenia nadzorowanego to klasyfikacja,
+która separuje dane, oraz regresja, która dopasowuje dane
+\autocite{sarker_2021_ml}.
+
+W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych
+(ang. \emph{Random Forest}, RF) \autocite{breiman_2001_rf}.
+
+\hypertarget{sec-random-forest}{%
+\subsection{Metoda lasów losowych}\label{sec-random-forest}}
+
+\hypertarget{ux15brodowisko-jux119zyka-r}{%
+\section{Środowisko języka R}\label{ux15brodowisko-jux119zyka-r}}
 
 \begin{figure}[t]
 
