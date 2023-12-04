@@ -11,6 +11,7 @@ editor:
 ### Sentinel-1 {#sec-sentinel1}
 
 
+
 ### Senitnel-2 {#sec-sentinel2}
 Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
 Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
@@ -57,60 +58,8 @@ Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wyko
 Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona 30-60 cm.
 Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics]. 
 Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością. Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu [@planet-basemaps-product-specifications.pdf].
-Mozaiki Planet Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych[@planet-basemaps-product-specifications.pdf???].
+Mozaiki Planet Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet-basemaps-product-specifications.pdf???].
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach satelitarnych i scenie Sentinel-2 (kompozycja RGB)
 
-## Przygotowanie danych {#sec-processing}
-
-Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
-Złączenie kanałów w wielokanałowy raster.
-Opisać pozostałe czynności wykonane z tymi danymi.
-
-?rycina - schemat przygotowania danych
-?rycina - workflow Sentinel-1
-
-## Próbki treningowe i testowe {#sec-samples}
-
-## Uczenie maszynowe {#sec-machine-learning}
-
-Klasyfikacja obrazów w teledetekcji polega na grupowaniu komórek w niewielkie zestawy klas, aby komórki w tych samych klasach miały podobne właściwości [@ismail_2009_classification].
-Istnieje wiele różnych metod klasyfikacji danych teledetekcyjnych.
-Stosunkowo nowymi podejściami wykorzystywanymi w tym kontekście są metody oparte na sztucznej inteligencji, takie jak uczenie maszynowe (ang. *Machine Learning*, ML) lub uczenie głębokie (ang. *Deep Learning*, DL) [@hejmanowska_2020_dane].
-
-Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący się na opracowywaniu algorytmów i modeli statystycznych zapewniających systemom komputerowym możliwość automatycznego uczenia się z danych i wykonywania określonych zadań bez konieczności bezpośredniego programowania. 
-W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć poprawnych informacji po wizualnym przejrzeniu danych [@mahesh_2019_ml].
-Uczenie maszynowe jest wykorzystywane do uczenia maszyn efektywnego przetwarzania danych [@sindayigaya_2022_ml].
-Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
-
-W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], zazwyczaj wykorzystujące techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
-
-Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka. 
-Uczenie bez nadzoru jest powszechnie stosowane do eksploracji danych, ekstrakcji cech generatywnych, identyfikacji istotnych trendów i struktur oraz grupowania wyników.
-Ta technika uczenia maszynowego jest najczęściej używana do grupowania (klastowania), redukcji wielowymiarowości (redukcji cech) oraz identyfikacji skojarzeń i relacji [@sarker_2021_ml].
-
-Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi.
-Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych). Dwa główne typy uczenia nadzorowanego to klasyfikacja, która separuje dane, oraz regresja, która dopasowuje dane [@sarker_2021_ml]. 
-
-W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
-
-### Metoda lasów losowych {#sec-random-forest}
-
-## Środowisko języka R
-
-
-```{r}
-#| label: fig-rycina1
-#| echo: false
-#| fig-cap: "Moja pierwsza rycina"
-plot(1, 4)
-```
-
-```{r}
-#| label: fig-rycina2
-#| echo: false
-#| fig-cap: "Moja druga rycina"
-#| out-width: "100%"
-#| out-height: 300px
-knitr::include_graphics("figures/rcookies.png")
-```
+## Próbki treningowe i testowe {#sec-samples-materials}

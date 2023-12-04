@@ -1,22 +1,66 @@
 # Metody {#sec-metody}
 
-Rozdział **Metody** zawiera opis użytych metod (np. statystycznych czy geostatystycznych) oraz technologii (np. pakiety R). 
-Opis każdej z metod czy technologi powinien być zwarty i zawierać tylko najważniejsze informacje z punktu widzenia pracy dyplomowej.
+## Przygotowanie danych {#sec-processing}
 
-Każda użyta metoda i technologia powinna być zacytowana.
-W przypadku pakietów R, wystarczy wypełnić poniższy blok kodu (zwróć uwagę, że ten blok kodu ma parametr `echo: false`; oznacza to, że będzie on niewidoczny w wynikowym pliku PDF)...
+Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
+Złączenie kanałów w wielokanałowy raster.
+Opisać pozostałe czynności wykonane z tymi danymi.
+
+?rycina - schemat przygotowania danych
+?rycina - workflow Sentinel-1
+
+## Próbki treningowe i testowe {#sec-samples-methods}
+
+## Uczenie maszynowe {#sec-machine-learning}
+
+Klasyfikacja obrazów w teledetekcji polega na grupowaniu komórek w niewielkie zestawy klas, aby komórki w tych samych klasach miały podobne właściwości [@ismail_2009_classification].
+Istnieje wiele różnych metod klasyfikacji danych teledetekcyjnych.
+Stosunkowo nowymi podejściami wykorzystywanymi w tym kontekście są metody oparte na sztucznej inteligencji, takie jak uczenie maszynowe (ang. *Machine Learning*, ML) lub uczenie głębokie (ang. *Deep Learning*, DL) [@hejmanowska_2020_dane].
+
+Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący się na opracowywaniu algorytmów i modeli statystycznych zapewniających systemom komputerowym możliwość automatycznego uczenia się z danych i wykonywania określonych zadań bez konieczności bezpośredniego programowania. 
+W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć poprawnych informacji po wizualnym przejrzeniu danych [@mahesh_2019_ml].
+Uczenie maszynowe jest wykorzystywane do uczenia maszyn efektywnego przetwarzania danych [@sindayigaya_2022_ml].
+Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
+
+W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], zazwyczaj wykorzystujące techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
+
+Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka. 
+Uczenie bez nadzoru jest powszechnie stosowane do eksploracji danych, ekstrakcji cech generatywnych, identyfikacji istotnych trendów i struktur oraz grupowania wyników.
+Ta technika uczenia maszynowego jest najczęściej używana do grupowania (klastowania), redukcji wielowymiarowości (redukcji cech) oraz identyfikacji skojarzeń i relacji [@sarker_2021_ml].
+
+Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi.
+Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych). Dwa główne typy uczenia nadzorowanego to klasyfikacja, która separuje dane, oraz regresja, która dopasowuje dane [@sarker_2021_ml]. 
+
+W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
+
+### Metoda lasów losowych {#sec-random-forest}
+
+## Oprogramowanie
+
+### QGIS
+do wektoryzacji -- tworzenia danych treningowych/testowych
+
+### SNAP
+w przypadku wykorzystania danych Sentinel-1 -- wykorzystany do processingu danych Sentinel-1
+
+### Środowisko języka R
+
+Czynności związane z końcowym przygotowaniem danych wejściowych oraz bezpośrednio z uczeniem maszynowym zostały wykonane z wykorzystaniem środowiska języka R [@R-base].
+R to wieloplatformowy język programowania o otwartym kodzie źródłowym do obliczeń statystycznych i wizualizacji danych [@lovelace_2019_geocomputation].
+Dzięki dużej liczbie pakietów R obsługuje również statystki geoprzestrzenne, modelowanie oraz wizualizację danych przestrzennych [@lovelace_2019_geocomputation].
+W pracy wykorzystane zostało zintegrowane środowisko programistyczne (ang. *Integrated Development Environment*, IDE) RStudio [@rstudio_team_2020_rstudio] przeznaczone dla języka R.
+Poza standardowymi możliwościami środowiska R, w procesie pracy wykorzystane zostały pakiety stworzone przez społeczność R w celu rozszerzenia funkcjonalności tego języka.
+Do operacji na danych rastrowych zastosowano pakiet *terra* [@R-terra], natomiast do przetwarzania danych wektorowych używany był pakiet *sf* [@R-sf].
+Losowe generowanie danych przestrzennych umożliwia pakiet *spatstat.random* [@R-spatstat.random] z rodziny pakietów *spatstat* [@R-spatstat].
+Do przeprowadzenia analizy oraz predykcji opartej o elementy uczenia maszynowego wykorzystano pakiet *mlr3* [@R-mlr3], w ramach którego użyty został algorytm lasów losowych zaimplementowany w pakiecie *ranger* [@R-ranger].
+Do obliczeń związanych z uczeniem maszynowym wykorzystano pakiet *future* [@R-future], umożliwiający równoległe (wielowątkowe) przetwarzanie wyrażeń R, pozwalające na skrócenie czasu realizacji zadań w stosunku do przetwarzania sekwencyjnego.
+
+?GLCMTextres jeśli dojdą tekstury obrazu
 
 ```{r}
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "kableExtra")
+pakiety = c("base", "terra", "sf", "spatstat.random", "spatstat", "mlr3", "ranger", "future")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```
-
-... a następnie zacytować pakiet używając znaku `@`, po którym podać nazwę pakietu rozpoczynającą się od prefiksu `R-`.
-Przykładowe cytowanie języka R bez nawiasu to @R-base, a pakietu **kableExtra** w nawiasie to [@R-kableExtra].
-Więcej przykładów cytowania można znaleźć na stronie https://rmarkdown.rstudio.com/authoring_bibliographies_and_citations.html#citations.
-
-W przypadkach, gdy cytowanie istnieje, ale nie jest pakietem R to należy dodać je do pliku `thesis.bib` i użyć powyższej składni ze znakiem `@`.
-W ostateczności, gdy dana technologia nie posiada cytowania, należy podać jej adres internetowy.
