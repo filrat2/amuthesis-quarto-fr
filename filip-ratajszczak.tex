@@ -368,11 +368,32 @@ przezwyciężenia słabości pojedynczego drzewa \autocite{aaron_2018_ml}.
 
 do wektoryzacji -- tworzenia danych treningowych/testowych
 
-\hypertarget{snap}{%
-\subsection{SNAP}\label{snap}}
+\hypertarget{snap-i-sentinel-1-toolbox}{%
+\subsection{SNAP i Sentinel-1 Toolbox}\label{snap-i-sentinel-1-toolbox}}
 
-w przypadku wykorzystania danych Sentinel-1 -- wykorzystany do
-processingu danych Sentinel-1
+SNAP \autocite{snap}, czyli Sentinel Application Platform to platforma
+oprogramowania rozwijana wspólnie przez firmy Brockmann Consult,
+SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA),
+przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych
+Sentinel \autocite{snap-desktop,esa_snap}. Oprogramowanie SNAP zawiera
+zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych
+teledetekcyjnych, a zaimplementowane narzędzie do przetwarzania grafów
+(ang. \emph{Graph Processing Tool}, GPT) daje możliwość tworzenia
+łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika
+\autocite{hejmanowska_2020_dane,moskolai_2022_s1_workflow}. Struktura
+przetwarzania grafów (ang. \emph{Graph Processing Framework}, GPF) w
+oprogramowaniu SNAP służy do wsadowego przetwarzania danych za
+pośrednictwem języka Extensible Markup Language (XML)
+\autocite{moskolai_2022_s1_workflow}.
+
+Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw
+narzędzi S1TBX \autocite{s1tbx}, przeznaczony do przetwarzania danych
+radarowych. Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia
+do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
+koregistracji, ortorektyfikacji, mozaikowania, konwersji danych,
+polarymetrii i interferometrii \autocite{sentinel-1-toolbox}. Sentinel-1
+Toolbox jest opracowywany dla ESA przez firmę Array we współpracy z DLR,
+Brockmann Consult i OceanDataLab \autocite{sentinel-1-toolbox}.
 
 \hypertarget{ux15brodowisko-jux119zyka-r}{%
 \subsection{Środowisko języka R}\label{ux15brodowisko-jux119zyka-r}}
