@@ -48,7 +48,13 @@ Random Forest jest klasyfikatorem zespołowym (ang. *ensemble classifier*), co o
 
 ### QGIS
 
-do wektoryzacji -- tworzenia danych treningowych/testowych
+QGIS, dawniej Quantum GIS [@qgis], to wieloplatformowe i wolne oprogramowanie o otwartym kodzie źródłowym przeznaczone do przetwarzania danych przestrzennych, rozwijane przez QGIS Development Team od 2002 roku [@hejmanowska_2020_dane; @flenniken_2020_qgis].
+Algorytmy przetwarzania danych przestrzennych zebrane w oprogramowaniu QGIS umożliwiają manipulację danymi rastrowymi oraz wektorowymi, a także prowadzenie analiz i wizualizację wyników [@hejmanowska_2020_dane].
+Oprogramowanie QGIS oferuje również możliwość korzystania z wielu zewnętrznych programów, tzw. wtyczek (ang. *plug-in*) rozszerzających jego funkcjonalność [@hejmanowska_2020_dane]. 
+W repozytorium wtyczek znaleźć można narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji, czy wykonania dodatkowych zadań, takich jak np. nadawanie georeferencji czy klasyfikacja zobrazowań satelitarnych [@hejmanowska_2020_dane].
+
+Oprogramowanie QGIS zostało zastosowane do stworzenia zestawu danych referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik satelitarnych.
+QGIS dostarcza zaawansowane narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie obiektów wektorowych oraz umożliwia przeglądanie danych przestrzennych dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
 
 ### SNAP i Sentinel-1 Toolbox
 

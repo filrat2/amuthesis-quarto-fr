@@ -252,14 +252,13 @@ satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną
 produktów jest tworzona z miesięczną oraz kwartalną częstotliwością.
 Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie
 zbioru danych testowych i treningowych na konkretny okres czasu
-\autocite{planet-basemaps-product-specifications.pdf}. Mozaiki Planet
-Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu
-algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym
-przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie
-tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
+\autocite{planet_2019_basemaps}. Mozaiki Planet Basemaps są tworzone na
+podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera
+najlepsze obrazy z katalogu Planet w określonym przedziale czasowym.
+Wybierając najlepsze obrazy, Planet jest w stanie tworzyć
+wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
 przestrzennie, a także charakteryzują się zminimalizowanym wpływem
-czynników atmosferycznych
-\autocite[??]{planet-basemaps-product-specifications.pdf}.
+czynników atmosferycznych \autocite{planet_2019_basemaps}.
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach
 satelitarnych i scenie Sentinel-2 (kompozycja RGB)
@@ -366,7 +365,28 @@ przezwyciężenia słabości pojedynczego drzewa \autocite{aaron_2018_ml}.
 \hypertarget{qgis}{%
 \subsection{QGIS}\label{qgis}}
 
-do wektoryzacji -- tworzenia danych treningowych/testowych
+QGIS, dawniej Quantum GIS \autocite{qgis}, to wieloplatformowe i wolne
+oprogramowanie o otwartym kodzie źródłowym przeznaczone do przetwarzania
+danych przestrzennych, rozwijane przez QGIS Development Team od 2002
+roku \autocite{hejmanowska_2020_dane,flenniken_2020_qgis}. Algorytmy
+przetwarzania danych przestrzennych zebrane w oprogramowaniu QGIS
+umożliwiają manipulację danymi rastrowymi oraz wektorowymi, a także
+prowadzenie analiz i wizualizację wyników
+\autocite{hejmanowska_2020_dane}. Oprogramowanie QGIS oferuje również
+możliwość korzystania z wielu zewnętrznych programów, tzw. wtyczek (ang.
+\emph{plug-in}) rozszerzających jego funkcjonalność
+\autocite{hejmanowska_2020_dane}. W repozytorium wtyczek znaleźć można
+narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji,
+czy wykonania dodatkowych zadań, takich jak np. nadawanie georeferencji
+czy klasyfikacja zobrazowań satelitarnych
+\autocite{hejmanowska_2020_dane}.
+
+Oprogramowanie QGIS zostało zastosowane do stworzenia zestawu danych
+referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik
+satelitarnych. QGIS dostarcza zaawansowane narzędzia do digitalizacji,
+umożliwiające rysowanie i edytowanie obiektów wektorowych oraz umożliwia
+przeglądanie danych przestrzennych dostępnych w Internecie za pomocą
+usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
 
 \hypertarget{snap-i-sentinel-1-toolbox}{%
 \subsection{SNAP i Sentinel-1 Toolbox}\label{snap-i-sentinel-1-toolbox}}
