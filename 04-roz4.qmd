@@ -1,13 +1,54 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
 # Metody {#sec-metody}
 
 ## Przygotowanie danych {#sec-processing}
 
-Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
-Złączenie kanałów w wielokanałowy raster.
+### Sentinel-1 {#sec-processing-s1}
+
+Korzystanie z danych radarowych wymaga wcześniejszego przygotowania danych poprzez proces kalibracji, aby zapewnić poprawne wyniki analizy.
+Procesy te mogą różnić się w zależności od konkretnego zastosowania, mając na celu dostosowanie danych do specyficznych potrzeb.
+W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD zaproponowany przez @filipponi_2019_s1_workflow, który obejmuje:
+
+1.   aktualizację danych o położeniu satelity w momencie zobrazowania poprzez pobranie i zastosowanie pliku orbity;
+
+2.  usuwanie szumów termicznych;
+
+3.  korekcję szumów na granicach obrazów;
+
+4.  obliczenie współczynnika rozproszenia wstecznego (ang. *backscatter coefficient*) sigma0 za pomocą kalibracji radiometrycznej;
+
+5.  korekcję topograficzna (ortorektyfikacja za pomocą Copernicus 30 m Global DEM);
+
+6.  konwersję współczynnika rozproszenia wstecznego na dB za pomocą transformacji logarytmicznej
+
+rycina - Sentinel-1 GRD Preprocessing Workflow
+
+Wstępne Przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx] w oprogramowaniu SNAP [@snap] przy pomocy narzedzie do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) .
+Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
+Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. 
+Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
+Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji *focal* z pakietu *terra*.
+
+rycina - mapa produkty S1 GRD (granice) vs. granice kafla 33UWV Sentinel-2
+
+### Sentinel-2 {#sec-processing-s2}
+
+Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości 10 m.
+Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy wykorzystaniu języka R (@R-base) oraz funkcji *resample* z pakietu *terra* [@R-terra].
+Wykorzystano interpolację dwuliniową (ang. *bilinear interpolation*) poprzez zastosowanie parametru *method=bilinear*.
+
+### Łączenie danych {#sec-processing-data-merging}
+
+Resampling S1 do siatki S2.
+Złączenie kanałów i pozostałych danych w wielokanałowy raster.
 Opisać pozostałe czynności wykonane z tymi danymi.
 
-?rycina - schemat przygotowania danych
-?rycina - workflow Sentinel-1
+rycina - schemat przygotowania danych 
 
 ## Próbki treningowe i testowe {#sec-samples-methods}
 
@@ -17,19 +58,20 @@ Klasyfikacja obrazów w teledetekcji polega na grupowaniu komórek w niewielkie 
 Istnieje wiele różnych metod klasyfikacji danych teledetekcyjnych.
 Stosunkowo nowymi podejściami wykorzystywanymi w tym kontekście są metody oparte na sztucznej inteligencji, takie jak uczenie maszynowe (ang. *Machine Learning*, ML) lub uczenie głębokie (ang. *Deep Learning*, DL) [@hejmanowska_2020_dane].
 
-Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący się na opracowywaniu algorytmów i modeli statystycznych zapewniających systemom komputerowym możliwość automatycznego uczenia się z danych i wykonywania określonych zadań bez konieczności bezpośredniego programowania. 
+Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący się na opracowywaniu algorytmów i modeli statystycznych zapewniających systemom komputerowym możliwość automatycznego uczenia się z danych i wykonywania określonych zadań bez konieczności bezpośredniego programowania.
 W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć poprawnych informacji po wizualnym przejrzeniu danych [@mahesh_2019_ml].
 Uczenie maszynowe jest wykorzystywane do uczenia maszyn efektywnego przetwarzania danych [@sindayigaya_2022_ml].
 Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
 
 W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], zazwyczaj wykorzystujące techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
 
-Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka. 
+Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka.
 Uczenie bez nadzoru jest powszechnie stosowane do eksploracji danych, ekstrakcji cech generatywnych, identyfikacji istotnych trendów i struktur oraz grupowania wyników.
 Ta technika uczenia maszynowego jest najczęściej używana do grupowania (klastowania), redukcji wielowymiarowości (redukcji cech) oraz identyfikacji skojarzeń i relacji [@sarker_2021_ml].
 
 Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi.
-Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych). Dwa główne typy uczenia nadzorowanego to klasyfikacja, która separuje dane, oraz regresja, która dopasowuje dane [@sarker_2021_ml]. 
+Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych).
+Dwa główne typy uczenia nadzorowanego to klasyfikacja, która separuje dane, oraz regresja, która dopasowuje dane [@sarker_2021_ml].
 
 W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
 
@@ -50,17 +92,19 @@ Random Forest jest klasyfikatorem zespołowym (ang. *ensemble classifier*), co o
 
 QGIS, dawniej Quantum GIS [@qgis], to wieloplatformowe i wolne oprogramowanie o otwartym kodzie źródłowym przeznaczone do przetwarzania danych przestrzennych, rozwijane przez QGIS Development Team od 2002 roku [@hejmanowska_2020_dane; @flenniken_2020_qgis].
 Algorytmy przetwarzania danych przestrzennych zebrane w oprogramowaniu QGIS umożliwiają manipulację danymi rastrowymi oraz wektorowymi, a także prowadzenie analiz i wizualizację wyników [@hejmanowska_2020_dane].
-Oprogramowanie QGIS oferuje również możliwość korzystania z wielu zewnętrznych programów, tzw. wtyczek (ang. *plug-in*) rozszerzających jego funkcjonalność [@hejmanowska_2020_dane]. 
-W repozytorium wtyczek znaleźć można narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji, czy wykonania dodatkowych zadań, takich jak np. nadawanie georeferencji czy klasyfikacja zobrazowań satelitarnych [@hejmanowska_2020_dane].
+Oprogramowanie QGIS oferuje również możliwość korzystania z wielu zewnętrznych programów, tzw.
+wtyczek (ang. *plug-in*) rozszerzających jego funkcjonalność [@hejmanowska_2020_dane].
+W repozytorium wtyczek znaleźć można narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji, czy wykonania dodatkowych zadań, takich jak np.
+nadawanie georeferencji czy klasyfikacja zobrazowań satelitarnych [@hejmanowska_2020_dane].
 
 Oprogramowanie QGIS zostało zastosowane do stworzenia zestawu danych referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik satelitarnych.
-QGIS dostarcza zaawansowane narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie obiektów wektorowych oraz umożliwia przeglądanie danych przestrzennych dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
+QGIS dostarcza zaawansowane narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie obiektów wektorowych oraz pozwala na przeglądanie danych przestrzennych dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
 
 ### SNAP i Sentinel-1 Toolbox
 
 SNAP [@snap], czyli Sentinel Application Platform to platforma oprogramowania rozwijana wspólnie przez firmy Brockmann Consult, SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA), przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel [@snap-desktop; @esa_snap].
 Oprogramowanie SNAP zawiera zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych teledetekcyjnych, a zaimplementowane narzędzie do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) daje możliwość tworzenia łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika [@hejmanowska_2020_dane; @moskolai_2022_s1_workflow].
-Struktura przetwarzania grafów (ang. *Graph Processing Framework*,  GPF) w oprogramowaniu SNAP służy do wsadowego przetwarzania danych za pośrednictwem języka Extensible Markup Language (XML) [@moskolai_2022_s1_workflow].
+Struktura przetwarzania grafów (ang. *Graph Processing Framework*, GPF) w oprogramowaniu SNAP służy do wsadowego przetwarzania danych za pośrednictwem języka Extensible Markup Language (XML) [@moskolai_2022_s1_workflow].
 
 Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw narzędzi S1TBX [@s1tbx], przeznaczony do przetwarzania danych radarowych.
 Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli), koregistracji, ortorektyfikacji, mozaikowania, konwersji danych, polarymetrii i interferometrii [@sentinel-1-toolbox].
@@ -74,16 +118,16 @@ Dzięki dużej liczbie pakietów R obsługuje również statystki geoprzestrzenn
 W pracy wykorzystane zostało zintegrowane środowisko programistyczne (ang. *Integrated Development Environment*, IDE) RStudio [@rstudio_team_2020_rstudio] przeznaczone dla języka R.
 Poza standardowymi możliwościami środowiska R, w procesie pracy wykorzystane zostały pakiety stworzone przez społeczność R w celu rozszerzenia funkcjonalności tego języka.
 Do operacji na danych rastrowych zastosowano pakiet *terra* [@R-terra], natomiast do przetwarzania danych wektorowych używany był pakiet *sf* [@R-sf].
+Obliczanie tekstury obrazu Sum Average wyprowadzonej z macierzy współwystępowania poziomu szarości (ang. *gray-level co-occurrence matrix*, GLCM) zostało wykonane przy pomocy pakietu *GLCMTextures* [@R-GLCMTextures].
 Losowe generowanie danych przestrzennych umożliwia pakiet *spatstat.random* [@R-spatstat.random] z rodziny pakietów *spatstat* [@R-spatstat].
 Do przeprowadzenia analizy oraz predykcji opartej o elementy uczenia maszynowego wykorzystano pakiet *mlr3* [@R-mlr3], w ramach którego użyty został algorytm lasów losowych zaimplementowany w pakiecie *ranger* [@R-ranger].
-Do obliczeń związanych z uczeniem maszynowym wykorzystano pakiet *future* [@R-future], umożliwiający równoległe (wielowątkowe) przetwarzanie wyrażeń R, pozwalające na skrócenie czasu realizacji zadań w stosunku do przetwarzania sekwencyjnego.
-
-?GLCMTextres jeśli dojdą tekstury obrazu
+Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzystano pakiet *future* [@R-future], umożliwiający równoległe (wielowątkowe) przetwarzanie wyrażeń R, skracające czas realizacji zadań w stosunku do przetwarzania sekwencyjnego.
+W funkcji pozwalającej na równoległe obliczanie tektur obrazu wykorzystano operator *%\>%* z pakietu *dplyr* [@R-dplyr], który daje możliwość przekazywania wyniku jednej operacji do następnej.
 
 ```{r}
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "terra", "sf", "spatstat.random", "spatstat", "mlr3", "ranger", "future")
+pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "future", "dplyr")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```

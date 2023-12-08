@@ -10,9 +10,27 @@ editor:
 
 ### Sentinel-1 {#sec-sentinel1}
 
+Misja Sentinel-1 stanowi Europejskie Obserwatorium Radarowe działające w ramach programu Copernicus, wspólnej inicjatywy Komisji Europejskiej i Europejskiej Agencji Kosmicznej [@sentinel1_overview].
+Celem misji jest dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
+Misja odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym przemieszczania lodu morskiego, transportu morskiego, deformacji i przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk żywiołowych [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 
+Sentinel-1 jest wyposażony w radar z syntetyczną aperturą (ang. *Synthetic Aperture Radar*, SAR), pracujący w paśmie C na częstotliwości 5,405 GHz, co odpowiada długości fali 5,6 cm [@sentinel1_lulc; @sentinel1_instrument_payload].
+Radar działa głównie w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc zarówno fale pionowe (ang. *vertical*), jak i poziome (ang. *horizontal*) po ich powrocie do czujnika, dzięki czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH [@sentinel1_lulc].
+Radar z syntetyczną aperturą (SAR) umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od warunków pogodowych, przez co czas między rejestracją obrazów dla pojedynczego satelity Sentinel-1 wynosi 12 dni nad równikiem, a dla konstelacji dwóch satelitów skraca się do od dwóch do sześciu dni, zależnie od szerokości geograficznej [@hejmanowska_2020_dane; @sentinel1_overview].
+
+Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
+Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected (GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w zależności od produktu do do monitorowania Ziemi, klasyfikacji pokrycia terenu czy aplikacji interferometrycznych [@hejmanowska_2020_dane].
+SLC to obrazy SAR w geometrii ukośnej, zachowujące informację fazową sygnału [@hejmanowska_2020_dane]. 
+Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane]. 
+GRD nie zawiera cech ortofotomapy i wymaga dodatkowego przepróbkowania z użyciem numerycznego modelu terenu przed zastosowaniem w systemach GIS [@hejmanowska_2020_dane].
+Przy konwersji SLC do GRD tracimy informację fazową sygnału, co sprawia, że produkty GRD nie są odpowiednie do interferometrii radarowej [@sentinel1_products].
+
+Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) – podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) – używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) – tryb do monitorowania stref polarnych i niektórych obszarów morskich, Wave (WV) – tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
+
+Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected (GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez satelitę Sentinel-1B w dniu 8 maja 2023 roku. Zestaw danych został utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o oznaczeniu 33UWV. W analizie uwzględniono dwie polaryzacje: VV i VH.
 
 ### Senitnel-2 {#sec-sentinel2}
+
 Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
 Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
 Rozdzielczość czasowa misji Sentinel-2 wynosi pięć dni nad równikiem i zwiększa się wraz ze wzrostem szerokości geograficznej, osiągając dwa dni na średnich szerokościach geograficznych [@hejmanowska_2020_dane].
@@ -43,11 +61,14 @@ knitr::kable(df, booktabs = TRUE) |>
   kableExtra::column_spec(5, width = "2cm")
 ```
 
+Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały dostarczone przez satelitę Sentinel-2B.
+Obszar analizy obejmuje kafel (ang. *tile*) o oznaczeniu 33UWV, dla którego współczynnik zachmurzenia w tym dniu wynosił 0,7%.
+Użyte zostały dane na poziomie przetworzenia L2A.
 Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
 
-### Indeksy spektralne - ???
+### Indeksy spektralne
 
-### Tekstury obrazu - ???
+### Tekstury obrazu
 
 ## Ortofotomapa i mozaiki zdjęć satelitarnych {#sec-mosaics}
 
@@ -61,5 +82,3 @@ Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych pr
 Mozaiki Planet Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach satelitarnych i scenie Sentinel-2 (kompozycja RGB)
-
-## Próbki treningowe i testowe {#sec-samples-materials}

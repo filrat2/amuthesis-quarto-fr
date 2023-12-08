@@ -148,6 +148,66 @@ jest odnośnik w pliku PDF.
 \hypertarget{sec-sentinel1}{%
 \subsection{Sentinel-1}\label{sec-sentinel1}}
 
+Misja Sentinel-1 stanowi Europejskie Obserwatorium Radarowe działające w
+ramach programu Copernicus, wspólnej inicjatywy Komisji Europejskiej i
+Europejskiej Agencji Kosmicznej \autocite{sentinel1_overview}. Celem
+misji jest dostarczanie danych radarowych obejmujących globalną
+powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras
+żeglugowych, stref lodu morskiego, mórz i oceanów
+\autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}. Misja
+odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym
+przemieszczania lodu morskiego, transportu morskiego, deformacji i
+przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk
+żywiołowych
+\autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}.
+
+Sentinel-1 jest wyposażony w radar z syntetyczną aperturą (ang.
+\emph{Synthetic Aperture Radar}, SAR), pracujący w paśmie C na
+częstotliwości 5,405 GHz, co odpowiada długości fali 5,6 cm
+\autocite{sentinel1_lulc,sentinel1_instrument_payload}. Radar działa
+głównie w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc
+zarówno fale pionowe (ang. \emph{vertical}), jak i poziome (ang.
+\emph{horizontal}) po ich powrocie do czujnika, dzięki czemu otrzymujemy
+dane o intensywności rozproszenia wstecznego VV i VH
+\autocite{sentinel1_lulc}. Radar z syntetyczną aperturą (SAR) umożliwia
+prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od
+warunków pogodowych, przez co czas między rejestracją obrazów dla
+pojedynczego satelity Sentinel-1 wynosi 12 dni nad równikiem, a dla
+konstelacji dwóch satelitów skraca się do od dwóch do sześciu dni,
+zależnie od szerokości geograficznej
+\autocite{hejmanowska_2020_dane,sentinel1_overview}.
+
+Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
+Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected
+(GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w
+zależności od produktu do do monitorowania Ziemi, klasyfikacji pokrycia
+terenu czy aplikacji interferometrycznych
+\autocite{hejmanowska_2020_dane}. SLC to obrazy SAR w geometrii ukośnej,
+zachowujące informację fazową sygnału \autocite{hejmanowska_2020_dane}.
+Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej
+rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię
+elipsoidy odniesienia \autocite{hejmanowska_2020_dane}. GRD nie zawiera
+cech ortofotomapy i wymaga dodatkowego przepróbkowania z użyciem
+numerycznego modelu terenu przed zastosowaniem w systemach GIS
+\autocite{hejmanowska_2020_dane}. Przy konwersji SLC do GRD tracimy
+informację fazową sygnału, co sprawia, że produkty GRD nie są
+odpowiednie do interferometrii radarowej \autocite{sentinel1_products}.
+
+Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide
+Swath (IW) -- podstawowy tryb obrazowania dla obszarów lądowych,
+Stripmap (SM) -- używany do obrazowania małych wysp i na potrzeby
+zarządzania kryzysowego, Extra-Wide Swath (EW) -- tryb do monitorowania
+stref polarnych i niektórych obszarów morskich, Wave (WV) -- tryb
+obrazowania oceanów
+\autocite{hejmanowska_2020_dane,sentinel1_instrument_payload,sentinel1_stripmap}.
+
+Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected
+(GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez
+satelitę Sentinel-1B w dniu 8 maja 2023 roku. Zestaw danych został
+utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD,
+a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o
+oznaczeniu 33UWV. W analizie uwzględniono dwie polaryzacje: VV i VH.
+
 \hypertarget{sec-sentinel2}{%
 \subsection{Senitnel-2}\label{sec-sentinel2}}
 
@@ -210,18 +270,23 @@ B12 & SWIR & 2190 & 2100–2280 & 20\\
 \end{tabular}
 \end{table}
 
-Z dostępnych kanałów spektralnych (Tabela \ref{tbl-tabela1})
-wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości
-60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji
-chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940
-nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania
-chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
+Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały
+dostarczone przez satelitę Sentinel-2B. Obszar analizy obejmuje kafel
+(ang. \emph{tile}) o oznaczeniu 33UWV, dla którego współczynnik
+zachmurzenia w tym dniu wynosił 0,7\%. Użyte zostały dane na poziomie
+przetworzenia L2A. Z dostępnych kanałów spektralnych (Tabela
+\ref{tbl-tabela1}) wykorzystano 10 zakresów, ponieważ pasma rejestrowane
+w rozdzielczości 60 metrów są przeznaczone głównie do korekcji
+atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do korekcji
+wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a
+kanał 10 (1375 nm) do wykrywania chmur typu cirrus
+\autocite{drusch_2012_sen2GMES}.
 
-\hypertarget{indeksy-spektralne--}{%
-\subsection{Indeksy spektralne - ???}\label{indeksy-spektralne--}}
+\hypertarget{indeksy-spektralne}{%
+\subsection{Indeksy spektralne}\label{indeksy-spektralne}}
 
-\hypertarget{tekstury-obrazu--}{%
-\subsection{Tekstury obrazu - ???}\label{tekstury-obrazu--}}
+\hypertarget{tekstury-obrazu}{%
+\subsection{Tekstury obrazu}\label{tekstury-obrazu}}
 
 \hypertarget{sec-mosaics}{%
 \section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
@@ -263,9 +328,6 @@ czynników atmosferycznych \autocite{planet_2019_basemaps}.
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach
 satelitarnych i scenie Sentinel-2 (kompozycja RGB)
 
-\hypertarget{sec-samples-materials}{%
-\section{Próbki treningowe i testowe}\label{sec-samples-materials}}
-
 \bookmarksetup{startatroot}
 
 \hypertarget{sec-metody}{%
@@ -274,11 +336,74 @@ satelitarnych i scenie Sentinel-2 (kompozycja RGB)
 \hypertarget{sec-processing}{%
 \section{Przygotowanie danych}\label{sec-processing}}
 
-Resampling kanałów w rozdzielczości 20 m do 10 m (metoda=bilinear).
-Złączenie kanałów w wielokanałowy raster. Opisać pozostałe czynności
-wykonane z tymi danymi.
+\hypertarget{sec-processing-s1}{%
+\subsection{Sentinel-1}\label{sec-processing-s1}}
 
-?rycina - schemat przygotowania danych ?rycina - workflow Sentinel-1
+Korzystanie z danych radarowych wymaga wcześniejszego przygotowania
+danych poprzez proces kalibracji, aby zapewnić poprawne wyniki analizy.
+Procesy te mogą różnić się w zależności od konkretnego zastosowania,
+mając na celu dostosowanie danych do specyficznych potrzeb. W pracy
+wykorzystano schemat przetwarzania danych Sentinel-1 GRD zaproponowany
+przez \textcite{filipponi_2019_s1_workflow}, który obejmuje:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  aktualizację danych o położeniu satelity w momencie zobrazowania
+  poprzez pobranie i zastosowanie pliku orbity;
+\item
+  usuwanie szumów termicznych;
+\item
+  korekcję szumów na granicach obrazów;
+\item
+  obliczenie współczynnika rozproszenia wstecznego (ang.
+  \emph{backscatter coefficient}) sigma0 za pomocą kalibracji
+  radiometrycznej;
+\item
+  korekcję topograficzna (ortorektyfikacja za pomocą Copernicus 30 m
+  Global DEM);
+\item
+  konwersję współczynnika rozproszenia wstecznego na dB za pomocą
+  transformacji logarytmicznej
+\end{enumerate}
+
+rycina - Sentinel-1 GRD Preprocessing Workflow
+
+Wstępne Przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i
+VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox
+(S1TBX) \autocite{s1tbx} w oprogramowaniu SNAP \autocite{snap} przy
+pomocy narzedzie do przetwarzania grafów (ang. \emph{Graph Processing
+Tool}, GPT) . Kolejne etapy przygotowania danych zostały zrealizowane
+przy wykorzystaniu języka R (\textcite{R-base}) oraz pakietu
+\emph{terra} \autocite{R-terra}. Obszar analizy, będący kaflem
+Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich
+produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania,
+sąsiadujące produkty zostały połączone i odpowiednio ograniczone do
+obszaru zainteresowania. Na granicy sąsiednich produktów Sentinel-1 GRD
+występowała przestrzeń bez danych, co wymagało wypełnienia tego obszaru
+danymi przy użyciu funkcji \emph{focal} z pakietu \emph{terra}.
+
+rycina - mapa produkty S1 GRD (granice) vs.~granice kafla 33UWV
+Sentinel-2
+
+\hypertarget{sec-processing-s2}{%
+\subsection{Sentinel-2}\label{sec-processing-s2}}
+
+Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o
+rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
+10 m. Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone
+przy wykorzystaniu języka R (\textcite{R-base}) oraz funkcji
+\emph{resample} z pakietu \emph{terra} \autocite{R-terra}. Wykorzystano
+interpolację dwuliniową (ang. \emph{bilinear interpolation}) poprzez
+zastosowanie parametru \emph{method=bilinear}.
+
+\hypertarget{sec-processing-data-merging}{%
+\subsection{Łączenie danych}\label{sec-processing-data-merging}}
+
+Resampling S1 do siatki S2. Złączenie kanałów i pozostałych danych w
+wielokanałowy raster. Opisać pozostałe czynności wykonane z tymi danymi.
+
+rycina - schemat przygotowania danych
 
 \hypertarget{sec-samples-methods}{%
 \section{Próbki treningowe i testowe}\label{sec-samples-methods}}
@@ -384,8 +509,8 @@ czy klasyfikacja zobrazowań satelitarnych
 Oprogramowanie QGIS zostało zastosowane do stworzenia zestawu danych
 referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik
 satelitarnych. QGIS dostarcza zaawansowane narzędzia do digitalizacji,
-umożliwiające rysowanie i edytowanie obiektów wektorowych oraz umożliwia
-przeglądanie danych przestrzennych dostępnych w Internecie za pomocą
+umożliwiające rysowanie i edytowanie obiektów wektorowych oraz pozwala
+na przeglądanie danych przestrzennych dostępnych w Internecie za pomocą
 usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
 
 \hypertarget{snap-i-sentinel-1-toolbox}{%
@@ -434,19 +559,24 @@ zostały pakiety stworzone przez społeczność R w celu rozszerzenia
 funkcjonalności tego języka. Do operacji na danych rastrowych
 zastosowano pakiet \emph{terra} \autocite{R-terra}, natomiast do
 przetwarzania danych wektorowych używany był pakiet \emph{sf}
-\autocite{R-sf}. Losowe generowanie danych przestrzennych umożliwia
-pakiet \emph{spatstat.random} \autocite{R-spatstat.random} z rodziny
-pakietów \emph{spatstat} \autocite{R-spatstat}. Do przeprowadzenia
-analizy oraz predykcji opartej o elementy uczenia maszynowego
-wykorzystano pakiet \emph{mlr3} \autocite{R-mlr3}, w ramach którego
-użyty został algorytm lasów losowych zaimplementowany w pakiecie
-\emph{ranger} \autocite{R-ranger}. Do obliczeń związanych z uczeniem
-maszynowym wykorzystano pakiet \emph{future} \autocite{R-future},
-umożliwiający równoległe (wielowątkowe) przetwarzanie wyrażeń R,
-pozwalające na skrócenie czasu realizacji zadań w stosunku do
-przetwarzania sekwencyjnego.
-
-?GLCMTextres jeśli dojdą tekstury obrazu
+\autocite{R-sf}. Obliczanie tekstury obrazu Sum Average wyprowadzonej z
+macierzy współwystępowania poziomu szarości (ang. \emph{gray-level
+co-occurrence matrix}, GLCM) zostało wykonane przy pomocy pakietu
+\emph{GLCMTextures} \autocite{R-GLCMTextures}. Losowe generowanie danych
+przestrzennych umożliwia pakiet \emph{spatstat.random}
+\autocite{R-spatstat.random} z rodziny pakietów \emph{spatstat}
+\autocite{R-spatstat}. Do przeprowadzenia analizy oraz predykcji opartej
+o elementy uczenia maszynowego wykorzystano pakiet \emph{mlr3}
+\autocite{R-mlr3}, w ramach którego użyty został algorytm lasów losowych
+zaimplementowany w pakiecie \emph{ranger} \autocite{R-ranger}. Do
+obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym
+wykorzystano pakiet \emph{future} \autocite{R-future}, umożliwiający
+równoległe (wielowątkowe) przetwarzanie wyrażeń R, skracające czas
+realizacji zadań w stosunku do przetwarzania sekwencyjnego. W funkcji
+pozwalającej na równoległe obliczanie tektur obrazu wykorzystano
+operator \emph{\%\textgreater\%} z pakietu \emph{dplyr}
+\autocite{R-dplyr}, który daje możliwość przekazywania wyniku jednej
+operacji do następnej.
 
 \bookmarksetup{startatroot}
 
