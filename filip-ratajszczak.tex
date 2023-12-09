@@ -156,7 +156,7 @@ powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras
 żeglugowych, stref lodu morskiego, mórz i oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}. Misja
 odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym
-przemieszczania lodu morskiego, transportu morskiego, deformacji i
+przemieszczania kry lodowej, transportu morskiego, deformacji i
 przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk
 żywiołowych
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}.
@@ -303,25 +303,26 @@ ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet
 Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
 Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych
 wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy
-Planet Labs. Ortofotomapa udostępniana przez GUGiK charakteryzuje się
-rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna
-wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest
-wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę
-Microsoft wynosi ona 30-60 cm. Często jednak nie jest możliwie ustalenie
-dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia
-konkretnej mozaiki zobrazowań satelitarnych
+Planet Labs.
+
+Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością
+przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik
+obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np.
+dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona
+30-60 cm \autocite{ortofotomapa,bing_aerial}. Często jednak nie jest
+możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do
+stworzenia konkretnej mozaiki zobrazowań satelitarnych
 \autocite{lesiv_2018_sat_imagery_mosaics}. Mozaika tworzona przez Planet
 na podstawie zdjęć satelitarnych wykonywanych przez konstelację
 satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną
 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych
-produktów jest tworzona z miesięczną oraz kwartalną częstotliwością.
-Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie
-zbioru danych testowych i treningowych na konkretny okres czasu
-\autocite{planet_2019_basemaps}. Mozaiki Planet Basemaps są tworzone na
-podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera
-najlepsze obrazy z katalogu Planet w określonym przedziale czasowym.
-Wybierając najlepsze obrazy, Planet jest w stanie tworzyć
-wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
+produktów jest tworzona z miesięczną oraz kwartalną częstotliwością
+\autocite{planet_2019_basemaps}. Pozwala to, pomimo niższej
+rozdzielczości przestrzennej na stworzenie zbioru danych testowych i
+treningowych na konkretny okres czasu. Mozaiki Planet Basemaps są
+tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym
+przedziale czasowym. Wybierając najlepsze zdjęcia, Planet jest w stanie
+tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
 przestrzennie, a także charakteryzują się zminimalizowanym wpływem
 czynników atmosferycznych \autocite{planet_2019_basemaps}.
 
@@ -343,8 +344,8 @@ Korzystanie z danych radarowych wymaga wcześniejszego przygotowania
 danych poprzez proces kalibracji, aby zapewnić poprawne wyniki analizy.
 Procesy te mogą różnić się w zależności od konkretnego zastosowania,
 mając na celu dostosowanie danych do specyficznych potrzeb. W pracy
-wykorzystano schemat przetwarzania danych Sentinel-1 GRD zaproponowany
-przez \textcite{filipponi_2019_s1_workflow}, który obejmuje:
+wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który
+zaproponował \textcite{filipponi_2019_s1_workflow}, obejmujący:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -352,7 +353,7 @@ przez \textcite{filipponi_2019_s1_workflow}, który obejmuje:
   aktualizację danych o położeniu satelity w momencie zobrazowania
   poprzez pobranie i zastosowanie pliku orbity;
 \item
-  usuwanie szumów termicznych;
+  korekcję szumów termicznych;
 \item
   korekcję szumów na granicach obrazów;
 \item
@@ -469,20 +470,26 @@ Random Forest stał się jednym z najpopularniejszych klasyfikatorów
 uczenia maszynowego wykorzystywanych przez społeczność teledetekcyjną ze
 względu na dokładność jego klasyfikacji oraz wysoką wydajność
 \autocite{belgiu_2016_rf,sheykhmousa_2020_svm_vs_rf}. Metoda lasów
-losowych nie jest wrażliwa na szumy ani przetrenowanie, ponieważ nie
-opiera się na ważeniu \autocite{gislason_2006_rf}. Dodatkowo lasy losowe
-są znacznie lżejsze obliczeniowo niż metody oparte na wzmacnianiu (ang.
-\emph{boosting}) \autocite{gislason_2006_rf} oraz mogą przetwarzać różne
-typy danych, w tym zobrazowania satelitarne i dane numeryczne
-\autocite{talukdar_2020_lulc}.
+losowych charakteryzuje się odpornością na szumy (ang. \emph{noise}) i
+przeuczenie (ang. \emph{overfitting}), ponieważ nie bazuje na ważeniu
+\autocite{gislason_2006_rf}.
 
-Random Forest (RF) to algorytm uczenia maszynowego, będący rozszerzeniem
-idei drzew decyzyjnych \autocite{hejmanowska_2020_dane}. Random Forest
-jest klasyfikatorem zespołowym (ang. \emph{ensemble classifier}), co
-oznacza, że wykorzystuje dużą liczbę drzew decyzyjnych w celu
-przezwyciężenia słabości pojedynczego drzewa \autocite{aaron_2018_ml}.
-
-\ldots{} do opisania sposób działania (ciężkie)\ldots{}
+Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych,
+operuje na zasadzie ensemble learning, czyli łączenia wielu słabszych
+modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model
+\autocite{aaron_2018_ml,sekulic_2020_rf_interpolation}. Procedura
+generuje liczne drzewa decyzyjne, opierając się na losowo wybranym
+zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych
+zmiennych klasyfikacyjnych \autocite{breiman_2001_rf}. Pojedyncze drzewo
+korzysta ze zredukowanej liczby danych treningowych i zmiennych, co
+sprawia, że drzewa różnią się od siebie i są mniej precyzyjne, ale
+jednocześnie są też mniej skorelowane, przez co model złożony z wielu
+drzew będzie bardziej niezawodny
+\autocite{sekulic_2020_rf_interpolation}. W fazie predykcji każde z
+drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana
+na podstawie głosowania większościowego. W przypadku klasyfikacji, klasa
+wybierana jest na podstawie największej liczby głosów.
+\autocite{malinowski_2020_s2lulc}.
 
 \hypertarget{oprogramowanie}{%
 \section{Oprogramowanie}\label{oprogramowanie}}

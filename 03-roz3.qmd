@@ -12,7 +12,7 @@ editor:
 
 Misja Sentinel-1 stanowi Europejskie Obserwatorium Radarowe działające w ramach programu Copernicus, wspólnej inicjatywy Komisji Europejskiej i Europejskiej Agencji Kosmicznej [@sentinel1_overview].
 Celem misji jest dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
-Misja odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym przemieszczania lodu morskiego, transportu morskiego, deformacji i przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk żywiołowych [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
+Misja odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym przemieszczania kry lodowej, transportu morskiego, deformacji i przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk żywiołowych [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 
 Sentinel-1 jest wyposażony w radar z syntetyczną aperturą (ang. *Synthetic Aperture Radar*, SAR), pracujący w paśmie C na częstotliwości 5,405 GHz, co odpowiada długości fali 5,6 cm [@sentinel1_lulc; @sentinel1_instrument_payload].
 Radar działa głównie w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc zarówno fale pionowe (ang. *vertical*), jak i poziome (ang. *horizontal*) po ich powrocie do czujnika, dzięki czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH [@sentinel1_lulc].
@@ -76,9 +76,12 @@ Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych wykorzystan
 W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np. w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics]. 
 Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
 Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
-Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona 30-60 cm.
+
+Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona 30-60 cm [@ortofotomapa; @bing_aerial].
 Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics]. 
-Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością. Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu [@planet_2019_basemaps].
-Mozaiki Planet Basemaps są tworzone na podstawie zdjęć wybieranych przy użyciu algorytmu, który wybiera najlepsze obrazy z katalogu Planet w określonym przedziale czasowym. Wybierając najlepsze obrazy, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps]. 
+Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu.
+Mozaiki Planet Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym. 
+Wybierając najlepsze zdjęcia, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach satelitarnych i scenie Sentinel-2 (kompozycja RGB)

@@ -12,11 +12,11 @@ editor:
 
 Korzystanie z danych radarowych wymaga wcześniejszego przygotowania danych poprzez proces kalibracji, aby zapewnić poprawne wyniki analizy.
 Procesy te mogą różnić się w zależności od konkretnego zastosowania, mając na celu dostosowanie danych do specyficznych potrzeb.
-W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD zaproponowany przez @filipponi_2019_s1_workflow, który obejmuje:
+W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zaproponował @filipponi_2019_s1_workflow, obejmujący:
 
-1.   aktualizację danych o położeniu satelity w momencie zobrazowania poprzez pobranie i zastosowanie pliku orbity;
+1.  aktualizację danych o położeniu satelity w momencie zobrazowania poprzez pobranie i zastosowanie pliku orbity;
 
-2.  usuwanie szumów termicznych;
+2.  korekcję szumów termicznych;
 
 3.  korekcję szumów na granicach obrazów;
 
@@ -30,8 +30,7 @@ rycina - Sentinel-1 GRD Preprocessing Workflow
 
 Wstępne Przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx] w oprogramowaniu SNAP [@snap] przy pomocy narzedzie do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) .
 Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
-Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. 
-Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
+Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
 Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji *focal* z pakietu *terra*.
 
 rycina - mapa produkty S1 GRD (granice) vs. granice kafla 33UWV Sentinel-2
@@ -48,7 +47,7 @@ Resampling S1 do siatki S2.
 Złączenie kanałów i pozostałych danych w wielokanałowy raster.
 Opisać pozostałe czynności wykonane z tymi danymi.
 
-rycina - schemat przygotowania danych 
+rycina - schemat przygotowania danych
 
 ## Próbki treningowe i testowe {#sec-samples-methods}
 
@@ -78,13 +77,13 @@ W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang
 ### Metoda lasów losowych {#sec-random-forest}
 
 Random Forest stał się jednym z najpopularniejszych klasyfikatorów uczenia maszynowego wykorzystywanych przez społeczność teledetekcyjną ze względu na dokładność jego klasyfikacji oraz wysoką wydajność [@belgiu_2016_rf; @sheykhmousa_2020_svm_vs_rf].
-Metoda lasów losowych nie jest wrażliwa na szumy ani przetrenowanie, ponieważ nie opiera się na ważeniu [@gislason_2006_rf].
-Dodatkowo lasy losowe są znacznie lżejsze obliczeniowo niż metody oparte na wzmacnianiu (ang. *boosting*) [@gislason_2006_rf] oraz mogą przetwarzać różne typy danych, w tym zobrazowania satelitarne i dane numeryczne [@talukdar_2020_lulc].
+Metoda lasów losowych charakteryzuje się odpornością na szumy (ang. *noise*) i przeuczenie (ang. *overfitting*), ponieważ nie bazuje na ważeniu [@gislason_2006_rf].
 
-Random Forest (RF) to algorytm uczenia maszynowego, będący rozszerzeniem idei drzew decyzyjnych [@hejmanowska_2020_dane].
-Random Forest jest klasyfikatorem zespołowym (ang. *ensemble classifier*), co oznacza, że wykorzystuje dużą liczbę drzew decyzyjnych w celu przezwyciężenia słabości pojedynczego drzewa [@aaron_2018_ml].
-
-... do opisania sposób działania (ciężkie)...
+Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych, operuje na zasadzie ensemble learning, czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model [@aaron_2018_ml; @sekulic_2020_rf_interpolation].
+Procedura generuje liczne drzewa decyzyjne, opierając się na losowo wybranym zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych zmiennych klasyfikacyjnych [@breiman_2001_rf].
+Pojedyncze drzewo korzysta ze zredukowanej liczby danych treningowych i zmiennych, co sprawia, że drzewa różnią się od siebie i są mniej precyzyjne, ale jednocześnie są też mniej skorelowane, przez co model złożony z wielu drzew będzie bardziej niezawodny [@sekulic_2020_rf_interpolation].
+W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego. 
+W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów. [@malinowski_2020_s2lulc].
 
 ## Oprogramowanie
 
