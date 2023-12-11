@@ -38,18 +38,24 @@ rycina - mapa produkty S1 GRD (granice) vs. granice kafla 33UWV Sentinel-2
 ### Sentinel-2 {#sec-processing-s2}
 
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości 10 m.
-Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy wykorzystaniu języka R (@R-base) oraz funkcji *resample* z pakietu *terra* [@R-terra].
-Wykorzystano interpolację dwuliniową (ang. *bilinear interpolation*) poprzez zastosowanie parametru *method=bilinear*.
+Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy wykorzystaniu języka R (@R-base) oraz funkcji *resample* z pakietu *terra* [@R-terra], wykorzystując interpolację dwuliniową (ang. *bilinear interpolation*).
 
 ### Łączenie danych {#sec-processing-data-merging}
 
-Resampling S1 do siatki S2.
-Złączenie kanałów i pozostałych danych w wielokanałowy raster.
-Opisać pozostałe czynności wykonane z tymi danymi.
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale [-@sec-processing-s2] wynosi 10 m. 
+Stworzenie spójnych wielokanałowych rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej rozdzielczości i siatki.
+Dane Sentinel-1 GRD zostały przetransformowane do siatki danych Sentinel-2.
+Przepróbkowane do wspólnej rozdzielczości oraz siatki dane zostały następnie użyte do obliczeń filtracji teksturalnych oraz wskaźników teledetekcyjnych.
+Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w kilka wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych oraz do przeprowadzenia predykcji.
+
+tabela - warianty połączenia danych - np. kanały S2, kanały S2 + indeksy spektralne, kanały S2 + polaryzacje S1 etc.
 
 rycina - schemat przygotowania danych
 
 ## Próbki treningowe i testowe {#sec-samples-methods}
+
+Opis wektoryzacji farm fotowoltaicznych na podstawie ortofotomapy i mozaik satelitarnych.
+Opis procesu pozyskiwania próbek treningowych, uwzględniając liczbę próbek pozytywnych i negatywnych, ewentualne dobieranie negatywnych próbek z jakiejś konkretnej kategorii pokrycia terenu terenu - do napisania po ostatecznym generowaniu/losowaniu próbek
 
 ## Uczenie maszynowe {#sec-machine-learning}
 

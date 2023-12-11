@@ -20,14 +20,16 @@ Radar z syntetyczną aperturą (SAR) umożliwia prowadzenie obserwacji zarówno 
 
 Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
 Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected (GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w zależności od produktu do do monitorowania Ziemi, klasyfikacji pokrycia terenu czy aplikacji interferometrycznych [@hejmanowska_2020_dane].
-SLC to obrazy SAR w geometrii ukośnej, zachowujące informację fazową sygnału [@hejmanowska_2020_dane]. 
-Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane]. 
+SLC to obrazy SAR w geometrii ukośnej, zachowujące informację fazową sygnału [@hejmanowska_2020_dane].
+Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane].
 GRD nie zawiera cech ortofotomapy i wymaga dodatkowego przepróbkowania z użyciem numerycznego modelu terenu przed zastosowaniem w systemach GIS [@hejmanowska_2020_dane].
 Przy konwersji SLC do GRD tracimy informację fazową sygnału, co sprawia, że produkty GRD nie są odpowiednie do interferometrii radarowej [@sentinel1_products].
 
-Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) – podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) – używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) – tryb do monitorowania stref polarnych i niektórych obszarów morskich, Wave (WV) – tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
+Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) -- podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) -- używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) -- tryb do monitorowania stref polarnych i niektórych obszarów morskich, Wave (WV) -- tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
 
-Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected (GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez satelitę Sentinel-1B w dniu 8 maja 2023 roku. Zestaw danych został utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o oznaczeniu 33UWV. W analizie uwzględniono dwie polaryzacje: VV i VH.
+Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected (GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez satelitę Sentinel-1B w dniu 8 maja 2023 roku.
+Zestaw danych został utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o oznaczeniu 33UWV.
+W analizie uwzględniono dwie polaryzacje: VV i VH.
 
 ### Senitnel-2 {#sec-sentinel2}
 
@@ -64,24 +66,69 @@ knitr::kable(df, booktabs = TRUE) |>
 Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały dostarczone przez satelitę Sentinel-2B.
 Obszar analizy obejmuje kafel (ang. *tile*) o oznaczeniu 33UWV, dla którego współczynnik zachmurzenia w tym dniu wynosił 0,7%.
 Użyte zostały dane na poziomie przetworzenia L2A.
-Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
+Z dostępnych kanałów spektralnych (Tabela [-@tbl-tabela1]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur.
+Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
 
 ### Indeksy spektralne
 
+Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach przez @zhang_2021_texture, @plakman_2022_pv, @wang_2022_pv i innych, takie jak:
+
+-   znormalizowany wskaźnik roślinności (ang. *Normalized Difference Vegetation Index*, NDVI) [@ndvi], monitorujący zawartość biomasy i kondycję roślinności na danym obszarze
+
+    $$
+    NDVI = \frac{NIR - Red}{NIR + Red}
+    $$
+
+    , gdzie $NIR$ -- reflektancja w kanale bliskiej podczerwieni, $Red$ -- reflektancja w kanale czerwonym
+
+-   znormalizowany indeks zabudowy (ang. *Normalized Difference Built-up Index*, NDBI) [@ndbi], przeznaczony do kartowania obszarów zabudowanych
+
+    $$
+    NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
+    $$
+
+    , $SWIR1$ -- reflektancja w kanale średniej podczerwieni, $NIR$ -- reflektancja w kanale bliskiej podczerwieni
+
+-   znormalizowany indeks wody (ang. *Modified Normalized Differene Water Index*, mNDWI) [@mndwi], który skutecznie identyfikuje obszary wodne na zdjęciach satelitarnych, posiadając możliwości tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby
+
+    $$
+    mNDWI = \frac{Green + SWIR1}{Green - SWIR1}
+    $$
+
+    , gdzie $Green$ -- reflektancja w kanale zielonym, $SWIR1$ -- reflektancja w kanale średniej podczerwieni
+
 ### Tekstury obrazu
+
+Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów i obszarów zainteresowania na obrazie [@haralick_1973_texture] i odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i satelitarnych [@lewinski_2012_texture].
+Gdy różnice widmowe pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie odmiennych typów obiektów na podstawie ich organizacji w terenie, często kontrastując przestrzenie naturalne z antropogenicznymi [@grass_r_texture].
+W zależności od zastosowalnej funkcji wybrane cechy obrazu zostają uwidocznione w porównaniu z jego obrazem wejściowym [@lewinski_2012_texture].
+Informacja o teksturze może stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji lub segmentacji obrazu [@gong_1992_spatial_features; @mumby_2002_ikonos].
+Tekstura obejmuje różnice poziomów szarości (kontrast), obecność lub brak kierunkowości, regularne wzory i zdefiniowany obszar, na którym występują zmiany, określony przez rozmiar okna [@hall_beyer_2017_glcm; @grass_r_texture].
+Można ją opisać za pomocą tonu (intensywność poziomu szarości) i struktury (relacje przestrzenne) [@grass_r_texture].
+Model tekstury oparty na macierzy współwystępowania poziomów szarości (ang. *Gray Level Co-Occurrence Matrix*, GLCM), zaproponowany przez @haralick_1973_texture, jest często używany do obliczania tekstur obrazu.
+Ta metoda polega na tworzeniu macierzy opisującej częstotliwość występowania par wartości w określonym fragmencie obrazu, uwzględniając określone sąsiedztwo, kierunki i przerwy między pikselami [@kupidura_2019_texture].
+
+Przydatność i wykorzystanie tekstury w dużym stopniu zależy od rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które ukształtowało teksturę [@grass_r_texture].
+Badanie, które przeprowadził [@zhang_2021_texture] dotyczące wykorzystania filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ tekstur na skuteczność modelu.
+Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli (co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m), natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na poprawę dokładności modelu [@zhang_2021_texture].
+
+Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy skorzystano jedynie z tekstury średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazanej przez @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest.
+W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 ## Ortofotomapa i mozaiki zdjęć satelitarnych {#sec-mosaics}
 
 Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
-W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np. w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics]. 
+W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
+w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics].
 Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
 Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
 
-Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np. dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona 30-60 cm [@ortofotomapa; @bing_aerial].
-Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics]. 
-Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps]. 
+Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np.
+dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona 30-60 cm [@ortofotomapa; @bing_aerial].
+Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics].
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
 Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu.
-Mozaiki Planet Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym. 
+Mozaiki Planet Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym.
 Wybierając najlepsze zdjęcia, Planet jest w stanie tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach satelitarnych i scenie Sentinel-2 (kompozycja RGB)

@@ -285,8 +285,98 @@ kanał 10 (1375 nm) do wykrywania chmur typu cirrus
 \hypertarget{indeksy-spektralne}{%
 \subsection{Indeksy spektralne}\label{indeksy-spektralne}}
 
+Oprócz surowych współczynników odbicia, w niektórych wariantach
+predykcji zastosowano również wskaźniki spektralne (ang. \emph{spectral
+indices}), które były wykorzystywane w poprzednich badaniach przez
+\textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
+\textcite{wang_2022_pv} i innych, takie jak:
+
+\begin{itemize}
+\item
+  znormalizowany wskaźnik roślinności (ang. \emph{Normalized Difference
+  Vegetation Index}, NDVI) \autocite{ndvi}, monitorujący zawartość
+  biomasy i kondycję roślinności na danym obszarze
+
+  \[
+  NDVI = \frac{NIR - Red}{NIR + Red}
+  \]
+
+  , gdzie \(NIR\) -- reflektancja w kanale bliskiej podczerwieni,
+  \(Red\) -- reflektancja w kanale czerwonym
+\item
+  znormalizowany indeks zabudowy (ang. \emph{Normalized Difference
+  Built-up Index}, NDBI) \autocite{ndbi}, przeznaczony do kartowania
+  obszarów zabudowanych
+
+  \[
+  NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
+  \]
+
+  , \(SWIR1\) -- reflektancja w kanale średniej podczerwieni, \(NIR\) --
+  reflektancja w kanale bliskiej podczerwieni
+\item
+  znormalizowany indeks wody (ang. \emph{Modified Normalized Differene
+  Water Index}, mNDWI) \autocite{mndwi}, który skutecznie identyfikuje
+  obszary wodne na zdjęciach satelitarnych, posiadając możliwości
+  tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby
+
+  \[
+  mNDWI = \frac{Green + SWIR1}{Green - SWIR1}
+  \]
+
+  , gdzie \(Green\) -- reflektancja w kanale zielonym, \(SWIR1\) --
+  reflektancja w kanale średniej podczerwieni
+\end{itemize}
+
 \hypertarget{tekstury-obrazu}{%
 \subsection{Tekstury obrazu}\label{tekstury-obrazu}}
+
+Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów
+i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture} i
+odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i
+satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
+pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
+odmiennych typów obiektów na podstawie ich organizacji w terenie, często
+kontrastując przestrzenie naturalne z antropogenicznymi
+\autocite{grass_r_texture}. W zależności od zastosowalnej funkcji
+wybrane cechy obrazu zostają uwidocznione w porównaniu z jego obrazem
+wejściowym \autocite{lewinski_2012_texture}. Informacja o teksturze może
+stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji
+lub segmentacji obrazu
+\autocite{gong_1992_spatial_features,mumby_2002_ikonos}. Tekstura
+obejmuje różnice poziomów szarości (kontrast), obecność lub brak
+kierunkowości, regularne wzory i zdefiniowany obszar, na którym
+występują zmiany, określony przez rozmiar okna
+\autocite{hall_beyer_2017_glcm,grass_r_texture}. Można ją opisać za
+pomocą tonu (intensywność poziomu szarości) i struktury (relacje
+przestrzenne) \autocite{grass_r_texture}. Model tekstury oparty na
+macierzy współwystępowania poziomów szarości (ang. \emph{Gray Level
+Co-Occurrence Matrix}, GLCM), zaproponowany przez
+\textcite{haralick_1973_texture}, jest często używany do obliczania
+tekstur obrazu. Ta metoda polega na tworzeniu macierzy opisującej
+częstotliwość występowania par wartości w określonym fragmencie obrazu,
+uwzględniając określone sąsiedztwo, kierunki i przerwy między pikselami
+\autocite{kupidura_2019_texture}.
+
+Przydatność i wykorzystanie tekstury w dużym stopniu zależy od
+rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które
+ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
+przeprowadził \autocite{zhang_2021_texture} dotyczące wykorzystania
+filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z
+użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ
+tekstur na skuteczność modelu. Według wyników badania najlepiej
+dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli
+(co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m),
+natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na
+poprawę dokładności modelu \autocite{zhang_2021_texture}.
+
+Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w
+pracy skorzystano jedynie z tekstury średniej sumy (ang. \emph{Sum
+Average}, SA lub SAVG), wskazanej przez \textcite{wang_2022_pv} jako
+teksturę niosącą najwięcej informacji w kontekście detekcji farm
+fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
+Random Forest. W celu skrócenia czasu obliczeń, w pracy zdecydowano się
+na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 \hypertarget{sec-mosaics}{%
 \section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
@@ -394,20 +484,37 @@ Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o
 rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
 10 m. Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone
 przy wykorzystaniu języka R (\textcite{R-base}) oraz funkcji
-\emph{resample} z pakietu \emph{terra} \autocite{R-terra}. Wykorzystano
-interpolację dwuliniową (ang. \emph{bilinear interpolation}) poprzez
-zastosowanie parametru \emph{method=bilinear}.
+\emph{resample} z pakietu \emph{terra} \autocite{R-terra}, wykorzystując
+interpolację dwuliniową (ang. \emph{bilinear interpolation}).
 
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
 
-Resampling S1 do siatki S2. Złączenie kanałów i pozostałych danych w
-wielokanałowy raster. Opisać pozostałe czynności wykonane z tymi danymi.
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych
+Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale
+\ref{sec-processing-s2} wynosi 10 m. Stworzenie spójnych wielokanałowych
+rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej
+rozdzielczości i siatki. Dane Sentinel-1 GRD zostały przetransformowane
+do siatki danych Sentinel-2. Przepróbkowane do wspólnej rozdzielczości
+oraz siatki dane zostały następnie użyte do obliczeń filtracji
+teksturalnych oraz wskaźników teledetekcyjnych. Po uzyskaniu produktów
+pochodnych, w zależności od wariantu, dane zostały scalone w kilka
+wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych
+treningowych oraz do przeprowadzenia predykcji.
+
+tabela - warianty połączenia danych - np. kanały S2, kanały S2 + indeksy
+spektralne, kanały S2 + polaryzacje S1 etc.
 
 rycina - schemat przygotowania danych
 
 \hypertarget{sec-samples-methods}{%
 \section{Próbki treningowe i testowe}\label{sec-samples-methods}}
+
+Opis wektoryzacji farm fotowoltaicznych na podstawie ortofotomapy i
+mozaik satelitarnych. Opis procesu pozyskiwania próbek treningowych,
+uwzględniając liczbę próbek pozytywnych i negatywnych, ewentualne
+dobieranie negatywnych próbek z jakiejś konkretnej kategorii pokrycia
+terenu terenu - do napisania po ostatecznym generowaniu/losowaniu próbek
 
 \hypertarget{sec-machine-learning}{%
 \section{Uczenie maszynowe}\label{sec-machine-learning}}
