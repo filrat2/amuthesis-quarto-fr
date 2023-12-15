@@ -24,7 +24,8 @@
 \author{Filip Ratajszczak}
 \title{Wykrywanie farm fotowoltaicznych na podstawie danych
 teledetekcyjnych}
-\def\titleeng{My title}
+\def\titleeng{Detection of photovoltaic farms based on remote sensing
+data}
 \def\degreetitle{Praca inżynierska}
 \def\major{Geoinformacja}
 \def\albumid{461791}
@@ -161,7 +162,7 @@ przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk
 żywiołowych
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}.
 
-Sentinel-1 jest wyposażony w radar z syntetyczną aperturą (ang.
+Sentinel-1 jest wyposażony w radar z z syntetyzowaną aperturą (ang.
 \emph{Synthetic Aperture Radar}, SAR), pracujący w paśmie C na
 częstotliwości 5,405 GHz, co odpowiada długości fali 5,6 cm
 \autocite{sentinel1_lulc,sentinel1_instrument_payload}. Radar działa
@@ -169,41 +170,70 @@ głównie w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc
 zarówno fale pionowe (ang. \emph{vertical}), jak i poziome (ang.
 \emph{horizontal}) po ich powrocie do czujnika, dzięki czemu otrzymujemy
 dane o intensywności rozproszenia wstecznego VV i VH
-\autocite{sentinel1_lulc}. Radar z syntetyczną aperturą (SAR) umożliwia
-prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od
-warunków pogodowych, przez co czas między rejestracją obrazów dla
-pojedynczego satelity Sentinel-1 wynosi 12 dni nad równikiem, a dla
-konstelacji dwóch satelitów skraca się do od dwóch do sześciu dni,
-zależnie od szerokości geograficznej
-\autocite{hejmanowska_2020_dane,sentinel1_overview}.
+\autocite{sentinel1_lulc}. Radar z syntetyzowaną aperturą (SAR)
+umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień,
+niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji
+dwóch satelitów dla obszaru Polski wynosi około 2 dni
+\autocite{attema_2008_s1,sentinel1_revisit}. W grudniu 2021 roku w
+satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem
+elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych
+radarowych \autocite{sentinel_1b}. W wyniku awarii satelita Sentinel-1B
+został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C
+zaplanowano na marzec 2024 roku
+\autocite{sentinel_1b,sentinel1_eoportal}.
 
 Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
 Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected
 (GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w
-zależności od produktu do do monitorowania Ziemi, klasyfikacji pokrycia
+zależności od produktu do monitorowania Ziemi, klasyfikacji pokrycia
 terenu czy aplikacji interferometrycznych
-\autocite{hejmanowska_2020_dane}. SLC to obrazy SAR w geometrii ukośnej,
-zachowujące informację fazową sygnału \autocite{hejmanowska_2020_dane}.
-Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej
-rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię
-elipsoidy odniesienia \autocite{hejmanowska_2020_dane}. GRD nie zawiera
-cech ortofotomapy i wymaga dodatkowego przepróbkowania z użyciem
-numerycznego modelu terenu przed zastosowaniem w systemach GIS
-\autocite{hejmanowska_2020_dane}. Przy konwersji SLC do GRD tracimy
-informację fazową sygnału, co sprawia, że produkty GRD nie są
-odpowiednie do interferometrii radarowej \autocite{sentinel1_products}.
+\autocite{hejmanowska_2020_dane}. Interferometria radarowa (ang.
+\emph{Interferometric Synthetic Aperture Radar}, InSAR) to technika
+umożliwiająca generowanie cyfrowych modeli wysokościowych (ang.
+\emph{digital elevation model}, DEM) oraz pomiary deformacji terenu na
+podstawie informacji o fazie sygnału
+\autocite{hanssen_2001_insar,hejmanowska_2020_dane}. SLC to obrazy SAR w
+geometrii ukośnej, posiadające informację o wartości amplitudy i fazie
+sygnału \autocite{hejmanowska_2020_dane}. Produkty GRD są rezultatem
+przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej
+(10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia
+\autocite{hejmanowska_2020_dane}. GRD nie zawiera cech ortofotomapy i
+wymaga dodatkowego przepróbkowania z użyciem numerycznego modelu terenu
+przed zastosowaniem w systemach GIS \autocite{hejmanowska_2020_dane}.
+Przy konwersji SLC do GRD tracimy informację fazową sygnału, co sprawia,
+że produkty GRD nie są odpowiednie do interferometrii radarowej
+\autocite{sentinel1_products}.
 
 Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide
-Swath (IW) -- podstawowy tryb obrazowania dla obszarów lądowych,
-Stripmap (SM) -- używany do obrazowania małych wysp i na potrzeby
-zarządzania kryzysowego, Extra-Wide Swath (EW) -- tryb do monitorowania
-stref polarnych i niektórych obszarów morskich, Wave (WV) -- tryb
+Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap
+(SM) - używany do obrazowania małych wysp i na potrzeby zarządzania
+kryzysowego, Extra-Wide Swath (EW) - tryb do monitorowania stref
+polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb
 obrazowania oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_instrument_payload,sentinel1_stripmap}.
+Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1
+przedstawia tabela \ref{tbl-tabela-sentinel1}.
+
+\hypertarget{tbl-tabela-sentinel1}{}
+\begin{table}
+\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA, 2023) }\tabularnewline
+
+\centering
+\begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{2cm}}
+\toprule
+Tryb & Kąt padania wiązki [°] & Rozdzielczość przestrzenna [m] & Szerokość rejestrowanego pasa [km] & Polaryzacje (H=pozioma, V=pionowa)\\
+\midrule
+Stripmap & 20 - 45 & 5 x 5 & 80 & HH+HV, VH+VV, HH, VV\\
+\textbf{Interferometric Wide Swath} & \textbf{29 - 46} & \textbf{5 x 20} & \textbf{250} & \textbf{HH+HV, VH+VV, HH, VV}\\
+Extra Wide Swath & 19 - 47 & 20 x 40 & 400 & HH+HV, VH+VV, HH, VV\\
+Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected
 (GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez
-satelitę Sentinel-1B w dniu 8 maja 2023 roku. Zestaw danych został
+satelitę Sentinel-1A w dniu 8 maja 2023 roku. Zestaw danych został
 utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD,
 a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o
 oznaczeniu 33UWV. W analizie uwzględniono dwie polaryzacje: VV i VH.
@@ -217,10 +247,9 @@ operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang.
 tej misji jest dostarczanie obrazów satelitarnych, obejmujących
 trzynaście zakresów spektralnych o różnych rozdzielczościach
 przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
-Rozdzielczość czasowa misji Sentinel-2 wynosi pięć dni nad równikiem i
-zwiększa się wraz ze wzrostem szerokości geograficznej, osiągając dwa
-dni na średnich szerokościach geograficznych
-\autocite{hejmanowska_2020_dane}.
+Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem
+do 2-3 dni na średnich szerokościach geograficznych, obejmujących obszar
+Polski \autocite{hejmanowska_2020_dane,sentinel_2_guide}.
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
 poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map
@@ -242,9 +271,9 @@ powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla
 danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 \autocite{main-knorn_2017_Sen2Cor}.
 
-\hypertarget{tbl-tabela1}{}
+\hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
-\caption{\label{tbl-tabela1}Kanały spektralne satelitów Sentinel-2 }\tabularnewline
+\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 }\tabularnewline
 
 \centering
 \begin{tabular}{>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{4cm}>{\raggedleft\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedleft\arraybackslash}p{2cm}}
@@ -252,20 +281,20 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 Kanał & Nazwa kanału & Centralna długość fali [nm] & Zakres spektralny [nm] & Rozdzielczość przestrzenna [m]\\
 \midrule
 B01 & Coastal Aerosol & 443 & 433–453 & 60\\
-B02 & Blue & 490 & 458–523 & 10\\
-B03 & Green & 560 & 543–578 & 10\\
-B04 & Red & 665 & 650–680 & 10\\
-B05 & Vegetation RedEdge & 705 & 698–713 & 20\\
+\textbf{B02} & \textbf{Blue} & \textbf{490} & \textbf{458–523} & \textbf{10}\\
+\textbf{B03} & \textbf{Green} & \textbf{560} & \textbf{543–578} & \textbf{10}\\
+\textbf{B04} & \textbf{Red} & \textbf{665} & \textbf{650–680} & \textbf{10}\\
+\textbf{B05} & \textbf{Vegetation RedEdge} & \textbf{705} & \textbf{698–713} & \textbf{20}\\
 \addlinespace
-B06 & Vegetation RedEdge & 740 & 733–748 & 20\\
-B07 & Vegetation RedEdge & 783 & 773–793 & 20\\
-B08 & NIR & 842 & 785–900 & 10\\
-B8A & NIR & 865 & 855–875 & 20\\
+\textbf{B06} & \textbf{Vegetation RedEdge} & \textbf{740} & \textbf{733–748} & \textbf{20}\\
+\textbf{B07} & \textbf{Vegetation RedEdge} & \textbf{783} & \textbf{773–793} & \textbf{20}\\
+\textbf{B08} & \textbf{NIR} & \textbf{842} & \textbf{785–900} & \textbf{10}\\
+\textbf{B8A} & \textbf{NIR} & \textbf{865} & \textbf{855–875} & \textbf{20}\\
 B09 & Water Vapour & 945 & 935–955 & 60\\
 \addlinespace
 B10 & Cirrus & 1375 & 1360–1390 & 60\\
-B11 & SWIR & 1610 & 1565–1655 & 20\\
-B12 & SWIR & 2190 & 2100–2280 & 20\\
+\textbf{B11} & \textbf{SWIR} & \textbf{1610} & \textbf{1565–1655} & \textbf{20}\\
+\textbf{B12} & \textbf{SWIR} & \textbf{2190} & \textbf{2100–2280} & \textbf{20}\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -274,109 +303,13 @@ Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały
 dostarczone przez satelitę Sentinel-2B. Obszar analizy obejmuje kafel
 (ang. \emph{tile}) o oznaczeniu 33UWV, dla którego współczynnik
 zachmurzenia w tym dniu wynosił 0,7\%. Użyte zostały dane na poziomie
-przetworzenia L2A. Z dostępnych kanałów spektralnych (Tabela
-\ref{tbl-tabela1}) wykorzystano 10 zakresów, ponieważ pasma rejestrowane
-w rozdzielczości 60 metrów są przeznaczone głównie do korekcji
-atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do korekcji
-wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a
-kanał 10 (1375 nm) do wykrywania chmur typu cirrus
+przetworzenia L2A. Z dostępnych kanałów spektralnych (tabela
+\ref{tbl-tabela-sentinel2}) wykorzystano 10 zakresów, ponieważ pasma
+rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do
+korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do
+korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary
+wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus
 \autocite{drusch_2012_sen2GMES}.
-
-\hypertarget{indeksy-spektralne}{%
-\subsection{Indeksy spektralne}\label{indeksy-spektralne}}
-
-Oprócz surowych współczynników odbicia, w niektórych wariantach
-predykcji zastosowano również wskaźniki spektralne (ang. \emph{spectral
-indices}), które były wykorzystywane w poprzednich badaniach przez
-\textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
-\textcite{wang_2022_pv} i innych, takie jak:
-
-\begin{itemize}
-\item
-  znormalizowany wskaźnik roślinności (ang. \emph{Normalized Difference
-  Vegetation Index}, NDVI) \autocite{ndvi}, monitorujący zawartość
-  biomasy i kondycję roślinności na danym obszarze
-
-  \[
-  NDVI = \frac{NIR - Red}{NIR + Red}
-  \]
-
-  , gdzie \(NIR\) -- reflektancja w kanale bliskiej podczerwieni,
-  \(Red\) -- reflektancja w kanale czerwonym
-\item
-  znormalizowany indeks zabudowy (ang. \emph{Normalized Difference
-  Built-up Index}, NDBI) \autocite{ndbi}, przeznaczony do kartowania
-  obszarów zabudowanych
-
-  \[
-  NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
-  \]
-
-  , \(SWIR1\) -- reflektancja w kanale średniej podczerwieni, \(NIR\) --
-  reflektancja w kanale bliskiej podczerwieni
-\item
-  znormalizowany indeks wody (ang. \emph{Modified Normalized Differene
-  Water Index}, mNDWI) \autocite{mndwi}, który skutecznie identyfikuje
-  obszary wodne na zdjęciach satelitarnych, posiadając możliwości
-  tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby
-
-  \[
-  mNDWI = \frac{Green + SWIR1}{Green - SWIR1}
-  \]
-
-  , gdzie \(Green\) -- reflektancja w kanale zielonym, \(SWIR1\) --
-  reflektancja w kanale średniej podczerwieni
-\end{itemize}
-
-\hypertarget{tekstury-obrazu}{%
-\subsection{Tekstury obrazu}\label{tekstury-obrazu}}
-
-Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów
-i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture} i
-odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i
-satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
-pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
-odmiennych typów obiektów na podstawie ich organizacji w terenie, często
-kontrastując przestrzenie naturalne z antropogenicznymi
-\autocite{grass_r_texture}. W zależności od zastosowalnej funkcji
-wybrane cechy obrazu zostają uwidocznione w porównaniu z jego obrazem
-wejściowym \autocite{lewinski_2012_texture}. Informacja o teksturze może
-stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji
-lub segmentacji obrazu
-\autocite{gong_1992_spatial_features,mumby_2002_ikonos}. Tekstura
-obejmuje różnice poziomów szarości (kontrast), obecność lub brak
-kierunkowości, regularne wzory i zdefiniowany obszar, na którym
-występują zmiany, określony przez rozmiar okna
-\autocite{hall_beyer_2017_glcm,grass_r_texture}. Można ją opisać za
-pomocą tonu (intensywność poziomu szarości) i struktury (relacje
-przestrzenne) \autocite{grass_r_texture}. Model tekstury oparty na
-macierzy współwystępowania poziomów szarości (ang. \emph{Gray Level
-Co-Occurrence Matrix}, GLCM), zaproponowany przez
-\textcite{haralick_1973_texture}, jest często używany do obliczania
-tekstur obrazu. Ta metoda polega na tworzeniu macierzy opisującej
-częstotliwość występowania par wartości w określonym fragmencie obrazu,
-uwzględniając określone sąsiedztwo, kierunki i przerwy między pikselami
-\autocite{kupidura_2019_texture}.
-
-Przydatność i wykorzystanie tekstury w dużym stopniu zależy od
-rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które
-ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
-przeprowadził \autocite{zhang_2021_texture} dotyczące wykorzystania
-filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z
-użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ
-tekstur na skuteczność modelu. Według wyników badania najlepiej
-dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli
-(co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m),
-natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na
-poprawę dokładności modelu \autocite{zhang_2021_texture}.
-
-Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w
-pracy skorzystano jedynie z tekstury średniej sumy (ang. \emph{Sum
-Average}, SA lub SAVG), wskazanej przez \textcite{wang_2022_pv} jako
-teksturę niosącą najwięcej informacji w kontekście detekcji farm
-fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
-Random Forest. W celu skrócenia czasu obliczeń, w pracy zdecydowano się
-na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 \hypertarget{sec-mosaics}{%
 \section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
@@ -411,10 +344,10 @@ produktów jest tworzona z miesięczną oraz kwartalną częstotliwością
 rozdzielczości przestrzennej na stworzenie zbioru danych testowych i
 treningowych na konkretny okres czasu. Mozaiki Planet Basemaps są
 tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym
-przedziale czasowym. Wybierając najlepsze zdjęcia, Planet jest w stanie
-tworzyć wysokorodzielcze mozaiki, które są dokładne radiometrycznie i
-przestrzennie, a także charakteryzują się zminimalizowanym wpływem
-czynników atmosferycznych \autocite{planet_2019_basemaps}.
+przedziale czasowym, co umożliwia generowanie wysokorozdzielczych
+mozaik, które są dokładne radiometrycznie i przestrzennie, a także
+charakteryzują się zminimalizowanym wpływem czynników atmosferycznych
+\autocite{planet_2019_basemaps}.
 
 ?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach
 satelitarnych i scenie Sentinel-2 (kompozycja RGB)
@@ -440,8 +373,10 @@ zaproponował \textcite{filipponi_2019_s1_workflow}, obejmujący:
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  aktualizację danych o położeniu satelity w momencie zobrazowania
-  poprzez pobranie i zastosowanie pliku orbity;
+  aktualizację informacji o położeniu satelity w momencie zobrazowania
+  poprzez pobranie dokładnych wektorów stanu orbity dla produktu
+  zapewniając precyzyjne informacje o pozycji i prędkości satelity
+  podczas akwizycji;
 \item
   korekcję szumów termicznych;
 \item
@@ -451,16 +386,25 @@ zaproponował \textcite{filipponi_2019_s1_workflow}, obejmujący:
   \emph{backscatter coefficient}) sigma0 za pomocą kalibracji
   radiometrycznej;
 \item
-  korekcję topograficzna (ortorektyfikacja za pomocą Copernicus 30 m
+  korekcję topograficzną (ortorektyfikacja za pomocą Copernicus 30 m
   Global DEM);
 \item
   konwersję współczynnika rozproszenia wstecznego na dB za pomocą
   transformacji logarytmicznej
 \end{enumerate}
 
-rycina - Sentinel-1 GRD Preprocessing Workflow
+\begin{figure}[t]
 
-Wstępne Przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i
+{\centering \includegraphics[width=5.01042in,height=5.38542in]{figures/sentinel1_workflow.drawio.png}
+
+}
+
+\caption{\label{fig-rycina-s1-workflow}Przebieg wstępnego przetwarzania
+danych Sentinel-1 Ground Range Detected (GRD)}
+
+\end{figure}
+
+Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i
 VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox
 (S1TBX) \autocite{s1tbx} w oprogramowaniu SNAP \autocite{snap} przy
 pomocy narzedzie do przetwarzania grafów (ang. \emph{Graph Processing
@@ -471,8 +415,9 @@ Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich
 produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania,
 sąsiadujące produkty zostały połączone i odpowiednio ograniczone do
 obszaru zainteresowania. Na granicy sąsiednich produktów Sentinel-1 GRD
-występowała przestrzeń bez danych, co wymagało wypełnienia tego obszaru
-danymi przy użyciu funkcji \emph{focal} z pakietu \emph{terra}.
+występowała przestrzeń bez danych o szerokości jednej komórki, co
+wymagało wypełnienia tego obszaru danymi przy użyciu funkcji
+\emph{focal} z pakietu \emph{terra}.
 
 rycina - mapa produkty S1 GRD (granice) vs.~granice kafla 33UWV
 Sentinel-2
@@ -483,9 +428,104 @@ Sentinel-2
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o
 rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
 10 m. Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone
-przy wykorzystaniu języka R (\textcite{R-base}) oraz funkcji
-\emph{resample} z pakietu \emph{terra} \autocite{R-terra}, wykorzystując
+przy \emph{resample} z pakietu \emph{terra} \autocite{R-terra}, stosując
 interpolację dwuliniową (ang. \emph{bilinear interpolation}).
+
+\hypertarget{wskaux17aniki-spektralne}{%
+\subsection{Wskaźniki spektralne}\label{wskaux17aniki-spektralne}}
+
+Oprócz surowych współczynników odbicia, w niektórych wariantach
+predykcji zastosowano również wskaźniki spektralne (ang. \emph{spectral
+indices}), które były wykorzystywane w poprzednich badaniach dotyczących
+detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych
+przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
+\textcite{wang_2022_pv} i innych, takie jak:
+
+\begin{itemize}
+\item
+  znormalizowany wskaźnik roślinności (ang. \emph{Normalized Difference
+  Vegetation Index}, NDVI) \autocite{ndvi}, monitorujący zawartość
+  biomasy i kondycję roślinności na danym obszarze:
+
+  \[
+  NDVI = \frac{NIR - Red}{NIR + Red}
+  \]
+
+  , gdzie \(NIR\) -- reflektancja w kanale bliskiej podczerwieni,
+  \(Red\) -- reflektancja w kanale czerwonym
+\item
+  znormalizowany indeks zabudowy (ang. \emph{Normalized Difference
+  Built-up Index}, NDBI) \autocite{ndbi}, przeznaczony do kartowania
+  obszarów zabudowanych:
+
+  \[
+  NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
+  \]
+
+  , gdzie \(SWIR1\) -- reflektancja w kanale średniej podczerwieni,
+  \(NIR\) -- reflektancja w kanale bliskiej podczerwieni
+\item
+  znormalizowany indeks wody (ang. \emph{Modified Normalized Differene
+  Water Index}, mNDWI) \autocite{mndwi}, który skutecznie identyfikuje
+  obszary wodne na zdjęciach satelitarnych, posiadając możliwości
+  tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby:
+
+  \[
+  mNDWI = \frac{Green - SWIR1}{Green + SWIR1}
+  \]
+
+  , gdzie \(Green\) -- reflektancja w kanale zielonym, \(SWIR1\) --
+  reflektancja w kanale średniej podczerwieni
+\end{itemize}
+
+\hypertarget{tekstury-obrazu}{%
+\subsection{Tekstury obrazu}\label{tekstury-obrazu}}
+
+Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów
+i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture} i
+odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i
+satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
+pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
+odmiennych typów obiektów na podstawie ich organizacji w terenie, często
+kontrastując przestrzenie naturalne z antropogenicznymi
+\autocite{grass_r_texture}. W zależności od zastosowalnej funkcji
+wybrane cechy obrazu zostają uwidocznione w porównaniu z jego obrazem
+wejściowym \autocite{lewinski_2012_texture}. Informacja o teksturze może
+stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji
+lub segmentacji obrazu
+\autocite{gong_1992_spatial_features,mumby_2002_ikonos}. Tekstura
+obejmuje różnice poziomów szarości (kontrast), obecność lub brak
+kierunkowości, regularne wzory i zdefiniowany obszar, na którym
+występują zmiany, określony przez rozmiar okna
+\autocite{hall_beyer_2017_glcm,grass_r_texture}. Można ją opisać za
+pomocą tonu (intensywność poziomu szarości) i struktury (relacje
+przestrzenne) \autocite{grass_r_texture}. Model oparty na macierzy
+współwystępowania poziomów szarości (ang. \emph{Gray Level Co-Occurrence
+Matrix}, GLCM), zaproponowany przez \textcite{haralick_1973_texture},
+jest często używany do obliczania tekstur obrazu. Ta metoda polega na
+tworzeniu macierzy opisującej częstotliwość występowania par wartości w
+określonym fragmencie obrazu, uwzględniając określone sąsiedztwo,
+kierunki i odstępy między komórkami \autocite{kupidura_2019_texture}.
+
+Przydatność i wykorzystanie tekstury w dużym stopniu zależy od
+rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które
+ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
+przeprowadził \textcite{zhang_2021_texture} dotyczące wykorzystania
+filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z
+użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ
+tekstur na skuteczność modelu. Według wyników badania najlepiej
+dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli
+(co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m),
+natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na
+poprawę dokładności modelu \autocite{zhang_2021_texture}.
+
+Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w
+pracy wykorzystano jedynie teksturę średniej sumy (ang. \emph{Sum
+Average}, SA lub SAVG), wskazaną przez \textcite{wang_2022_pv} jako
+teksturę niosącą najwięcej informacji w kontekście detekcji farm
+fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
+Random Forest. W celu skrócenia czasu obliczeń, w pracy zdecydowano się
+na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
@@ -496,11 +536,11 @@ Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale
 rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej
 rozdzielczości i siatki. Dane Sentinel-1 GRD zostały przetransformowane
 do siatki danych Sentinel-2. Przepróbkowane do wspólnej rozdzielczości
-oraz siatki dane zostały następnie użyte do obliczeń filtracji
-teksturalnych oraz wskaźników teledetekcyjnych. Po uzyskaniu produktów
-pochodnych, w zależności od wariantu, dane zostały scalone w kilka
-wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych
-treningowych oraz do przeprowadzenia predykcji.
+oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz
+wskaźników teledetekcyjnych. Po uzyskaniu produktów pochodnych, w
+zależności od wariantu, dane zostały scalone w kilka wielokanałowych
+rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych
+oraz do przeprowadzenia predykcji.
 
 tabela - warianty połączenia danych - np. kanały S2, kanały S2 + indeksy
 spektralne, kanały S2 + polaryzacje S1 etc.
@@ -567,8 +607,9 @@ osiągnięte na podstawie konkretnego zestawu danych wejściowych
 która separuje dane, oraz regresja, która dopasowuje dane
 \autocite{sarker_2021_ml}.
 
-W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych
-(ang. \emph{Random Forest}, RF) \autocite{breiman_2001_rf}.
+W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę
+lasów losowych (ang. \emph{Random Forest}, RF)
+\autocite{breiman_2001_rf}.
 
 \hypertarget{sec-random-forest}{%
 \subsection{Metoda lasów losowych}\label{sec-random-forest}}
@@ -576,27 +617,28 @@ W badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych
 Random Forest stał się jednym z najpopularniejszych klasyfikatorów
 uczenia maszynowego wykorzystywanych przez społeczność teledetekcyjną ze
 względu na dokładność jego klasyfikacji oraz wysoką wydajność
-\autocite{belgiu_2016_rf,sheykhmousa_2020_svm_vs_rf}. Metoda lasów
-losowych charakteryzuje się odpornością na szumy (ang. \emph{noise}) i
-przeuczenie (ang. \emph{overfitting}), ponieważ nie bazuje na ważeniu
-\autocite{gislason_2006_rf}.
+obliczeniową \autocite{belgiu_2016_rf,sheykhmousa_2020_svm_vs_rf}.
+Metoda lasów losowych charakteryzuje się pewną odpornością na szumy
+(ang. \emph{noise}) i przeuczenie (ang. \emph{overfitting}), ponieważ
+nie bazuje na ważeniu \autocite{gislason_2006_rf}.
 
 Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych,
-operuje na zasadzie ensemble learning, czyli łączenia wielu słabszych
-modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model
+operuje na zasadzie uczenia zespołowego (ang. \emph{ensemble learning}),
+czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych)
+w jeden silniejszy model
 \autocite{aaron_2018_ml,sekulic_2020_rf_interpolation}. Procedura
 generuje liczne drzewa decyzyjne, opierając się na losowo wybranym
 zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych
 zmiennych klasyfikacyjnych \autocite{breiman_2001_rf}. Pojedyncze drzewo
 korzysta ze zredukowanej liczby danych treningowych i zmiennych, co
-sprawia, że drzewa różnią się od siebie i są mniej precyzyjne, ale
+sprawia, że drzewa różnią się od siebie i są mniej dokładne, ale
 jednocześnie są też mniej skorelowane, przez co model złożony z wielu
 drzew będzie bardziej niezawodny
 \autocite{sekulic_2020_rf_interpolation}. W fazie predykcji każde z
 drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana
 na podstawie głosowania większościowego. W przypadku klasyfikacji, klasa
 wybierana jest na podstawie największej liczby głosów.
-\autocite{malinowski_2020_s2lulc}.
+\autocite{breiman_2001_rf}.
 
 \hypertarget{oprogramowanie}{%
 \section{Oprogramowanie}\label{oprogramowanie}}
@@ -604,10 +646,10 @@ wybierana jest na podstawie największej liczby głosów.
 \hypertarget{qgis}{%
 \subsection{QGIS}\label{qgis}}
 
-QGIS, dawniej Quantum GIS \autocite{qgis}, to wieloplatformowe i wolne
-oprogramowanie o otwartym kodzie źródłowym przeznaczone do przetwarzania
-danych przestrzennych, rozwijane przez QGIS Development Team od 2002
-roku \autocite{hejmanowska_2020_dane,flenniken_2020_qgis}. Algorytmy
+QGIS \autocite{qgis}, to wieloplatformowe i wolne oprogramowanie o
+otwartym kodzie źródłowym przeznaczone do przetwarzania danych
+przestrzennych, rozwijane od 2002 roku
+\autocite{hejmanowska_2020_dane,flenniken_2020_qgis}. Algorytmy
 przetwarzania danych przestrzennych zebrane w oprogramowaniu QGIS
 umożliwiają manipulację danymi rastrowymi oraz wektorowymi, a także
 prowadzenie analiz i wizualizację wyników
@@ -620,15 +662,26 @@ czy wykonania dodatkowych zadań, takich jak np. nadawanie georeferencji
 czy klasyfikacja zobrazowań satelitarnych
 \autocite{hejmanowska_2020_dane}.
 
-Oprogramowanie QGIS zostało zastosowane do stworzenia zestawu danych
-referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik
-satelitarnych. QGIS dostarcza zaawansowane narzędzia do digitalizacji,
-umożliwiające rysowanie i edytowanie obiektów wektorowych oraz pozwala
-na przeglądanie danych przestrzennych dostępnych w Internecie za pomocą
-usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
+Oprogramowanie QGIS zostało wykorzystane w tej pracy do stworzenia
+zestawu danych referencyjnych poprzez wizualną interpretację
+ortofotomapy oraz mozaik satelitarnych. QGIS dostarcza zaawansowane
+narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie
+obiektów wektorowych oraz pozwala na przeglądanie danych przestrzennych
+dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS
+czy XYZ Tiles.
 
-\hypertarget{snap-i-sentinel-1-toolbox}{%
-\subsection{SNAP i Sentinel-1 Toolbox}\label{snap-i-sentinel-1-toolbox}}
+\hypertarget{sentinel-1-toolbox-i-snap}{%
+\subsection{Sentinel-1 Toolbox i SNAP}\label{sentinel-1-toolbox-i-snap}}
+
+Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw
+narzędzi S1TBX \autocite{s1tbx}, przeznaczony do przetwarzania danych
+radarowych. Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia
+do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
+koregistracji, ortorektyfikacji, mozaikowania, konwersji danych,
+polarymetrii czy interferometrii \autocite{sentinel-1-toolbox}.
+Sentinel-1 Toolbox jest opracowywany dla ESA przez firmę Array we
+współpracy z DLR, Brockmann Consult i OceanDataLab
+\autocite{sentinel-1-toolbox}.
 
 SNAP \autocite{snap}, czyli Sentinel Application Platform to platforma
 oprogramowania rozwijana wspólnie przez firmy Brockmann Consult,
@@ -636,7 +689,7 @@ SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA),
 przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych
 Sentinel \autocite{snap-desktop,esa_snap}. Oprogramowanie SNAP zawiera
 zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych
-teledetekcyjnych, a zaimplementowane narzędzie do przetwarzania grafów
+teledetekcyjnych, a zaimplementowane narzędzie przetwarzania grafów
 (ang. \emph{Graph Processing Tool}, GPT) daje możliwość tworzenia
 łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika
 \autocite{hejmanowska_2020_dane,moskolai_2022_s1_workflow}. Struktura
@@ -645,15 +698,6 @@ oprogramowaniu SNAP służy do wsadowego przetwarzania danych za
 pośrednictwem języka Extensible Markup Language (XML)
 \autocite{moskolai_2022_s1_workflow}.
 
-Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw
-narzędzi S1TBX \autocite{s1tbx}, przeznaczony do przetwarzania danych
-radarowych. Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia
-do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
-koregistracji, ortorektyfikacji, mozaikowania, konwersji danych,
-polarymetrii i interferometrii \autocite{sentinel-1-toolbox}. Sentinel-1
-Toolbox jest opracowywany dla ESA przez firmę Array we współpracy z DLR,
-Brockmann Consult i OceanDataLab \autocite{sentinel-1-toolbox}.
-
 \hypertarget{ux15brodowisko-jux119zyka-r}{%
 \subsection{Środowisko języka R}\label{ux15brodowisko-jux119zyka-r}}
 
@@ -661,12 +705,11 @@ Czynności związane z końcowym przygotowaniem danych wejściowych oraz
 bezpośrednio z uczeniem maszynowym zostały wykonane z wykorzystaniem
 środowiska języka R \autocite{R-base}. R to wieloplatformowy język
 programowania o otwartym kodzie źródłowym do obliczeń statystycznych i
-wizualizacji danych \autocite{lovelace_2019_geocomputation}. Dzięki
-dużej liczbie pakietów R obsługuje również statystki geoprzestrzenne,
-modelowanie oraz wizualizację danych przestrzennych
-\autocite{lovelace_2019_geocomputation}. W pracy wykorzystane zostało
-zintegrowane środowisko programistyczne (ang. \emph{Integrated
-Development Environment}, IDE) RStudio
+wizualizacji danych. Dzięki dużej liczbie pakietów R obsługuje również
+statystki geoprzestrzenne, modelowanie oraz wizualizację danych
+przestrzennych \autocite{lovelace_2019_geocomputation}. W pracy
+wykorzystane zostało zintegrowane środowisko programistyczne (ang.
+\emph{Integrated Development Environment}, IDE) RStudio
 \autocite{rstudio_team_2020_rstudio} przeznaczone dla języka R. Poza
 standardowymi możliwościami środowiska R, w procesie pracy wykorzystane
 zostały pakiety stworzone przez społeczność R w celu rozszerzenia
@@ -677,7 +720,7 @@ przetwarzania danych wektorowych używany był pakiet \emph{sf}
 macierzy współwystępowania poziomu szarości (ang. \emph{gray-level
 co-occurrence matrix}, GLCM) zostało wykonane przy pomocy pakietu
 \emph{GLCMTextures} \autocite{R-GLCMTextures}. Losowe generowanie danych
-przestrzennych umożliwia pakiet \emph{spatstat.random}
+przestrzennych umożliwił pakiet \emph{spatstat.random}
 \autocite{R-spatstat.random} z rodziny pakietów \emph{spatstat}
 \autocite{R-spatstat}. Do przeprowadzenia analizy oraz predykcji opartej
 o elementy uczenia maszynowego wykorzystano pakiet \emph{mlr3}
@@ -686,11 +729,7 @@ zaimplementowany w pakiecie \emph{ranger} \autocite{R-ranger}. Do
 obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym
 wykorzystano pakiet \emph{future} \autocite{R-future}, umożliwiający
 równoległe (wielowątkowe) przetwarzanie wyrażeń R, skracające czas
-realizacji zadań w stosunku do przetwarzania sekwencyjnego. W funkcji
-pozwalającej na równoległe obliczanie tektur obrazu wykorzystano
-operator \emph{\%\textgreater\%} z pakietu \emph{dplyr}
-\autocite{R-dplyr}, który daje możliwość przekazywania wyniku jednej
-operacji do następnej.
+realizacji zadań w stosunku do przetwarzania sekwencyjnego.
 
 \bookmarksetup{startatroot}
 

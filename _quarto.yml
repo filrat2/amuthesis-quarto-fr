@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 title: "Wykrywanie farm fotowoltaicznych na podstawie danych teledetekcyjnych"
-titleeng: "My title"
+titleeng: "Detection of photovoltaic farms based on remote sensing data"
 degreetype: "Praca inżynierska" #"Engineer's thesis"
 author: "Filip Ratajszczak"
 major: "Geoinformacja" #"Geoinformation"
