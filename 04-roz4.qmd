@@ -40,7 +40,14 @@ Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu jęz
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
 Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji *focal* z pakietu *terra*.
 
-rycina - mapa produkty S1 GRD (granice) vs. granice kafla 33UWV Sentinel-2
+```{r}
+#| label: fig-rycina-s1-extents
+#| echo: false
+#| fig-cap: "Obszar badań i zasięg wykorzystanych produktów Sentinel-1"
+#| out-width: 564px
+#| out-height: 456px
+knitr::include_graphics("figures/sen1_extents.png")
+```
 
 ### Sentinel-2 {#sec-processing-s2}
 
@@ -121,7 +128,7 @@ W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stani
 Uczenie maszynowe jest wykorzystywane do uczenia maszyn efektywnego przetwarzania danych [@sindayigaya_2022_ml].
 Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
 
-W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], zazwyczaj wykorzystujące techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
+W ciągu ostatnich dwudziestu lat zaproponowano stosowanie kilku różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], które zazwyczaj wykorzystują techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
 
 Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka.
 Uczenie bez nadzoru jest powszechnie stosowane do eksploracji danych, ekstrakcji cech generatywnych, identyfikacji istotnych trendów i struktur oraz grupowania wyników.
@@ -165,8 +172,7 @@ Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia do kalibracji, fi
 Sentinel-1 Toolbox jest opracowywany dla ESA przez firmę Array we współpracy z DLR, Brockmann Consult i OceanDataLab [@sentinel-1-toolbox].
 
 SNAP [@snap], czyli Sentinel Application Platform to platforma oprogramowania rozwijana wspólnie przez firmy Brockmann Consult, SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA), przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel [@snap-desktop; @esa_snap].
-Oprogramowanie SNAP zawiera zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych teledetekcyjnych, a zaimplementowane narzędzie przetwarzania grafów (ang. *Graph Processing Tool*, GPT) daje możliwość tworzenia łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika [@hejmanowska_2020_dane; @moskolai_2022_s1_workflow].
-Struktura przetwarzania grafów (ang. *Graph Processing Framework*, GPF) w oprogramowaniu SNAP służy do wsadowego przetwarzania danych za pośrednictwem języka Extensible Markup Language (XML) [@moskolai_2022_s1_workflow].
+Oprogramowanie SNAP zawiera zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych teledetekcyjnych, a także umożliwia tworzenie łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika [@hejmanowska_2020_dane; @moskolai_2022_s1_workflow].
 
 ### Środowisko języka R
 

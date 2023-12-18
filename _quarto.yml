@@ -31,8 +31,8 @@ format:
     keep-tex: true
     pdf-engine: pdflatex
     cite-method: biblatex
-    fig-height: 3.8
-    fig-width: 6.3
-    fig-asp: 0.618  # 1 / phi
+    # fig-height: 3.8
+    # fig-width: 6.3
+    # fig-asp: 0.618  # 1 / phi
     fig-pos: 't'
     number-sections: true

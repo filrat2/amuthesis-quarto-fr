@@ -143,18 +143,27 @@ jest odnośnik w pliku PDF.
 \hypertarget{sec-materialy}{%
 \chapter{Materiały}\label{sec-materialy}}
 
+\begin{figure}[t]
+
+{\centering \includegraphics[width=5.875in,height=4.75in]{figures/sen2_extent.png}
+
+}
+
+\caption{\label{fig-rycina-area}Obszar badań}
+
+\end{figure}
+
 \hypertarget{sec-satellite-imagery}{%
 \section{Zdjęcia satelitarne}\label{sec-satellite-imagery}}
 
 \hypertarget{sec-sentinel1}{%
 \subsection{Sentinel-1}\label{sec-sentinel1}}
 
-Misja Sentinel-1 stanowi Europejskie Obserwatorium Radarowe działające w
-ramach programu Copernicus, wspólnej inicjatywy Komisji Europejskiej i
-Europejskiej Agencji Kosmicznej \autocite{sentinel1_overview}. Celem
-misji jest dostarczanie danych radarowych obejmujących globalną
-powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras
-żeglugowych, stref lodu morskiego, mórz i oceanów
+Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej
+Agencji Kosmicznej w ramach programu Copernicus, mająca na celu
+dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi,
+w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref
+lodu morskiego, mórz i oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}. Misja
 odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym
 przemieszczania kry lodowej, transportu morskiego, deformacji i
@@ -162,14 +171,17 @@ przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk
 żywiołowych
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}.
 
-Sentinel-1 jest wyposażony w radar z z syntetyzowaną aperturą (ang.
-\emph{Synthetic Aperture Radar}, SAR), pracujący w paśmie C na
-częstotliwości 5,405 GHz, co odpowiada długości fali 5,6 cm
-\autocite{sentinel1_lulc,sentinel1_instrument_payload}. Radar działa
-głównie w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc
-zarówno fale pionowe (ang. \emph{vertical}), jak i poziome (ang.
-\emph{horizontal}) po ich powrocie do czujnika, dzięki czemu otrzymujemy
-dane o intensywności rozproszenia wstecznego VV i VH
+Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang.
+\emph{Synthetic Aperture Radar}, SAR), który działa na jednej
+częstotliwości środkowej 5,405 GHz, co odpowiada długości fali 5,6 cm
+\autocite{sentinel1_lulc,sentinel1_instrument_payload}. Częstotliwość
+radaru Sentinel-1, mieszcząca się w pasmie C (od 4 do 8 GHz),
+determinuje jego zdolność do penetracji jedynie górnych warstw koron
+drzew, roślinności oraz gleby \autocite{sentinel_1_user_guide}. Radar
+jest najczęściej wykorzystywany w trybie podwójnej polaryzacji, emitując
+fale pionowe i mierząc zarówno fale pionowe (ang. \emph{vertical}), jak
+i poziome (ang. \emph{horizontal}) po ich powrocie do czujnika, dzięki
+czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH
 \autocite{sentinel1_lulc}. Radar z syntetyzowaną aperturą (SAR)
 umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień,
 niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji
@@ -212,11 +224,12 @@ polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb
 obrazowania oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_instrument_payload,sentinel1_stripmap}.
 Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1
-przedstawia tabela \ref{tbl-tabela-sentinel1}.
+przedstawia tabela \ref{tbl-tabela-sentinel1}
+\autocite{sentinel1_resolution_swath}.
 
 \hypertarget{tbl-tabela-sentinel1}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA, 2023) }\tabularnewline
+\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA, 2023f) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{2cm}}
@@ -231,12 +244,12 @@ Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
 \end{tabular}
 \end{table}
 
-Dane wykorzystane do analizy pochodzą z produktów Ground Range Detected
-(GRD) zarejestrowanych w trybie Interferometric Wide Swath (IW) przez
-satelitę Sentinel-1A w dniu 8 maja 2023 roku. Zestaw danych został
-utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD,
-a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o
-oznaczeniu 33UWV. W analizie uwzględniono dwie polaryzacje: VV i VH.
+W pracy wykorzystano dwie polaryzacje (VV i VH) pochodzące z produktów
+Ground Range Detected (GRD), zarejestrowanych w trybie Interferometric
+Wide Swath (IW) przez platformę Sentinel-1A w dniu 8 maja 2023 roku.
+Użyty zestaw danych został utworzony poprzez połączenie dwóch sąsiednich
+produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do
+kafla Sentinel-2 o oznaczeniu 33UWV.
 
 \hypertarget{sec-sentinel2}{%
 \subsection{Senitnel-2}\label{sec-sentinel2}}
@@ -273,7 +286,7 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 
 \hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 }\tabularnewline
+\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA, 2023l) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{4cm}>{\raggedleft\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedleft\arraybackslash}p{2cm}}
@@ -281,18 +294,18 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 Kanał & Nazwa kanału & Centralna długość fali [nm] & Zakres spektralny [nm] & Rozdzielczość przestrzenna [m]\\
 \midrule
 B01 & Coastal Aerosol & 443 & 433–453 & 60\\
-\textbf{B02} & \textbf{Blue} & \textbf{490} & \textbf{458–523} & \textbf{10}\\
+\textbf{B02} & \textbf{Blue} & \textbf{493} & \textbf{458–523} & \textbf{10}\\
 \textbf{B03} & \textbf{Green} & \textbf{560} & \textbf{543–578} & \textbf{10}\\
 \textbf{B04} & \textbf{Red} & \textbf{665} & \textbf{650–680} & \textbf{10}\\
-\textbf{B05} & \textbf{Vegetation RedEdge} & \textbf{705} & \textbf{698–713} & \textbf{20}\\
+\textbf{B05} & \textbf{Vegetation RedEdge} & \textbf{704} & \textbf{698–713} & \textbf{20}\\
 \addlinespace
 \textbf{B06} & \textbf{Vegetation RedEdge} & \textbf{740} & \textbf{733–748} & \textbf{20}\\
 \textbf{B07} & \textbf{Vegetation RedEdge} & \textbf{783} & \textbf{773–793} & \textbf{20}\\
-\textbf{B08} & \textbf{NIR} & \textbf{842} & \textbf{785–900} & \textbf{10}\\
+\textbf{B08} & \textbf{NIR} & \textbf{833} & \textbf{785–900} & \textbf{10}\\
 \textbf{B8A} & \textbf{NIR} & \textbf{865} & \textbf{855–875} & \textbf{20}\\
 B09 & Water Vapour & 945 & 935–955 & 60\\
 \addlinespace
-B10 & Cirrus & 1375 & 1360–1390 & 60\\
+B10 & Cirrus & 1374 & 1360–1390 & 60\\
 \textbf{B11} & \textbf{SWIR} & \textbf{1610} & \textbf{1565–1655} & \textbf{20}\\
 \textbf{B12} & \textbf{SWIR} & \textbf{2190} & \textbf{2100–2280} & \textbf{20}\\
 \bottomrule
@@ -304,53 +317,65 @@ dostarczone przez satelitę Sentinel-2B. Obszar analizy obejmuje kafel
 (ang. \emph{tile}) o oznaczeniu 33UWV, dla którego współczynnik
 zachmurzenia w tym dniu wynosił 0,7\%. Użyte zostały dane na poziomie
 przetworzenia L2A. Z dostępnych kanałów spektralnych (tabela
-\ref{tbl-tabela-sentinel2}) wykorzystano 10 zakresów, ponieważ pasma
-rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do
-korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do
-korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary
-wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus
-\autocite{drusch_2012_sen2GMES}.
+\ref{tbl-tabela-sentinel2} \autocite{sentinel_2_user_guide})
+wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości
+60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji
+chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940
+nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania
+chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
 
 \hypertarget{sec-mosaics}{%
 \section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
 
 Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych
 wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i
-Kartografii oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty
-komercyjne. W teledetekcji jednym z zastosowań mozaik obrazów
+Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez
+podmioty komercyjne. W teledetekcji jednym z zastosowań mozaik obrazów
 satelitarnych jest tworzenie zestawów danych referencyjnych poprzez
 interpretację wizualną, np. w celu walidacji wyników klasyfikacji
 produktów pokrycia terenu \autocite{lesiv_2018_sat_imagery_mosaics}. Do
 stworzenie zbioru danych testowych i treningowych wykorzystano
-ortomozaiki Google Satellite, Bing Aerial, Mapbox Satellite oraz Planet
-Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
-Ortomozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych
+ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps,
+udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles). Mozaiki
+te są tworzone na podstawie komercyjnych zdjęć satelitarnych
 wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy
 Planet Labs.
 
-Ortofotomapa udostępniana przez GUGiK charakteryzuje się rozdzielczością
-przestrzenną 25 cm, a rozdzielczość przestrzenna wykorzystanych mozaik
-obrazów satelitarnych (poza Planet Basemaps) jest wyższa niż 1 m, np.
-dla mozaiki Bing Aerial udostępnianej przez firmę Microsoft wynosi ona
-30-60 cm \autocite{ortofotomapa,bing_aerial}. Często jednak nie jest
-możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do
-stworzenia konkretnej mozaiki zobrazowań satelitarnych
-\autocite{lesiv_2018_sat_imagery_mosaics}. Mozaika tworzona przez Planet
-na podstawie zdjęć satelitarnych wykonywanych przez konstelację
-satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną
-4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych
-produktów jest tworzona z miesięczną oraz kwartalną częstotliwością
-\autocite{planet_2019_basemaps}. Pozwala to, pomimo niższej
-rozdzielczości przestrzennej na stworzenie zbioru danych testowych i
-treningowych na konkretny okres czasu. Mozaiki Planet Basemaps są
-tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym
-przedziale czasowym, co umożliwia generowanie wysokorozdzielczych
-mozaik, które są dokładne radiometrycznie i przestrzennie, a także
-charakteryzują się zminimalizowanym wpływem czynników atmosferycznych
-\autocite{planet_2019_basemaps}.
+Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w
+standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują
+się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą
+\autocite{ortofotomapa}. Rozdzielczość przestrzenna wykorzystanych
+mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1
+m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft
+cechuje się wielkością komórki od 30 do 60 cm \autocite{bing_aerial}.
+Często jednak nie jest możliwie ustalenie dat wykonania zdjęć
+satelitarnych, które posłużyły do stworzenia konkretnej mozaiki
+zobrazowań satelitarnych \autocite{lesiv_2018_sat_imagery_mosaics}.
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych
+wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się
+rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do
+pozostałych wymienionych produktów jest tworzona z miesięczną oraz
+kwartalną częstotliwością \autocite{planet_2019_basemaps}. Pozwala to,
+pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych
+testowych i treningowych na konkretny okres czasu. Mozaiki Planet
+Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet
+w określonym przedziale czasowym, co umożliwia generowanie
+wysokorozdzielczych mozaik, które są dokładne radiometrycznie i
+przestrzennie, a także charakteryzują się zminimalizowanym wpływem
+czynników atmosferycznych \autocite{planet_2019_basemaps}.
 
-?Rycina przedstawiająca jedną farmę na ortofotomapie, mozaikach
-satelitarnych i scenie Sentinel-2 (kompozycja RGB)
+\begin{figure}[t]
+
+{\centering \includegraphics[width=5.875in,height=8.67708in]{figures/pv.png}
+
+}
+
+\caption{\label{fig-rycina-pv}Porównanie wyglądu farm fotowoltaicznych w
+Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej
+przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps
+(d) oraz w kompozycji RGB Sentinel-2 (e)}
+
+\end{figure}
 
 \bookmarksetup{startatroot}
 
@@ -419,8 +444,16 @@ występowała przestrzeń bez danych o szerokości jednej komórki, co
 wymagało wypełnienia tego obszaru danymi przy użyciu funkcji
 \emph{focal} z pakietu \emph{terra}.
 
-rycina - mapa produkty S1 GRD (granice) vs.~granice kafla 33UWV
-Sentinel-2
+\begin{figure}[t]
+
+{\centering \includegraphics[width=5.875in,height=4.75in]{figures/sen1_extents.png}
+
+}
+
+\caption{\label{fig-rycina-s1-extents}Obszar badań i zasięg
+wykorzystanych produktów Sentinel-1}
+
+\end{figure}
 
 \hypertarget{sec-processing-s2}{%
 \subsection{Sentinel-2}\label{sec-processing-s2}}
@@ -585,10 +618,10 @@ podzielić na cztery główne podejścia: uczenie nienadzorowane (ang.
 posiłkowane, ang. \emph{reinforcement learning})
 \autocite{sarker_2021_ml}.
 
-W ciągu ostaniach dwudziestu lat zaproponowano kilka różnych algorytmów
-uczenia maszynowego do klasyfikacji obrazów satelitarnych
-\autocite{sheykhmousa_2020_svm_vs_rf}, zazwyczaj wykorzystujące techniki
-klasyfikacji bez nadzoru i klasyfikacji nadzorowanej
+W ciągu ostatnich dwudziestu lat zaproponowano stosowanie kilku różnych
+algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych
+\autocite{sheykhmousa_2020_svm_vs_rf}, które zazwyczaj wykorzystują
+techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej
 \autocite{ismail_2009_classification}.
 
 Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez
@@ -689,14 +722,9 @@ SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA),
 przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych
 Sentinel \autocite{snap-desktop,esa_snap}. Oprogramowanie SNAP zawiera
 zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych
-teledetekcyjnych, a zaimplementowane narzędzie przetwarzania grafów
-(ang. \emph{Graph Processing Tool}, GPT) daje możliwość tworzenia
-łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika
-\autocite{hejmanowska_2020_dane,moskolai_2022_s1_workflow}. Struktura
-przetwarzania grafów (ang. \emph{Graph Processing Framework}, GPF) w
-oprogramowaniu SNAP służy do wsadowego przetwarzania danych za
-pośrednictwem języka Extensible Markup Language (XML)
-\autocite{moskolai_2022_s1_workflow}.
+teledetekcyjnych, a także umożliwia tworzenie łańcuchów procesów
+przetwarzania danych zdefiniowanych przez użytkownika
+\autocite{hejmanowska_2020_dane,moskolai_2022_s1_workflow}.
 
 \hypertarget{ux15brodowisko-jux119zyka-r}{%
 \subsection{Środowisko języka R}\label{ux15brodowisko-jux119zyka-r}}
