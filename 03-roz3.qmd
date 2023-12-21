@@ -10,8 +10,7 @@ editor:
 #| label: fig-rycina-area
 #| echo: false
 #| fig-cap: "Obszar badań"
-#| out-width: 564px
-#| out-height: 456px 
+#| out-width: 100% 
 knitr::include_graphics("figures/sen2_extent.png")
 ```
 
@@ -127,7 +126,6 @@ Mozaiki Planet Basemaps są tworzone na podstawie najlepszych obrazów z katalog
 #| label: fig-rycina-pv
 #| echo: false
 #| fig-cap: "Porównanie wyglądu farm fotowoltaicznych w Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps (d) oraz w kompozycji RGB Sentinel-2 (e)"
-#| out-width: 564px
-#| out-height: 833px
+#| out-width: 100%
 knitr::include_graphics("figures/pv.png")
 ```

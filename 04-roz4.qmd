@@ -44,8 +44,7 @@ Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez d
 #| label: fig-rycina-s1-extents
 #| echo: false
 #| fig-cap: "Obszar badań i zasięg wykorzystanych produktów Sentinel-1"
-#| out-width: 564px
-#| out-height: 456px
+#| out-width: 100%
 knitr::include_graphics("figures/sen1_extents.png")
 ```
 
