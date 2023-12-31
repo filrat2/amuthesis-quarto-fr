@@ -14,7 +14,7 @@ Korzystanie z danych radarowych wymaga wcześniejszego przygotowania danych popr
 Procesy te mogą różnić się w zależności od konkretnego zastosowania, mając na celu dostosowanie danych do specyficznych potrzeb.
 W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zaproponował @filipponi_2019_s1_workflow, obejmujący:
 
-1.  aktualizację informacji o położeniu satelity w momencie zobrazowania poprzez pobranie  dokładnych wektorów stanu orbity dla produktu zapewniając precyzyjne informacje o pozycji i prędkości satelity podczas akwizycji;
+1.  aktualizację informacji o położeniu satelity w momencie zobrazowania poprzez pobranie dokładnych wektorów stanu orbity dla produktu zapewniając precyzyjne informacje o pozycji i prędkości satelity podczas akwizycji;
 
 2.  korekcję szumów termicznych;
 
@@ -101,13 +101,14 @@ W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruch
 
 ### Łączenie danych {#sec-processing-data-merging}
 
-Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale [-@sec-processing-s2] wynosi 10 m. 
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale [-@sec-processing-s2] wynosi 10 m.
 Stworzenie spójnych wielokanałowych rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej rozdzielczości i siatki.
 Dane Sentinel-1 GRD zostały przetransformowane do siatki danych Sentinel-2.
 Przepróbkowane do wspólnej rozdzielczości oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
 Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w kilka wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych oraz do przeprowadzenia predykcji.
 
-tabela - warianty połączenia danych - np. kanały S2, kanały S2 + indeksy spektralne, kanały S2 + polaryzacje S1 etc.
+tabela - warianty połączenia danych - np.
+kanały S2, kanały S2 + indeksy spektralne, kanały S2 + polaryzacje S1 etc.
 
 rycina - schemat przygotowania danych
 
@@ -147,8 +148,30 @@ Metoda lasów losowych charakteryzuje się pewną odpornością na szumy (ang. *
 Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych, operuje na zasadzie uczenia zespołowego (ang. *ensemble learning*), czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model [@aaron_2018_ml; @sekulic_2020_rf_interpolation].
 Procedura generuje liczne drzewa decyzyjne, opierając się na losowo wybranym zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych zmiennych klasyfikacyjnych [@breiman_2001_rf].
 Pojedyncze drzewo korzysta ze zredukowanej liczby danych treningowych i zmiennych, co sprawia, że drzewa różnią się od siebie i są mniej dokładne, ale jednocześnie są też mniej skorelowane, przez co model złożony z wielu drzew będzie bardziej niezawodny [@sekulic_2020_rf_interpolation].
-W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego. 
-W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów. [@breiman_2001_rf].
+W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego.
+W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów.
+[@breiman_2001_rf].
+
+### Ocena jakości modeli
+
+### Dostrajanie modeli
+
+## Ważność zmiennych
+
+Ocena ważności zmiennych (ang. *variable inportance*) może zostać wykorzystana do poprawy i oceny jakości stworzonych modeli.
+Analizowanie wpływu poszczególnych zmiennych na dokładność modelu umożliwia ocenę ich istotności dla przewidywań.
+Stosowanie zmiennych o niskiej mocy predykcyjnej może prowadzić do nadmiernego dopasowania (ang. *overfitting*) modelu lub obniżenia jego jakości.
+Dlatego ważny jest wybór odpowiednich zmiennych do trenowania modelu, unikając na przykład kolinearności predyktorów, czyli wysokiej korelacji między zmiennymi.
+Celem określania ważności zmiennych i ich selekcji jest zwiększenie mocy predykcyjnej modelu w kontekście analizowanego zjawiska poprzez identyfikację silnie skorelowanych z nim zmiennych.
+
+W lasach losowych ważność zmiennych można ocenić różnymi metodami, z których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang. *Gini impurity*) oraz metoda oparta na permutacji [@R-Przewodnik].
+W celu określenia wartości zmiennych wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie danych teledetekcyjnych, zastosowano metodę permutacji (ang. *permutation*), która może być również używana do upraszczania i eksploracji modeli lub generowania wiedzy [@biecek_2021_model_analysis].
+
+Główną ideą metody opartej na permutacji jest pomiar tego, jak bardzo zmieni się dopasowanie modelu, gdy usunięty zostanie wpływ wybranej zmiennej lub grupy zmiennych.
+Jeśli zmienna jest istotna, permutacja jej wartości skutkuje pogorszeniem jakości modelu.
+Im większa zmiana dopasowania modelu, tym istotniejsza jest permutowana zmienna [@biecek_2021_model_analysis].
+
+Metoda oparta na permutacji została pierwotnie zaproponowana przez @breiman_2001_rf dla lasów losowych, jednak jej prostota umożliwia zastosowanie permutacji do dowolnego modelu, a także porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach [@biecek_2021_model_analysis].
 
 ## Oprogramowanie
 
@@ -190,6 +213,6 @@ Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzysta
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "future")
+pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "future", "Przewodnik")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```
