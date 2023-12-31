@@ -109,7 +109,7 @@
 
 %% SPACING
 \RequirePackage{setspace}
-\spacing{1.5}
+\setstretch{1.5}
 
 %% LINE AND PAGE BREAKING
 \sloppy
@@ -313,5 +313,6 @@
 \usepackage{longtable,booktabs,tabu}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\raggedbottom
 \setkeys{Gin}{keepaspectratio}
+
+\raggedbottom
