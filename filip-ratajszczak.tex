@@ -464,8 +464,8 @@ rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
 przy \emph{resample} z pakietu \emph{terra} \autocite{R-terra}, stosując
 interpolację dwuliniową (ang. \emph{bilinear interpolation}).
 
-\hypertarget{wskaux17aniki-spektralne}{%
-\subsection{Wskaźniki spektralne}\label{wskaux17aniki-spektralne}}
+\hypertarget{sec-spectral-indices}{%
+\subsection{Wskaźniki spektralne}\label{sec-spectral-indices}}
 
 Oprócz surowych współczynników odbicia, w niektórych wariantach
 predykcji zastosowano również wskaźniki spektralne (ang. \emph{spectral
@@ -511,8 +511,8 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
   reflektancja w kanale średniej podczerwieni
 \end{itemize}
 
-\hypertarget{tekstury-obrazu}{%
-\subsection{Tekstury obrazu}\label{tekstury-obrazu}}
+\hypertarget{sec-textures}{%
+\subsection{Tekstury obrazu}\label{sec-textures}}
 
 Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów
 i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture} i
@@ -583,11 +583,55 @@ rycina - schemat przygotowania danych
 \hypertarget{sec-samples-methods}{%
 \section{Próbki treningowe i testowe}\label{sec-samples-methods}}
 
-Opis wektoryzacji farm fotowoltaicznych na podstawie ortofotomapy i
-mozaik satelitarnych. Opis procesu pozyskiwania próbek treningowych,
-uwzględniając liczbę próbek pozytywnych i negatywnych, ewentualne
-dobieranie negatywnych próbek z jakiejś konkretnej kategorii pokrycia
-terenu terenu - do napisania po ostatecznym generowaniu/losowaniu próbek
+Na podstawie ortofotomapy oraz mozaik satelitarnych wskazanych w sekcji
+\ref{sec-mosaics} zwektoryzowane zostały prawdopodobnie wszystkie farmy
+fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV
+istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023
+roku). Z każdego zwektoryzowanego poligonu, reprezentującego obszar pod
+panelami fotowoltaicznymi pozyskano dwie losowo zlokalizowane próbki,
+stanowiące obserwacje pozytywne. Lokalizacje próbek negatywnych,
+znajdujących się poza obszarami oznaczonymi jako farmy fotowoltaiczne na
+obszarze kafla Sentinel-2 o oznaczeniu 33UWV, zostały wylosowane
+wykorzystując próbkowanie losowe stratyfikowane (ang.
+\emph{stratified}). Próbkowanie losowe stratyfikowane polega na podziale
+obszaru analizy na regularne komórki, a następnie losowaniu lokalizacji
+punktu w każdej komórce \autocite{nowosad_2021_geostatystyka_r}.
+
+Po wykonaniu pierwszych testowych predykcji zauważono, że modele
+przeuczały się na niektórych typach pokrycia terenu i użytkowania ziemi,
+wskazując farmy fotowoltaiczne w miejscach, gdzie faktycznie nie
+występowały. W celu poprawy wyników predykcji dodatkowe lokalizacje
+negatywnych próbek zostały wylosowane na obszarach niepoprawnie
+sklasyfikowanych, wykorzystując dane z OpenStreetMap
+\autocite{OpenStreetMap}. OpenStreetMap (OSM) to bezpłatna, otwarta
+geograficzna baza danych aktualizowana i utrzymywana przez społeczność
+wolontariuszy \autocite{bennett_2010_openstreetmap}.
+
+Obszary niepoprawnie sklasyfikowane przez pierwsze modele to plaże,
+budynki oraz drogi. W celu poprawy wyników predykcji pobrano z bazy
+danych OpenStreetMap dane przestrzenne o plażach
+(\texttt{tag:natural=beach}), budynkach (\texttt{key:building}) oraz
+drogach (\texttt{key:highway}) na obszarze kafla Sentinel-2 o oznaczeniu
+33UWV, z których wylosowano lokalizacje kolejnych negatywnych próbek.
+Dodatkowo, lokalizacje negatywnych obserwacji zostały wylosowane na
+zbiornikach wodnych (jeziorach; \texttt{tag:water=lake}).
+
+Przy tworzeniu kolejnych predykcji zauważono również skłonność do
+regularnego przeuczania się kolejnych, poprawionych modeli na terenach
+oznaczonych w OSM jako kopalnie torfu. W celu eliminacji tych błędnie
+sklasyfikowanych terenów, przy tworzeniu ostatecznych modeli,
+wykorzystano również negatywne próbki wylosowane na terenach kopalni
+odkrywkowych oznaczonych w bazie OpenStreetMap jako
+\texttt{tag:landuse=quarry}.
+
+Dla każdej wylosowanej próbki zostały wyekstraktowane wartości
+pochodzące z danych teledetekcyjnych i ich pochodnych, przygotowane
+zgodnie z opisem przedstawionym w sekcjach \ref{sec-processing-s1},
+\ref{sec-processing-s2}, \ref{sec-spectral-indices} oraz
+\ref{sec-textures}. Tak przygotowane próbki były następnie wykorzystane
+przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie
+farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich
+pochodnych.
 
 \hypertarget{sec-machine-learning}{%
 \section{Uczenie maszynowe}\label{sec-machine-learning}}
