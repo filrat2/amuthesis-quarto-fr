@@ -432,7 +432,7 @@ danych Sentinel-1 Ground Range Detected (GRD)}
 Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i
 VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox
 (S1TBX) \autocite{s1tbx} w oprogramowaniu SNAP \autocite{snap} przy
-pomocy narzedzie do przetwarzania grafów (ang. \emph{Graph Processing
+pomocy narzędzia do przetwarzania grafów (ang. \emph{Graph Processing
 Tool}, GPT) . Kolejne etapy przygotowania danych zostały zrealizowane
 przy wykorzystaniu języka R (\textcite{R-base}) oraz pakietu
 \emph{terra} \autocite{R-terra}. Obszar analizy, będący kaflem
@@ -442,7 +442,7 @@ sąsiadujące produkty zostały połączone i odpowiednio ograniczone do
 obszaru zainteresowania. Na granicy sąsiednich produktów Sentinel-1 GRD
 występowała przestrzeń bez danych o szerokości jednej komórki, co
 wymagało wypełnienia tego obszaru danymi przy użyciu funkcji
-\emph{focal} z pakietu \emph{terra}.
+\texttt{focal} z pakietu \emph{terra} \autocite{R-terra}.
 
 \begin{figure}[t]
 
@@ -461,8 +461,9 @@ wykorzystanych produktów Sentinel-1}
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o
 rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
 10 m. Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone
-przy \emph{resample} z pakietu \emph{terra} \autocite{R-terra}, stosując
-interpolację dwuliniową (ang. \emph{bilinear interpolation}).
+przy pomocy funkcji \texttt{resample} z pakietu \emph{terra}
+\autocite{R-terra}, stosując interpolację dwuliniową (ang.
+\emph{bilinear interpolation}).
 
 \hypertarget{sec-spectral-indices}{%
 \subsection{Wskaźniki spektralne}\label{sec-spectral-indices}}
@@ -476,9 +477,9 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
 
 \begin{itemize}
 \item
-  znormalizowany wskaźnik roślinności (ang. \emph{Normalized Difference
-  Vegetation Index}, NDVI) \autocite{ndvi}, monitorujący zawartość
-  biomasy i kondycję roślinności na danym obszarze:
+  znormalizowany różnicowy wskaźnik wegetacji (ang. \emph{Normalized
+  Difference Vegetation Index}, NDVI) \autocite{ndvi}, monitorujący
+  zawartość biomasy i kondycję roślinności na danym obszarze:
 
   \[
   NDVI = \frac{NIR - Red}{NIR + Red}
@@ -487,9 +488,9 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
   , gdzie \(NIR\) -- reflektancja w kanale bliskiej podczerwieni,
   \(Red\) -- reflektancja w kanale czerwonym
 \item
-  znormalizowany indeks zabudowy (ang. \emph{Normalized Difference
-  Built-up Index}, NDBI) \autocite{ndbi}, przeznaczony do kartowania
-  obszarów zabudowanych:
+  znormalizowany różnicowy wskaźnik obszarów zabudowanych (ang.
+  \emph{Normalized Difference Built-up Index}, NDBI) \autocite{ndbi},
+  przeznaczony do kartowania obszarów zabudowanych:
 
   \[
   NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
@@ -498,10 +499,11 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
   , gdzie \(SWIR1\) -- reflektancja w kanale średniej podczerwieni,
   \(NIR\) -- reflektancja w kanale bliskiej podczerwieni
 \item
-  znormalizowany indeks wody (ang. \emph{Modified Normalized Differene
-  Water Index}, mNDWI) \autocite{mndwi}, który skutecznie identyfikuje
-  obszary wodne na zdjęciach satelitarnych, posiadając możliwości
-  tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby:
+  znormalizowany zmodyfikowany różnicowy wskaźnik wody (ang.
+  \emph{Modified Normalized Difference Water Index}, mNDWI)
+  \autocite{mndwi}, który skutecznie identyfikuje obszary wodne na
+  zdjęciach satelitarnych, posiadając możliwości tłumienia zakłóceń
+  spowodowanych przez zabudowę, roślinność i gleby:
 
   \[
   mNDWI = \frac{Green - SWIR1}{Green + SWIR1}
@@ -564,7 +566,7 @@ na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
 
 Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych
-Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale
+Sentinel-2 przegotowanych w sposób przedstawiony w sekcji
 \ref{sec-processing-s2} wynosi 10 m. Stworzenie spójnych wielokanałowych
 rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej
 rozdzielczości i siatki. Dane Sentinel-1 GRD zostały przetransformowane
@@ -717,11 +719,83 @@ na podstawie głosowania większościowego. W przypadku klasyfikacji, klasa
 wybierana jest na podstawie największej liczby głosów.
 \autocite{breiman_2001_rf}.
 
+\hypertarget{dostrajanie-modeli}{%
+\subsection{Dostrajanie modeli}\label{dostrajanie-modeli}}
+
+Celem optymalizacji hiperparametrów lub dostrajania modelu jest
+znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia
+maszynowego dla danego zadania \autocite{bischl_2024_mlr3}.
+Optymalizacja hiperparametrów (ang. \emph{hyperparameters}) odgrywa
+kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości
+modelu \autocite{schratz_2019_hyperparameters}. Hiperparametry są
+ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna
+konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań
+(ang. \emph{search space}) i ustalana na podstawie krzyżowej walidacji
+(inaczej kroswalidacji; ang. \emph{cross-validation}, CV)
+\autocite{lovelace_2019_geocomputation}. Nazywa się to strojeniem
+hiperparametrów.
+
+Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi
+wartościami hiperparametrów, co może być jednym z powodów ich dużej
+popularności \autocite{lovelace_2019_geocomputation}. Chociaż
+dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze
+strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia
+maszynowego, takich jak maszyny wektorów nośnych (ang. \emph{Support
+Vector Machines}, SVM) \autocite{probst_2019_hyperparameters}.
+
+Hiperparametry \texttt{mtry}, \texttt{sample.fraction} i
+\texttt{min.node.size} są parametrami określającymi stopień losowości
+lasu losowego i powinny zostać odpowiednio dostrojone
+\autocite{probst_2019_hyperparameters}. Liczba losowo wybranych
+zmiennych \texttt{mtry} wskazuje, ile zmiennych predykcyjnych powinno
+zostać użytych w każdym drzewie \autocite{lovelace_2019_geocomputation}.
+Parametr \texttt{sample.fraction} odnosi się do wielkości próbki, czyli
+ułamka obserwacji użytego w każdym drzewie
+\autocite{lovelace_2019_geocomputation}. Mniejsze frakcje prowadzą do
+większej różnorodności drzew, a tym samym do mniejszej korelacji między
+nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew
+\autocite{probst_2019_hyperparameters}. Minimalna wielkość węzła
+\texttt{min.node.size} określa minimalną liczbę obserwacji w węźle
+końcowym \autocite{probst_2019_hyperparameters}. W ramach optymalizacji
+uwzględniono również parametry \texttt{num.trees} oraz
+\texttt{max.depth}, odnoszące się odpowiednio do liczby drzew w lesie
+oraz maksymalnej głębokości pojedynczego drzewa.
+
+Kombinacje hiperparametrów zostały wybrane losowo, jednak pozostawały w
+określonych granicach strojenia ustalonych za pomocą pakietu
+\emph{paradox} \autocite{R-paradox}. Zasięg przestrzeni strojenia został
+wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie
+\emph{mlr3tuningspaces} \autocite{R-mlr3tuningspaces} lub literaturze
+\autocite{probst_2019_hyperparameters,schratz_2019_hyperparameters}.
+\texttt{mtry} powinno przyjmować wartości z przedziału od 1 do liczby
+predyktorów, \texttt{sample.fraction} powinno mieścić się w zakresie od
+0,2 do 0,9, a \texttt{min.node.size} powinno przybierać wartości z
+przedziału od 1 do 10. Zgodnie z pakietem \emph{mlr3tuningspaces}
+\autocite{R-mlr3tuningspaces}, hiperparametr \texttt{num.trees} powinien
+być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości
+do przedziału od 50 do 500.
+
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \subsection{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
-\hypertarget{dostrajanie-modeli}{%
-\subsection{Dostrajanie modeli}\label{dostrajanie-modeli}}
+Jakość dostrojonych modeli oceniono przy pomocy miar:
+
+\begin{itemize}
+\item
+  AUC
+\item
+  dokładność
+\item
+  precyzja
+\item
+  czułość
+\item
+  wskaźnik F1
+\end{itemize}
+
+Jakość modeli za pomocą wymienionych miar została oceniona za pomocą
+przestrzennej walidacji krzyżowej, która uwzględnia szczególny charakter
+danych geograficznych \autocite{lovelace_2019_geocomputation}.
 
 \hypertarget{waux17cnoux15bux107-zmiennych}{%
 \section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}

@@ -35,10 +35,10 @@ W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zapropo
 knitr::include_graphics("figures/sentinel1_workflow.drawio.png")
 ```
 
-Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx] w oprogramowaniu SNAP [@snap] przy pomocy narzedzie do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) .
+Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx] w oprogramowaniu SNAP [@snap] przy pomocy narzędzia do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) .
 Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
-Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji *focal* z pakietu *terra*.
+Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji `focal` z pakietu *terra* [@R-terra].
 
 ```{r}
 #| label: fig-rycina-s1-extents
@@ -51,13 +51,13 @@ knitr::include_graphics("figures/sen1_extents.png")
 ### Sentinel-2 {#sec-processing-s2}
 
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości 10 m.
-Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy *resample* z pakietu *terra* [@R-terra], stosując interpolację dwuliniową (ang. *bilinear interpolation*).
+Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy pomocy funkcji `resample` z pakietu *terra* [@R-terra], stosując interpolację dwuliniową (ang. *bilinear interpolation*).
 
 ### Wskaźniki spektralne {#sec-spectral-indices}
 
 Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez @zhang_2021_texture, @plakman_2022_pv, @wang_2022_pv i innych, takie jak:
 
--   znormalizowany wskaźnik roślinności (ang. *Normalized Difference Vegetation Index*, NDVI) [@ndvi], monitorujący zawartość biomasy i kondycję roślinności na danym obszarze:
+-   znormalizowany różnicowy wskaźnik wegetacji (ang. *Normalized Difference Vegetation Index*, NDVI) [@ndvi], monitorujący zawartość biomasy i kondycję roślinności na danym obszarze:
 
     $$
     NDVI = \frac{NIR - Red}{NIR + Red}
@@ -65,7 +65,7 @@ Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji z
 
     , gdzie $NIR$ -- reflektancja w kanale bliskiej podczerwieni, $Red$ -- reflektancja w kanale czerwonym
 
--   znormalizowany indeks zabudowy (ang. *Normalized Difference Built-up Index*, NDBI) [@ndbi], przeznaczony do kartowania obszarów zabudowanych:
+-   znormalizowany różnicowy wskaźnik obszarów zabudowanych (ang. *Normalized Difference Built-up Index*, NDBI) [@ndbi], przeznaczony do kartowania obszarów zabudowanych:
 
     $$
     NDBI = \frac{SWIR1 - NIR}{SWIR1 + NIR}
@@ -73,7 +73,7 @@ Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji z
 
     , gdzie $SWIR1$ -- reflektancja w kanale średniej podczerwieni, $NIR$ -- reflektancja w kanale bliskiej podczerwieni
 
--   znormalizowany indeks wody (ang. *Modified Normalized Differene Water Index*, mNDWI) [@mndwi], który skutecznie identyfikuje obszary wodne na zdjęciach satelitarnych, posiadając możliwości tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby:
+-   znormalizowany zmodyfikowany różnicowy wskaźnik wody (ang. *Modified Normalized Difference Water Index*, mNDWI) [@mndwi], który skutecznie identyfikuje obszary wodne na zdjęciach satelitarnych, posiadając możliwości tłumienia zakłóceń spowodowanych przez zabudowę, roślinność i gleby:
 
     $$
     mNDWI = \frac{Green - SWIR1}{Green + SWIR1}
@@ -101,7 +101,7 @@ W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruch
 
 ### Łączenie danych {#sec-processing-data-merging}
 
-Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w podrozdziale [-@sec-processing-s2] wynosi 10 m.
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w sekcji [-@sec-processing-s2] wynosi 10 m.
 Stworzenie spójnych wielokanałowych rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej rozdzielczości i siatki.
 Dane Sentinel-1 GRD zostały przetransformowane do siatki danych Sentinel-2.
 Przepróbkowane do wspólnej rozdzielczości oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
@@ -174,9 +174,44 @@ W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja
 W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów.
 [@breiman_2001_rf].
 
+### Dostrajanie modeli
+
+Celem optymalizacji hiperparametrów lub dostrajania modelu jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
+Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters].
+Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i ustalana na podstawie krzyżowej walidacji (inaczej kroswalidacji; ang. *cross-validation*, CV) [@lovelace_2019_geocomputation].
+Nazywa się to strojeniem hiperparametrów.
+
+Lasy losowe często wykazują  satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
+Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych (ang. *Support Vector Machines*, SVM) [@probst_2019_hyperparameters].
+
+Hiperparametry `mtry`, `sample.fraction` i `min.node.size` są parametrami określającymi stopień losowości lasu losowego i powinny zostać odpowiednio dostrojone [@probst_2019_hyperparameters].
+Liczba losowo wybranych zmiennych `mtry` wskazuje, ile zmiennych predykcyjnych powinno zostać użytych w każdym drzewie [@lovelace_2019_geocomputation].
+Parametr `sample.fraction` odnosi się do wielkości próbki, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
+Mniejsze frakcje prowadzą do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew
+[@probst_2019_hyperparameters].
+Minimalna wielkość węzła `min.node.size` określa minimalną liczbę obserwacji w węźle końcowym [@probst_2019_hyperparameters].
+W ramach optymalizacji uwzględniono również parametry `num.trees` oraz `max.depth`, odnoszące się odpowiednio do liczby drzew w lesie oraz maksymalnej głębokości pojedynczego drzewa.
+
+Kombinacje hiperparametrów zostały wybrane losowo, jednak pozostawały w określonych granicach strojenia ustalonych za pomocą pakietu *paradox* [@R-paradox].
+Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie *mlr3tuningspaces* [@R-mlr3tuningspaces] lub literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
+`mtry` powinno przyjmować wartości z przedziału od 1 do liczby predyktorów, `sample.fraction` powinno mieścić się w zakresie od 0,2 do 0,9, a `min.node.size` powinno przybierać wartości z przedziału od 1 do 10. 
+Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees`  powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500.
+
 ### Ocena jakości modeli
 
-### Dostrajanie modeli
+Jakość dostrojonych modeli oceniono przy pomocy miar:
+
+-   AUC
+
+-   dokładność
+
+-   precyzja
+
+-   czułość
+
+-   wskaźnik F1
+
+Jakość modeli za pomocą wymienionych miar została oceniona za pomocą przestrzennej walidacji krzyżowej, która uwzględnia szczególny charakter danych geograficznych [@lovelace_2019_geocomputation].
 
 ## Ważność zmiennych
 
@@ -235,6 +270,6 @@ Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzysta
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "future", "Przewodnik")
+pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "paradox", "mlr3tuningspaces", "future", "Przewodnik")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```
