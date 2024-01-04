@@ -101,43 +101,6 @@ pracy.
 \hypertarget{sec-lit}{%
 \chapter{Przegląd literatury}\label{sec-lit}}
 
-Ten rozdział zawiera wyjaśnienie kontekstu pracy.
-
-Pisząc ten rozdział proszę pomyśleć o osobach, które zupełnie nie znają
-opisywanej tematyki. Należy tutaj krok po kroku wyjaśnić podstawowe
-koncepcje, istotność problemu, wyniki poprzednich podobnych badań, itd.
-Ten rozdział obejmuje tylko kwestie, które już zostały wykonane przez
-inne osoby - nowe wyniki mają swoje miejsce w rozdziale
-\ref{sec-wyniki}.
-
-Każda kwestia opisana w tym rozdziale powinna być cytowana. Dodatnie
-cytowania odbywa się poprzez uzupełnienie pliku \texttt{thesis.bib}
-zapisem w formacie BibTeX, a następnie dodanie nazwy referencji
-poprzedzonej znakiem \texttt{@}. Przykładowo, zacytowanie książki
-Geocomputation with R odbywa się poprzez
-\autocite{lovelace_geocomputation_2019}.
-
-W przypadku, gdy cytowanie zostało poprawnie wpisane oraz istnieje w
-pliku \texttt{thesis.bib} to bibliografia powinna się automatycznie
-wygenerować na końcu pracy.
-
-W przypadku, gdy praca dyplomowa opisuje konkretny obszar to można po
-tym rozdziale stworzyć kolejny rozdział opisujący ``obszar badań''.
-
-Ten i kolejne rozdziału moją mieć także podrozdziały. Tworzenie
-podrozdziałów polega na stworzeniu nowej linii rozpoczynającej się od
-znaków \texttt{\#\#} a następnie tytułu podrozdziału. Dodatkowo w
-postaci \texttt{\{\#sec-\}} można dodać skrót nazwy
-rozdziału/podrozdziału umożliwiający odnoszenie się do niego używając
-operatora \texttt{{[}-@sec{]}}.
-
-\hypertarget{sec-podr}{%
-\section{Podrozdział}\label{sec-podr}}
-
-Przykładowo, ``te kwestie zostały opisane w podrozdziale
-\ref{sec-podr}''. Zwróć uwagę, że w ten sposób automatycznie tworzony
-jest odnośnik w pliku PDF.
-
 \bookmarksetup{startatroot}
 
 \hypertarget{sec-materialy}{%
@@ -232,14 +195,14 @@ przedstawia tabela \ref{tbl-tabela-sentinel1}
 \caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA, 2023f) }\tabularnewline
 
 \centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{3cm}>{\raggedright\arraybackslash}p{2cm}}
+\begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2cm}}
 \toprule
 Tryb & Kąt padania wiązki [°] & Rozdzielczość przestrzenna [m] & Szerokość rejestrowanego pasa [km] & Polaryzacje (H=pozioma, V=pionowa)\\
 \midrule
 Stripmap & 20 - 45 & 5 x 5 & 80 & HH+HV, VH+VV, HH, VV\\
 \textbf{Interferometric Wide Swath} & \textbf{29 - 46} & \textbf{5 x 20} & \textbf{250} & \textbf{HH+HV, VH+VV, HH, VV}\\
 Extra Wide Swath & 19 - 47 & 20 x 40 & 400 & HH+HV, VH+VV, HH, VV\\
-Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
+Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -289,7 +252,7 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 \caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA, 2023l) }\tabularnewline
 
 \centering
-\begin{tabular}{>{\raggedright\arraybackslash}p{1.5cm}>{\raggedright\arraybackslash}p{4cm}>{\raggedleft\arraybackslash}p{2cm}>{\raggedright\arraybackslash}p{2cm}>{\raggedleft\arraybackslash}p{2cm}}
+\begin{tabular}{>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2.4cm}}
 \toprule
 Kanał & Nazwa kanału & Centralna długość fali [nm] & Zakres spektralny [nm] & Rozdzielczość przestrzenna [m]\\
 \midrule
@@ -298,13 +261,11 @@ B01 & Coastal Aerosol & 443 & 433–453 & 60\\
 \textbf{B03} & \textbf{Green} & \textbf{560} & \textbf{543–578} & \textbf{10}\\
 \textbf{B04} & \textbf{Red} & \textbf{665} & \textbf{650–680} & \textbf{10}\\
 \textbf{B05} & \textbf{Vegetation RedEdge} & \textbf{704} & \textbf{698–713} & \textbf{20}\\
-\addlinespace
 \textbf{B06} & \textbf{Vegetation RedEdge} & \textbf{740} & \textbf{733–748} & \textbf{20}\\
 \textbf{B07} & \textbf{Vegetation RedEdge} & \textbf{783} & \textbf{773–793} & \textbf{20}\\
 \textbf{B08} & \textbf{NIR} & \textbf{833} & \textbf{785–900} & \textbf{10}\\
 \textbf{B8A} & \textbf{NIR} & \textbf{865} & \textbf{855–875} & \textbf{20}\\
 B09 & Water Vapour & 945 & 935–955 & 60\\
-\addlinespace
 B10 & Cirrus & 1374 & 1360–1390 & 60\\
 \textbf{B11} & \textbf{SWIR} & \textbf{1610} & \textbf{1565–1655} & \textbf{20}\\
 \textbf{B12} & \textbf{SWIR} & \textbf{2190} & \textbf{2100–2280} & \textbf{20}\\
@@ -577,8 +538,32 @@ zależności od wariantu, dane zostały scalone w kilka wielokanałowych
 rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych
 oraz do przeprowadzenia predykcji.
 
-tabela - warianty połączenia danych - np. kanały S2, kanały S2 + indeksy
-spektralne, kanały S2 + polaryzacje S1 etc.
+\hypertarget{tbl-tabela-datasets}{}
+\begin{table}
+\caption{\label{tbl-tabela-datasets}Warianty {[}NAZWA DO ZMIANY!!!{]} }\tabularnewline
+
+\centering
+\begin{tabular}{>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{9.5cm}}
+\toprule
+Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
+\midrule
+1 & 10 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12\\
+\addlinespace
+2 & 13 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI\\
+\addlinespace
+3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+\addlinespace
+4 & 12 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH\\
+\addlinespace
+5 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
+        tekstury: 02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG\\
+\addlinespace
+6 & 21 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; S1:VV, VH;
+        tekstury: B02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+\bottomrule
+\multicolumn{3}{l}{\textsuperscript{a} Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1}\\
+\end{tabular}
+\end{table}
 
 rycina - schemat przygotowania danych
 
@@ -774,6 +759,39 @@ przedziału od 1 do 10. Zgodnie z pakietem \emph{mlr3tuningspaces}
 \autocite{R-mlr3tuningspaces}, hiperparametr \texttt{num.trees} powinien
 być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości
 do przedziału od 50 do 500.
+
+\hypertarget{tbl-tabela-tuning}{}
+\begin{table}
+\caption{\label{tbl-tabela-tuning}Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF }\tabularnewline
+
+\centering
+\begin{tabular}{ccccccc}
+\toprule
+\multicolumn{1}{c}{ } & \multicolumn{5}{c}{Optymalizowane parametry} & \multicolumn{1}{c}{ } \\
+\cmidrule(l{3pt}r{3pt}){2-6}
+Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees & max.depth & AUC\\
+\midrule
+1 & 9 & 0.6843 & 2 & 180 & 36 & 0.9886\\
+2 & 7 & 0.7373 & 1 & 372 & 23 & 0.9914\\
+3 & 7 & 0.8847 & 5 & 388 & 75 & 0.9904\\
+4 & 6 & 0.8758 & 5 & 291 & 54 & 0.9881\\
+5 & 5 & 0.6898 & 1 & 234 & 99 & 0.9850\\
+6 & 8 & 0.8847 & 5 & 388 & 75 & 0.9905\\
+\bottomrule
+\multicolumn{7}{l}{\textsuperscript{a} Patrz: tabela 4.1}\\
+\end{tabular}
+\end{table}
+
+Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów
+losowych dla poszczególnych wariantów (zbiorów danych) zostały
+przedstawione w tabeli \ref{tbl-tabela-tuning}. Warto zauważyć, że
+warianty 3 i 6 wykazują identyczne wartości dla parametrów
+\texttt{sample.fraction}, \texttt{min.node.size}, \texttt{num.trees} i
+\texttt{max.depth}. Podczas losowania hiperparametrów dla każdego
+wariantu wykorzystano to samo ziarno losowości (ang. \emph{random
+seed}), ustawione za pomocą funkcji \texttt{set.seed()}. Dla dwóch
+wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy
+wykorzystaniu identycznego zestawu hiperparametrów.
 
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \subsection{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}

@@ -107,8 +107,29 @@ Dane Sentinel-1 GRD zostały przetransformowane do siatki danych Sentinel-2.
 Przepróbkowane do wspólnej rozdzielczości oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
 Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w kilka wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych oraz do przeprowadzenia predykcji.
 
-tabela - warianty połączenia danych - np.
-kanały S2, kanały S2 + indeksy spektralne, kanały S2 + polaryzacje S1 etc.
+```{r tabela1, echo=FALSE}
+#| label: tbl-tabela-datasets
+#| echo: false
+#| tbl-cap: "Warianty [NAZWA DO ZMIANY!!!]"
+#| warning: false
+df <- data.frame(
+  a = c(1, 2, 3, 4, 5, 6),
+  b = c(10, 13, 16, 12, 16, 21),
+  c = c("S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
+        tekstury: 02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; S1:VV, VH;
+        tekstury: B02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG, NDBI_SAVG, mNDWI_SAVG"))
+
+knitr::kable(df, booktabs = TRUE, align = "c", 
+             col.names = c("Wariant", "Liczba zmiennych", "Zmienne [note]"),
+             linesep = "\\addlinespace") |>
+    kableExtra::column_spec(c(1, 2, 3), width = c("2cm", "2cm", "9.5cm")) |>
+    kableExtra::add_footnote("Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1")
+```
 
 rycina - schemat przygotowania danych
 
@@ -181,21 +202,37 @@ Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę 
 Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i ustalana na podstawie krzyżowej walidacji (inaczej kroswalidacji; ang. *cross-validation*, CV) [@lovelace_2019_geocomputation].
 Nazywa się to strojeniem hiperparametrów.
 
-Lasy losowe często wykazują  satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
+Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
 Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych (ang. *Support Vector Machines*, SVM) [@probst_2019_hyperparameters].
 
 Hiperparametry `mtry`, `sample.fraction` i `min.node.size` są parametrami określającymi stopień losowości lasu losowego i powinny zostać odpowiednio dostrojone [@probst_2019_hyperparameters].
 Liczba losowo wybranych zmiennych `mtry` wskazuje, ile zmiennych predykcyjnych powinno zostać użytych w każdym drzewie [@lovelace_2019_geocomputation].
 Parametr `sample.fraction` odnosi się do wielkości próbki, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
-Mniejsze frakcje prowadzą do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew
-[@probst_2019_hyperparameters].
+Mniejsze frakcje prowadzą do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew [@probst_2019_hyperparameters].
 Minimalna wielkość węzła `min.node.size` określa minimalną liczbę obserwacji w węźle końcowym [@probst_2019_hyperparameters].
 W ramach optymalizacji uwzględniono również parametry `num.trees` oraz `max.depth`, odnoszące się odpowiednio do liczby drzew w lesie oraz maksymalnej głębokości pojedynczego drzewa.
 
 Kombinacje hiperparametrów zostały wybrane losowo, jednak pozostawały w określonych granicach strojenia ustalonych za pomocą pakietu *paradox* [@R-paradox].
 Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie *mlr3tuningspaces* [@R-mlr3tuningspaces] lub literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
-`mtry` powinno przyjmować wartości z przedziału od 1 do liczby predyktorów, `sample.fraction` powinno mieścić się w zakresie od 0,2 do 0,9, a `min.node.size` powinno przybierać wartości z przedziału od 1 do 10. 
-Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees`  powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500.
+`mtry` powinno przyjmować wartości z przedziału od 1 do liczby predyktorów, `sample.fraction` powinno mieścić się w zakresie od 0,2 do 0,9, a `min.node.size` powinno przybierać wartości z przedziału od 1 do 10.
+Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees` powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500.
+
+```{r tabela1, echo=FALSE}
+#| label: tbl-tabela-tuning
+#| echo: false
+#| tbl-cap: "Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF"
+df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
+names(df)[names(df) == 'dataset'] = 'Wariant [note]'
+names(df)[names(df) == 'classif.auc'] = 'AUC'
+kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
+  kableExtra::add_header_above(c(" ", "Optymalizowane parametry" = 5, " ")) |>
+  kableExtra::add_footnote("Patrz: tabela 4.1")
+```
+
+Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) zostały przedstawione w tabeli [-@tbl-tabela-tuning].
+Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla parametrów `sample.fraction`, `min.node.size`, `num.trees` i `max.depth`.
+Podczas losowania hiperparametrów dla każdego wariantu wykorzystano to samo ziarno losowości (ang. *random seed*), ustawione za pomocą funkcji `set.seed()`.
+Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu hiperparametrów.
 
 ### Ocena jakości modeli
 
