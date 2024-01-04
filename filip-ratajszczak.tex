@@ -551,7 +551,7 @@ Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \addlinespace
 2 & 13 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI\\
 \addlinespace
-3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
 \addlinespace
 4 & 12 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH\\
 \addlinespace
@@ -796,19 +796,42 @@ wykorzystaniu identycznego zestawu hiperparametrów.
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \subsection{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
-Jakość dostrojonych modeli oceniono przy pomocy miar:
+Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela
+\ref{tbl-tabela-datasets}) przeprowadzono przy pomocy pięciu miar
+jakości, przeznaczonych dla klasyfikatorów binarnych:
 
 \begin{itemize}
 \item
-  AUC
+  precyzja (ang. \emph{precision}, inaczej \emph{positive predictive
+  value}) - określa jaka część wyników wskazanych przez klasyfikator
+  jako dodatnie jest faktycznie dodatnia
+  \autocite{jaworski_2013_perfomance_measures}
 \item
-  dokładność
+  czułość (ang. \emph{sensitivity}, inaczej \emph{recall} lub \emph{true
+  positive rate}) - określa jaką część dodatnich wyników wykrył
+  klasyfikator \autocite{jaworski_2013_perfomance_measures}
 \item
-  precyzja
+  specyficzność (ang. \emph{specificity}, inaczej \emph{true negative
+  rate}) - określa jaką część ujemnych wyników wykrył klasyfikator
+  \autocite{jaworski_2013_perfomance_measures}
 \item
-  czułość
+  pole powierzchni pod krzywą (ang. \emph{Area Under Curve} lub
+  \emph{Area Under the ROC Curve}, AUC lub AUROC) - oblicza obszar pod
+  krzywą ROC, która graficznie przedstawia zależność pomiędzy czułością
+  a specyficznością \autocite{jaworski_2013_perfomance_measures}. AUC
+  ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma
+  wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka
+  negatywna \autocite{R-mlr3measures}. Wartości AUC mieszczą się w
+  zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza oznacza model
+  nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie obu klas.
+  Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
+  \autocite{lovelace_2019_geocomputation}
 \item
-  wskaźnik F1
+  \(F_{\beta}\) score (F-beta score) - ważona średnia harmoniczna
+  pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między
+  czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik.
+  Miara ta nie uwzględnia wyników prawdziwie negatywnych
+  \autocite{uw_2021_ml}
 \end{itemize}
 
 Jakość modeli za pomocą wymienionych miar została oceniona za pomocą

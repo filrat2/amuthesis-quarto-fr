@@ -117,7 +117,7 @@ df <- data.frame(
   b = c(10, 13, 16, 12, 16, 21),
   c = c("S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12",
         "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
         "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH",
         "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
         tekstury: 02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG",
@@ -236,17 +236,20 @@ Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy w
 
 ### Ocena jakości modeli
 
-Jakość dostrojonych modeli oceniono przy pomocy miar:
+Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy pomocy pięciu miar jakości, przeznaczonych dla klasyfikatorów binarnych:
 
--   AUC
+-   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako dodatnie jest faktycznie dodatnia [@jaworski_2013_perfomance_measures]
 
--   dokładność
+-   czułość (ang. *sensitivity*, inaczej *recall* lub *true positive rate*) - określa jaką część dodatnich wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
 
--   precyzja
+-   specyficzność (ang. *specificity*, inaczej *true negative rate*) - określa jaką część ujemnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
 
--   czułość
+-   pole powierzchni pod krzywą (ang. *Area Under Curve* lub *Area Under the ROC Curve*, AUC lub AUROC) - oblicza obszar pod krzywą ROC, która graficznie przedstawia zależność pomiędzy czułością a specyficznością [@jaworski_2013_perfomance_measures].
+AUC ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka negatywna [@R-mlr3measures].
+Wartości AUC mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza oznacza model nie lepszy od losowego, a 1,0 – doskonałe przewidywanie obu klas.
+Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu [@lovelace_2019_geocomputation]
 
--   wskaźnik F1
+-   $F_{\beta}$ score (F-beta score) - ważona średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik. Miara ta nie uwzględnia wyników prawdziwie negatywnych [@uw_2021_ml]
 
 Jakość modeli za pomocą wymienionych miar została oceniona za pomocą przestrzennej walidacji krzyżowej, która uwzględnia szczególny charakter danych geograficznych [@lovelace_2019_geocomputation].
 
@@ -307,6 +310,6 @@ Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzysta
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "paradox", "mlr3tuningspaces", "future", "Przewodnik")
+pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "paradox", "mlr3tuningspaces", "mlr3measures", "future", "Przewodnik")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```
