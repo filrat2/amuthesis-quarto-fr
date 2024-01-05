@@ -222,7 +222,7 @@ Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.
 #| label: tbl-tabela-tuning
 #| echo: false
 #| tbl-cap: "Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF"
-df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
+df = readRDS("C:/Users/Dell 3620/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
 names(df)[names(df) == 'dataset'] = 'Wariant [note]'
 names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
@@ -248,10 +248,19 @@ Procedurę tę powtarza się, aż każdy z *k* podzbiorów zostanie użyty jako 
 Kroswalidacja pozwala na ocenę ogólnej wydajności modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
 
 Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*, SAC) [@pohjankukka_2017_scv].
-Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, mówiącym, że „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography], będącym jednocześnie podstawowym założeniem analizy geostatystycznej.
-Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, które może pozostać niewykryte, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
-Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych. 
-Aby ograniczyć nadmierny optymizm w ocenie jakości, podzbiory danych szkoleniowych muszą zawierać tylko obserwacje, które znajdują się w określonej odległości przestrzennej od siebie [@pohjankukka_2017_scv].
+Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, będącym jednocześnie podstawowym założeniem analizy geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography].
+Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników w zakresie dokładności predykcyjnej modeli [@brenning_2005_scv] Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
+Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych.
+Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie odseparowane podzbiory danych, wprowadzając przestrzenną odległość pomiędzy zbiorem treningowym a testowym [@pohjankukka_2017_scv].
+Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
+
+```{r}
+#| label: fig-rycina-spcv
+#| echo: false
+#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Opracowanie własne na podstawie [kodu Patricka Schratza](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
+#| out-width: 100%
+knitr::include_graphics("figures/spcv_plot.png")
+```
 
 Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy pomocy pięciu miar jakości, przeznaczonych dla klasyfikatorów binarnych, wykorzystując przestrzenną walidację krzyżową:
 

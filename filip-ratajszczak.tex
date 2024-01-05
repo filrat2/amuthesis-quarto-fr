@@ -192,7 +192,9 @@ przedstawia tabela \ref{tbl-tabela-sentinel1}
 
 \hypertarget{tbl-tabela-sentinel1}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA, 2023f) }\tabularnewline
+\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1
+(\href{https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath}{ESA,
+2023}) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2cm}}
@@ -200,8 +202,11 @@ przedstawia tabela \ref{tbl-tabela-sentinel1}
 Tryb & Kąt padania wiązki [°] & Rozdzielczość przestrzenna [m] & Szerokość rejestrowanego pasa [km] & Polaryzacje (H=pozioma, V=pionowa)\\
 \midrule
 Stripmap & 20 - 45 & 5 x 5 & 80 & HH+HV, VH+VV, HH, VV\\
+\addlinespace
 \textbf{Interferometric Wide Swath} & \textbf{29 - 46} & \textbf{5 x 20} & \textbf{250} & \textbf{HH+HV, VH+VV, HH, VV}\\
+\addlinespace
 Extra Wide Swath & 19 - 47 & 20 x 40 & 400 & HH+HV, VH+VV, HH, VV\\
+\addlinespace
 Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
 \bottomrule
 \end{tabular}
@@ -249,7 +254,9 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 
 \hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA, 2023l) }\tabularnewline
+\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2
+(\href{https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral}{ESA,
+2023}) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2.4cm}}
@@ -825,20 +832,39 @@ spełniają założenia niezależności danych ze względu na autokorelację
 przestrzenną (ang. \emph{spatial autocorrelation}, SAC)
 \autocite{pohjankukka_2017_scv}. Ogólnie rzecz biorąc, dane przestrzenne
 wykazują autokorelację przestrzenną zgodnie z pierwszym prawem
-geografii, mówiącym, że „Wszystko jest powiązane ze wszystkim innym, ale
-rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
-\autocite{tobler_1970_first_law_of_geography}, będącym jednocześnie
-podstawowym założeniem analizy geostatystycznej. Konsekwencją
-autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie
-klasyfikatorów do obserwacji uczących, które może pozostać niewykryte,
-jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru
-uczącego \autocite{brenning_2012_scv}. Przestrzenna walidacja krzyżowa
-(ang. \emph{spatial cross-validation}) jest modyfikacją standardowej
-kroswalidacji, która zapobiega błędom w ocenie jakości modelu
-wynikającym z bliskości danych testowych i treningowych. Aby ograniczyć
-nadmierny optymizm w ocenie jakości, podzbiory danych szkoleniowych
-muszą zawierać tylko obserwacje, które znajdują się w określonej
-odległości przestrzennej od siebie \autocite{pohjankukka_2017_scv}.
+geografii, będącym jednocześnie podstawowym założeniem analizy
+geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim
+innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
+\autocite{tobler_1970_first_law_of_geography}. Traktowanie zbiorów
+danych przestrzennych jak nieprzestrzennych prowadzi do zbyt
+optymistycznych wyników w zakresie dokładności predykcyjnej modeli
+\autocite{brenning_2005_scv} Konsekwencją autokorelacji przestrzennej
+dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
+obserwacji uczących jeśli obserwacje testowe (lub walidacyjne) nie są
+niezależne od zbioru uczącego \autocite{brenning_2012_scv}. Przestrzenna
+walidacja krzyżowa (ang. \emph{spatial cross-validation}) jest
+modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie
+jakości modelu wynikającym z bliskości danych testowych i treningowych.
+Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w
+ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie
+odseparowane podzbiory danych, wprowadzając przestrzenną odległość
+pomiędzy zbiorem treningowym a testowym \autocite{pohjankukka_2017_scv}.
+Przykład takiego podejścia przedstawia rycina \ref{fig-rycina-spcv}.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/spcv_plot.png}
+
+}
+
+\caption{\label{fig-rycina-spcv}Porównanie przestrzennego i losowego
+podziału zbioru danych na potrzeby walidacji krzyżowej jednego
+powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
+Opracowanie własne na podstawie
+\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{kodu
+Patricka Schratza}}
+
+\end{figure}
 
 Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela
 \ref{tbl-tabela-datasets}) przeprowadzono przy pomocy pięciu miar

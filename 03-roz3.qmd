@@ -42,7 +42,7 @@ Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1 przedstawia tab
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-sentinel1
 #| echo: false
-#| tbl-cap: "Tryby radaru Sentinel-1 (ESA, 2023f)"
+#| tbl-cap: "Tryby radaru Sentinel-1 ([ESA, 2023](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath))"
 df = data.frame(
   a = c("Stripmap", "Interferometric Wide Swath", "Extra Wide Swath", "Wave"),
   b = c("20 - 45", "29 - 46", "19 - 47", "22 - 35   35 - 38"),
@@ -55,7 +55,7 @@ colnames(df) = c("Tryb", "Kąt padania wiązki [°]", "Rozdzielczość przestrze
 # source:
 # https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath
 
-knitr::kable(df, booktabs = TRUE, align = "c", linesep = "") |> 
+knitr::kable(df, booktabs = TRUE, align = "c", linesep = "\\addlinespace") |> 
   kableExtra::column_spec(1, width = "3cm") |>  
   kableExtra::column_spec(2, width = "1.8cm") |>
   kableExtra::column_spec(3, width = "2.4cm") |> 
@@ -82,7 +82,7 @@ Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosfery
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-sentinel2
 #| echo: false
-#| tbl-cap: "Kanały spektralne satelitów Sentinel-2 (ESA, 2023l)"
+#| tbl-cap: "Kanały spektralne satelitów Sentinel-2 ([ESA, 2023](https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral))"
 df = data.frame(
   a = c("B01","B02","B03","B04","B05","B06","B07","B08","B8A","B09","B10","B11","B12"),
   b = c("Coastal Aerosol","Blue","Green","Red","Vegetation RedEdge","Vegetation RedEdge","Vegetation RedEdge","NIR","NIR","Water Vapour","Cirrus","SWIR","SWIR"),
