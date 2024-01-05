@@ -101,11 +101,12 @@ W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruch
 
 ### Łączenie danych {#sec-processing-data-merging}
 
-Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych Sentinel-2 przegotowanych w sposób przedstawiony w sekcji [-@sec-processing-s2] wynosi 10 m.
-Stworzenie spójnych wielokanałowych rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej rozdzielczości i siatki.
-Dane Sentinel-1 GRD zostały przetransformowane do siatki danych Sentinel-2.
-Przepróbkowane do wspólnej rozdzielczości oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
-Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w kilka wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych oraz do przeprowadzenia predykcji.
+W celu uzyskania spójnych wielokanałowych rastrów, wszystkie zbiory danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych Sentinel-2 przegotowanych w sposób przedstawiony w sekcji [-@sec-processing-s2] wynosi 10 m.
+Mimo że rozdzielczość przestrzenna danych Sentinel-1 GRD jest identyczna z rozdzielczością danych Sentinel-2, siatki przestrzenne obu zbiorów różniły się od siebie, przez co wymagana była transformacja danych Sentinel-1 do siatki danych Sentinel-2 w celu zachowania ich zgodności.
+Przetransformowane dane zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
+Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w formie kilku wielokanałowych rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych oraz do przeprowadzenia predykcji.
+Warianty zestawów danych zostały szczegółowo przedstawione w tabeli [-@tbl-tabela-datasets].
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-datasets
@@ -223,20 +224,36 @@ Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.
 #| tbl-cap: "Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF"
 df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
 names(df)[names(df) == 'dataset'] = 'Wariant [note]'
-names(df)[names(df) == 'classif.auc'] = 'AUC'
+names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
   kableExtra::add_header_above(c(" ", "Optymalizowane parametry" = 5, " ")) |>
-  kableExtra::add_footnote("Patrz: tabela 4.1")
+  kableExtra::add_footnote(c("Patrz: tabela 4.1",
+                             "Patrz: sekcja 4.3.3"))
 ```
 
-Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) zostały przedstawione w tabeli [-@tbl-tabela-tuning].
+Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną jakości AUC zostały przedstawione w tabeli [-@tbl-tabela-tuning].
 Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla parametrów `sample.fraction`, `min.node.size`, `num.trees` i `max.depth`.
 Podczas losowania hiperparametrów dla każdego wariantu wykorzystano to samo ziarno losowości (ang. *random seed*), ustawione za pomocą funkcji `set.seed()`.
-Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu hiperparametrów.
+Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z pięciu optymalizowanych hiperparametrów.
 
 ### Ocena jakości modeli
 
-Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy pomocy pięciu miar jakości, przeznaczonych dla klasyfikatorów binarnych:
+Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości modelu w rozważanym zadaniu.
+W tym celu można zastosować *k*-krotną walidację krzyżową (ang. *k-fold cross-validation*, CV), która zakłada, że obserwacje są od siebie niezależne [@pohjankukka_2017_scv].
+W standardowej *k*-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony na *k* podzbiorów podobnej wielkości, gdzie *fold* odnosi się do liczby powstałych podzbiorów.
+Podział ten przeprowadza się poprzez losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
+Model jest uczony na *k* - 1 podzbiorach, które razem tworzą zbiór uczący.
+Następnie model jest testowany na pozostałym podzbiorze, określanym jako zbiór walidacyjny i mierzona jest jego jakość.
+Procedurę tę powtarza się, aż każdy z *k* podzbiorów zostanie użyty jako zbiór walidacyjny [@berrar_2018_cv].
+Kroswalidacja pozwala na ocenę ogólnej wydajności modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
+
+Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*, SAC) [@pohjankukka_2017_scv].
+Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, mówiącym, że „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography], będącym jednocześnie podstawowym założeniem analizy geostatystycznej.
+Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, które może pozostać niewykryte, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
+Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych. 
+Aby ograniczyć nadmierny optymizm w ocenie jakości, podzbiory danych szkoleniowych muszą zawierać tylko obserwacje, które znajdują się w określonej odległości przestrzennej od siebie [@pohjankukka_2017_scv].
+
+Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy pomocy pięciu miar jakości, przeznaczonych dla klasyfikatorów binarnych, wykorzystując przestrzenną walidację krzyżową:
 
 -   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako dodatnie jest faktycznie dodatnia [@jaworski_2013_perfomance_measures]
 
@@ -245,13 +262,14 @@ Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabe
 -   specyficzność (ang. *specificity*, inaczej *true negative rate*) - określa jaką część ujemnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
 
 -   pole powierzchni pod krzywą (ang. *Area Under Curve* lub *Area Under the ROC Curve*, AUC lub AUROC) - oblicza obszar pod krzywą ROC, która graficznie przedstawia zależność pomiędzy czułością a specyficznością [@jaworski_2013_perfomance_measures].
-AUC ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka negatywna [@R-mlr3measures].
+    AUC ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka negatywna [@R-mlr3measures]
+
+-   $F_{\beta}$ score (F-beta score) - ważona średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik.
+    Miara ta nie uwzględnia wyników prawdziwie negatywnych [@zygierewicz_2021_ml]
+
+Wartości każdej z wymienionych miar jakości modelu zawierają się w zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu, natomiast wartość 1 odzwierciedla wysoki poziom jakości.
 Wartości AUC mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza oznacza model nie lepszy od losowego, a 1,0 – doskonałe przewidywanie obu klas.
-Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu [@lovelace_2019_geocomputation]
-
--   $F_{\beta}$ score (F-beta score) - ważona średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik. Miara ta nie uwzględnia wyników prawdziwie negatywnych [@uw_2021_ml]
-
-Jakość modeli za pomocą wymienionych miar została oceniona za pomocą przestrzennej walidacji krzyżowej, która uwzględnia szczególny charakter danych geograficznych [@lovelace_2019_geocomputation].
+Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu [@lovelace_2019_geocomputation].
 
 ## Ważność zmiennych
 

@@ -526,17 +526,21 @@ na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
 
-Rozdzielczość przestrzenna danych Sentinel-1 GRD, podobnie jak danych
+W celu uzyskania spójnych wielokanałowych rastrów, wszystkie zbiory
+danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
+Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych
 Sentinel-2 przegotowanych w sposób przedstawiony w sekcji
-\ref{sec-processing-s2} wynosi 10 m. Stworzenie spójnych wielokanałowych
-rastrów wymaga sprowadzenia wszystkich zestawów danych do wspólnej
-rozdzielczości i siatki. Dane Sentinel-1 GRD zostały przetransformowane
-do siatki danych Sentinel-2. Przepróbkowane do wspólnej rozdzielczości
-oraz siatki dane zostały następnie użyte do obliczeń tekstur obrazu oraz
-wskaźników teledetekcyjnych. Po uzyskaniu produktów pochodnych, w
-zależności od wariantu, dane zostały scalone w kilka wielokanałowych
-rastrów, które posłużyły do wyodrębnienia zestawu danych treningowych
-oraz do przeprowadzenia predykcji.
+\ref{sec-processing-s2} wynosi 10 m. Mimo że rozdzielczość przestrzenna
+danych Sentinel-1 GRD jest identyczna z rozdzielczością danych
+Sentinel-2, siatki przestrzenne obu zbiorów różniły się od siebie, przez
+co wymagana była transformacja danych Sentinel-1 do siatki danych
+Sentinel-2 w celu zachowania ich zgodności. Przetransformowane dane
+zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników
+teledetekcyjnych. Po uzyskaniu produktów pochodnych, w zależności od
+wariantu, dane zostały scalone w formie kilku wielokanałowych rastrów,
+które posłużyły do wyodrębnienia zestawu danych treningowych oraz do
+przeprowadzenia predykcji. Warianty zestawów danych zostały szczegółowo
+przedstawione w tabeli \ref{tbl-tabela-datasets}.
 
 \hypertarget{tbl-tabela-datasets}{}
 \begin{table}
@@ -769,7 +773,7 @@ do przedziału od 50 do 500.
 \toprule
 \multicolumn{1}{c}{ } & \multicolumn{5}{c}{Optymalizowane parametry} & \multicolumn{1}{c}{ } \\
 \cmidrule(l{3pt}r{3pt}){2-6}
-Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees & max.depth & AUC\\
+Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees & max.depth & AUC\textsuperscript{b}\\
 \midrule
 1 & 9 & 0.6843 & 2 & 180 & 36 & 0.9886\\
 2 & 7 & 0.7373 & 1 & 372 & 23 & 0.9914\\
@@ -779,26 +783,67 @@ Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees
 6 & 8 & 0.8847 & 5 & 388 & 75 & 0.9905\\
 \bottomrule
 \multicolumn{7}{l}{\textsuperscript{a} Patrz: tabela 4.1}\\
+\multicolumn{7}{l}{\textsuperscript{b} Patrz: sekcja 4.3.3}\\
 \end{tabular}
 \end{table}
 
 Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów
-losowych dla poszczególnych wariantów (zbiorów danych) zostały
-przedstawione w tabeli \ref{tbl-tabela-tuning}. Warto zauważyć, że
-warianty 3 i 6 wykazują identyczne wartości dla parametrów
-\texttt{sample.fraction}, \texttt{min.node.size}, \texttt{num.trees} i
-\texttt{max.depth}. Podczas losowania hiperparametrów dla każdego
-wariantu wykorzystano to samo ziarno losowości (ang. \emph{random
-seed}), ustawione za pomocą funkcji \texttt{set.seed()}. Dla dwóch
-wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy
-wykorzystaniu identycznego zestawu hiperparametrów.
+losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną
+jakości AUC zostały przedstawione w tabeli \ref{tbl-tabela-tuning}.
+Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla
+parametrów \texttt{sample.fraction}, \texttt{min.node.size},
+\texttt{num.trees} i \texttt{max.depth}. Podczas losowania
+hiperparametrów dla każdego wariantu wykorzystano to samo ziarno
+losowości (ang. \emph{random seed}), ustawione za pomocą funkcji
+\texttt{set.seed()}. Dla dwóch wspomnianych wariantów najlepsze wyniki
+zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z
+pięciu optymalizowanych hiperparametrów.
 
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \subsection{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
+Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości
+modelu w rozważanym zadaniu. W tym celu można zastosować \emph{k}-krotną
+walidację krzyżową (ang. \emph{k-fold cross-validation}, CV), która
+zakłada, że obserwacje są od siebie niezależne
+\autocite{pohjankukka_2017_scv}. W standardowej \emph{k}-krotnej
+walidacji krzyżowej dostępny zbiór uczący jest dzielony na \emph{k}
+podzbiorów podobnej wielkości, gdzie \emph{fold} odnosi się do liczby
+powstałych podzbiorów. Podział ten przeprowadza się poprzez losowe
+próbkowanie obserwacji ze zbioru uczącego się bez zastępowania. Model
+jest uczony na \emph{k} - 1 podzbiorach, które razem tworzą zbiór
+uczący. Następnie model jest testowany na pozostałym podzbiorze,
+określanym jako zbiór walidacyjny i mierzona jest jego jakość. Procedurę
+tę powtarza się, aż każdy z \emph{k} podzbiorów zostanie użyty jako
+zbiór walidacyjny \autocite{berrar_2018_cv}. Kroswalidacja pozwala na
+ocenę ogólnej wydajności modelu, uwzględniając różnorodność danych i
+pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od
+konkretnego podziału danych.
+
+Obserwacje geograficzne, posiadające określone współrzędne, nie
+spełniają założenia niezależności danych ze względu na autokorelację
+przestrzenną (ang. \emph{spatial autocorrelation}, SAC)
+\autocite{pohjankukka_2017_scv}. Ogólnie rzecz biorąc, dane przestrzenne
+wykazują autokorelację przestrzenną zgodnie z pierwszym prawem
+geografii, mówiącym, że „Wszystko jest powiązane ze wszystkim innym, ale
+rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
+\autocite{tobler_1970_first_law_of_geography}, będącym jednocześnie
+podstawowym założeniem analizy geostatystycznej. Konsekwencją
+autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie
+klasyfikatorów do obserwacji uczących, które może pozostać niewykryte,
+jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru
+uczącego \autocite{brenning_2012_scv}. Przestrzenna walidacja krzyżowa
+(ang. \emph{spatial cross-validation}) jest modyfikacją standardowej
+kroswalidacji, która zapobiega błędom w ocenie jakości modelu
+wynikającym z bliskości danych testowych i treningowych. Aby ograniczyć
+nadmierny optymizm w ocenie jakości, podzbiory danych szkoleniowych
+muszą zawierać tylko obserwacje, które znajdują się w określonej
+odległości przestrzennej od siebie \autocite{pohjankukka_2017_scv}.
+
 Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela
 \ref{tbl-tabela-datasets}) przeprowadzono przy pomocy pięciu miar
-jakości, przeznaczonych dla klasyfikatorów binarnych:
+jakości, przeznaczonych dla klasyfikatorów binarnych, wykorzystując
+przestrzenną walidację krzyżową:
 
 \begin{itemize}
 \item
@@ -821,22 +866,22 @@ jakości, przeznaczonych dla klasyfikatorów binarnych:
   a specyficznością \autocite{jaworski_2013_perfomance_measures}. AUC
   ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma
   wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka
-  negatywna \autocite{R-mlr3measures}. Wartości AUC mieszczą się w
-  zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza oznacza model
-  nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie obu klas.
-  Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
-  \autocite{lovelace_2019_geocomputation}
+  negatywna \autocite{R-mlr3measures}
 \item
   \(F_{\beta}\) score (F-beta score) - ważona średnia harmoniczna
   pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między
   czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik.
   Miara ta nie uwzględnia wyników prawdziwie negatywnych
-  \autocite{uw_2021_ml}
+  \autocite{zygierewicz_2021_ml}
 \end{itemize}
 
-Jakość modeli za pomocą wymienionych miar została oceniona za pomocą
-przestrzennej walidacji krzyżowej, która uwzględnia szczególny charakter
-danych geograficznych \autocite{lovelace_2019_geocomputation}.
+Wartości każdej z wymienionych miar jakości modelu zawierają się w
+zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu,
+natomiast wartość 1 odzwierciedla wysoki poziom jakości. Wartości AUC
+mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza
+oznacza model nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie
+obu klas. Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
+\autocite{lovelace_2019_geocomputation}.
 
 \hypertarget{waux17cnoux15bux107-zmiennych}{%
 \section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}
