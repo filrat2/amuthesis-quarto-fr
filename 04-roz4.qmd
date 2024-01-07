@@ -30,12 +30,11 @@ W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zapropo
 #| label: fig-rycina-s1-workflow
 #| echo: false
 #| fig-cap: "Przebieg wstępnego przetwarzania danych Sentinel-1 Ground Range Detected (GRD)"
-#| out-width: 481px
-#| out-height: 517px
+#| out-width: 450px
 knitr::include_graphics("figures/sentinel1_workflow.drawio.png")
 ```
 
-Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx] w oprogramowaniu SNAP [@snap] przy pomocy narzędzia do przetwarzania grafów (ang. *Graph Processing Tool*, GPT) .
+Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób przedstawiony na rycinie [-@fig-rycina-s1-workflow] przy użyciu narzędzi dostępnych w ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx], a proces ten został ułożony w sekwencję operacji przetwarzania za pomocą narzędzia GraphBuilder w oprogramowaniu SNAP [@snap].
 Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
 Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji `focal` z pakietu *terra* [@R-terra].
@@ -193,8 +192,7 @@ Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych, oper
 Procedura generuje liczne drzewa decyzyjne, opierając się na losowo wybranym zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych zmiennych klasyfikacyjnych [@breiman_2001_rf].
 Pojedyncze drzewo korzysta ze zredukowanej liczby danych treningowych i zmiennych, co sprawia, że drzewa różnią się od siebie i są mniej dokładne, ale jednocześnie są też mniej skorelowane, przez co model złożony z wielu drzew będzie bardziej niezawodny [@sekulic_2020_rf_interpolation].
 W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego.
-W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów.
-[@breiman_2001_rf].
+W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby głosów [@breiman_2001_rf].
 
 ### Dostrajanie modeli
 
@@ -257,7 +255,7 @@ Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
 ```{r}
 #| label: fig-rycina-spcv
 #| echo: false
-#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Opracowanie własne na podstawie [kodu Patricka Schratza](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
+#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Opracowanie własne na podstawie [tutoriala](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html) Patricka Schratza"
 #| out-width: 100%
 knitr::include_graphics("figures/spcv_plot.png")
 ```
@@ -331,6 +329,7 @@ Do operacji na danych rastrowych zastosowano pakiet *terra* [@R-terra], natomias
 Obliczanie tekstury obrazu Sum Average wyprowadzonej z macierzy współwystępowania poziomu szarości (ang. *gray-level co-occurrence matrix*, GLCM) zostało wykonane przy pomocy pakietu *GLCMTextures* [@R-GLCMTextures].
 Losowe generowanie danych przestrzennych umożliwił pakiet *spatstat.random* [@R-spatstat.random] z rodziny pakietów *spatstat* [@R-spatstat].
 Do przeprowadzenia analizy oraz predykcji opartej o elementy uczenia maszynowego wykorzystano pakiet *mlr3* [@R-mlr3], w ramach którego użyty został algorytm lasów losowych zaimplementowany w pakiecie *ranger* [@R-ranger].
+Podczas strojenia parametrów algorytmów uczenia maszynowego, korzystano również z pakietu *paradox* [@R-paradox], umożliwiającego definiowanie granic przestrzeni szukania optymalnych wartości hiperparametrów.
 Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzystano pakiet *future* [@R-future], umożliwiający równoległe (wielowątkowe) przetwarzanie wyrażeń R, skracające czas realizacji zadań w stosunku do przetwarzania sekwencyjnego.
 
 ```{r}

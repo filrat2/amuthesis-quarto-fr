@@ -388,7 +388,7 @@ zaproponował \textcite{filipponi_2019_s1_workflow}, obejmujący:
 
 \begin{figure}[t]
 
-{\centering \includegraphics[width=5.01042in,height=5.38542in]{figures/sentinel1_workflow.drawio.png}
+{\centering \includegraphics[width=4.6875in,height=\textheight]{figures/sentinel1_workflow.drawio.png}
 
 }
 
@@ -397,20 +397,21 @@ danych Sentinel-1 Ground Range Detected (GRD)}
 
 \end{figure}
 
-Wstępne przetwarzanie danych dla obu wykorzystywanych polaryzacji (VV i
-VH) zostało wykonane przy użyciu zestawu narzędzi ESA Sentinel-1 Toolbox
-(S1TBX) \autocite{s1tbx} w oprogramowaniu SNAP \autocite{snap} przy
-pomocy narzędzia do przetwarzania grafów (ang. \emph{Graph Processing
-Tool}, GPT) . Kolejne etapy przygotowania danych zostały zrealizowane
-przy wykorzystaniu języka R (\textcite{R-base}) oraz pakietu
-\emph{terra} \autocite{R-terra}. Obszar analizy, będący kaflem
-Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich
-produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania,
-sąsiadujące produkty zostały połączone i odpowiednio ograniczone do
-obszaru zainteresowania. Na granicy sąsiednich produktów Sentinel-1 GRD
-występowała przestrzeń bez danych o szerokości jednej komórki, co
-wymagało wypełnienia tego obszaru danymi przy użyciu funkcji
-\texttt{focal} z pakietu \emph{terra} \autocite{R-terra}.
+Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób
+przedstawiony na rycinie \ref{fig-rycina-s1-workflow} przy użyciu
+narzędzi dostępnych w ESA Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx}, a
+proces ten został ułożony w sekwencję operacji przetwarzania za pomocą
+narzędzia GraphBuilder w oprogramowaniu SNAP \autocite{snap}. Kolejne
+etapy przygotowania danych zostały zrealizowane przy wykorzystaniu
+języka R (\textcite{R-base}) oraz pakietu \emph{terra}
+\autocite{R-terra}. Obszar analizy, będący kaflem Sentinel-2 o
+oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów
+Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty
+zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
+Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń
+bez danych o szerokości jednej komórki, co wymagało wypełnienia tego
+obszaru danymi przy użyciu funkcji \texttt{focal} z pakietu \emph{terra}
+\autocite{R-terra}.
 
 \begin{figure}[t]
 
@@ -712,7 +713,7 @@ drzew będzie bardziej niezawodny
 \autocite{sekulic_2020_rf_interpolation}. W fazie predykcji każde z
 drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana
 na podstawie głosowania większościowego. W przypadku klasyfikacji, klasa
-wybierana jest na podstawie największej liczby głosów.
+wybierana jest na podstawie największej liczby głosów
 \autocite{breiman_2001_rf}.
 
 \hypertarget{dostrajanie-modeli}{%
@@ -861,8 +862,8 @@ Przykład takiego podejścia przedstawia rycina \ref{fig-rycina-spcv}.
 podziału zbioru danych na potrzeby walidacji krzyżowej jednego
 powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
 Opracowanie własne na podstawie
-\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{kodu
-Patricka Schratza}}
+\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{tutoriala}
+Patricka Schratza}
 
 \end{figure}
 
@@ -1027,11 +1028,15 @@ przestrzennych umożliwił pakiet \emph{spatstat.random}
 \autocite{R-spatstat}. Do przeprowadzenia analizy oraz predykcji opartej
 o elementy uczenia maszynowego wykorzystano pakiet \emph{mlr3}
 \autocite{R-mlr3}, w ramach którego użyty został algorytm lasów losowych
-zaimplementowany w pakiecie \emph{ranger} \autocite{R-ranger}. Do
-obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym
-wykorzystano pakiet \emph{future} \autocite{R-future}, umożliwiający
-równoległe (wielowątkowe) przetwarzanie wyrażeń R, skracające czas
-realizacji zadań w stosunku do przetwarzania sekwencyjnego.
+zaimplementowany w pakiecie \emph{ranger} \autocite{R-ranger}. Podczas
+strojenia parametrów algorytmów uczenia maszynowego, korzystano również
+z pakietu \emph{paradox} \autocite{R-paradox}, umożliwiającego
+definiowanie granic przestrzeni szukania optymalnych wartości
+hiperparametrów. Do obliczeń związanych z teksturami obrazu oraz
+uczeniem maszynowym wykorzystano pakiet \emph{future}
+\autocite{R-future}, umożliwiający równoległe (wielowątkowe)
+przetwarzanie wyrażeń R, skracające czas realizacji zadań w stosunku do
+przetwarzania sekwencyjnego.
 
 \bookmarksetup{startatroot}
 
