@@ -192,9 +192,8 @@ przedstawia tabela \ref{tbl-tabela-sentinel1}
 
 \hypertarget{tbl-tabela-sentinel1}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1
-(\href{https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath}{ESA,
-2023}) }\tabularnewline
+\caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA,
+\href{https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath}{2023}) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2cm}}
@@ -254,9 +253,8 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 
 \hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
-\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2
-(\href{https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral}{ESA,
-2023}) }\tabularnewline
+\caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA,
+\href{https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral}{2023}) }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2.4cm}}
@@ -350,6 +348,10 @@ przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps
 \hypertarget{sec-metody}{%
 \chapter{Metody}\label{sec-metody}}
 
+WSTĘP
+
+RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)
+
 \hypertarget{sec-processing}{%
 \section{Przygotowanie danych}\label{sec-processing}}
 
@@ -433,6 +435,17 @@ rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
 przy pomocy funkcji \texttt{resample} z pakietu \emph{terra}
 \autocite{R-terra}, stosując interpolację dwuliniową (ang.
 \emph{bilinear interpolation}).
+
+W teledetekcji miarą opisującą wielkość odbicia jest rzeczywisty
+współczynnik odbicia, nazywany również reflektancją, którego wartości
+mieszczą się w przedziale od 0 do 1 \autocite{hejmanowska_2020_dane}.
+Informacje dotyczące odbitego promieniowania w przypadku danych
+Sentinel-2 są udostępniane za pomocą współczynnika odbicia, wyrażonego w
+zakresie od 0 do 10000, gdzie wartości te reprezentują jasność komórki,
+określaną w języku angielskim jako \emph{Digital Number} (DN) Po
+standaryzacji wszystkich kanałów Sentinel-2 do wspólnej rozdzielczości,
+dokonano przeliczenia wartości kanałów w celu uzyskania rzeczywistego
+współczynnika odbicia, poprzez podzielenie wartości DN przez 10000.
 
 \hypertarget{sec-spectral-indices}{%
 \subsection{Wskaźniki spektralne}\label{sec-spectral-indices}}
@@ -528,8 +541,12 @@ pracy wykorzystano jedynie teksturę średniej sumy (ang. \emph{Sum
 Average}, SA lub SAVG), wskazaną przez \textcite{wang_2022_pv} jako
 teksturę niosącą najwięcej informacji w kontekście detekcji farm
 fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
-Random Forest. W celu skrócenia czasu obliczeń, w pracy zdecydowano się
-na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+Random Forest. Przeprowadzono obliczenia sześciu tekstur obrazów dla
+dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych
+(NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie z
+wskazaniami \textcite{wang_2022_pv}. W celu skrócenia czasu obliczeń, w
+pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9
+komórek.
 
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
@@ -576,8 +593,6 @@ Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \multicolumn{3}{l}{\textsuperscript{a} Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1}\\
 \end{tabular}
 \end{table}
-
-rycina - schemat przygotowania danych
 
 \hypertarget{sec-samples-methods}{%
 \section{Próbki treningowe i testowe}\label{sec-samples-methods}}
@@ -632,6 +647,45 @@ przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie
 farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich
 pochodnych.
 
+\hypertarget{przetwarzanie-koux144cowe}{%
+\section{Przetwarzanie końcowe}\label{przetwarzanie-koux144cowe}}
+
+Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie
+metod przetwarzania końcowego (ang. \emph{post-processing}), mających na
+celu udoskonalenie wyników wykrywania farm fotowoltaicznych. Z
+teoretycznego punktu widzenia, obszar zajmowany przez farmę
+fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia
+pojedynczej komórki lub grupy kilku komórek. W celu usunięcia
+pozytywnych predykcji, które reprezentowały pojedyncze komórki lub
+obszary składające się z 10 lub mniej komórek, o powierzchni
+mniejszej/równej 1000 m\textsuperscript{2}, zastosowano sekwencję
+procesów przetwarzania, dzięki której udało się pozbyć tzw. efektu soli
+i pieprzu (ang. \emph{salt-and-pepper effect}).
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/postprocessing.png}
+
+}
+
+\caption{\label{fig-rycina-post-processing}POSTPROCESSING {[}DO
+ZMIANY{]}}
+
+\end{figure}
+
+Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników
+predykcji dla każdego wariantu, a następnie selekcję pozytywnych
+predykcji oraz obliczenie powierzchni każdego wybranego obszaru. Na
+podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje
+reprezentujące pojedyncze komórki lub obszary składające się z 10 lub
+mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
+W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych
+oparty na danych teledetekcyjnych w formie wektorowej.
+
+W celu stworzenia wizualizacji oraz porównania produktów końcowych z
+predykcjami niepoddanymi etapowi przetwarzania końcowego, produkty
+wektorowe zostały ponownie przetworzone do formy rastrowej.
+
 \hypertarget{sec-machine-learning}{%
 \section{Uczenie maszynowe}\label{sec-machine-learning}}
 
@@ -651,8 +705,8 @@ wykonywania określonych zadań bez konieczności bezpośredniego
 programowania. W przypadku skomplikowanych i złożonych zestawów danych
 nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć
 poprawnych informacji po wizualnym przejrzeniu danych
-\autocite{mahesh_2019_ml}. Uczenie maszynowe jest wykorzystywane do
-uczenia maszyn efektywnego przetwarzania danych
+\autocite{mahesh_2019_ml}. Uczenie maszynowe jest wykorzystywane w celu
+doskonalenia efektywnego przetwarzania danych przez maszyny
 \autocite{sindayigaya_2022_ml}. Algorytmy uczenia maszynowego można
 podzielić na cztery główne podejścia: uczenie nienadzorowane (ang.
 \emph{unsupervised learning}), uczenie nadzorowane (ang.
@@ -679,9 +733,9 @@ Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane
 treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi. Proces
 uczenia nadzorowanego zachodzi, gdy określone cele mają zostać
 osiągnięte na podstawie konkretnego zestawu danych wejściowych
-(treningowych). Dwa główne typy uczenia nadzorowanego to klasyfikacja,
-która separuje dane, oraz regresja, która dopasowuje dane
-\autocite{sarker_2021_ml}.
+(treningowych). W uczeniu nadzorowanym wyróżniamy klasyfikację, która
+dzieli dane na klasy, oraz regresję, która umożliwia oszacowanie
+określonych wartości \autocite{sarker_2021_ml}.
 
 W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę
 lasów losowych (ang. \emph{Random Forest}, RF)
@@ -691,12 +745,12 @@ lasów losowych (ang. \emph{Random Forest}, RF)
 \subsection{Metoda lasów losowych}\label{sec-random-forest}}
 
 Random Forest stał się jednym z najpopularniejszych klasyfikatorów
-uczenia maszynowego wykorzystywanych przez społeczność teledetekcyjną ze
-względu na dokładność jego klasyfikacji oraz wysoką wydajność
-obliczeniową \autocite{belgiu_2016_rf,sheykhmousa_2020_svm_vs_rf}.
-Metoda lasów losowych charakteryzuje się pewną odpornością na szumy
-(ang. \emph{noise}) i przeuczenie (ang. \emph{overfitting}), ponieważ
-nie bazuje na ważeniu \autocite{gislason_2006_rf}.
+uczenia maszynowego wykorzystywanych w dziedzinie teledetekcji ze
+względu na wysoką dokładność klasyfikacji i efektywność obliczeniową
+\autocite{belgiu_2016_rf,sheykhmousa_2020_svm_vs_rf}. Metoda lasów
+losowych charakteryzuje się pewną odpornością na szumy (ang.
+\emph{noise}) i przeuczenie (ang. \emph{overfitting}), ponieważ nie
+bazuje na ważeniu \autocite{gislason_2006_rf}.
 
 Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych,
 operuje na zasadzie uczenia zespołowego (ang. \emph{ensemble learning}),
@@ -727,10 +781,22 @@ kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości
 modelu \autocite{schratz_2019_hyperparameters}. Hiperparametry są
 ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna
 konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań
-(ang. \emph{search space}) i ustalana na podstawie krzyżowej walidacji
-(inaczej kroswalidacji; ang. \emph{cross-validation}, CV)
-\autocite{lovelace_2019_geocomputation}. Nazywa się to strojeniem
-hiperparametrów.
+(ang. \emph{search space}) i ustalana na podstawie zagnieżdżonej
+walidacji krzyżowej (ang. \emph{nested cross-validation})
+\autocite{lovelace_2019_geocomputation}. Metoda zagnieżdżonej walidacji
+krzyżowej to rozwinięcie walidacji krzyżowej, opisanej w sekcji
+\ref{sec-model-quality-assessment}, przeznaczone do procesu strojenia
+hiperparametrów. Każdy fold utworzony w przestrzennej walidacji
+krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne foldy. W
+zewnętrznym obiegu model jest trenowany na danych z jednego obszaru
+przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy
+do doboru optymalnych hiperparametrów. Cały proces jest następnie
+powtarzany na każdym z \emph{k} zewnętrznych foldów, co prowadzi do
+określenia najlepszego ustawienia hiperparametrów. Wykorzystanie tych
+samych danych do oceny jakości i dostrajania mogłoby potencjalnie
+prowadzić do nadmiernie wysokich wyników oceny jakości, czego można
+uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację. Cały ten
+proces jest nazywany strojeniem hiperparametrów.
 
 Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi
 wartościami hiperparametrów, co może być jednym z powodów ich dużej
@@ -807,8 +873,8 @@ losowości (ang. \emph{random seed}), ustawione za pomocą funkcji
 zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z
 pięciu optymalizowanych hiperparametrów.
 
-\hypertarget{ocena-jakoux15bci-modeli}{%
-\subsection{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
+\hypertarget{sec-model-quality-assessment}{%
+\subsection{Ocena jakości modeli}\label{sec-model-quality-assessment}}
 
 Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości
 modelu w rozważanym zadaniu. W tym celu można zastosować \emph{k}-krotną
@@ -861,9 +927,8 @@ Przykład takiego podejścia przedstawia rycina \ref{fig-rycina-spcv}.
 \caption{\label{fig-rycina-spcv}Porównanie przestrzennego i losowego
 podziału zbioru danych na potrzeby walidacji krzyżowej jednego
 powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
-Opracowanie własne na podstawie
-\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{tutoriala}
-Patricka Schratza}
+Opracowanie własne na podstawie Schratz,
+\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2024}}
 
 \end{figure}
 
@@ -1043,8 +1108,8 @@ przetwarzania sekwencyjnego.
 \hypertarget{sec-wyniki}{%
 \chapter{Wyniki}\label{sec-wyniki}}
 
-\hypertarget{ocena-jakoux15bci-modeli-1}{%
-\section{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli-1}}
+\hypertarget{ocena-jakoux15bci-modeli}{%
+\section{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
 \hypertarget{waux17cnoux15bux107-zmiennych-1}{%
 \section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych-1}}

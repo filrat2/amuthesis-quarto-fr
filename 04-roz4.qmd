@@ -6,6 +6,10 @@ editor:
 
 # Metody {#sec-metody}
 
+WSTĘP
+
+RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)
+
 ## Przygotowanie danych {#sec-processing}
 
 ### Sentinel-1 {#sec-processing-s1}
@@ -52,6 +56,9 @@ knitr::include_graphics("figures/sen1_extents.png")
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości 10 m.
 Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy pomocy funkcji `resample` z pakietu *terra* [@R-terra], stosując interpolację dwuliniową (ang. *bilinear interpolation*).
 
+W teledetekcji miarą opisującą wielkość odbicia jest rzeczywisty współczynnik odbicia, nazywany również reflektancją, którego wartości mieszczą się w przedziale od 0 do 1 [@hejmanowska_2020_dane].
+Informacje dotyczące odbitego promieniowania w przypadku danych Sentinel-2 są udostępniane za pomocą współczynnika odbicia, wyrażonego w zakresie od 0 do 10000, gdzie wartości te reprezentują jasność komórki, określaną w języku angielskim jako *Digital Number* (DN) Po standaryzacji wszystkich kanałów Sentinel-2 do wspólnej rozdzielczości, dokonano przeliczenia wartości kanałów w celu uzyskania rzeczywistego współczynnika odbicia, poprzez podzielenie wartości DN przez 10000.
+
 ### Wskaźniki spektralne {#sec-spectral-indices}
 
 Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez @zhang_2021_texture, @plakman_2022_pv, @wang_2022_pv i innych, takie jak:
@@ -96,6 +103,7 @@ Badanie, które przeprowadził @zhang_2021_texture dotyczące wykorzystania filt
 Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli (co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m), natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na poprawę dokładności modelu [@zhang_2021_texture].
 
 Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest.
+Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie z wskazaniami @wang_2022_pv.
 W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 ### Łączenie danych {#sec-processing-data-merging}
@@ -131,8 +139,6 @@ knitr::kable(df, booktabs = TRUE, align = "c",
     kableExtra::add_footnote("Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1")
 ```
 
-rycina - schemat przygotowania danych
-
 ## Próbki treningowe i testowe {#sec-samples-methods}
 
 ```{=html}
@@ -160,6 +166,26 @@ W celu eliminacji tych błędnie sklasyfikowanych terenów, przy tworzeniu ostat
 Dla każdej wylosowanej próbki zostały wyekstraktowane wartości pochodzące z danych teledetekcyjnych i ich pochodnych, przygotowane zgodnie z opisem przedstawionym w sekcjach [-@sec-processing-s1], [-@sec-processing-s2], [-@sec-spectral-indices] oraz [-@sec-textures].
 Tak przygotowane próbki były następnie wykorzystane przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich pochodnych.
 
+## Przetwarzanie końcowe
+
+Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie metod przetwarzania końcowego (ang. *post-processing*), mających na celu udoskonalenie wyników wykrywania farm fotowoltaicznych.
+Z teoretycznego punktu widzenia, obszar zajmowany przez farmę fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia pojedynczej komórki lub grupy kilku komórek.
+W celu usunięcia pozytywnych predykcji, które reprezentowały pojedyncze komórki lub obszary składające się z 10 lub mniej komórek, o powierzchni mniejszej/równej 1000 m^2^, zastosowano sekwencję procesów przetwarzania, dzięki której udało się pozbyć tzw. efektu soli i pieprzu (ang. *salt-and-pepper effect*).
+
+```{r}
+#| label: fig-rycina-post-processing
+#| echo: false
+#| fig-cap: "POSTPROCESSING [DO ZMIANY]"
+#| out-width: 100%
+knitr::include_graphics("figures/postprocessing.png")
+```
+
+Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników predykcji dla każdego wariantu, a następnie selekcję pozytywnych predykcji oraz obliczenie powierzchni każdego wybranego obszaru.
+Na podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje reprezentujące pojedyncze komórki lub obszary składające się z 10 lub mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
+W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych oparty na danych teledetekcyjnych w formie wektorowej.
+
+W celu stworzenia wizualizacji oraz porównania produktów końcowych z predykcjami niepoddanymi etapowi przetwarzania końcowego, produkty wektorowe zostały ponownie przetworzone do formy rastrowej.
+
 ## Uczenie maszynowe {#sec-machine-learning}
 
 Klasyfikacja obrazów w teledetekcji polega na grupowaniu komórek w niewielkie zestawy klas, aby komórki w tych samych klasach miały podobne właściwości [@ismail_2009_classification].
@@ -168,7 +194,7 @@ Stosunkowo nowymi podejściami wykorzystywanymi w tym kontekście są metody opa
 
 Uczenie maszynowe stanowi obszar sztucznej inteligencji, koncentrujący się na opracowywaniu algorytmów i modeli statystycznych zapewniających systemom komputerowym możliwość automatycznego uczenia się z danych i wykonywania określonych zadań bez konieczności bezpośredniego programowania.
 W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stanie odpowiednio ich zinterpretować oraz wydobyć poprawnych informacji po wizualnym przejrzeniu danych [@mahesh_2019_ml].
-Uczenie maszynowe jest wykorzystywane do uczenia maszyn efektywnego przetwarzania danych [@sindayigaya_2022_ml].
+Uczenie maszynowe jest wykorzystywane w celu doskonalenia efektywnego przetwarzania danych przez maszyny [@sindayigaya_2022_ml].
 Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
 
 W ciągu ostatnich dwudziestu lat zaproponowano stosowanie kilku różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], które zazwyczaj wykorzystują techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
@@ -179,13 +205,13 @@ Ta technika uczenia maszynowego jest najczęściej używana do grupowania (klast
 
 Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi.
 Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych).
-Dwa główne typy uczenia nadzorowanego to klasyfikacja, która separuje dane, oraz regresja, która dopasowuje dane [@sarker_2021_ml].
+W uczeniu nadzorowanym wyróżniamy klasyfikację, która dzieli dane na klasy, oraz regresję, która umożliwia oszacowanie określonych wartości [@sarker_2021_ml].
 
 W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
 
 ### Metoda lasów losowych {#sec-random-forest}
 
-Random Forest stał się jednym z najpopularniejszych klasyfikatorów uczenia maszynowego wykorzystywanych przez społeczność teledetekcyjną ze względu na dokładność jego klasyfikacji oraz wysoką wydajność obliczeniową [@belgiu_2016_rf; @sheykhmousa_2020_svm_vs_rf].
+Random Forest stał się jednym z najpopularniejszych klasyfikatorów uczenia maszynowego wykorzystywanych w dziedzinie teledetekcji ze względu na wysoką dokładność klasyfikacji i efektywność obliczeniową [@belgiu_2016_rf; @sheykhmousa_2020_svm_vs_rf].
 Metoda lasów losowych charakteryzuje się pewną odpornością na szumy (ang. *noise*) i przeuczenie (ang. *overfitting*), ponieważ nie bazuje na ważeniu [@gislason_2006_rf].
 
 Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych, operuje na zasadzie uczenia zespołowego (ang. *ensemble learning*), czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model [@aaron_2018_ml; @sekulic_2020_rf_interpolation].
@@ -198,8 +224,13 @@ W przypadku klasyfikacji, klasa wybierana jest na podstawie największej liczby 
 
 Celem optymalizacji hiperparametrów lub dostrajania modelu jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
 Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters].
-Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i ustalana na podstawie krzyżowej walidacji (inaczej kroswalidacji; ang. *cross-validation*, CV) [@lovelace_2019_geocomputation].
-Nazywa się to strojeniem hiperparametrów.
+Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i ustalana na podstawie zagnieżdżonej walidacji krzyżowej (ang. *nested cross-validation*) [@lovelace_2019_geocomputation].
+Metoda zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej, opisanej w sekcji [-@sec-model-quality-assessment], przeznaczone do procesu strojenia hiperparametrów.
+Każdy fold utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne foldy.
+W zewnętrznym obiegu model jest trenowany na danych z jednego obszaru przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych hiperparametrów.
+Cały proces jest następnie powtarzany na każdym z *k* zewnętrznych foldów, co prowadzi do określenia najlepszego ustawienia hiperparametrów.
+Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości, czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
+Cały ten proces jest nazywany strojeniem hiperparametrów.
 
 Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
 Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych (ang. *Support Vector Machines*, SVM) [@probst_2019_hyperparameters].
@@ -220,7 +251,7 @@ Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.
 #| label: tbl-tabela-tuning
 #| echo: false
 #| tbl-cap: "Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF"
-df = readRDS("C:/Users/Dell 3620/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
+df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/df_tuning_results.rds")
 names(df)[names(df) == 'dataset'] = 'Wariant [note]'
 names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
@@ -234,7 +265,7 @@ Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla parametr
 Podczas losowania hiperparametrów dla każdego wariantu wykorzystano to samo ziarno losowości (ang. *random seed*), ustawione za pomocą funkcji `set.seed()`.
 Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z pięciu optymalizowanych hiperparametrów.
 
-### Ocena jakości modeli
+### Ocena jakości modeli {#sec-model-quality-assessment}
 
 Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości modelu w rozważanym zadaniu.
 W tym celu można zastosować *k*-krotną walidację krzyżową (ang. *k-fold cross-validation*, CV), która zakłada, że obserwacje są od siebie niezależne [@pohjankukka_2017_scv].
@@ -255,7 +286,7 @@ Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
 ```{r}
 #| label: fig-rycina-spcv
 #| echo: false
-#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Opracowanie własne na podstawie [tutoriala](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html) Patricka Schratza"
+#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Opracowanie własne na podstawie Schratz, [2024](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
 #| out-width: 100%
 knitr::include_graphics("figures/spcv_plot.png")
 ```
