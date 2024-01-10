@@ -86,16 +86,6 @@ Keywords: (as stated before)
 \hypertarget{sec-wprowadzenie}{%
 \chapter{Wprowadzenie}\label{sec-wprowadzenie}}
 
-Wprowadzenie powinno mieć charakter opisu od ogółu do szczegółu (np.
-trzy-pięć paragrafów). Pierwszy paragraf powinien być najbardziej
-ogólny, a kolejne powinny przybliżać czytelnika do problemu.
-Przedostatni paragraf powinien określić jaki jest problem (są problemy),
-który praca ma rozwiązać i dlaczego jest to (są one) ważne.
-
-Wprowadzenie powinno być zakończone stwierdzeniem celu pracy. Dodatkowo
-tutaj może znaleźć się również krótki opis co zostało zrealizowane w
-pracy.
-
 \bookmarksetup{startatroot}
 
 \hypertarget{sec-lit}{%
@@ -157,27 +147,27 @@ został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C
 zaplanowano na marzec 2024 roku
 \autocite{sentinel_1b,sentinel1_eoportal}.
 
-Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
-Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected
-(GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w
-zależności od produktu do monitorowania Ziemi, klasyfikacji pokrycia
-terenu czy aplikacji interferometrycznych
-\autocite{hejmanowska_2020_dane}. Interferometria radarowa (ang.
-\emph{Interferometric Synthetic Aperture Radar}, InSAR) to technika
-umożliwiająca generowanie cyfrowych modeli wysokościowych (ang.
-\emph{digital elevation model}, DEM) oraz pomiary deformacji terenu na
-podstawie informacji o fazie sygnału
-\autocite{hanssen_2001_insar,hejmanowska_2020_dane}. SLC to obrazy SAR w
-geometrii ukośnej, posiadające informację o wartości amplitudy i fazie
-sygnału \autocite{hejmanowska_2020_dane}. Produkty GRD są rezultatem
+Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia.
+Produkty poziomu 1, Single Look Complex (SLC) i Ground Range Detected
+(GRD), przeznaczone są dla użytkowników końcowych, umożliwiając
+monitorowanie Ziemi, klasyfikację pokrycia terenu oraz aplikacje
+interferometryczne \autocite{hejmanowska_2020_dane}. Interferometria
+radarowa (ang. \emph{Interferometric Synthetic Aperture Radar}, InSAR)
+to technika umożliwiająca generowanie cyfrowych modeli wysokościowych
+(ang. \emph{digital elevation model}, DEM) oraz pomiary deformacji
+terenu na podstawie informacji o fazie sygnału
+\autocite{hanssen_2001_insar,hejmanowska_2020_dane}. Produkty SLC to
+obrazy SAR w geometrii ukośnej, posiadające informację o wartości
+amplitudy i fazie sygnału, co czyni je odpowiednimi do interferometrii
+radarowej \autocite{hejmanowska_2020_dane}. Produkty GRD są rezultatem
 przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej
 (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia
-\autocite{hejmanowska_2020_dane}. GRD nie zawiera cech ortofotomapy i
-wymaga dodatkowego przepróbkowania z użyciem numerycznego modelu terenu
-przed zastosowaniem w systemach GIS \autocite{hejmanowska_2020_dane}.
-Przy konwersji SLC do GRD tracimy informację fazową sygnału, co sprawia,
-że produkty GRD nie są odpowiednie do interferometrii radarowej
-\autocite{sentinel1_products}.
+\autocite{hejmanowska_2020_dane}. Przy konwersji SLC do GRD tracimy
+informację fazową sygnału, co wyklucza zastosowanie produktów GRD w
+interferometrii radarowej \autocite{sentinel1_products}. Produkty GRD
+nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z
+użyciem cyfrowego modelu wysokości przed zastosowaniem w systemach GIS
+\autocite{hejmanowska_2020_dane}.
 
 Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide
 Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap
@@ -286,8 +276,8 @@ przetworzenia L2A. Z dostępnych kanałów spektralnych (tabela
 \ref{tbl-tabela-sentinel2} \autocite{sentinel_2_user_guide})
 wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości
 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji
-chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940
-nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania
+chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945
+nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania
 chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
 
 \hypertarget{sec-mosaics}{%
@@ -301,11 +291,11 @@ satelitarnych jest tworzenie zestawów danych referencyjnych poprzez
 interpretację wizualną, np. w celu walidacji wyników klasyfikacji
 produktów pokrycia terenu \autocite{lesiv_2018_sat_imagery_mosaics}. Do
 stworzenie zbioru danych testowych i treningowych wykorzystano
-ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps,
-udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles). Mozaiki
-te są tworzone na podstawie komercyjnych zdjęć satelitarnych
-wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy
-Planet Labs.
+ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps
+\autocite{planet}, udostępniane w formie usług sieciowych (WMS, WMTS,
+XYZ Tiles). Mozaiki te są tworzone na podstawie komercyjnych zdjęć
+satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies,
+Airbus czy Planet Labs.
 
 Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w
 standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują
@@ -324,11 +314,12 @@ pozostałych wymienionych produktów jest tworzona z miesięczną oraz
 kwartalną częstotliwością \autocite{planet_2019_basemaps}. Pozwala to,
 pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych
 testowych i treningowych na konkretny okres czasu. Mozaiki Planet
-Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet
-w określonym przedziale czasowym, co umożliwia generowanie
-wysokorozdzielczych mozaik, które są dokładne radiometrycznie i
-przestrzennie, a także charakteryzują się zminimalizowanym wpływem
-czynników atmosferycznych \autocite{planet_2019_basemaps}.
+Basemaps \autocite{planet} są tworzone na podstawie najlepszych obrazów
+z katalogu Planet w określonym przedziale czasowym, co umożliwia
+generowanie wysokorozdzielczych mozaik, które są dokładne
+radiometrycznie i przestrzennie, a także charakteryzują się
+zminimalizowanym wpływem czynników atmosferycznych
+\autocite{planet_2019_basemaps}.
 
 \begin{figure}[t]
 
@@ -348,9 +339,40 @@ przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps
 \hypertarget{sec-metody}{%
 \chapter{Metody}\label{sec-metody}}
 
-WSTĘP
+Badanie obejmowało kilka etapów, rozpoczynając od wstępnego
+przetwarzania danych satelitarnych, opisanego w sekcjach
+\ref{sec-processing-s1} i \ref{sec-processing-s2}. Następnie
+przeprowadzono obliczenia produktów pochodnych, takich jak wskaźniki
+spektralne oraz tekstury obrazu, opisane odpowiednio w sekcjach
+\ref{sec-spectral-indices} i \ref{sec-textures}. Kolejnym krokiem było
+połączenie przetworzonych danych źródłowych i ich produktów pochodnych w
+kilka wariantów zbiorów danych, stworzonych do na potrzeby detekcji farm
+fotowoltaicznych. Warianty zbiorów danych przedstawia tabela
+\ref{tbl-tabela-datasets}, a przebieg łączenia danych w wielokanałowe
+rastry został opisany w sekcji \ref{sec-processing-data-merging}. Na
+podstawie uzyskanych rastrów, zgodnie z sekcją \ref{sec-samples},
+utworzono zbiory danych uczących, które zostały wykorzystane do
+tworzenia modeli predykcyjnych. Następnie zoptymalizowano parametry tych
+modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z nich,
+co opisano odpowiednio w sekcjach \ref{sec-tuning},
+\ref{sec-model-quality-assessment} oraz \ref{sec-variable-importance}.
+Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano
+procesowi przetwarzania końcowego, przedstawionemu w sekcji
+\ref{sec-post-processing}. Wizualną reprezentację przebiegu badania
+przedstawia rycina \textbf{?@fig-rycina-workflow}.
 
-RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)
+Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu
+oprogramowania Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx} i SNAP
+\autocite{snap}, udostępnianego przez Europejską Agencję Kosmiczną (ang.
+ang. \emph{European Space Agency}, ESA). Każdy z kolejnych etapów został
+wykonany przy użyciu języka R \autocite{R-base} oraz pakietów
+rozszerzających funkcjonalności tego języka. Końcowe wizualizacje
+zostały stworzone w oprogramowaniu QGIS \autocite{qgis}. Zarówno
+oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i środowisko programistyczne
+R stanowią oprogramowanie o otwartym kodzie źródłowym (ang.
+\emph{open-source software}).
+
+\textbf{RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)}
 
 \hypertarget{sec-processing}{%
 \section{Przygotowanie danych}\label{sec-processing}}
@@ -442,7 +464,7 @@ mieszczą się w przedziale od 0 do 1 \autocite{hejmanowska_2020_dane}.
 Informacje dotyczące odbitego promieniowania w przypadku danych
 Sentinel-2 są udostępniane za pomocą współczynnika odbicia, wyrażonego w
 zakresie od 0 do 10000, gdzie wartości te reprezentują jasność komórki,
-określaną w języku angielskim jako \emph{Digital Number} (DN) Po
+określaną w języku angielskim jako \emph{Digital Number} (DN). Po
 standaryzacji wszystkich kanałów Sentinel-2 do wspólnej rozdzielczości,
 dokonano przeliczenia wartości kanałów w celu uzyskania rzeczywistego
 współczynnika odbicia, poprzez podzielenie wartości DN przez 10000.
@@ -484,7 +506,7 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
   znormalizowany zmodyfikowany różnicowy wskaźnik wody (ang.
   \emph{Modified Normalized Difference Water Index}, mNDWI)
   \autocite{mndwi}, który skutecznie identyfikuje obszary wodne na
-  zdjęciach satelitarnych, posiadając możliwości tłumienia zakłóceń
+  zdjęciach satelitarnych, mając możliwości tłumienia zakłóceń
   spowodowanych przez zabudowę, roślinność i gleby:
 
   \[
@@ -505,8 +527,8 @@ satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
 pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
 odmiennych typów obiektów na podstawie ich organizacji w terenie, często
 kontrastując przestrzenie naturalne z antropogenicznymi
-\autocite{grass_r_texture}. W zależności od zastosowalnej funkcji
-wybrane cechy obrazu zostają uwidocznione w porównaniu z jego obrazem
+\autocite{grass_r_texture}. W zależności od zastosowanej funkcji wybrane
+cechy obrazu zostają uwidocznione w porównaniu z pierwotnym obrazem
 wejściowym \autocite{lewinski_2012_texture}. Informacja o teksturze może
 stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji
 lub segmentacji obrazu
@@ -543,7 +565,7 @@ teksturę niosącą najwięcej informacji w kontekście detekcji farm
 fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
 Random Forest. Przeprowadzono obliczenia sześciu tekstur obrazów dla
 dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych
-(NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie z
+(NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze
 wskazaniami \textcite{wang_2022_pv}. W celu skrócenia czasu obliczeń, w
 pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9
 komórek.
@@ -551,7 +573,7 @@ komórek.
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
 
-W celu uzyskania spójnych wielokanałowych rastrów, wszystkie zbiory
+W celu uzyskania spójnych wielokanałowych rastrów wszystkie zbiory
 danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
 Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych
 Sentinel-2 przegotowanych w sposób przedstawiony w sekcji
@@ -563,13 +585,16 @@ Sentinel-2 w celu zachowania ich zgodności. Przetransformowane dane
 zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników
 teledetekcyjnych. Po uzyskaniu produktów pochodnych, w zależności od
 wariantu, dane zostały scalone w formie kilku wielokanałowych rastrów,
-które posłużyły do wyodrębnienia zestawu danych treningowych oraz do
-przeprowadzenia predykcji. Warianty zestawów danych zostały szczegółowo
-przedstawione w tabeli \ref{tbl-tabela-datasets}.
+które posłużyły do wyodrębnienia próbek obserwacji, niezbędnych do
+stworzenia modelu. Złączone rastry zostały również bezpośrednio
+wykorzystane do przeprowadzenia predykcji w późniejszym etapie analizy.
+Warianty zestawów danych zostały szczegółowo przedstawione w tabeli
+\ref{tbl-tabela-datasets}.
 
 \hypertarget{tbl-tabela-datasets}{}
 \begin{table}
-\caption{\label{tbl-tabela-datasets}Warianty {[}NAZWA DO ZMIANY!!!{]} }\tabularnewline
+\caption{\label{tbl-tabela-datasets}Zestawienie różnych wariantów zbiorów danych stworzonych na potrzeby
+detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{9.5cm}}
@@ -594,8 +619,8 @@ Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \end{tabular}
 \end{table}
 
-\hypertarget{sec-samples-methods}{%
-\section{Próbki treningowe i testowe}\label{sec-samples-methods}}
+\hypertarget{sec-samples}{%
+\section{Próbki treningowe i testowe}\label{sec-samples}}
 
 Na podstawie ortofotomapy oraz mozaik satelitarnych wskazanych w sekcji
 \ref{sec-mosaics} zwektoryzowane zostały prawdopodobnie wszystkie farmy
@@ -639,7 +664,7 @@ odkrywkowych oznaczonych w bazie OpenStreetMap jako
 \texttt{tag:landuse=quarry}.
 
 Dla każdej wylosowanej próbki zostały wyekstraktowane wartości
-pochodzące z danych teledetekcyjnych i ich pochodnych, przygotowane
+pochodzące z danych teledetekcyjnych i ich pochodnych, przygotowanych
 zgodnie z opisem przedstawionym w sekcjach \ref{sec-processing-s1},
 \ref{sec-processing-s2}, \ref{sec-spectral-indices} oraz
 \ref{sec-textures}. Tak przygotowane próbki były następnie wykorzystane
@@ -647,8 +672,8 @@ przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie
 farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich
 pochodnych.
 
-\hypertarget{przetwarzanie-koux144cowe}{%
-\section{Przetwarzanie końcowe}\label{przetwarzanie-koux144cowe}}
+\hypertarget{sec-post-processing}{%
+\section{Przetwarzanie końcowe}\label{sec-post-processing}}
 
 Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie
 metod przetwarzania końcowego (ang. \emph{post-processing}), mających na
@@ -668,8 +693,10 @@ i pieprzu (ang. \emph{salt-and-pepper effect}).
 
 }
 
-\caption{\label{fig-rycina-post-processing}POSTPROCESSING {[}DO
-ZMIANY{]}}
+\caption{\label{fig-rycina-post-processing}Kompozycja RGB Sentinel-2
+(a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV
+wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i
+poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)}
 
 \end{figure}
 
@@ -683,7 +710,7 @@ W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych
 oparty na danych teledetekcyjnych w formie wektorowej.
 
 W celu stworzenia wizualizacji oraz porównania produktów końcowych z
-predykcjami niepoddanymi etapowi przetwarzania końcowego, produkty
+predykcjami niepoddanymi etapowi przetwarzania końcowego produkty
 wektorowe zostały ponownie przetworzone do formy rastrowej.
 
 \hypertarget{sec-machine-learning}{%
@@ -766,12 +793,12 @@ jednocześnie są też mniej skorelowane, przez co model złożony z wielu
 drzew będzie bardziej niezawodny
 \autocite{sekulic_2020_rf_interpolation}. W fazie predykcji każde z
 drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana
-na podstawie głosowania większościowego. W przypadku klasyfikacji, klasa
+na podstawie głosowania większościowego. W przypadku klasyfikacji klasa
 wybierana jest na podstawie największej liczby głosów
 \autocite{breiman_2001_rf}.
 
-\hypertarget{dostrajanie-modeli}{%
-\subsection{Dostrajanie modeli}\label{dostrajanie-modeli}}
+\hypertarget{sec-tuning}{%
+\subsection{Dostrajanie modeli}\label{sec-tuning}}
 
 Celem optymalizacji hiperparametrów lub dostrajania modelu jest
 znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia
@@ -849,7 +876,7 @@ do przedziału od 50 do 500.
 \cmidrule(l{3pt}r{3pt}){2-6}
 Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees & max.depth & AUC\textsuperscript{b}\\
 \midrule
-1 & 9 & 0.6843 & 2 & 180 & 36 & 0.9886\\
+1 & 6 & 0.6689 & 2 & 264 & 34 & 0.9842\\
 2 & 7 & 0.7373 & 1 & 372 & 23 & 0.9914\\
 3 & 7 & 0.8847 & 5 & 388 & 75 & 0.9904\\
 4 & 6 & 0.8758 & 5 & 291 & 54 & 0.9881\\
@@ -907,7 +934,7 @@ danych przestrzennych jak nieprzestrzennych prowadzi do zbyt
 optymistycznych wyników w zakresie dokładności predykcyjnej modeli
 \autocite{brenning_2005_scv} Konsekwencją autokorelacji przestrzennej
 dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
-obserwacji uczących jeśli obserwacje testowe (lub walidacyjne) nie są
+obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są
 niezależne od zbioru uczącego \autocite{brenning_2012_scv}. Przestrzenna
 walidacja krzyżowa (ang. \emph{spatial cross-validation}) jest
 modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie
@@ -927,7 +954,8 @@ Przykład takiego podejścia przedstawia rycina \ref{fig-rycina-spcv}.
 \caption{\label{fig-rycina-spcv}Porównanie przestrzennego i losowego
 podziału zbioru danych na potrzeby walidacji krzyżowej jednego
 powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
-Opracowanie własne na podstawie Schratz,
+Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane
+testowe. Opracowanie własne na podstawie Schratz,
 \href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2024}}
 
 \end{figure}
@@ -971,14 +999,14 @@ Wartości każdej z wymienionych miar jakości modelu zawierają się w
 zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu,
 natomiast wartość 1 odzwierciedla wysoki poziom jakości. Wartości AUC
 mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza
-oznacza model nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie
-obu klas. Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
+model nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie obu klas.
+Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
 \autocite{lovelace_2019_geocomputation}.
 
-\hypertarget{waux17cnoux15bux107-zmiennych}{%
-\section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}
+\hypertarget{sec-variable-importance}{%
+\section{Ważność zmiennych}\label{sec-variable-importance}}
 
-Ocena ważności zmiennych (ang. \emph{variable inportance}) może zostać
+Ocena ważności zmiennych (ang. \emph{variable importance}) może zostać
 wykorzystana do poprawy i oceny jakości stworzonych modeli. Analizowanie
 wpływu poszczególnych zmiennych na dokładność modelu umożliwia ocenę ich
 istotności dla przewidywań. Stosowanie zmiennych o niskiej mocy
@@ -995,7 +1023,7 @@ których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang.
 \emph{Gini impurity}) oraz metoda oparta na permutacji
 \autocite{R-Przewodnik}. W celu określenia wartości zmiennych
 wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie
-danych teledetekcyjnych, zastosowano metodę permutacji (ang.
+danych teledetekcyjnych zastosowano metodę permutacji (ang.
 \emph{permutation}), która może być również używana do upraszczania i
 eksploracji modeli lub generowania wiedzy
 \autocite{biecek_2021_model_analysis}.
@@ -1111,8 +1139,8 @@ przetwarzania sekwencyjnego.
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \section{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
-\hypertarget{waux17cnoux15bux107-zmiennych-1}{%
-\section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych-1}}
+\hypertarget{waux17cnoux15bux107-zmiennych}{%
+\section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}
 
 \hypertarget{wizualna-kontrola-wynikuxf3w-klasyfikacji}{%
 \section{Wizualna kontrola wyników

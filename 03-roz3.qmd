@@ -28,13 +28,13 @@ Radar z syntetyzowaną aperturą (SAR) umożliwia prowadzenie obserwacji zarówn
 W grudniu 2021 roku w satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych radarowych [@sentinel_1b].
 W wyniku awarii satelita Sentinel-1B został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C zaplanowano na marzec 2024 roku [@sentinel_1b; @sentinel1_eoportal].
 
-Dane radarowe Sentinel-1 sa dostępne na trzech poziomach przetworzenia.
-Produkty poziomu 1 (Single Look Complex (SLC) i Ground Range Detected (GRD)), są przeznaczone dla użytkowników końcowych i nadają się, w zależności od produktu do monitorowania Ziemi, klasyfikacji pokrycia terenu czy aplikacji interferometrycznych [@hejmanowska_2020_dane].
+Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia.
+Produkty poziomu 1, Single Look Complex (SLC) i Ground Range Detected (GRD), przeznaczone są dla użytkowników końcowych, umożliwiając monitorowanie Ziemi, klasyfikację pokrycia terenu oraz aplikacje interferometryczne  [@hejmanowska_2020_dane].
 Interferometria radarowa (ang. *Interferometric Synthetic Aperture Radar*, InSAR) to technika umożliwiająca generowanie cyfrowych modeli wysokościowych (ang. *digital elevation model*, DEM) oraz pomiary deformacji terenu na podstawie informacji o fazie sygnału [@hanssen_2001_insar; @hejmanowska_2020_dane].
-SLC to obrazy SAR w geometrii ukośnej, posiadające informację o wartości amplitudy i fazie sygnału [@hejmanowska_2020_dane].
+Produkty SLC to obrazy SAR w geometrii ukośnej, posiadające informację o wartości amplitudy i fazie sygnału, co czyni je odpowiednimi do interferometrii radarowej [@hejmanowska_2020_dane].
 Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane].
-GRD nie zawiera cech ortofotomapy i wymaga dodatkowego przepróbkowania z użyciem numerycznego modelu terenu przed zastosowaniem w systemach GIS [@hejmanowska_2020_dane].
-Przy konwersji SLC do GRD tracimy informację fazową sygnału, co sprawia, że produkty GRD nie są odpowiednie do interferometrii radarowej [@sentinel1_products].
+Przy konwersji SLC do GRD tracimy informację fazową sygnału, co wyklucza zastosowanie produktów GRD w interferometrii radarowej [@sentinel1_products].
+Produkty GRD nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z użyciem cyfrowego modelu wysokości przed zastosowaniem w systemach GIS [@hejmanowska_2020_dane].
 
 Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) - używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) - tryb do monitorowania stref polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
 Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1 przedstawia tabela [-@tbl-tabela-sentinel1] [@sentinel1_resolution_swath].
@@ -105,14 +105,14 @@ Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały dostar
 Obszar analizy obejmuje kafel (ang. *tile*) o oznaczeniu 33UWV, dla którego współczynnik zachmurzenia w tym dniu wynosił 0,7%.
 Użyte zostały dane na poziomie przetworzenia L2A.
 Z dostępnych kanałów spektralnych (tabela [-@tbl-tabela-sentinel2] [@sentinel_2_user_guide]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur.
-Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (940 nm) do korekcji wpływu pary wodnej, a kanał 10 (1375 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
+Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945 nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
 
 ## Ortofotomapa i mozaiki zdjęć satelitarnych {#sec-mosaics}
 
 Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
 W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
 w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics].
-Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps, udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
+Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps [@planet], udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
 Mozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
 
 Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą [@ortofotomapa].
@@ -120,7 +120,7 @@ Rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (opró
 Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics].
 Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
 Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu.
-Mozaiki Planet Basemaps są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym, co umożliwia generowanie wysokorozdzielczych mozaik, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
+Mozaiki Planet Basemaps [@planet] są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym, co umożliwia generowanie wysokorozdzielczych mozaik, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
 
 ```{r}
 #| label: fig-rycina-pv
