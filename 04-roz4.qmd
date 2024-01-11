@@ -51,6 +51,11 @@ W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zapropo
 knitr::include_graphics("figures/sentinel1_workflow.drawio.png")
 ```
 
+Podczas przetwarzania danych radarowych pominięto etap filtrowania plamek (ang. *speckle filtering*), ponieważ nie jest to zalecane w kontekście identyfikacji tekstur obrazu [@filipponi_2019_s1_workflow].
+Zastosowanie filtracji plamek może prowadzić do utraty istotnych informacji [@filipponi_2019_s1_workflow].
+Filtracja plamek polega na usunięciu ziarnistych szumów na obszarach, gdzie oczekuje się jednorodnej intensywności rozpraszania wstecznego [@sentinel1_lulc].
+Ziarniste szumy, znane również jako efekty soli i pieprzu (ang. *salt-and-pepper effects*), wynikają z interferencji fal odbitych od licznych elementarnych rozpraszaczy [@lee_1994_speckle_filtering], czyli wielu niewielkich rozpraszaczy charakteryzujących się różnymi mechanizmami rozpraszania w jednej komórce rozdzielczości [@sentinel1_lulc].
+
 Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób przedstawiony na rycinie [-@fig-rycina-s1-workflow] przy użyciu narzędzi dostępnych w ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx], a proces ten został ułożony w sekwencję operacji przetwarzania za pomocą narzędzia GraphBuilder w oprogramowaniu SNAP [@snap].
 Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.

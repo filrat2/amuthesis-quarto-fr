@@ -73,6 +73,7 @@ knitr::kable(df, booktabs = TRUE, align = "c", linesep = "\\addlinespace") |>
 ```
 
 W pracy wykorzystano dwie polaryzacje (VV i VH) pochodzące z produktów Ground Range Detected (GRD), zarejestrowanych w trybie Interferometric Wide Swath (IW) przez platformę Sentinel-1A w dniu 8 maja 2023 roku.
+Podczas rejestracji danych platforma znajdowała się na orbicie wznoszącej (ang. *ascending orbit*), co oznacza, że satelita przemieszczał się z południa w kierunku bieguna północnego.
 Użyty zestaw danych został utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o oznaczeniu 33UWV.
 
 ### Senitnel-2 {#sec-sentinel2}
