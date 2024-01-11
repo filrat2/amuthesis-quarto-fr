@@ -96,6 +96,26 @@ Keywords: (as stated before)
 \hypertarget{sec-materialy}{%
 \chapter{Materiały}\label{sec-materialy}}
 
+W ramach badania wykorzystano zarówno radarowe, jak i multispektralne
+dane satelitarne pochodzące z programu Copernicus, konkretnie z misji
+Sentinel-1 i Sentinel-2. Program Copernicus to unijna inicjatywa
+obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we
+współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną
+(ang. \emph{European Space Agency}, ESA). Dane radarowe z misji
+Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2
+zostały pozyskane z obserwacji wykonanych 8 maja 2023 roku, gdy
+współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1\%. W
+badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz
+skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące
+współczynnik odbicia na powierzchni Ziemi (ang.
+\emph{Bottom-of-Atmospheric reflectance}, BOA).
+
+Obszar analizy obejmuje kafel Sentinel-2 (ang. \emph{tile}) o oznaczeniu
+33UWV, obejmujący głównie obszar województwa zachodniopomorskiego oraz
+fragment województwa wielkopolskiego. Powierzchnia obszaru analizy
+wynosi w przybliżeniu 12000 km\textsuperscript{2}, a jego lokalizację
+przedstawia rycina \ref{fig-rycina-area}.
+
 \begin{figure}[t]
 
 {\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/sen2_extent.png}
@@ -346,15 +366,18 @@ przeprowadzono obliczenia produktów pochodnych, takich jak wskaźniki
 spektralne oraz tekstury obrazu, opisane odpowiednio w sekcjach
 \ref{sec-spectral-indices} i \ref{sec-textures}. Kolejnym krokiem było
 połączenie przetworzonych danych źródłowych i ich produktów pochodnych w
-kilka wariantów zbiorów danych, stworzonych do na potrzeby detekcji farm
+kilka wariantów zbiorów danych, stworzonych na potrzeby detekcji farm
 fotowoltaicznych. Warianty zbiorów danych przedstawia tabela
 \ref{tbl-tabela-datasets}, a przebieg łączenia danych w wielokanałowe
 rastry został opisany w sekcji \ref{sec-processing-data-merging}. Na
 podstawie uzyskanych rastrów, zgodnie z sekcją \ref{sec-samples},
 utworzono zbiory danych uczących, które zostały wykorzystane do
-tworzenia modeli predykcyjnych. Następnie zoptymalizowano parametry tych
-modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z nich,
-co opisano odpowiednio w sekcjach \ref{sec-tuning},
+tworzenia modeli predykcyjnych. W procesie klasyfikacji wykorzystano
+metodę lasów losowych (ang. \emph{Random Forest}, RF) zaproponowaną
+przez \textcite{breiman_2001_rf}, która została dokładniej przedstawiona
+w sekcji \ref{sec-random-forest}. Następnie zoptymalizowano parametry
+tych modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z
+nich, co opisano odpowiednio w sekcjach \ref{sec-tuning},
 \ref{sec-model-quality-assessment} oraz \ref{sec-variable-importance}.
 Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano
 procesowi przetwarzania końcowego, przedstawionemu w sekcji
@@ -363,14 +386,13 @@ przedstawia rycina \textbf{?@fig-rycina-workflow}.
 
 Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu
 oprogramowania Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx} i SNAP
-\autocite{snap}, udostępnianego przez Europejską Agencję Kosmiczną (ang.
-ang. \emph{European Space Agency}, ESA). Każdy z kolejnych etapów został
-wykonany przy użyciu języka R \autocite{R-base} oraz pakietów
-rozszerzających funkcjonalności tego języka. Końcowe wizualizacje
-zostały stworzone w oprogramowaniu QGIS \autocite{qgis}. Zarówno
-oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i środowisko programistyczne
-R stanowią oprogramowanie o otwartym kodzie źródłowym (ang.
-\emph{open-source software}).
+\autocite{snap}, udostępnianego przez Europejską Agencję Kosmiczną.
+Każdy z kolejnych etapów został wykonany przy użyciu języka R
+\autocite{R-base} oraz pakietów rozszerzających funkcjonalności tego
+języka. Końcowe wizualizacje zostały stworzone w oprogramowaniu QGIS
+\autocite{qgis}. Zarówno oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i
+środowisko programistyczne R stanowią oprogramowanie o otwartym kodzie
+źródłowym (ang. \emph{open-source software}).
 
 \textbf{RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)}
 

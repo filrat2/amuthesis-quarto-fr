@@ -6,6 +6,14 @@ editor:
 
 # Materiały {#sec-materialy}
 
+W ramach badania wykorzystano zarówno radarowe, jak i multispektralne dane satelitarne pochodzące z programu Copernicus, konkretnie z misji Sentinel-1 i Sentinel-2.
+Program Copernicus to unijna inicjatywa obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną (ang. *European Space Agency*, ESA).
+Dane radarowe z misji Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2 zostały pozyskane z obserwacji wykonanych 8 maja 2023 roku, gdy współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1%.
+W badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące współczynnik odbicia na powierzchni Ziemi (ang. *Bottom-of-Atmospheric reflectance*, BOA).
+
+Obszar analizy obejmuje kafel Sentinel-2 (ang. *tile*) o oznaczeniu 33UWV, obejmujący głównie obszar województwa zachodniopomorskiego oraz fragment województwa wielkopolskiego. 
+Powierzchnia obszaru analizy wynosi w przybliżeniu 12000 km^2^, a jego lokalizację przedstawia rycina [-@fig-rycina-area].
+
 ```{r}
 #| label: fig-rycina-area
 #| echo: false

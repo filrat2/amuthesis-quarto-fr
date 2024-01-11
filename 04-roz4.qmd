@@ -8,14 +8,15 @@ editor:
 
 Badanie obejmowało kilka etapów, rozpoczynając od wstępnego przetwarzania danych satelitarnych, opisanego w sekcjach [-@sec-processing-s1] i [-@sec-processing-s2].
 Następnie przeprowadzono obliczenia produktów pochodnych, takich jak wskaźniki spektralne oraz tekstury obrazu, opisane odpowiednio w sekcjach [-@sec-spectral-indices] i [-@sec-textures].
-Kolejnym krokiem było połączenie przetworzonych danych źródłowych i ich produktów pochodnych w kilka wariantów zbiorów danych, stworzonych do na potrzeby detekcji farm fotowoltaicznych.
+Kolejnym krokiem było połączenie przetworzonych danych źródłowych i ich produktów pochodnych w kilka wariantów zbiorów danych, stworzonych na potrzeby detekcji farm fotowoltaicznych.
 Warianty zbiorów danych przedstawia tabela [-@tbl-tabela-datasets], a przebieg łączenia danych w wielokanałowe rastry został opisany w sekcji [-@sec-processing-data-merging].
 Na podstawie uzyskanych rastrów, zgodnie z sekcją [-@sec-samples], utworzono zbiory danych uczących, które zostały wykorzystane do tworzenia modeli predykcyjnych.
+W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*, RF) zaproponowaną przez @breiman_2001_rf, która została dokładniej przedstawiona w sekcji [-@sec-random-forest].
 Następnie zoptymalizowano parametry tych modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z nich, co opisano odpowiednio w sekcjach [-@sec-tuning], [-@sec-model-quality-assessment] oraz [-@sec-variable-importance].
 Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano procesowi przetwarzania końcowego, przedstawionemu w sekcji [-@sec-post-processing].
 Wizualną reprezentację przebiegu badania przedstawia rycina [-@fig-rycina-workflow].
 
-Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu oprogramowania Sentinel-1 Toolbox (S1TBX) [@s1tbx] i SNAP [@snap], udostępnianego przez Europejską Agencję Kosmiczną (ang. ang. *European Space Agency*, ESA).
+Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu oprogramowania Sentinel-1 Toolbox (S1TBX) [@s1tbx] i SNAP [@snap], udostępnianego przez Europejską Agencję Kosmiczną.
 Każdy z kolejnych etapów został wykonany przy użyciu języka R [@R-base] oraz pakietów rozszerzających funkcjonalności tego języka.
 Końcowe wizualizacje zostały stworzone w oprogramowaniu QGIS [@qgis].
 Zarówno oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i środowisko programistyczne R stanowią oprogramowanie o otwartym kodzie źródłowym (ang. *open-source software*).
