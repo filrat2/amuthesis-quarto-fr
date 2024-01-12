@@ -1179,8 +1179,111 @@ przetwarzania sekwencyjnego.
 \hypertarget{ocena-jakoux15bci-modeli}{%
 \section{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
 
+Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli
+\ref{tbl-tabela-datasets} przeprowadzono osobną zagnieżdżoną
+\emph{k}-krotną przestrzenną walidację krzyżową, zgodnie z sekcją
+\ref{sec-model-quality-assessment}. Zagnieżdżona przestrzenna walidacja
+krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących
+optymalizację hiperparametrów oraz ocenę jakości.
+
+Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli
+dla jednego foldu w celu określenia optymalnych hiperparametrów.
+Powtarzając tę procedurę dla każdego z pięciu ustalonych foldów,
+uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia. W celu
+identyfikacji optymalnych hiperparametrów założono dwadzieścia iteracji
+wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100
+000 modeli.
+
+Zoptymalizowane parametry modelu zostały następnie wykorzystane do
+oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100
+modeli (5 foldów * 20 powtórzeń). W rezultacie całkowita liczba
+stworzonych modeli wykorzystanych do oceny jakości i dostrajania
+hiperparametrów dla jednego wariantu wynosi 100 100.
+
+\hypertarget{tbl-tabela-performance-measures}{}
+\begin{table}
+\caption{\label{tbl-tabela-performance-measures}Śrdenie wyniki oceny jakości modeli uzyskane podczas przestrzennej
+walidacji krzyżowej }\tabularnewline
+
+\centering
+\begin{tabular}{lcccccc}
+\toprule
+  & Dataset 1 & Dataset 2 & Dataset 3 & Dataset 4 & Dataset 5 & Dataset 6\\
+\midrule
+precision & 0.8852 & 0.9001 & 0.8746 & 0.9112 & 0.9034 & 0.9180\\
+sensitivity & 0.7413 & 0.7296 & 0.7181 & 0.7134 & 0.7081 & 0.7151\\
+specificity & 0.9929 & 0.9942 & 0.9924 & 0.9950 & 0.9948 & 0.9956\\
+AUC & 0.9818 & 0.9862 & 0.9844 & 0.9802 & 0.9812 & 0.9867\\
+F-beta score & 0.7872 & 0.7875 & 0.7691 & 0.7855 & 0.7837 & 0.7929\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Ocenę klasyfikatorów stworzonych dla każdego z sześciu wariantów (tabela
+\ref{tbl-tabela-datasets}) przeprowadzono przy użyciu pięciu miar
+jakości opisanych w sekcji \ref{sec-model-quality-assessment}. Średnie
+wyniki miar jakości modeli oszacowane na podstawie przestrzennej
+walidacji krzyżowej przedstawia tabela
+\ref{tbl-tabela-performance-measures}.
+
+Ogólnie średnie wartości miar jakości dla każdego z wariantów są
+zbliżone. Prawdopodobnie wynika to z faktu, że w każdym wariancie
+dziesięć klasyfikatorów uwzględniało dane dotyczące reflektancji
+Sentinel-2 w poszczególnych kanałach. Każdy wariant różnił się jednak od
+pozostałych zestawem dodatkowych zmiennych.
+
+Na podstawie średnich wartości miar jakości przedstawionych w tabeli
+\ref{tbl-tabela-performance-measures}, najlepsze dopasowanie uzyskano,
+wykorzystując wszystkie predyktory (wariant nr 6). Ten wariant osiągnął
+najwyższe średnie oceny w czterech z pięciu zastosowanych miar
+(precyzja, specyficzność, AUC i \(F_{\beta}\) score). Najlepszy wynik
+czułości uzyskał natomiast wariant nr 1. W przypadku trzech z pięciu
+miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja, swoistość
+i \(F_{\beta}\) score). Najgorszą czułością cechuje się natomiast
+wariant nr 5, a najniższym wynikiem miary AUC - wariant nr 4.
+
+Średnie wyniki czułości i miary AUC dla wszystkich klasyfikatorów są
+bardzo zbliżone, a różnice pomiędzy najlepszym a najgorszym wynikiem są
+niewielkie. Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla
+precyzji wynosi 0,0434, dla czułości 0,0332, a dla \(F_{\beta}\) score
+0,0238, co wskazuje na bardziej znaczące różnice. Średnie wyniki
+precyzji czterech z sześciu klasyfikatorów przekroczyły wartość 0,90
+(0,8746 dla najgorszego wariantu nr 3, 0,9180 dla najlepszego wariantu
+nr 6). Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników
+(False), uzyskując bardzo wysokie wyniki specyficzności (zakres wartości
+od 0,9924 do 0,9956). Niższe wyniki czułości wskazują jednak na mniej
+efektywne radzenie sobie z wykrywaniem wyników dodatnich (True).
+Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie wyższym niż
+0,70, kształtując się w zakresie od 0,7081 do 0,7413. Podobnie jak w
+przypadku specyficzności, wszystkie klasyfikatory uzyskały wysokie oceny
+dla miary AUC, gdzie najgorszy wynik wyniósł 0,9802, a najlepszy 0,9867.
+Wyniki miary \(F_{\beta}\) score dla każdego wariantu przekroczyły
+wartość 0,75, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
+
 \hypertarget{waux17cnoux15bux107-zmiennych}{%
 \section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1.05\textwidth,height=\textheight]{figures/importance_cowplot.png}
+
+}
+
+\caption{\label{fig-rycina-variance-importance_cowplot}Permutowane
+znaczenie 10 najważniejszych zmiennych dla każdego wariantu}
+
+\end{figure}
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=4.6875in,height=\textheight]{figures/importance_plot_dataset6.png}
+
+}
+
+\caption{\label{fig-rycina-variance-importance-dataset6}Permutowana
+ważność zmiennych dla wariantu nr 6}
+
+\end{figure}
 
 \hypertarget{wizualna-kontrola-wynikuxf3w-klasyfikacji}{%
 \section{Wizualna kontrola wyników

@@ -20,6 +20,68 @@ moja_funkcja("Autor tej pracy")
 
 ## Ocena jakości modeli
 
+Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli [-@tbl-tabela-datasets] przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z sekcją [-@sec-model-quality-assessment].
+Zagnieżdżona przestrzenna walidacja krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
+
+Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli dla jednego foldu w celu określenia optymalnych hiperparametrów.
+Powtarzając tę procedurę dla każdego z pięciu ustalonych foldów, uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia.
+W celu identyfikacji optymalnych hiperparametrów założono dwadzieścia iteracji wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100 000 modeli.
+
+Zoptymalizowane parametry modelu zostały następnie wykorzystane do oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100 modeli (5 foldów * 20 powtórzeń).
+W rezultacie całkowita liczba stworzonych modeli wykorzystanych do oceny jakości i dostrajania hiperparametrów dla jednego wariantu wynosi 100 100.
+
+```{r tabela1, echo=FALSE}
+#| label: tbl-tabela-performance-measures
+#| echo: false
+#| tbl-cap: "Śrdenie wyniki oceny jakości modeli uzyskane podczas przestrzennej walidacji krzyżowej"
+df = readRDS("C:/Users/Filip/Desktop/inzynierka/rds/performance_scores_df_12_01.rds")
+rownames(df) = gsub("classif.", '', rownames(df))
+colnames(df) = gsub('dataset', 'Dataset ', colnames(df))
+rownames(df)[4] = "AUC"
+rownames(df)[5] = "F-beta score"
+kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "")
+```
+
+Ocenę klasyfikatorów stworzonych dla każdego z sześciu wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy użyciu pięciu miar jakości opisanych w sekcji [-@sec-model-quality-assessment].
+Średnie wyniki miar jakości modeli oszacowane na podstawie przestrzennej walidacji krzyżowej przedstawia tabela [-@tbl-tabela-performance-measures].
+
+Ogólnie średnie wartości miar jakości dla każdego z wariantów są zbliżone.
+Prawdopodobnie wynika to z faktu, że w każdym wariancie dziesięć klasyfikatorów uwzględniało dane dotyczące reflektancji Sentinel-2 w poszczególnych kanałach.
+Każdy wariant różnił się jednak od pozostałych zestawem dodatkowych zmiennych.
+
+Na podstawie średnich wartości miar jakości przedstawionych w tabeli [-@tbl-tabela-performance-measures], najlepsze dopasowanie uzyskano, wykorzystując wszystkie predyktory (wariant nr 6).
+Ten wariant osiągnął najwyższe średnie oceny w czterech z pięciu zastosowanych miar (precyzja, specyficzność, AUC i $F_{\beta}$ score).
+Najlepszy wynik czułości uzyskał natomiast wariant nr 1.
+W przypadku trzech z pięciu miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja, swoistość i $F_{\beta}$ score).
+Najgorszą czułością cechuje się natomiast wariant nr 5, a najniższym wynikiem miary AUC - wariant nr 4.
+
+Średnie wyniki czułości i miary AUC dla wszystkich klasyfikatorów są bardzo zbliżone, a różnice pomiędzy najlepszym a najgorszym wynikiem są niewielkie.
+Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla precyzji wynosi 0,0434, dla czułości 0,0332, a dla $F_{\beta}$ score 0,0238, co wskazuje na bardziej znaczące różnice.
+Średnie wyniki precyzji czterech z sześciu klasyfikatorów przekroczyły wartość 0,90 (0,8746 dla najgorszego wariantu nr 3, 0,9180 dla najlepszego wariantu nr 6).
+Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników (False), uzyskując bardzo wysokie wyniki specyficzności (zakres wartości od 0,9924 do 0,9956).
+Niższe wyniki czułości wskazują jednak na mniej efektywne radzenie sobie z wykrywaniem wyników dodatnich (True). 
+Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie wyższym niż 0,70, kształtując się w zakresie od 0,7081 do 0,7413.
+Podobnie jak w przypadku specyficzności, wszystkie klasyfikatory uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł 0,9802, a najlepszy 0,9867.
+Wyniki miary $F_{\beta}$ score dla każdego wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
+
 ## Ważność zmiennych
+
+```{r}
+#| label: fig-rycina-variance-importance_cowplot
+#| echo: false
+#| fig-cap: "Permutowane znaczenie 10 najważniejszych zmiennych dla każdego wariantu"
+#| out-width: 105%
+knitr::include_graphics("figures/importance_cowplot.png")
+```
+
+
+
+```{r}
+#| label: fig-rycina-variance-importance-dataset6
+#| echo: false
+#| fig-cap: "Permutowana ważność zmiennych dla wariantu nr 6"
+#| out-width: 450px
+knitr::include_graphics("figures/importance_plot_dataset6.png")
+```
 
 ## Wizualna kontrola wyników klasyfikacji
