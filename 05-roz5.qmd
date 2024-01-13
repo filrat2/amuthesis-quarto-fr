@@ -52,14 +52,14 @@ Każdy wariant różnił się jednak od pozostałych zestawem dodatkowych zmienn
 Na podstawie średnich wartości miar jakości przedstawionych w tabeli [-@tbl-tabela-performance-measures], najlepsze dopasowanie uzyskano, wykorzystując wszystkie predyktory (wariant nr 6).
 Ten wariant osiągnął najwyższe średnie oceny w czterech z pięciu zastosowanych miar (precyzja, specyficzność, AUC i $F_{\beta}$ score).
 Najlepszy wynik czułości uzyskał natomiast wariant nr 1.
-W przypadku trzech z pięciu miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja, swoistość i $F_{\beta}$ score).
+W przypadku trzech z pięciu miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja, specyficzność i $F_{\beta}$ score).
 Najgorszą czułością cechuje się natomiast wariant nr 5, a najniższym wynikiem miary AUC - wariant nr 4.
 
 Średnie wyniki czułości i miary AUC dla wszystkich klasyfikatorów są bardzo zbliżone, a różnice pomiędzy najlepszym a najgorszym wynikiem są niewielkie.
 Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla precyzji wynosi 0,0434, dla czułości 0,0332, a dla $F_{\beta}$ score 0,0238, co wskazuje na bardziej znaczące różnice.
 Średnie wyniki precyzji czterech z sześciu klasyfikatorów przekroczyły wartość 0,90 (0,8746 dla najgorszego wariantu nr 3, 0,9180 dla najlepszego wariantu nr 6).
-Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników (False), uzyskując bardzo wysokie wyniki specyficzności (zakres wartości od 0,9924 do 0,9956).
-Niższe wyniki czułości wskazują jednak na mniej efektywne radzenie sobie z wykrywaniem wyników dodatnich (True). 
+Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników (True negative), uzyskując bardzo wysokie wyniki specyficzności (zakres wartości od 0,9924 do 0,9956).
+Niższe wyniki czułości wskazują jednak na mniej efektywne radzenie sobie z wykrywaniem wyników dodatnich (True positive). 
 Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie wyższym niż 0,70, kształtując się w zakresie od 0,7081 do 0,7413.
 Podobnie jak w przypadku specyficzności, wszystkie klasyfikatory uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł 0,9802, a najlepszy 0,9867.
 Wyniki miary $F_{\beta}$ score dla każdego wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
@@ -74,7 +74,10 @@ Wyniki miary $F_{\beta}$ score dla każdego wariantu przekroczyły wartość 0,7
 knitr::include_graphics("figures/importance_cowplot.png")
 ```
 
-
+Dla każdego z sześciu wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono ocenę ważności zmiennych z wykorzystaniem metody opartej na permutacji, szczegółowo opisanej w sekcji [-@sec-variable-importance].
+Ważność zmiennych dla każdego wariantu została posortowana w porządku malejącym i przedstawiona na rycinie [-@fig-rycina-variance-importance_cowplot], która prezentuje moc predykcyjną różnych zmiennych wejściowych.
+Na potrzeby wizualizacji przedstawiono 10 najważniejszych zmiennych dla każdego wariantu, co odpowiada liczbie predyktorów w wariancie o najmniejszej ilości zmiennych (wariant nr 1).
+Rycina [-@fig-rycina-variance-importance-dataset6] ilustruje permutowaną ważność zmiennych dla wariantu nr 6, obejmującego wszystkie dostępne zmienne (21 predyktorów).
 
 ```{r}
 #| label: fig-rycina-variance-importance-dataset6
@@ -83,5 +86,21 @@ knitr::include_graphics("figures/importance_cowplot.png")
 #| out-width: 450px
 knitr::include_graphics("figures/importance_plot_dataset6.png")
 ```
+
+Pomijając aspekt związków i interakcji pomiędzy zmiennymi, które powodowały subtelne różnice w kolejności znaczenia zmiennych dla poszczególnych wariantów, zauważalny jest podział zmiennych na pięć grup według ich istotności w detekcji farm fotowoltaicznych.
+Z rycin [-@fig-rycina-variance-importance_cowplot] i [-@fig-rycina-variance-importance-dataset6] wynika, że największe znaczenie spośród wszystkich predyktorów miała grupa czterech zmiennych: tekstura średniej sumy kanału niebieskiego (B02 SAVG), kanały średniej podczerwieni (SWIR1 (B11) i SWIR2 (B12)) oraz kanał niebieski (B02).
+Trochę niższą istotność w kontekście wykrywania farm fotowoltaicznych miały trzy kolejne zmienne: znormalizowany zmodyfikowany różnicowy wskaźnik wody (mNDVI), znormalizowany różnicowy wskaźnik obszarów zabudowanych (NDBI) oraz kanał czerwony (B04).
+Trzecią grupę stanowiły dwie zmienne: znormalizowany różnicowy wskaźnik wegetacji (NDVI) oraz jeden z kanałów czerwieni krawędziowej (tzw. *RedEdge*, B05), a do czwartej grupy zaliczyć można tekstury średniej sumy dla polaryzacji VV i wskaźnika mNDWI (VV SAVG, mNDWI SAVG) oraz kanał bliskiej podczerwieni (B8A).
+Najmniejsze znaczenie przy detekcji farm fotowoltaicznych miały kanał zielony (B03), pozostałe kanały czerwieni krawędziowej (B06 i B07),  kanał bliskiej podczerwieni (B08), obie wykorzystane polaryzacje (VV i VH) oraz tekstury średniej sumy dla kanału B8A, polaryzacji VH oraz wskaźnika NDBI (B8A SAVG, VH SAVG i NDBI SAVG).
+
+Uzyskane wyniki oceny ważności zmiennych wskazują na dość spore znacznie wskaźników spektralnych, głównie mNDWI oraz NDBI w kontekście wykrywania farm fotowoltaicznych.
+Niskie znaczenie w tym zastosowaniu wykazują natomiast dane radarowe pochodzące z misji Sentienl-1 oraz tekstury średniej sumy dla tych zmiennych.
+
+Spośród sześciu obliczonych tekstur średniej sumy wskazanych przez @wang_2022_pv jako istotne przy detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest, jedynie tekstura średniej sumy dla kanału niebieskiego wykazywała się znaczącym wpływem na wynik klasyfikacji.
+Pozostałe tekstury wskazywały przeciętną lub niską istotność w tym konkretnym zadaniu.
+Ważność trzech z obliczonych tekstur (B02 SAVG, VV SAVG i VH SAVG) była wyższa niż ocena ważności odpowiadających im danych pierwotnych.
+W przypadku pozostałych trzech tekstur (B8A SAVG, mNDWI SAVG i NDBI SAVG), uzyskane wyniki były niższe niż wyniki pierwotnych danych teledetekcyjnych.
+
+**W tym miejscu można też wstawić rycinę (corplot) z korelacją między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć umieszczenie tych rycin w sekcji [-@sec-variable-importance].**
 
 ## Wizualna kontrola wyników klasyfikacji
