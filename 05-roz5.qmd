@@ -103,4 +103,25 @@ W przypadku pozostałych trzech tekstur (B8A SAVG, mNDWI SAVG i NDBI SAVG), uzys
 
 **W tym miejscu można też wstawić rycinę (corplot) z korelacją między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć umieszczenie tych rycin w sekcji [-@sec-variable-importance].**
 
-## Wizualna kontrola wyników klasyfikacji
+## Wyniki klasyfikacji
+
+### Wizualna kontrola wyników klasyfikacji
+
+```{r}
+#| label: fig-rycina-truepositive-dataset6
+#| echo: false
+#| fig-cap: "Wyniki klasyfikacji wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów prawdziwie dodatnich przewidywań (ang. True positive) (c) z wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB Sentinel-2 (b)"
+#| out-width: 91%
+knitr::include_graphics("figures/pv_dataset6.png")
+```
+
+```{r}
+#| label: fig-rycina-falsepositive-dataset6
+#| echo: false
+#| fig-cap: "Wyniki klasyfikacji wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów fałszywie dodatnich przewidywań (ang. False positive) (c) z wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB Sentinel-2 (b)"
+#| out-width: 91%
+knitr::include_graphics("figures/incorrect_dataset6.png")
+```
+
+### **???**
+
