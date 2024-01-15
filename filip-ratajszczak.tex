@@ -1176,8 +1176,9 @@ przetwarzania sekwencyjnego.
 \hypertarget{sec-wyniki}{%
 \chapter{Wyniki}\label{sec-wyniki}}
 
-\hypertarget{ocena-jakoux15bci-modeli}{%
-\section{Ocena jakości modeli}\label{ocena-jakoux15bci-modeli}}
+\hypertarget{sec-results-model-quality-assessment}{%
+\section{Ocena jakości
+modeli}\label{sec-results-model-quality-assessment}}
 
 Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli
 \ref{tbl-tabela-datasets} przeprowadzono osobną zagnieżdżoną
@@ -1261,8 +1262,8 @@ uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł
 wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy
 0,7691, a 0,7929.
 
-\hypertarget{waux17cnoux15bux107-zmiennych}{%
-\section{Ważność zmiennych}\label{waux17cnoux15bux107-zmiennych}}
+\hypertarget{sec-results-variable-importance}{%
+\section{Ważność zmiennych}\label{sec-results-variable-importance}}
 
 \begin{figure}[t]
 
@@ -1345,12 +1346,94 @@ między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych
 klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć
 umieszczenie tych rycin w sekcji \ref{sec-variable-importance}.}
 
-\hypertarget{wyniki-klasyfikacji}{%
-\section{Wyniki klasyfikacji}\label{wyniki-klasyfikacji}}
+\hypertarget{sec-classification-results}{%
+\section{Wyniki klasyfikacji}\label{sec-classification-results}}
 
-\hypertarget{wizualna-kontrola-wynikuxf3w-klasyfikacji}{%
+\hypertarget{sec-spatial-quality-assessment}{%
+\subsection{Przestrzenna ocena jakości
+predykcji}\label{sec-spatial-quality-assessment}}
+
+\hypertarget{sec-visual-quality-assessment}{%
 \subsection{Wizualna kontrola wyników
-klasyfikacji}\label{wizualna-kontrola-wynikuxf3w-klasyfikacji}}
+klasyfikacji}\label{sec-visual-quality-assessment}}
+
+Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja
+\ref{sec-spatial-quality-assessment}), modele stworzone w ramach
+niniejszego badania wykazują dobrą skuteczność w identyfikacji farm
+fotowoltaicznych, co ilustruje również rycina
+\ref{fig-rycina-truepositive-dataset6}, przedstawiająca przykłady
+poprawnych przewidywań dla wariantu nr 6. Dla porównania, na rycinie
+przedstawiono także instalacje fotowoltaiczne generujące energię
+elektryczną, pochodzące z badania przeprowadzonego przez
+\textcite{kruitwagen_2021_pv}, wskazującego istniejące konstrukcje
+fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Wysokorozdzielcze obrazy satelitarne na rycinie
+\ref{fig-rycina-truepositive-dataset6} (kolumna a) pochodzą z różnych
+okresów. Obraz satelitarny 2a został pozyskany później niż dane użyte do
+detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku),
+natomiast obrazy 4a i 4b pochodzą sprzed tego okresu.
+
+W niektórych przypadkach wewnątrz wykrytych instalacji fotowoltaicznych
+pojawiły się fałszywie ujemne predykcje (ang. \emph{False negative}), co
+przedstawiają ryciny \ref{fig-rycina-truepositive-dataset6} 1c i
+\ref{fig-rycina-post-processing} 2c. Na kompozycji RGB Sentinel-2 możemy
+zaobserwować w miejscach tych błędnych wskazań różnice w jasności
+komórek względem otaczającej instalacji fotowoltaicznej lub
+zróżnicowanie powierzchni pod panelami fotowoltaicznymi. Rycina
+\ref{fig-rycina-truepositive-dataset6} 5c pokazuje, że w niektórych
+przypadkach poprawne wskazania powierzchni farm fotowoltaicznych są
+niepełne, pomimo jednolitego wyglądu instalacji na kompozycji RGB
+Sentinel-2.
+
+Problemem stworzonych modeli jest ich tendencja do przeuczania się na
+niektórych typach pokrycia terenu i użytkowania ziemi, co zostało
+szerzej opisane w sekcji dotyczącej losowania próbek (sekcja
+\ref{sec-samples}). Zaproponowane metody przetwarzania końcowego,
+omówione w sekcji \ref{sec-post-processing}, poprawiają wyniki
+predykcji. Niemniej jednak, w zależności od wariantu, nadal występują
+mniejsze lub większe błędy w klasyfikacji. Przykłady fałszywie dodatnich
+przewidywań (ang. \emph{False positive}) zostały przedstawione na
+rycinach \ref{fig-rycina-falsepositive-dataset6} (dla wariantu nr 6)
+oraz \ref{fig-rycina-post-processing} (dla wariantu nr 1). Wybrane
+lokalizacje ilustrują typowe błędy modeli na różnych typach pokrycia
+terenu i użytkowania ziemi.
+
+Mimo zastosowania dodatkowych próbek negatywnych na drogach oraz
+kopalniach torfu, jak wskazano w sekcji \ref{sec-samples}, błędne
+pozytywne przewidywania na tych obszarach nadal występują, co ilustrują
+odpowiednio pierwszy i czwarty rząd ryciny
+\ref{fig-rycina-falsepositive-dataset6}. Trzeci rząd ryciny
+\ref{fig-rycina-falsepositive-dataset6} oraz drugi rząd ryciny
+\ref{fig-rycina-post-processing} sugerują, że błędne predykcje mogą
+występować również na obszarach zachmurzonych. Drugi rząd ryciny
+\ref{fig-rycina-falsepositive-dataset6} oraz pierwszy rząd ryciny
+\ref{fig-rycina-post-processing} pokazują natomiast, że błędne predykcje
+obejmują także obszary użytków rolnych (pola uprawne, łąki i pastwiska)
+oraz nieużytków, szczególnie w miejscach, gdzie istnieje gęsta sieć
+melioracyjna. W wyniku klasyfikacji wariantu nr 6 pojawił się nietypowy
+przypadek błędnego sklasyfikowania boiska sportowego jako instalacji
+fotowoltaicznej, które ze względu na powierzchnię większą niż 1000
+m\textsuperscript{2} nie zostało skorygowane przez zastosowane metody
+przetwarzania końcowego.
+
+Należy zaznaczyć, że pomimo wykorzystania próbek z tych samych
+lokalizacji do trenowania każdego z wariantów, różne modele wykazują
+zróżnicowaną skuteczność klasyfikacji w zależności od typów pokrycia
+terenu i użytkowania ziemi. Jest to prawdopodobnie rezultat wpływów
+różnych zmiennych, gdzie niektóre z nich wspomagały decyzje w przypadku
+konkretnego typu pokrycia terenu, podczas gdy inne miały przeciwny
+efekt.
+
+\textbf{DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach
+potwierdziła, że modele w większości przepadków skutecznie dokonują
+rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas
+klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka
+powtarzających się błędów. W celu poprawy wyników identyfikacji farm
+fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów
+chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego
+etapu w procesie przetwarzania końcowego, który wykluczałby predykcje
+wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z
+sugestią Ortiz et al.~(2022).}
 
 \begin{figure}[t]
 
@@ -1379,9 +1462,6 @@ wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB
 Sentinel-2 (b)}
 
 \end{figure}
-
-\hypertarget{section}{%
-\subsection{\texorpdfstring{\textbf{???}}{???}}\label{section}}
 
 \bookmarksetup{startatroot}
 

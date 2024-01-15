@@ -18,7 +18,7 @@ moja_funkcja("Autor tej pracy")
 ```
 -->
 
-## Ocena jakości modeli
+## Ocena jakości modeli {#sec-results-model-quality-assessment}
 
 Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli [-@tbl-tabela-datasets] przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z sekcją [-@sec-model-quality-assessment].
 Zagnieżdżona przestrzenna walidacja krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
@@ -64,7 +64,7 @@ Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie wyższym niż 0,
 Podobnie jak w przypadku specyficzności, wszystkie klasyfikatory uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł 0,9802, a najlepszy 0,9867.
 Wyniki miary $F_{\beta}$ score dla każdego wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
 
-## Ważność zmiennych
+## Ważność zmiennych {#sec-results-variable-importance}
 
 ```{r}
 #| label: fig-rycina-variance-importance_cowplot
@@ -103,9 +103,39 @@ W przypadku pozostałych trzech tekstur (B8A SAVG, mNDWI SAVG i NDBI SAVG), uzys
 
 **W tym miejscu można też wstawić rycinę (corplot) z korelacją między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć umieszczenie tych rycin w sekcji [-@sec-variable-importance].**
 
-## Wyniki klasyfikacji
+## Wyniki klasyfikacji {#sec-classification-results}
 
-### Wizualna kontrola wyników klasyfikacji
+### Przestrzenna ocena jakości predykcji {#sec-spatial-quality-assessment}
+
+
+
+### Wizualna kontrola wyników klasyfikacji {#sec-visual-quality-assessment}
+
+Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja [-@sec-spatial-quality-assessment]), modele stworzone w ramach niniejszego badania wykazują dobrą skuteczność w identyfikacji farm fotowoltaicznych, co ilustruje również rycina [-@fig-rycina-truepositive-dataset6], przedstawiająca przykłady poprawnych przewidywań dla wariantu nr 6.
+Dla porównania, na rycinie przedstawiono także instalacje fotowoltaiczne generujące energię elektryczną, pochodzące z badania przeprowadzonego przez @kruitwagen_2021_pv, wskazującego istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Wysokorozdzielcze obrazy satelitarne na rycinie [-@fig-rycina-truepositive-dataset6] (kolumna a) pochodzą z różnych okresów.
+Obraz satelitarny 2a został pozyskany później niż dane użyte do detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku), natomiast obrazy 4a i 4b pochodzą sprzed tego okresu.
+
+W niektórych przypadkach wewnątrz wykrytych instalacji fotowoltaicznych pojawiły się fałszywie ujemne predykcje (ang. *False negative*), co przedstawiają ryciny [-@fig-rycina-truepositive-dataset6] 1c i [-@fig-rycina-post-processing] 2c.
+Na kompozycji RGB Sentinel-2 możemy zaobserwować w miejscach tych błędnych wskazań różnice w jasności komórek względem otaczającej instalacji fotowoltaicznej lub zróżnicowanie powierzchni pod panelami fotowoltaicznymi.
+Rycina [-@fig-rycina-truepositive-dataset6] 5c pokazuje, że w niektórych przypadkach poprawne wskazania powierzchni farm fotowoltaicznych są niepełne, pomimo jednolitego wyglądu instalacji na kompozycji RGB Sentinel-2.
+
+Problemem stworzonych modeli jest ich tendencja do przeuczania się na niektórych typach pokrycia terenu i użytkowania ziemi, co zostało szerzej opisane w sekcji dotyczącej losowania próbek (sekcja [-@sec-samples]).
+Zaproponowane metody przetwarzania końcowego, omówione w sekcji [-@sec-post-processing], poprawiają wyniki predykcji.
+Niemniej jednak, w zależności od wariantu, nadal występują mniejsze lub większe błędy w klasyfikacji.
+Przykłady fałszywie dodatnich przewidywań (ang. *False positive*) zostały przedstawione na rycinach [-@fig-rycina-falsepositive-dataset6] (dla wariantu nr 6) oraz [-@fig-rycina-post-processing] (dla wariantu nr 1).
+Wybrane lokalizacje ilustrują typowe błędy modeli na różnych typach pokrycia terenu i użytkowania ziemi.
+
+Mimo zastosowania dodatkowych próbek negatywnych na drogach oraz kopalniach torfu, jak wskazano w sekcji [-@sec-samples], błędne pozytywne przewidywania na tych obszarach nadal występują, co ilustrują odpowiednio pierwszy i czwarty rząd ryciny [-@fig-rycina-falsepositive-dataset6].
+Trzeci rząd ryciny [-@fig-rycina-falsepositive-dataset6] oraz drugi rząd ryciny [-@fig-rycina-post-processing] sugerują, że błędne predykcje mogą występować również na obszarach zachmurzonych.
+Drugi rząd ryciny [-@fig-rycina-falsepositive-dataset6] oraz pierwszy rząd ryciny [-@fig-rycina-post-processing] pokazują natomiast, że błędne predykcje obejmują także obszary użytków rolnych (pola uprawne, łąki i pastwiska) oraz nieużytków, szczególnie w miejscach, gdzie istnieje gęsta sieć melioracyjna.
+W wyniku klasyfikacji wariantu nr 6 pojawił się nietypowy przypadek błędnego sklasyfikowania boiska sportowego jako instalacji fotowoltaicznej, które ze względu na powierzchnię większą niż 1000 m^2^ nie zostało skorygowane przez zastosowane metody przetwarzania końcowego.
+
+Należy zaznaczyć, że pomimo wykorzystania próbek z tych samych lokalizacji do trenowania każdego z wariantów, różne modele wykazują zróżnicowaną skuteczność klasyfikacji w zależności od typów pokrycia terenu i użytkowania ziemi.
+Jest to prawdopodobnie rezultat wpływów różnych zmiennych, gdzie niektóre z nich wspomagały decyzje w przypadku konkretnego typu pokrycia terenu, podczas gdy inne miały przeciwny efekt.
+
+**DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów. W celu poprawy wyników identyfikacji farm fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania końcowego, który wykluczałby predykcje wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z sugestią Ortiz et al. (2022).**
+
 
 ```{r}
 #| label: fig-rycina-truepositive-dataset6
@@ -122,6 +152,3 @@ knitr::include_graphics("figures/pv_dataset6.png")
 #| out-width: 91%
 knitr::include_graphics("figures/incorrect_dataset6.png")
 ```
-
-### **???**
-
