@@ -56,7 +56,7 @@ Zastosowanie filtracji plamek może prowadzić do utraty istotnych informacji [@
 Filtracja plamek polega na usunięciu ziarnistych szumów na obszarach, gdzie oczekuje się jednorodnej intensywności rozpraszania wstecznego [@sentinel1_lulc].
 Ziarniste szumy, znane również jako efekty soli i pieprzu (ang. *salt-and-pepper effects*), wynikają z interferencji fal odbitych od licznych elementarnych rozpraszaczy [@lee_1994_speckle_filtering], czyli wielu niewielkich rozpraszaczy charakteryzujących się różnymi mechanizmami rozpraszania w jednej komórce rozdzielczości [@sentinel1_lulc].
 
-Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób przedstawiony na rycinie [-@fig-rycina-s1-workflow] przy użyciu narzędzi dostępnych w ESA Sentinel-1 Toolbox (S1TBX) [@s1tbx], a proces ten został ułożony w sekwencję operacji przetwarzania za pomocą narzędzia GraphBuilder w oprogramowaniu SNAP [@snap].
+Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób przedstawiony na rycinie [-@fig-rycina-s1-workflow] przy użyciu narzędzi dostępnych w ESA Sentinel-1 Toolbox [@s1tbx], a proces ten został ułożony w sekwencję operacji przetwarzania za pomocą narzędzia GraphBuilder w oprogramowaniu SNAP [@snap].
 Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
 Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji `focal` z pakietu *terra* [@R-terra].
@@ -108,7 +108,7 @@ Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji z
 
 ### Tekstury obrazu {#sec-textures}
 
-Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów i obszarów zainteresowania na obrazie [@haralick_1973_texture] i odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i satelitarnych [@lewinski_2012_texture].
+Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów i obszarów zainteresowania na obrazie [@haralick_1973_texture] oraz odgrywa dużą rolę w interpretacji wizualnej zdjęć lotniczych i satelitarnych [@lewinski_2012_texture].
 Gdy różnice widmowe pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie odmiennych typów obiektów na podstawie ich organizacji w terenie, często kontrastując przestrzenie naturalne z antropogenicznymi [@grass_r_texture].
 W zależności od zastosowanej funkcji wybrane cechy obrazu zostają uwidocznione w porównaniu z pierwotnym obrazem wejściowym [@lewinski_2012_texture].
 Informacja o teksturze może stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji lub segmentacji obrazu [@gong_1992_spatial_features; @mumby_2002_ikonos].
@@ -117,13 +117,18 @@ Można ją opisać za pomocą tonu (intensywność poziomu szarości) i struktur
 Model oparty na macierzy współwystępowania poziomów szarości (ang. *Gray Level Co-Occurrence Matrix*, GLCM), zaproponowany przez @haralick_1973_texture, jest często używany do obliczania tekstur obrazu.
 Ta metoda polega na tworzeniu macierzy opisującej częstotliwość występowania par wartości w określonym fragmencie obrazu, uwzględniając określone sąsiedztwo, kierunki i odstępy między komórkami [@kupidura_2019_texture].
 
+Dane teledetekcyjne zazwyczaj reprezentują dane ciągle o szerokim zakresie, które niejednokrotnie mogą przyjmować zarówno wartości dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb całkowitych [@R-GLCMTextures].
+Obliczanie tekstur obrazu wymaga uprzedniego zredukowania zakresu wartości obrazów rastrowych do dyskretnej liczby poziomów szarości, co określa się mianem kwantyzacji (ang. *quantization*).
+Metoda kwantyzacji danych zasugerowana przez @haralick_1973_texture opiera się na równym prawdopodobieństwie (ang. *equal probability*), dokonując redukcji poziomów szarości z równym prawdopodobieństwem i wykorzystując kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą liczbę próbek [@R-GLCMTextures].
+
 Przydatność i wykorzystanie tekstury w dużym stopniu zależy od rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które ukształtowało teksturę [@grass_r_texture].
 Badanie, które przeprowadził @zhang_2021_texture dotyczące wykorzystania filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ tekstur na skuteczność modelu.
 Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli (co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m), natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na poprawę dokładności modelu [@zhang_2021_texture].
 
-Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest.
+Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez @zhang_2021_texture i @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na satelitarnych.
 Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami @wang_2022_pv.
 W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+Z uwagi na rosnący koszt i czas obliczeń wraz z zwiększaniem liczby poziomów szarości, zdecydowano się na kwantyzację wartości rastrów do 32 poziomów szarości.
 
 ### Łączenie danych {#sec-processing-data-merging}
 
@@ -144,12 +149,12 @@ df <- data.frame(
   a = c(1, 2, 3, 4, 5, 6),
   b = c(10, 13, 16, 12, 16, 21),
   c = c("S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI",
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
         "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH",
         "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
         tekstury: 02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; S1:VV, VH;
+        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
         tekstury: B02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG, NDBI_SAVG, mNDWI_SAVG"))
 
 knitr::kable(df, booktabs = TRUE, align = "c", 
@@ -206,6 +211,7 @@ Na podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje repr
 W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych oparty na danych teledetekcyjnych w formie wektorowej.
 
 W celu stworzenia wizualizacji oraz porównania produktów końcowych z predykcjami niepoddanymi etapowi przetwarzania końcowego produkty wektorowe zostały ponownie przetworzone do formy rastrowej.
+Efekty zastosowanego przetwarzania końcowego przedstawia rycina [-@fig-rycina-post-processing].
 
 ## Uczenie maszynowe {#sec-machine-learning}
 
@@ -299,7 +305,8 @@ Kroswalidacja pozwala na ocenę ogólnej wydajności modelu, uwzględniając ró
 
 Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*, SAC) [@pohjankukka_2017_scv].
 Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, będącym jednocześnie podstawowym założeniem analizy geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography].
-Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników w zakresie dokładności predykcyjnej modeli [@brenning_2005_scv] Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
+Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników oceny jakości modeli [@brenning_2005_scv].
+Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
 Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych.
 Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie odseparowane podzbiory danych, wprowadzając przestrzenną odległość pomiędzy zbiorem treningowym a testowym [@pohjankukka_2017_scv].
 Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
@@ -364,10 +371,10 @@ QGIS dostarcza zaawansowane narzędzia do digitalizacji, umożliwiające rysowan
 ### Sentinel-1 Toolbox i SNAP
 
 Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw narzędzi S1TBX [@s1tbx], przeznaczony do przetwarzania danych radarowych.
-Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli), koregistracji, ortorektyfikacji, mozaikowania, konwersji danych, polarymetrii czy interferometrii [@sentinel-1-toolbox].
+Zestaw narzędzi Sentinel-1 Toolbox zawiera narzędzia do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli), koregistracji, ortorektyfikacji, mozaikowania, konwersji danych, polarymetrii czy interferometrii [@sentinel-1-toolbox].
 Sentinel-1 Toolbox jest opracowywany dla ESA przez firmę Array we współpracy z DLR, Brockmann Consult i OceanDataLab [@sentinel-1-toolbox].
 
-SNAP [@snap], czyli Sentinel Application Platform to platforma oprogramowania rozwijana wspólnie przez firmy Brockmann Consult, SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA), przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel [@snap-desktop; @esa_snap].
+SNAP [@snap], czyli Sentinel Application Platform to platforma oprogramowania rozwijana wspólnie przez firmy Brockmann Consult, SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej, przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel [@snap-desktop; @esa_snap].
 Oprogramowanie SNAP zawiera zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych teledetekcyjnych, a także umożliwia tworzenie łańcuchów procesów przetwarzania danych zdefiniowanych przez użytkownika [@hejmanowska_2020_dane; @moskolai_2022_s1_workflow].
 
 ### Środowisko języka R
@@ -377,7 +384,7 @@ R to wieloplatformowy język programowania o otwartym kodzie źródłowym do obl
 Dzięki dużej liczbie pakietów R obsługuje również statystki geoprzestrzenne, modelowanie oraz wizualizację danych przestrzennych [@lovelace_2019_geocomputation].
 W pracy wykorzystane zostało zintegrowane środowisko programistyczne (ang. *Integrated Development Environment*, IDE) RStudio [@rstudio_team_2020_rstudio] przeznaczone dla języka R.
 Poza standardowymi możliwościami środowiska R, w procesie pracy wykorzystane zostały pakiety stworzone przez społeczność R w celu rozszerzenia funkcjonalności tego języka.
-Do operacji na danych rastrowych zastosowano pakiet *terra* [@R-terra], natomiast do przetwarzania danych wektorowych używany był pakiet *sf* [@R-sf].
+Do operacji na danych rastrowych zastosowano pakiety *terra* [@R-terra] i *stars* [@R-stars], natomiast do przetwarzania danych wektorowych używany był pakiet *sf* [@R-sf].
 Obliczanie tekstury obrazu Sum Average wyprowadzonej z macierzy współwystępowania poziomu szarości (ang. *gray-level co-occurrence matrix*, GLCM) zostało wykonane przy pomocy pakietu *GLCMTextures* [@R-GLCMTextures].
 Losowe generowanie danych przestrzennych umożliwił pakiet *spatstat.random* [@R-spatstat.random] z rodziny pakietów *spatstat* [@R-spatstat].
 Do przeprowadzenia analizy oraz predykcji opartej o elementy uczenia maszynowego wykorzystano pakiet *mlr3* [@R-mlr3], w ramach którego użyty został algorytm lasów losowych zaimplementowany w pakiecie *ranger* [@R-ranger].
@@ -388,6 +395,6 @@ Do obliczeń związanych z teksturami obrazu oraz uczeniem maszynowym wykorzysta
 #| label: pakietbib
 #| echo: false
 #| warning: false
-pakiety = c("base", "terra", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "paradox", "mlr3tuningspaces", "mlr3measures", "future", "Przewodnik")
+pakiety = c("base", "terra", "stars", "sf", "GLCMTextures", "spatstat.random", "spatstat", "mlr3", "ranger", "paradox", "mlr3tuningspaces", "mlr3measures", "future", "Przewodnik")
 knitr::write_bib(pakiety, "packages.bib", width = 60)
 ```

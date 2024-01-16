@@ -8,10 +8,10 @@ editor:
 
 W ramach badania wykorzystano zarówno radarowe, jak i multispektralne dane satelitarne pochodzące z programu Copernicus, konkretnie z misji Sentinel-1 i Sentinel-2.
 Program Copernicus to unijna inicjatywa obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną (ang. *European Space Agency*, ESA).
-Dane radarowe z misji Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2 zostały pozyskane z obserwacji wykonanych 8 maja 2023 roku, gdy współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1%.
-W badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące współczynnik odbicia na powierzchni Ziemi (ang. *Bottom-of-Atmospheric reflectance*, BOA).
+Zarówno dane radarowe z misji Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2 zostały pozyskane 8 maja 2023 roku, gdy współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1%.
+W badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące współczynnik odbicia na powierzchni Ziemi.
 
-Obszar analizy obejmuje kafel Sentinel-2 (ang. *tile*) o oznaczeniu 33UWV, obejmujący głównie obszar województwa zachodniopomorskiego oraz fragment województwa wielkopolskiego. 
+Obszar analizy stanowi kafel Sentinel-2 o oznaczeniu 33UWV, obejmujący głównie obszar województwa zachodniopomorskiego oraz fragment województwa wielkopolskiego. 
 Powierzchnia obszaru analizy wynosi w przybliżeniu 12000 km^2^, a jego lokalizację przedstawia rycina [-@fig-rycina-area].
 
 ```{r}
@@ -26,13 +26,13 @@ knitr::include_graphics("figures/sen2_extent.png")
 
 ### Sentinel-1 {#sec-sentinel1}
 
-Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej Agencji Kosmicznej w ramach programu Copernicus, mająca na celu dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
+Misja Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej Agencji Kosmicznej w ramach programu Copernicus, mająca na celu dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 Misja odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym przemieszczania kry lodowej, transportu morskiego, deformacji i przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk żywiołowych [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 
-Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang. *Synthetic Aperture Radar*, SAR), który działa na jednej częstotliwości środkowej 5,405 GHz, co odpowiada długości fali 5,6 cm [@sentinel1_lulc; @sentinel1_instrument_payload].
+Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang. *Synthetic Aperture Radar*, SAR), który działa na jednej częstotliwości środkowej 5,405 GHz, odpowiadającej długości fali 5,6 cm [@sentinel1_lulc; @sentinel1_instrument_payload].
 Częstotliwość radaru Sentinel-1, mieszcząca się w pasmie C (od 4 do 8 GHz), determinuje jego zdolność do penetracji jedynie górnych warstw koron drzew, roślinności oraz gleby [@sentinel_1_user_guide].
 Radar jest najczęściej wykorzystywany w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc zarówno fale pionowe (ang. *vertical*), jak i poziome (ang. *horizontal*) po ich powrocie do czujnika, dzięki czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH [@sentinel1_lulc].
-Radar z syntetyzowaną aperturą (SAR) umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji dwóch satelitów dla obszaru Polski wynosi około 2 dni [@attema_2008_s1; @sentinel1_revisit].
+Radar z syntetyzowaną aperturą umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji dwóch satelitów dla obszaru Polski wynosi około 2 dni [@attema_2008_s1; @sentinel1_revisit].
 W grudniu 2021 roku w satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych radarowych [@sentinel_1b].
 W wyniku awarii satelita Sentinel-1B został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C zaplanowano na marzec 2024 roku [@sentinel_1b; @sentinel1_eoportal].
 
@@ -42,7 +42,7 @@ Interferometria radarowa (ang. *Interferometric Synthetic Aperture Radar*, InSAR
 Produkty SLC to obrazy SAR w geometrii ukośnej, posiadające informację o wartości amplitudy i fazie sygnału, co czyni je odpowiednimi do interferometrii radarowej [@hejmanowska_2020_dane].
 Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane].
 Przy konwersji SLC do GRD tracimy informację fazową sygnału, co wyklucza zastosowanie produktów GRD w interferometrii radarowej [@sentinel1_products].
-Produkty GRD nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z użyciem cyfrowego modelu wysokości przed zastosowaniem w systemach GIS [@hejmanowska_2020_dane].
+Produkty GRD nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z użyciem cyfrowego modelu wysokości przed wykorzystaniem w systemach GIS [@hejmanowska_2020_dane].
 
 Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) - używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) - tryb do monitorowania stref polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
 Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1 przedstawia tabela [-@tbl-tabela-sentinel1] [@sentinel1_resolution_swath].
@@ -72,19 +72,19 @@ knitr::kable(df, booktabs = TRUE, align = "c", linesep = "\\addlinespace") |>
   kableExtra::row_spec(row = 2, bold = TRUE)
 ```
 
-W pracy wykorzystano dwie polaryzacje (VV i VH) pochodzące z produktów Ground Range Detected (GRD), zarejestrowanych w trybie Interferometric Wide Swath (IW) przez platformę Sentinel-1A w dniu 8 maja 2023 roku.
+W pracy wykorzystano dwie polaryzacje (VV i VH) pochodzące z produktów Ground Range Detected, zarejestrowanych w trybie Interferometric Wide Swath przez platformę Sentinel-1A w dniu 8 maja 2023 roku.
 Podczas rejestracji danych platforma znajdowała się na orbicie wznoszącej (ang. *ascending orbit*), co oznacza, że satelita przemieszczał się z południa w kierunku bieguna północnego.
 Użyty zestaw danych został utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o oznaczeniu 33UWV.
 
 ### Senitnel-2 {#sec-sentinel2}
 
-Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang. *European Space Agency*, ESA) w ramach programu Copernicus.
+Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną w ramach programu Copernicus.
 Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
 Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem do 2-3 dni na średnich szerokościach geograficznych, obejmujących obszar Polski [@hejmanowska_2020_dane; @sentinel_2_guide].
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia na powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
 
-Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i geometrycznym, prezentowane jako sceny o powierzchni 100 km^2^ (100 x 100 km) w projekcji UTM/WGS84 [@esa_2015_sentinel2handbook].
+Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i geometrycznym, prezentowane jako sceny (ang. *tile*, *granule*) o zasięgu 100 x 100 km w projekcji UTM/WGS84 [@esa_2015_sentinel2handbook].
 Skuteczne wykorzystanie tych danych w zastosowaniach związanych z terenami lądowymi wymaga precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych [@main-knorn_2017_Sen2Cor].
 Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor [@main-knorn_2017_Sen2Cor].
 

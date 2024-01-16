@@ -101,20 +101,19 @@ dane satelitarne pochodzące z programu Copernicus, konkretnie z misji
 Sentinel-1 i Sentinel-2. Program Copernicus to unijna inicjatywa
 obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we
 współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną
-(ang. \emph{European Space Agency}, ESA). Dane radarowe z misji
+(ang. \emph{European Space Agency}, ESA). Zarówno dane radarowe z misji
 Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2
-zostały pozyskane z obserwacji wykonanych 8 maja 2023 roku, gdy
-współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1\%. W
-badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz
-skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące
-współczynnik odbicia na powierzchni Ziemi (ang.
-\emph{Bottom-of-Atmospheric reflectance}, BOA).
+zostały pozyskane 8 maja 2023 roku, gdy współczynnik zachmurzenia na
+obszarze badań wynosił mniej niż 1\%. W badaniu wykorzystano dane
+Sentinel-1 Ground Range Detected (GRD) oraz skorygowane atmosferycznie
+dane Sentinel-2 L2A, reprezentujące współczynnik odbicia na powierzchni
+Ziemi.
 
-Obszar analizy obejmuje kafel Sentinel-2 (ang. \emph{tile}) o oznaczeniu
-33UWV, obejmujący głównie obszar województwa zachodniopomorskiego oraz
-fragment województwa wielkopolskiego. Powierzchnia obszaru analizy
-wynosi w przybliżeniu 12000 km\textsuperscript{2}, a jego lokalizację
-przedstawia rycina \ref{fig-rycina-area}.
+Obszar analizy stanowi kafel Sentinel-2 o oznaczeniu 33UWV, obejmujący
+głównie obszar województwa zachodniopomorskiego oraz fragment
+województwa wielkopolskiego. Powierzchnia obszaru analizy wynosi w
+przybliżeniu 12000 km\textsuperscript{2}, a jego lokalizację przedstawia
+rycina \ref{fig-rycina-area}.
 
 \begin{figure}[t]
 
@@ -132,11 +131,11 @@ przedstawia rycina \ref{fig-rycina-area}.
 \hypertarget{sec-sentinel1}{%
 \subsection{Sentinel-1}\label{sec-sentinel1}}
 
-Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej
-Agencji Kosmicznej w ramach programu Copernicus, mająca na celu
-dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi,
-w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref
-lodu morskiego, mórz i oceanów
+Misja Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i
+Europejskiej Agencji Kosmicznej w ramach programu Copernicus, mająca na
+celu dostarczanie danych radarowych obejmujących globalną powierzchnię
+Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych,
+stref lodu morskiego, mórz i oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_mission_objectives}. Misja
 odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym
 przemieszczania kry lodowej, transportu morskiego, deformacji i
@@ -146,7 +145,7 @@ przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk
 
 Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang.
 \emph{Synthetic Aperture Radar}, SAR), który działa na jednej
-częstotliwości środkowej 5,405 GHz, co odpowiada długości fali 5,6 cm
+częstotliwości środkowej 5,405 GHz, odpowiadającej długości fali 5,6 cm
 \autocite{sentinel1_lulc,sentinel1_instrument_payload}. Częstotliwość
 radaru Sentinel-1, mieszcząca się w pasmie C (od 4 do 8 GHz),
 determinuje jego zdolność do penetracji jedynie górnych warstw koron
@@ -155,10 +154,10 @@ jest najczęściej wykorzystywany w trybie podwójnej polaryzacji, emitując
 fale pionowe i mierząc zarówno fale pionowe (ang. \emph{vertical}), jak
 i poziome (ang. \emph{horizontal}) po ich powrocie do czujnika, dzięki
 czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH
-\autocite{sentinel1_lulc}. Radar z syntetyzowaną aperturą (SAR)
-umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień,
-niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji
-dwóch satelitów dla obszaru Polski wynosi około 2 dni
+\autocite{sentinel1_lulc}. Radar z syntetyzowaną aperturą umożliwia
+prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od
+warunków pogodowych, przez co czas rewizyty konstelacji dwóch satelitów
+dla obszaru Polski wynosi około 2 dni
 \autocite{attema_2008_s1,sentinel1_revisit}. W grudniu 2021 roku w
 satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem
 elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych
@@ -186,7 +185,7 @@ przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej
 informację fazową sygnału, co wyklucza zastosowanie produktów GRD w
 interferometrii radarowej \autocite{sentinel1_products}. Produkty GRD
 nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z
-użyciem cyfrowego modelu wysokości przed zastosowaniem w systemach GIS
+użyciem cyfrowego modelu wysokości przed wykorzystaniem w systemach GIS
 \autocite{hejmanowska_2020_dane}.
 
 Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide
@@ -222,27 +221,27 @@ Wave & 22 - 35   35 - 38 & 5 x 5 & 20 x 20 & HH, VV\\
 \end{table}
 
 W pracy wykorzystano dwie polaryzacje (VV i VH) pochodzące z produktów
-Ground Range Detected (GRD), zarejestrowanych w trybie Interferometric
-Wide Swath (IW) przez platformę Sentinel-1A w dniu 8 maja 2023 roku.
-Podczas rejestracji danych platforma znajdowała się na orbicie
-wznoszącej (ang. \emph{ascending orbit}), co oznacza, że satelita
-przemieszczał się z południa w kierunku bieguna północnego. Użyty zestaw
-danych został utworzony poprzez połączenie dwóch sąsiednich produktów
-Sentinel-1 GRD, a następnie ograniczenie obszaru analizy do kafla
-Sentinel-2 o oznaczeniu 33UWV.
+Ground Range Detected, zarejestrowanych w trybie Interferometric Wide
+Swath przez platformę Sentinel-1A w dniu 8 maja 2023 roku. Podczas
+rejestracji danych platforma znajdowała się na orbicie wznoszącej (ang.
+\emph{ascending orbit}), co oznacza, że satelita przemieszczał się z
+południa w kierunku bieguna północnego. Użyty zestaw danych został
+utworzony poprzez połączenie dwóch sąsiednich produktów Sentinel-1 GRD,
+a następnie ograniczenie obszaru analizy do kafla Sentinel-2 o
+oznaczeniu 33UWV.
 
 \hypertarget{sec-sentinel2}{%
 \subsection{Senitnel-2}\label{sec-sentinel2}}
 
 Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest
-operacyjnie prowadzona przez Europejską Agencję Kosmiczną (ang.
-\emph{European Space Agency}, ESA) w ramach programu Copernicus. Celem
-tej misji jest dostarczanie obrazów satelitarnych, obejmujących
-trzynaście zakresów spektralnych o różnych rozdzielczościach
-przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
-Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem
-do 2-3 dni na średnich szerokościach geograficznych, obejmujących obszar
-Polski \autocite{hejmanowska_2020_dane,sentinel_2_guide}.
+operacyjnie prowadzona przez Europejską Agencję Kosmiczną w ramach
+programu Copernicus. Celem tej misji jest dostarczanie obrazów
+satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych
+rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od
+rejestrowanego kanału. Czas rewizyty konstelacji dwóch satelitów wzrasta
+z 5 dni nad równikiem do 2-3 dni na średnich szerokościach
+geograficznych, obejmujących obszar Polski
+\autocite{hejmanowska_2020_dane,sentinel_2_guide}.
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
 poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map
@@ -254,8 +253,8 @@ atmosfery; ang. \emph{Top-of-Atmospheric reflectance}, TOA) oraz 2A
 \autocite{phiri_2020_sentinel2}.
 
 Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i
-geometrycznym, prezentowane jako sceny o powierzchni 100
-km\textsuperscript{2} (100 x 100 km) w projekcji UTM/WGS84
+geometrycznym, prezentowane jako sceny (ang. \emph{tile},
+\emph{granule}) o zasięgu 100 x 100 km w projekcji UTM/WGS84
 \autocite{esa_2015_sentinel2handbook}. Skuteczne wykorzystanie tych
 danych w zastosowaniach związanych z terenami lądowymi wymaga
 precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów
@@ -463,8 +462,8 @@ jednej komórce rozdzielczości \autocite{sentinel1_lulc}.
 
 Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób
 przedstawiony na rycinie \ref{fig-rycina-s1-workflow} przy użyciu
-narzędzi dostępnych w ESA Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx}, a
-proces ten został ułożony w sekwencję operacji przetwarzania za pomocą
+narzędzi dostępnych w ESA Sentinel-1 Toolbox \autocite{s1tbx}, a proces
+ten został ułożony w sekwencję operacji przetwarzania za pomocą
 narzędzia GraphBuilder w oprogramowaniu SNAP \autocite{snap}. Kolejne
 etapy przygotowania danych zostały zrealizowane przy wykorzystaniu
 języka R (\textcite{R-base}) oraz pakietu \emph{terra}
@@ -561,8 +560,8 @@ przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
 \subsection{Tekstury obrazu}\label{sec-textures}}
 
 Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów
-i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture} i
-odgrywa ona dużą rolę w interpretacji wizualnej zdjęć lotniczych i
+i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture}
+oraz odgrywa dużą rolę w interpretacji wizualnej zdjęć lotniczych i
 satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
 pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
 odmiennych typów obiektów na podstawie ich organizacji w terenie, często
@@ -586,6 +585,19 @@ tworzeniu macierzy opisującej częstotliwość występowania par wartości w
 określonym fragmencie obrazu, uwzględniając określone sąsiedztwo,
 kierunki i odstępy między komórkami \autocite{kupidura_2019_texture}.
 
+Dane teledetekcyjne zazwyczaj reprezentują dane ciągle o szerokim
+zakresie, które niejednokrotnie mogą przyjmować zarówno wartości
+dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb
+całkowitych \autocite{R-GLCMTextures}. Obliczanie tekstur obrazu wymaga
+uprzedniego zredukowania zakresu wartości obrazów rastrowych do
+dyskretnej liczby poziomów szarości, co określa się mianem kwantyzacji
+(ang. \emph{quantization}). Metoda kwantyzacji danych zasugerowana przez
+\textcite{haralick_1973_texture} opiera się na równym
+prawdopodobieństwie (ang. \emph{equal probability}), dokonując redukcji
+poziomów szarości z równym prawdopodobieństwem i wykorzystując kwantyle
+do utworzenia przedziałów zawierających w przybliżeniu równą liczbę
+próbek \autocite{R-GLCMTextures}.
+
 Przydatność i wykorzystanie tekstury w dużym stopniu zależy od
 rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które
 ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
@@ -600,15 +612,17 @@ poprawę dokładności modelu \autocite{zhang_2021_texture}.
 
 Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w
 pracy wykorzystano jedynie teksturę średniej sumy (ang. \emph{Sum
-Average}, SA lub SAVG), wskazaną przez \textcite{wang_2022_pv} jako
-teksturę niosącą najwięcej informacji w kontekście detekcji farm
-fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
-Random Forest. Przeprowadzono obliczenia sześciu tekstur obrazów dla
-dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych
-(NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze
-wskazaniami \textcite{wang_2022_pv}. W celu skrócenia czasu obliczeń, w
-pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9
-komórek.
+Average}, SA lub SAVG), wskazaną przez \textcite{zhang_2021_texture} i
+\textcite{wang_2022_pv} jako teksturę niosącą najwięcej informacji w
+kontekście detekcji farm fotowoltaicznych na satelitarnych.
+Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów
+Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI)
+oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami
+\textcite{wang_2022_pv}. W celu skrócenia czasu obliczeń, w pracy
+zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+Z uwagi na rosnący koszt i czas obliczeń wraz z zwiększaniem liczby
+poziomów szarości, zdecydowano się na kwantyzację wartości rastrów do 32
+poziomów szarości.
 
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
@@ -643,16 +657,16 @@ Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \midrule
 1 & 10 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12\\
 \addlinespace
-2 & 13 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI\\
+2 & 13 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI\\
 \addlinespace
-3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
 \addlinespace
 4 & 12 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH\\
 \addlinespace
 5 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
         tekstury: 02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG\\
 \addlinespace
-6 & 21 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektrelne: NDVI, NDBI, mNDWI; S1:VV, VH;
+6 & 21 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
         tekstury: B02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
 \bottomrule
 \multicolumn{3}{l}{\textsuperscript{a} Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1}\\
@@ -751,7 +765,9 @@ oparty na danych teledetekcyjnych w formie wektorowej.
 
 W celu stworzenia wizualizacji oraz porównania produktów końcowych z
 predykcjami niepoddanymi etapowi przetwarzania końcowego produkty
-wektorowe zostały ponownie przetworzone do formy rastrowej.
+wektorowe zostały ponownie przetworzone do formy rastrowej. Efekty
+zastosowanego przetwarzania końcowego przedstawia rycina
+\ref{fig-rycina-post-processing}.
 
 \hypertarget{sec-machine-learning}{%
 \section{Uczenie maszynowe}\label{sec-machine-learning}}
@@ -971,8 +987,8 @@ geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim
 innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
 \autocite{tobler_1970_first_law_of_geography}. Traktowanie zbiorów
 danych przestrzennych jak nieprzestrzennych prowadzi do zbyt
-optymistycznych wyników w zakresie dokładności predykcyjnej modeli
-\autocite{brenning_2005_scv} Konsekwencją autokorelacji przestrzennej
+optymistycznych wyników oceny jakości modeli
+\autocite{brenning_2005_scv}. Konsekwencją autokorelacji przestrzennej
 dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
 obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są
 niezależne od zbioru uczącego \autocite{brenning_2012_scv}. Przestrzenna
@@ -1116,8 +1132,8 @@ czy XYZ Tiles.
 
 Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw
 narzędzi S1TBX \autocite{s1tbx}, przeznaczony do przetwarzania danych
-radarowych. Zestaw narzędzi Sentinel-1 Toolbox (S1TBX) zawiera narzędzia
-do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
+radarowych. Zestaw narzędzi Sentinel-1 Toolbox zawiera narzędzia do
+kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
 koregistracji, ortorektyfikacji, mozaikowania, konwersji danych,
 polarymetrii czy interferometrii \autocite{sentinel-1-toolbox}.
 Sentinel-1 Toolbox jest opracowywany dla ESA przez firmę Array we
@@ -1126,10 +1142,10 @@ współpracy z DLR, Brockmann Consult i OceanDataLab
 
 SNAP \autocite{snap}, czyli Sentinel Application Platform to platforma
 oprogramowania rozwijana wspólnie przez firmy Brockmann Consult,
-SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej (ESA),
-przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych
-Sentinel \autocite{snap-desktop,esa_snap}. Oprogramowanie SNAP zawiera
-zestawy narzędzi do wizualizacji, przetwarzania oraz analizy danych
+SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej, przeznaczona
+do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel
+\autocite{snap-desktop,esa_snap}. Oprogramowanie SNAP zawiera zestawy
+narzędzi do wizualizacji, przetwarzania oraz analizy danych
 teledetekcyjnych, a także umożliwia tworzenie łańcuchów procesów
 przetwarzania danych zdefiniowanych przez użytkownika
 \autocite{hejmanowska_2020_dane,moskolai_2022_s1_workflow}.
@@ -1150,26 +1166,26 @@ wykorzystane zostało zintegrowane środowisko programistyczne (ang.
 standardowymi możliwościami środowiska R, w procesie pracy wykorzystane
 zostały pakiety stworzone przez społeczność R w celu rozszerzenia
 funkcjonalności tego języka. Do operacji na danych rastrowych
-zastosowano pakiet \emph{terra} \autocite{R-terra}, natomiast do
-przetwarzania danych wektorowych używany był pakiet \emph{sf}
-\autocite{R-sf}. Obliczanie tekstury obrazu Sum Average wyprowadzonej z
-macierzy współwystępowania poziomu szarości (ang. \emph{gray-level
-co-occurrence matrix}, GLCM) zostało wykonane przy pomocy pakietu
-\emph{GLCMTextures} \autocite{R-GLCMTextures}. Losowe generowanie danych
-przestrzennych umożliwił pakiet \emph{spatstat.random}
-\autocite{R-spatstat.random} z rodziny pakietów \emph{spatstat}
-\autocite{R-spatstat}. Do przeprowadzenia analizy oraz predykcji opartej
-o elementy uczenia maszynowego wykorzystano pakiet \emph{mlr3}
-\autocite{R-mlr3}, w ramach którego użyty został algorytm lasów losowych
-zaimplementowany w pakiecie \emph{ranger} \autocite{R-ranger}. Podczas
-strojenia parametrów algorytmów uczenia maszynowego, korzystano również
-z pakietu \emph{paradox} \autocite{R-paradox}, umożliwiającego
-definiowanie granic przestrzeni szukania optymalnych wartości
-hiperparametrów. Do obliczeń związanych z teksturami obrazu oraz
-uczeniem maszynowym wykorzystano pakiet \emph{future}
-\autocite{R-future}, umożliwiający równoległe (wielowątkowe)
-przetwarzanie wyrażeń R, skracające czas realizacji zadań w stosunku do
-przetwarzania sekwencyjnego.
+zastosowano pakiety \emph{terra} \autocite{R-terra} i \emph{stars}
+\autocite{R-stars}, natomiast do przetwarzania danych wektorowych
+używany był pakiet \emph{sf} \autocite{R-sf}. Obliczanie tekstury obrazu
+Sum Average wyprowadzonej z macierzy współwystępowania poziomu szarości
+(ang. \emph{gray-level co-occurrence matrix}, GLCM) zostało wykonane
+przy pomocy pakietu \emph{GLCMTextures} \autocite{R-GLCMTextures}.
+Losowe generowanie danych przestrzennych umożliwił pakiet
+\emph{spatstat.random} \autocite{R-spatstat.random} z rodziny pakietów
+\emph{spatstat} \autocite{R-spatstat}. Do przeprowadzenia analizy oraz
+predykcji opartej o elementy uczenia maszynowego wykorzystano pakiet
+\emph{mlr3} \autocite{R-mlr3}, w ramach którego użyty został algorytm
+lasów losowych zaimplementowany w pakiecie \emph{ranger}
+\autocite{R-ranger}. Podczas strojenia parametrów algorytmów uczenia
+maszynowego, korzystano również z pakietu \emph{paradox}
+\autocite{R-paradox}, umożliwiającego definiowanie granic przestrzeni
+szukania optymalnych wartości hiperparametrów. Do obliczeń związanych z
+teksturami obrazu oraz uczeniem maszynowym wykorzystano pakiet
+\emph{future} \autocite{R-future}, umożliwiający równoległe
+(wielowątkowe) przetwarzanie wyrażeń R, skracające czas realizacji zadań
+w stosunku do przetwarzania sekwencyjnego.
 
 \bookmarksetup{startatroot}
 
