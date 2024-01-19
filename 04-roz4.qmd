@@ -117,9 +117,9 @@ Można ją opisać za pomocą tonu (intensywność poziomu szarości) i struktur
 Model oparty na macierzy współwystępowania poziomów szarości (ang. *Gray Level Co-Occurrence Matrix*, GLCM), zaproponowany przez @haralick_1973_texture, jest często używany do obliczania tekstur obrazu.
 Ta metoda polega na tworzeniu macierzy opisującej częstotliwość występowania par wartości w określonym fragmencie obrazu, uwzględniając określone sąsiedztwo, kierunki i odstępy między komórkami [@kupidura_2019_texture].
 
-Dane teledetekcyjne zazwyczaj reprezentują dane ciągle o szerokim zakresie, które niejednokrotnie mogą przyjmować zarówno wartości dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb całkowitych [@R-GLCMTextures].
+Dane teledetekcyjne zazwyczaj reprezentują dane ciągłe o szerokim zakresie, które niejednokrotnie mogą przyjmować zarówno wartości dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb całkowitych [@R-GLCMTextures].
 Obliczanie tekstur obrazu wymaga uprzedniego zredukowania zakresu wartości obrazów rastrowych do dyskretnej liczby poziomów szarości, co określa się mianem kwantyzacji (ang. *quantization*).
-Metoda kwantyzacji danych zasugerowana przez @haralick_1973_texture opiera się na równym prawdopodobieństwie (ang. *equal probability*), dokonując redukcji poziomów szarości z równym prawdopodobieństwem i wykorzystując kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą liczbę próbek [@R-GLCMTextures].
+Zalecana przez @haralick_1973_texture metoda kwantyzacji danych  opiera się na równym prawdopodobieństwie (ang. *equal probability*), dokonując redukcji poziomów szarości z równym prawdopodobieństwem i wykorzystując kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą liczbę próbek [@R-GLCMTextures].
 
 Przydatność i wykorzystanie tekstury w dużym stopniu zależy od rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które ukształtowało teksturę [@grass_r_texture].
 Badanie, które przeprowadził @zhang_2021_texture dotyczące wykorzystania filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ tekstur na skuteczność modelu.
@@ -127,8 +127,7 @@ Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM
 
 Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez @zhang_2021_texture i @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na satelitarnych.
 Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami @wang_2022_pv.
-W celu skrócenia czasu obliczeń, w pracy zdecydowano się na zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
-Z uwagi na rosnący koszt i czas obliczeń wraz z zwiększaniem liczby poziomów szarości, zdecydowano się na kwantyzację wartości rastrów do 32 poziomów szarości.
+Z uwagi na rosnący koszt i czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, zdecydowano się na kwantyzację wartości rastrów do 32 przedziałów oraz zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
 
 ### Łączenie danych {#sec-processing-data-merging}
 
@@ -319,7 +318,16 @@ Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
 knitr::include_graphics("figures/spcv_plot.png")
 ```
 
-Ocenę klasyfikatorów stworzonych dla każdego z wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy pomocy pięciu miar jakości, przeznaczonych dla klasyfikatorów binarnych, wykorzystując przestrzenną walidację krzyżową:
+Macierz pomyłek (ang. *error matrix* lub *confusion matrix*) to tablica prezentująca wyniki klasyfikatora binarnego, podając informację o liczbie obiektów przypisanych do każdej z klas.
+Macierz pomyłek jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi, składając się z czterech wartości reprezentujących różne kombinacje przewidywanych i rzeczywistych klas.
+
+W macierzy pomyłek dwie wartości reprezentują trafienia pozytywne: przypadki prawdziwie pozytywne (ang. *true positive*, TP) opisuje sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako pozytywną, natomiast przypadki prawdziwie negatywne (ang. *true negative*, TN) opisują poprawne przewidywanie klasy negatywnej.
+Dwie pozostałe wartości informują o błędnie sklasyfikowanych przypadkach: przypadki fałszywie pozytywne (ang. *false positive*, FP) opisują sytuacje, w których klasyfikator błędnie wskazał klasę pozytywną, podczas gdy rzeczywiście była ona negatywna.
+Przypadki fałszywie negatywne (ang. *false negative*, FN) to natomiast sytuacje, w których klasyfikator błędnie przewidział klasę jako negatywną, gdy faktycznie była ona pozytywna.
+
+Zliczenia tych czterech przypadków formują macierz pomyłek, stanowiącą podstawę dla obliczeń miar oceny jakości klasyfikatora.
+
+Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu przestrzennej walidacji krzyżowej, macierzy pomyłek oraz pięciu miar jakości dostosowanych do klasyfikatorów binarnych:
 
 -   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako dodatnie jest faktycznie dodatnia [@jaworski_2013_perfomance_measures]
 
