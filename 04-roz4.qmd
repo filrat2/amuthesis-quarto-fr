@@ -9,9 +9,9 @@ editor:
 Badanie obejmowało kilka etapów, rozpoczynając od wstępnego przetwarzania danych satelitarnych, opisanego w sekcjach [-@sec-processing-s1] i [-@sec-processing-s2].
 Następnie przeprowadzono obliczenia produktów pochodnych, takich jak wskaźniki spektralne oraz tekstury obrazu, opisane odpowiednio w sekcjach [-@sec-spectral-indices] i [-@sec-textures].
 Kolejnym krokiem było połączenie przetworzonych danych źródłowych i ich produktów pochodnych w kilka wariantów zbiorów danych, stworzonych na potrzeby detekcji farm fotowoltaicznych.
-Warianty zbiorów danych przedstawia tabela [-@tbl-tabela-datasets], a przebieg łączenia danych w wielokanałowe rastry został opisany w sekcji [-@sec-processing-data-merging].
+Warianty zbiorów danych przedstawia tabela [-@tbl-tabela-datasets], a przebieg łączenia danych w wielowarstwowe rastry został opisany w sekcji [-@sec-processing-data-merging].
 Na podstawie uzyskanych rastrów, zgodnie z sekcją [-@sec-samples], utworzono zbiory danych uczących, które zostały wykorzystane do tworzenia modeli predykcyjnych.
-W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*, RF) zaproponowaną przez @breiman_2001_rf, która została dokładniej przedstawiona w sekcji [-@sec-random-forest].
+W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*, RF) zaproponowaną przez Breimana [-@breiman_2001_rf], która została dokładniej przedstawiona w sekcji [-@sec-random-forest].
 Następnie zoptymalizowano parametry tych modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z nich, co opisano odpowiednio w sekcjach [-@sec-tuning], [-@sec-model-quality-assessment] oraz [-@sec-variable-importance].
 Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano procesowi przetwarzania końcowego, przedstawionemu w sekcji [-@sec-post-processing].
 Wizualną reprezentację przebiegu badania przedstawia rycina [-@fig-rycina-workflow].
@@ -51,13 +51,10 @@ W pracy wykorzystano schemat przetwarzania danych Sentinel-1 GRD, który zapropo
 knitr::include_graphics("figures/sentinel1_workflow.drawio.png")
 ```
 
-Podczas przetwarzania danych radarowych pominięto etap filtrowania plamek (ang. *speckle filtering*), ponieważ nie jest to zalecane w kontekście identyfikacji tekstur obrazu [@filipponi_2019_s1_workflow].
-Zastosowanie filtracji plamek może prowadzić do utraty istotnych informacji [@filipponi_2019_s1_workflow].
-Filtracja plamek polega na usunięciu ziarnistych szumów na obszarach, gdzie oczekuje się jednorodnej intensywności rozpraszania wstecznego [@sentinel1_lulc].
-Ziarniste szumy, znane również jako efekty soli i pieprzu (ang. *salt-and-pepper effects*), wynikają z interferencji fal odbitych od licznych elementarnych rozpraszaczy [@lee_1994_speckle_filtering], czyli wielu niewielkich rozpraszaczy charakteryzujących się różnymi mechanizmami rozpraszania w jednej komórce rozdzielczości [@sentinel1_lulc].
+Podczas przetwarzania danych radarowych pominięto etap filtrowania plamek (ang. *speckle filtering*), ponieważ ze względu na możliwość utraty istotnych informacji nie jest to zalecane w kontekście identyfikacji tekstur obrazu [@filipponi_2019_s1_workflow].
 
 Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób przedstawiony na rycinie [-@fig-rycina-s1-workflow] przy użyciu narzędzi dostępnych w ESA Sentinel-1 Toolbox [@s1tbx], a proces ten został ułożony w sekwencję operacji przetwarzania za pomocą narzędzia GraphBuilder w oprogramowaniu SNAP [@snap].
-Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R (@R-base) oraz pakietu *terra* [@R-terra].
+Kolejne etapy przygotowania danych zostały zrealizowane przy wykorzystaniu języka R [@R-base] oraz pakietu *terra* [@R-terra].
 Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
 Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi przy użyciu funkcji `focal` z pakietu *terra* [@R-terra].
 
@@ -71,7 +68,7 @@ knitr::include_graphics("figures/sen1_extents.png")
 
 ### Sentinel-2 {#sec-processing-s2}
 
-Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości 10 m.
+Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o rozdzielczości przestrzennej 20 m do rozdzielczości 10 m.
 Przepróbkowanie (ang. *resampling*) zostało przeprowadzone przy pomocy funkcji `resample` z pakietu *terra* [@R-terra], stosując interpolację dwuliniową (ang. *bilinear interpolation*).
 
 W teledetekcji miarą opisującą wielkość odbicia jest rzeczywisty współczynnik odbicia, nazywany również reflektancją, którego wartości mieszczą się w przedziale od 0 do 1 [@hejmanowska_2020_dane].
@@ -80,7 +77,7 @@ Po standaryzacji wszystkich kanałów Sentinel-2 do wspólnej rozdzielczości, d
 
 ### Wskaźniki spektralne {#sec-spectral-indices}
 
-Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez @zhang_2021_texture, @plakman_2022_pv, @wang_2022_pv i innych, takie jak:
+Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez Zhanga et al. [-@zhang_2021_texture], Plakmana et al. [-@plakman_2022_pv], Wanga et al. [-@wang_2022_pv] i innych, takie jak:
 
 -   znormalizowany różnicowy wskaźnik wegetacji (ang. *Normalized Difference Vegetation Index*, NDVI) [@ndvi], monitorujący zawartość biomasy i kondycję roślinności na danym obszarze:
 
@@ -109,33 +106,35 @@ Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji z
 ### Tekstury obrazu {#sec-textures}
 
 Tekstura stanowi istotną cechę wykorzystywaną do identyfikacji obiektów i obszarów zainteresowania na obrazie [@haralick_1973_texture] oraz odgrywa dużą rolę w interpretacji wizualnej zdjęć lotniczych i satelitarnych [@lewinski_2012_texture].
-Gdy różnice widmowe pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie odmiennych typów obiektów na podstawie ich organizacji w terenie, często kontrastując przestrzenie naturalne z antropogenicznymi [@grass_r_texture].
+Gdy różnice widmowe pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie odmiennych typów obiektów na podstawie ich ułożenia w przestrzeni, często kontrastując obszary naturalne z antropogenicznymi [@grass_r_texture].
 W zależności od zastosowanej funkcji wybrane cechy obrazu zostają uwidocznione w porównaniu z pierwotnym obrazem wejściowym [@lewinski_2012_texture].
 Informacja o teksturze może stanowić dodatkową, przydatną zmienną wejściową w procesach klasyfikacji lub segmentacji obrazu [@gong_1992_spatial_features; @mumby_2002_ikonos].
 Tekstura obejmuje różnice poziomów szarości (kontrast), obecność lub brak kierunkowości, regularne wzory i zdefiniowany obszar, na którym występują zmiany, określony przez rozmiar okna [@hall_beyer_2017_glcm; @grass_r_texture].
 Można ją opisać za pomocą tonu (intensywność poziomu szarości) i struktury (relacje przestrzenne) [@grass_r_texture].
-Model oparty na macierzy współwystępowania poziomów szarości (ang. *Gray Level Co-Occurrence Matrix*, GLCM), zaproponowany przez @haralick_1973_texture, jest często używany do obliczania tekstur obrazu.
+
+Model oparty na macierzy współwystępowania poziomów szarości (ang. *Gray Level Co-Occurrence Matrix*, GLCM), zaproponowany przez Haralicka et al. [-@haralick_1973_texture], jest często używany do określania tekstur obrazu.
 Ta metoda polega na tworzeniu macierzy opisującej częstotliwość występowania par wartości w określonym fragmencie obrazu, uwzględniając określone sąsiedztwo, kierunki i odstępy między komórkami [@kupidura_2019_texture].
 
 Dane teledetekcyjne zazwyczaj reprezentują dane ciągłe o szerokim zakresie, które niejednokrotnie mogą przyjmować zarówno wartości dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb całkowitych [@R-GLCMTextures].
 Obliczanie tekstur obrazu wymaga uprzedniego zredukowania zakresu wartości obrazów rastrowych do dyskretnej liczby poziomów szarości, co określa się mianem kwantyzacji (ang. *quantization*).
-Zalecana przez @haralick_1973_texture metoda kwantyzacji danych  opiera się na równym prawdopodobieństwie (ang. *equal probability*), dokonując redukcji poziomów szarości z równym prawdopodobieństwem i wykorzystując kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą liczbę próbek [@R-GLCMTextures].
+Zalecana przez Haralicka et al. [-@haralick_1973_texture] metoda kwantyzacji danych opiera się na równym prawdopodobieństwie (ang. *equal probability*), dokonując redukcji poziomów szarości wykorzystując kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą liczbę próbek [@R-GLCMTextures].
 
-Przydatność i wykorzystanie tekstury w dużym stopniu zależy od rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które ukształtowało teksturę [@grass_r_texture].
-Badanie, które przeprowadził @zhang_2021_texture dotyczące wykorzystania filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ tekstur na skuteczność modelu.
-Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli (co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m), natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na poprawę dokładności modelu [@zhang_2021_texture].
+Przydatność i wykorzystanie tekstury w dużym stopniu zależy od rozdzielczości przestrzennej zdjęć satelitarnych i wielkości zjawiska, które ukształtowało teksturę [@grass_r_texture].
+Badanie, które przeprowadził @zhang_2021_texture dotyczące wykorzystania filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z użyciem metody Random Forest i danych z Landsata-8 wykazało pozytywny wpływ tekstur na skuteczność modelu.
+Według wyników badania najlepiej dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli (co odpowiada wymiarom ruchomego okna o wymiarach 1830 m na 1830 m), natomiast tekstura o rozmiarze jednego sąsiada miała niewielki wpływ na poprawę dokładności modelu [@zhang_2021_texture].
 
-Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez @zhang_2021_texture i @wang_2022_pv jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na satelitarnych.
-Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami @wang_2022_pv.
-Z uwagi na rosnący koszt i czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, zdecydowano się na kwantyzację wartości rastrów do 32 przedziałów oraz zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+Obliczanie tekstur obrazu może być procesem wymagajacym obliczeniowo, dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang. *Sum Average*, SA lub SAVG), wskazaną przez Zhanga et al. [-@zhang_2021_texture] i Wanga et al. [-@wang_2022_pv] jako teksturę niosącą najwięcej informacji w kontekście detekcji farm fotowoltaicznych na obrazach satelitarnych.
+Przeprowadzono obliczenia sześciu tekstur obrazów dla: dwóch kanałów Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami Wanga et al. [-@wang_2022_pv].
+Z uwagi na rosnący czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, zdecydowano się na kwantyzację wartości rastrów do 32 przedziałów oraz zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+Odpowiada to wymiarom ruchomego okna o wymiarach 19 pikseli na 19 pikseli lub kwadratowi o wymiarach 190 m na 190 m.
 
 ### Łączenie danych {#sec-processing-data-merging}
 
-W celu uzyskania spójnych wielokanałowych rastrów wszystkie zbiory danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
+W celu uzyskania spójnych wielowarstwowych rastrów wszystkie zbiory danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
 Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych Sentinel-2 przegotowanych w sposób przedstawiony w sekcji [-@sec-processing-s2] wynosi 10 m.
 Mimo że rozdzielczość przestrzenna danych Sentinel-1 GRD jest identyczna z rozdzielczością danych Sentinel-2, siatki przestrzenne obu zbiorów różniły się od siebie, przez co wymagana była transformacja danych Sentinel-1 do siatki danych Sentinel-2 w celu zachowania ich zgodności.
 Przetransformowane dane zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
-Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w formie kilku wielokanałowych rastrów, które posłużyły do wyodrębnienia próbek obserwacji, niezbędnych do stworzenia modelu.
+Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w formie kilku wielowarstwowych rastrów, które posłużyły do wyodrębnienia próbek obserwacji, niezbędnych do stworzenia modelu.
 Złączone rastry zostały również bezpośrednio wykorzystane do przeprowadzenia predykcji w późniejszym etapie analizy.
 Warianty zestawów danych zostały szczegółowo przedstawione w tabeli [-@tbl-tabela-datasets].
 
@@ -147,14 +146,14 @@ Warianty zestawów danych zostały szczegółowo przedstawione w tabeli [-@tbl-t
 df <- data.frame(
   a = c(1, 2, 3, 4, 5, 6),
   b = c(10, 13, 16, 12, 16, 21),
-  c = c("S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
-        tekstury: 02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG",
-        "S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
-        tekstury: B02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG, NDBI_SAVG, mNDWI_SAVG"))
+  c = c("S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12",
+        "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI",
+        "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
+        "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; S1: VV, VH",
+        "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; S1: VV, VH;
+        tekstury: B02_SAVG, B8A_SAVG, VV_SAVG, VH_SAVG",
+        "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
+        tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG, VV_SAVG, VH_SAVG"))
 
 knitr::kable(df, booktabs = TRUE, align = "c", 
              col.names = c("Wariant", "Liczba zmiennych", "Zmienne [note]"),
@@ -171,46 +170,23 @@ Opis wektoryzacji farm fotowoltaicznych na podstawie ortofotomapy i mozaik satel
 Opis procesu pozyskiwania próbek treningowych, uwzględniając liczbę próbek pozytywnych i negatywnych, ewentualne dobieranie negatywnych próbek z jakiejś konkretnej kategorii pokrycia terenu - do napisania po ostatecznym generowaniu/losowaniu próbek
 -->
 ```
-Na podstawie ortofotomapy oraz mozaik satelitarnych wskazanych w sekcji [-@sec-mosaics] zwektoryzowane zostały prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku).
-Z każdego zwektoryzowanego poligonu, reprezentującego obszar pod panelami fotowoltaicznymi pozyskano dwie losowo zlokalizowane próbki, stanowiące obserwacje pozytywne.
-Lokalizacje próbek negatywnych, znajdujących się poza obszarami oznaczonymi jako farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV, zostały wylosowane wykorzystując próbkowanie losowe stratyfikowane (ang. *stratified*).
-Próbkowanie losowe stratyfikowane polega na podziale obszaru analizy na regularne komórki, a następnie losowaniu lokalizacji punktu w każdej komórce [@nowosad_2021_geostatystyka_r].
+Na podstawie ortofotomapy oraz mozaik satelitarnych wskazanych w sekcji [-@sec-pv] zdigitalizowane zostały prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku).
+Z każdego zdigitalizowanego poligonu, reprezentującego obszar pod panelami fotowoltaicznymi pozyskano dwie losowo zlokalizowane próbki, stanowiące obserwacje pozytywne.
+Lokalizacje próbek negatywnych, znajdujących się poza obszarami oznaczonymi jako farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV zostały wylosowane, wykorzystując próbkowanie losowe stratyfikowane (ang. *stratified*).
+Próbkowanie losowe stratyfikowane polega na podziale obszaru analizy na regularne komórki, a następnie losowaniu lokalizacji punktu w każdej komórce [@wang_2012_spatial_sampling].
 
-Po wykonaniu pierwszych testowych predykcji zauważono, że modele przeuczały się na niektórych typach pokrycia terenu i użytkowania ziemi, wskazując farmy fotowoltaiczne w miejscach, gdzie faktycznie nie występowały.
+Po wykonaniu testowych predykcji zauważono, że modele przeuczały się na niektórych typach pokrycia terenu i użytkowania ziemi, wskazując farmy fotowoltaiczne w miejscach, gdzie faktycznie nie występowały.
 W celu poprawy wyników predykcji dodatkowe lokalizacje negatywnych próbek zostały wylosowane na obszarach niepoprawnie sklasyfikowanych, wykorzystując dane z OpenStreetMap [@OpenStreetMap].
-OpenStreetMap (OSM) to bezpłatna, otwarta geograficzna baza danych aktualizowana i utrzymywana przez społeczność wolontariuszy [@bennett_2010_openstreetmap].
 
-Obszary niepoprawnie sklasyfikowane przez pierwsze modele to plaże, budynki oraz drogi.
+Obszary niepoprawnie sklasyfikowane przez testowe modele to plaże, budynki oraz drogi.
 W celu poprawy wyników predykcji pobrano z bazy danych OpenStreetMap dane przestrzenne o plażach (`tag:natural=beach`), budynkach (`key:building`) oraz drogach (`key:highway`) na obszarze kafla Sentinel-2 o oznaczeniu 33UWV, z których wylosowano lokalizacje kolejnych negatywnych próbek.
 Dodatkowo, lokalizacje negatywnych obserwacji zostały wylosowane na zbiornikach wodnych (jeziorach; `tag:water=lake`).
 
-Przy tworzeniu kolejnych predykcji zauważono również skłonność do regularnego przeuczania się kolejnych, poprawionych modeli na terenach oznaczonych w OSM jako kopalnie torfu.
+Przy tworzeniu kolejnych testowych predykcji zauważono również skłonność do regularnego przeuczania się kolejnych, poprawionych modeli na terenach oznaczonych w OSM jako kopalnie torfu.
 W celu eliminacji tych błędnie sklasyfikowanych terenów, przy tworzeniu ostatecznych modeli, wykorzystano również negatywne próbki wylosowane na terenach kopalni odkrywkowych oznaczonych w bazie OpenStreetMap jako `tag:landuse=quarry`.
 
 Dla każdej wylosowanej próbki zostały wyekstraktowane wartości pochodzące z danych teledetekcyjnych i ich pochodnych, przygotowanych zgodnie z opisem przedstawionym w sekcjach [-@sec-processing-s1], [-@sec-processing-s2], [-@sec-spectral-indices] oraz [-@sec-textures].
 Tak przygotowane próbki były następnie wykorzystane przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich pochodnych.
-
-## Przetwarzanie końcowe {#sec-post-processing}
-
-Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie metod przetwarzania końcowego (ang. *post-processing*), mających na celu udoskonalenie wyników wykrywania farm fotowoltaicznych.
-Z teoretycznego punktu widzenia, obszar zajmowany przez farmę fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia pojedynczej komórki lub grupy kilku komórek.
-W celu usunięcia pozytywnych predykcji, które reprezentowały pojedyncze komórki lub obszary składające się z 10 lub mniej komórek, o powierzchni mniejszej/równej 1000 m^2^, zastosowano sekwencję procesów przetwarzania, dzięki której udało się pozbyć tzw.
-efektu soli i pieprzu (ang. *salt-and-pepper effect*).
-
-```{r}
-#| label: fig-rycina-post-processing
-#| echo: false
-#| fig-cap: "Kompozycja RGB Sentinel-2 (a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)"
-#| out-width: 100%
-knitr::include_graphics("figures/postprocessing.png")
-```
-
-Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników predykcji dla każdego wariantu, a następnie selekcję pozytywnych predykcji oraz obliczenie powierzchni każdego wybranego obszaru.
-Na podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje reprezentujące pojedyncze komórki lub obszary składające się z 10 lub mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
-W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych oparty na danych teledetekcyjnych w formie wektorowej.
-
-W celu stworzenia wizualizacji oraz porównania produktów końcowych z predykcjami niepoddanymi etapowi przetwarzania końcowego produkty wektorowe zostały ponownie przetworzone do formy rastrowej.
-Efekty zastosowanego przetwarzania końcowego przedstawia rycina [-@fig-rycina-post-processing].
 
 ## Uczenie maszynowe {#sec-machine-learning}
 
@@ -223,55 +199,49 @@ W przypadku skomplikowanych i złożonych zestawów danych nie jesteśmy w stani
 Uczenie maszynowe jest wykorzystywane w celu doskonalenia efektywnego przetwarzania danych przez maszyny [@sindayigaya_2022_ml].
 Algorytmy uczenia maszynowego można podzielić na cztery główne podejścia: uczenie nienadzorowane (ang. *unsupervised learning*), uczenie nadzorowane (ang. *supervised learning*), uczenie częściowo nadzorowane (ang. *semi-supervised learning*) oraz uczenie przez wzmacnianie (uczenie posiłkowane, ang. *reinforcement learning*) [@sarker_2021_ml].
 
-W ciągu ostatnich dwudziestu lat zaproponowano stosowanie kilku różnych algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych [@sheykhmousa_2020_svm_vs_rf], które zazwyczaj wykorzystują techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej [@ismail_2009_classification].
-
-Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez konieczności ingerencji człowieka.
-Uczenie bez nadzoru jest powszechnie stosowane do eksploracji danych, ekstrakcji cech generatywnych, identyfikacji istotnych trendów i struktur oraz grupowania wyników.
-Ta technika uczenia maszynowego jest najczęściej używana do grupowania (klastowania), redukcji wielowymiarowości (redukcji cech) oraz identyfikacji skojarzeń i relacji [@sarker_2021_ml].
+W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
 
 Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi.
 Proces uczenia nadzorowanego zachodzi, gdy określone cele mają zostać osiągnięte na podstawie konkretnego zestawu danych wejściowych (treningowych).
 W uczeniu nadzorowanym wyróżniamy klasyfikację, która dzieli dane na klasy, oraz regresję, która umożliwia oszacowanie określonych wartości [@sarker_2021_ml].
-
-W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę lasów losowych (ang. *Random Forest*, RF) [@breiman_2001_rf].
 
 ### Metoda lasów losowych {#sec-random-forest}
 
 Random Forest stał się jednym z najpopularniejszych klasyfikatorów uczenia maszynowego wykorzystywanych w dziedzinie teledetekcji ze względu na wysoką dokładność klasyfikacji i efektywność obliczeniową [@belgiu_2016_rf; @sheykhmousa_2020_svm_vs_rf].
 Metoda lasów losowych charakteryzuje się pewną odpornością na szumy (ang. *noise*) i przeuczenie (ang. *overfitting*), ponieważ nie bazuje na ważeniu [@gislason_2006_rf].
 
-Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych, operuje na zasadzie uczenia zespołowego (ang. *ensemble learning*), czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model [@aaron_2018_ml; @sekulic_2020_rf_interpolation].
+Algorytm Random Forest rozwija koncepcję drzew decyzyjnych, operując na zasadzie uczenia zespołowego (ang. *ensemble learning*), czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w jeden silniejszy model [@aaron_2018_ml; @sekulic_2020_rf_interpolation].
 Procedura generuje liczne drzewa decyzyjne, opierając się na losowo wybranym zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych zmiennych klasyfikacyjnych [@breiman_2001_rf].
 Pojedyncze drzewo korzysta ze zredukowanej liczby danych treningowych i zmiennych, co sprawia, że drzewa różnią się od siebie i są mniej dokładne, ale jednocześnie są też mniej skorelowane, przez co model złożony z wielu drzew będzie bardziej niezawodny [@sekulic_2020_rf_interpolation].
-W fazie predykcji każde z drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego.
+W fazie predykcji każde z drzew dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego.
 W przypadku klasyfikacji klasa wybierana jest na podstawie największej liczby głosów [@breiman_2001_rf].
 
 ### Dostrajanie modeli {#sec-tuning}
 
-Celem optymalizacji hiperparametrów lub dostrajania modelu jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
-Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters].
-Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i ustalana na podstawie zagnieżdżonej walidacji krzyżowej (ang. *nested cross-validation*) [@lovelace_2019_geocomputation].
-Metoda zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej, opisanej w sekcji [-@sec-model-quality-assessment], przeznaczone do procesu strojenia hiperparametrów.
-Każdy fold utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne foldy.
+Większość algorytmów uczenia maszynowego wymaga ustalenia wartości pewnych zmiennych konfiguracyjnych zwanych hiperparametrami [@krol_2022_podstawy_ml].
+Hiperparametry są ustawiane przed rozpoczęciem procesu uczenia, nie uzyskuje się ich w wyniku trenowania modelu ani nie są modyfikowane w trakcie wykonywania algorytmu [@krol_2022_podstawy_ml].
+Optymalna konfiguracja hiperparametrów jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang. *search space*) i może być ustalana np.
+na podstawie zagnieżdżonej walidacji krzyżowej (ang. *nested cross-validation*) [@lovelace_2019_geocomputation].
+Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters], a jej celem jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
+
+Metoda zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej (sekcja [-@sec-model-quality-assessment]), przeznaczone do procesu strojenia hiperparametrów.
+Każdy podzbiór (*fold*) utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne podzbiory.
 W zewnętrznym obiegu model jest trenowany na danych z jednego obszaru przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych hiperparametrów.
-Cały proces jest następnie powtarzany na każdym z *k* zewnętrznych foldów, co prowadzi do określenia najlepszego ustawienia hiperparametrów.
+Cały proces jest następnie powtarzany na każdym z *k* zewnętrznych podzbiorów, co prowadzi do określenia najlepszego ustawienia hiperparametrów.
 Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości, czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
 Cały ten proces jest nazywany strojeniem hiperparametrów.
 
-Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
-Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych (ang. *Support Vector Machines*, SVM) [@probst_2019_hyperparameters].
-
 Hiperparametry `mtry`, `sample.fraction` i `min.node.size` są parametrami określającymi stopień losowości lasu losowego i powinny zostać odpowiednio dostrojone [@probst_2019_hyperparameters].
-Liczba losowo wybranych zmiennych `mtry` wskazuje, ile zmiennych predykcyjnych powinno zostać użytych w każdym drzewie [@lovelace_2019_geocomputation].
-Parametr `sample.fraction` odnosi się do wielkości próbki, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
-Mniejsze frakcje prowadzą do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew [@probst_2019_hyperparameters].
+Liczba losowo wybranych zmiennych, `mtry`, wskazuje, ile predyktorów powinno zostać użytych w każdym drzewie [@lovelace_2019_geocomputation].
+Parametr `sample.fraction` odnosi się do wielkości próby, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
+Mniejsza wielkość próby prowadzi do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew [@probst_2019_hyperparameters].
 Minimalna wielkość węzła `min.node.size` określa minimalną liczbę obserwacji w węźle końcowym [@probst_2019_hyperparameters].
 W ramach optymalizacji uwzględniono również parametry `num.trees` oraz `max.depth`, odnoszące się odpowiednio do liczby drzew w lesie oraz maksymalnej głębokości pojedynczego drzewa.
 
-Kombinacje hiperparametrów zostały wybrane losowo, jednak pozostawały w określonych granicach strojenia ustalonych za pomocą pakietu *paradox* [@R-paradox].
-Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie *mlr3tuningspaces* [@R-mlr3tuningspaces] lub literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
+Kombinacje hiperparametrów zostały wybrane losowo w ramach określonych granic strojenia ustalonych za pomocą pakietu *paradox* [@R-paradox].
+Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie *mlr3tuningspaces* [@R-mlr3tuningspaces] oraz literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
 `mtry` powinno przyjmować wartości z przedziału od 1 do liczby predyktorów, `sample.fraction` powinno mieścić się w zakresie od 0,2 do 0,9, a `min.node.size` powinno przybierać wartości z przedziału od 1 do 10.
-Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees` powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500.
+Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees` powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500 w celu zwiększenia wydajności obliczeń.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-tuning
@@ -283,29 +253,35 @@ names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
   kableExtra::add_header_above(c(" ", "Optymalizowane parametry" = 5, " ")) |>
   kableExtra::add_footnote(c("Patrz: tabela 4.1",
-                             "Patrz: sekcja 4.3.3"))
+                             "Patrz: przypis"))
 ```
 
-Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną jakości AUC zostały przedstawione w tabeli [-@tbl-tabela-tuning].
-Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla parametrów `sample.fraction`, `min.node.size`, `num.trees` i `max.depth`.
-Podczas losowania hiperparametrów dla każdego wariantu wykorzystano to samo ziarno losowości (ang. *random seed*), ustawione za pomocą funkcji `set.seed()`.
-Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z pięciu optymalizowanych hiperparametrów.
+Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną jakości AUC[^04-roz4-1] zostały przedstawione w tabeli [-@tbl-tabela-tuning].
+Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla parametrów `sample.fraction`, `min.node.size`, `num.trees` i `max.depth`. Podczas losowania hiperparametrów dla każdego wariantu wykorzystano to samo ziarno losowości (ang. *random seed*), ustawione za pomocą funkcji `set.seed()`. Dla dwóch wspomnianych wariantów najlepsze wyniki zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z pięciu optymalizowanych hiperparametrów.
+
+[^04-roz4-1]: Pole powierzchni pod krzywą (ang. *Area Under Curve* lub *Area Under the ROC Curve*, AUC lub AUROC) to miara jakości modelu, obliczająca obszar pod krzywą ROC (ang. *receiver operating characteristic curve*), która graficznie przedstawia zależność pomiędzy czułością (*true positive rate*) a specyficznością (*false positive rate*) [@jaworski_2013_perfomance_measures].
+    AUC reprezentuje zdolność klasyfikatora binarnego do oddzielania klas pozytywnych od klas negatywnych.
+    Wartości AUC mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza model nie lepszy od losowego, a 1,0 – doskonałe przewidywanie obu klas.
+
+Warto dodać, że lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi wartościami hiperparametrów, co może być jednym z powodów ich dużej popularności [@lovelace_2019_geocomputation].
+Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych (ang. *Support Vector Machines*, SVM [@svm]) [@probst_2019_hyperparameters] czy XGBoost [@xgboost].
 
 ### Ocena jakości modeli {#sec-model-quality-assessment}
 
-Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości modelu w rozważanym zadaniu.
+Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
 W tym celu można zastosować *k*-krotną walidację krzyżową (ang. *k-fold cross-validation*, CV), która zakłada, że obserwacje są od siebie niezależne [@pohjankukka_2017_scv].
 W standardowej *k*-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony na *k* podzbiorów podobnej wielkości, gdzie *fold* odnosi się do liczby powstałych podzbiorów.
 Podział ten przeprowadza się poprzez losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
 Model jest uczony na *k* - 1 podzbiorach, które razem tworzą zbiór uczący.
-Następnie model jest testowany na pozostałym podzbiorze, określanym jako zbiór walidacyjny i mierzona jest jego jakość.
+Następnie model jest testowany na pozostałym podzbiorze, określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
 Procedurę tę powtarza się, aż każdy z *k* podzbiorów zostanie użyty jako zbiór walidacyjny [@berrar_2018_cv].
-Kroswalidacja pozwala na ocenę ogólnej wydajności modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
+Kroswalidacja pozwala na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
 
-Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*, SAC) [@pohjankukka_2017_scv].
+Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*) [@pohjankukka_2017_scv].
 Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, będącym jednocześnie podstawowym założeniem analizy geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography].
 Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników oceny jakości modeli [@brenning_2005_scv].
 Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
+
 Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych.
 Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie odseparowane podzbiory danych, wprowadzając przestrzenną odległość pomiędzy zbiorem treningowym a testowym [@pohjankukka_2017_scv].
 Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
@@ -313,54 +289,82 @@ Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
 ```{r}
 #| label: fig-rycina-spcv
 #| echo: false
-#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane testowe. Opracowanie własne na podstawie Schratz, [2024](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
+#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane testowe. Opracowanie własne na podstawie Schratz, [2021](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
 #| out-width: 100%
 knitr::include_graphics("figures/spcv_plot.png")
 ```
 
-Macierz pomyłek (ang. *error matrix* lub *confusion matrix*) to tablica prezentująca wyniki klasyfikatora binarnego, podając informację o liczbie obiektów przypisanych do każdej z klas.
-Macierz pomyłek jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi, składając się z czterech wartości reprezentujących różne kombinacje przewidywanych i rzeczywistych klas.
+Macierz błędów (ang. *error matrix* lub *confusion matrix*) to tablica prezentująca wyniki klasyfikatora binarnego, podając informację o liczbie obiektów przypisanych do każdej z klas.
+Macierz błędów jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi, składając się z czterech wartości reprezentujących różne kombinacje przewidywanych i rzeczywistych klas.
 
-W macierzy pomyłek dwie wartości reprezentują trafienia pozytywne: przypadki prawdziwie pozytywne (ang. *true positive*, TP) opisuje sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako pozytywną, natomiast przypadki prawdziwie negatywne (ang. *true negative*, TN) opisują poprawne przewidywanie klasy negatywnej.
+W macierzy błędów dwie wartości reprezentują trafienia pozytywne: przypadki prawdziwie pozytywne (ang. *true positive*, TP) opisują sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako pozytywną, natomiast przypadki prawdziwie negatywne (ang. *true negative*, TN) opisują poprawne przewidywanie klasy negatywnej.
 Dwie pozostałe wartości informują o błędnie sklasyfikowanych przypadkach: przypadki fałszywie pozytywne (ang. *false positive*, FP) opisują sytuacje, w których klasyfikator błędnie wskazał klasę pozytywną, podczas gdy rzeczywiście była ona negatywna.
 Przypadki fałszywie negatywne (ang. *false negative*, FN) to natomiast sytuacje, w których klasyfikator błędnie przewidział klasę jako negatywną, gdy faktycznie była ona pozytywna.
 
-Zliczenia tych czterech przypadków formują macierz pomyłek, stanowiącą podstawę dla obliczeń miar oceny jakości klasyfikatora.
+Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu przestrzennej walidacji krzyżowej, macierzy błędów oraz trzech miar jakości dostosowanych do klasyfikatorów binarnych:
 
-Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu przestrzennej walidacji krzyżowej, macierzy pomyłek oraz pięciu miar jakości dostosowanych do klasyfikatorów binarnych:
+-   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako pozytywne jest faktycznie pozytywna [@jaworski_2013_perfomance_measures]
 
--   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako dodatnie jest faktycznie dodatnia [@jaworski_2013_perfomance_measures]
+-   czułość (ang. *sensitivity*, inaczej *recall* lub *true positive rate*) - określa jaką część prawdziwie pozytywnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
 
--   czułość (ang. *sensitivity*, inaczej *recall* lub *true positive rate*) - określa jaką część dodatnich wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
-
--   specyficzność (ang. *specificity*, inaczej *true negative rate*) - określa jaką część ujemnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
-
--   pole powierzchni pod krzywą (ang. *Area Under Curve* lub *Area Under the ROC Curve*, AUC lub AUROC) - oblicza obszar pod krzywą ROC, która graficznie przedstawia zależność pomiędzy czułością a specyficznością [@jaworski_2013_perfomance_measures].
-    AUC ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka negatywna [@R-mlr3measures]
-
--   $F_{\beta}$ score (F-beta score) - ważona średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik.
-    Miara ta nie uwzględnia wyników prawdziwie negatywnych [@zygierewicz_2021_ml]
+-   F1-score - średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę równowagi między tymi miarami, która w pewnym stopniu opisuje całościowo wynik.
+    Miara ta nie uwzględnia wyników prawdziwie negatywnych [@zygierewicz_2021_ml].
 
 Wartości każdej z wymienionych miar jakości modelu zawierają się w zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu, natomiast wartość 1 odzwierciedla wysoki poziom jakości.
-Wartości AUC mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza model nie lepszy od losowego, a 1,0 – doskonałe przewidywanie obu klas.
-Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu [@lovelace_2019_geocomputation].
 
 ## Ważność zmiennych {#sec-variable-importance}
 
-Ocena ważności zmiennych (ang. *variable importance*) może zostać wykorzystana do poprawy i oceny jakości stworzonych modeli.
-Analizowanie wpływu poszczególnych zmiennych na dokładność modelu umożliwia ocenę ich istotności dla przewidywań.
+Ocena ważności zmiennych (ang. *variable importance*) jest elementem oceny jakości stworzonych modeli.
+Analiza wpływu poszczególnych zmiennych na dokładność modelu pozwala ocenić, które zmienne są istotne dla przewidywań.
 Stosowanie zmiennych o niskiej mocy predykcyjnej może prowadzić do nadmiernego dopasowania (ang. *overfitting*) modelu lub obniżenia jego jakości.
 Dlatego ważny jest wybór odpowiednich zmiennych do trenowania modelu, unikając na przykład kolinearności predyktorów, czyli wysokiej korelacji między zmiennymi.
 Celem określania ważności zmiennych i ich selekcji jest zwiększenie mocy predykcyjnej modelu w kontekście analizowanego zjawiska poprzez identyfikację silnie skorelowanych z nim zmiennych.
 
-W lasach losowych ważność zmiennych można ocenić różnymi metodami, z których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang. *Gini impurity*) oraz metoda oparta na permutacji [@R-Przewodnik].
+W lasach losowych ważność zmiennych można ocenić różnymi metodami, z których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang. *Gini impurity*) oraz metoda oparta na permutacji [@biecek_2017_przewodnik].
 W celu określenia wartości zmiennych wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie danych teledetekcyjnych zastosowano metodę permutacji (ang. *permutation*), która może być również używana do upraszczania i eksploracji modeli lub generowania wiedzy [@biecek_2021_model_analysis].
 
 Główną ideą metody opartej na permutacji jest pomiar tego, jak bardzo zmieni się dopasowanie modelu, gdy usunięty zostanie wpływ wybranej zmiennej lub grupy zmiennych.
 Jeśli zmienna jest istotna, permutacja jej wartości skutkuje pogorszeniem jakości modelu.
 Im większa zmiana dopasowania modelu, tym istotniejsza jest permutowana zmienna [@biecek_2021_model_analysis].
+Metoda oparta na permutacji została pierwotnie zaproponowana przez Breimana [-@breiman_2001_rf] dla lasów losowych, jednak jej prostota umożliwia zastosowanie permutacji do dowolnego modelu, a także porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach [@biecek_2021_model_analysis].
 
-Metoda oparta na permutacji została pierwotnie zaproponowana przez @breiman_2001_rf dla lasów losowych, jednak jej prostota umożliwia zastosowanie permutacji do dowolnego modelu, a także porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach [@biecek_2021_model_analysis].
+```{r}
+#| label: fig-variables-correlation
+#| echo: false
+#| fig-cap: "Macierz korelacji wszystkich zmiennych wykorzystanych w badaniu"
+#| out-width: 100% 
+knitr::include_graphics("figures/corrplot1.png")
+```
+
+W przypadku silnie skorelowanych ze sobą zmiennych, brak jednej z nich niekoniecznie będzie negatywnie wpływać na jakość modelu, ponieważ inna, silnie skorelowana zmienna może zastąpić tę brakującą informację [@biecek_2021_model_analysis].
+Macierz korelacji zmiennych użytych w tym badaniu (rycina [-@fig-variables-correlation]) ukazuje silne związki między niektórymi zmiennymi.
+Wysoka korelacja występuje szczególnie między pasmami Sentinel-2 w zakresie widzialnym (kanały B02-04) a pasmami średniej podczerwieni (kanały B11-12). 
+Zauważalna jest również wysoka korelacja między pasmami czerwieni krawędziowej (kanały B05-07) oraz bliskiej podczerwieni (kanały B08 i B8A).
+Wykorzystane polaryzacje Sentinel-1 również są ze sobą silnie skorelowane.
+Wskaźniki teledetekcyjne wykazują zazwyczaj znaczną dodatnią lub ujemną korelację z pasmami, które zostały wykorzystane do ich obliczenia. 
+Tekstury obrazu charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla których zostały one określone.
+
+## Przetwarzanie końcowe {#sec-post-processing}
+
+Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie metod przetwarzania końcowego (ang. *post-processing*), mających na celu udoskonalenie wyników wykrywania farm fotowoltaicznych.
+Z teoretycznego punktu widzenia, obszar zajmowany przez farmę fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia pojedynczej komórki lub grupy kilku komórek.
+W celu usunięcia pozytywnych predykcji, które reprezentowały pojedyncze komórki lub obszary składające się z 10 lub mniej komórek (czyli o powierzchni mniejszej/równej 1000 m^2^) zastosowano sekwencję procesów przetwarzania, dzięki której udało się pozbyć tzw.
+efektu soli i pieprzu (ang. *salt-and-pepper effect*).
+
+```{r}
+#| label: fig-rycina-post-processing
+#| echo: false
+#| fig-cap: "Kompozycja RGB Sentinel-2 (a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)"
+#| out-width: 100%
+knitr::include_graphics("figures/postprocessing_pl.png")
+```
+
+Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników predykcji dla każdego wariantu, a następnie selekcję pozytywnych predykcji oraz obliczenie powierzchni każdego wybranego obszaru.
+Na podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje reprezentujące pojedyncze komórki lub obszary składające się z 10 lub mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
+W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych oparty na danych teledetekcyjnych w formie wektorowej.
+
+W celu stworzenia wizualizacji oraz porównania produktów końcowych z predykcjami niepoddanymi etapowi przetwarzania końcowego produkty wektorowe zostały ponownie przetworzone do formy rastrowej.
+Efekty zastosowanego przetwarzania końcowego przedstawia rycina [-@fig-rycina-post-processing].
 
 ## Oprogramowanie
 
@@ -368,18 +372,17 @@ Metoda oparta na permutacji została pierwotnie zaproponowana przez @breiman_200
 
 QGIS [@qgis], to wieloplatformowe i wolne oprogramowanie o otwartym kodzie źródłowym przeznaczone do przetwarzania danych przestrzennych, rozwijane od 2002 roku [@hejmanowska_2020_dane; @flenniken_2020_qgis].
 Algorytmy przetwarzania danych przestrzennych zebrane w oprogramowaniu QGIS umożliwiają manipulację danymi rastrowymi oraz wektorowymi, a także prowadzenie analiz i wizualizację wyników [@hejmanowska_2020_dane].
-Oprogramowanie QGIS oferuje również możliwość korzystania z wielu zewnętrznych programów, tzw.
-wtyczek (ang. *plug-in*) rozszerzających jego funkcjonalność [@hejmanowska_2020_dane].
+Oprogramowanie QGIS oferuje również możliwość korzystania z wielu zewnętrznych programów, tzw. wtyczek (ang. *plug-in*) rozszerzających jego funkcjonalność [@hejmanowska_2020_dane].
 W repozytorium wtyczek znaleźć można narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji, czy wykonania dodatkowych zadań, takich jak np.
 nadawanie georeferencji czy klasyfikacja zobrazowań satelitarnych [@hejmanowska_2020_dane].
+QGIS dostarcza także zaawansowane narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie obiektów wektorowych oraz pozwala na przeglądanie danych przestrzennych dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
 
-Oprogramowanie QGIS zostało wykorzystane w tej pracy do stworzenia zestawu danych referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik satelitarnych.
-QGIS dostarcza zaawansowane narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie obiektów wektorowych oraz pozwala na przeglądanie danych przestrzennych dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS czy XYZ Tiles.
+Oprogramowanie QGIS zostało wykorzystane w tej pracy do stworzenia zestawu danych referencyjnych poprzez wizualną interpretację ortofotomapy oraz mozaik satelitarnych, na podstawie których dokonano digitalizacji farm fotowoltaicznych istniejących na obszarze badań.
 
 ### Sentinel-1 Toolbox i SNAP
 
-Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw narzędzi S1TBX [@s1tbx], przeznaczony do przetwarzania danych radarowych.
-Zestaw narzędzi Sentinel-1 Toolbox zawiera narzędzia do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli), koregistracji, ortorektyfikacji, mozaikowania, konwersji danych, polarymetrii czy interferometrii [@sentinel-1-toolbox].
+Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw narzędzi Sentinel-1 Toolbox (S1TBX) [@s1tbx], przeznaczony do obsługi danych radarowych.
+Zestaw narzędzi S1TBX zawiera narzędzia do kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli), koregistracji, ortorektyfikacji, mozaikowania, konwersji danych, polarymetrii czy interferometrii [@sentinel-1-toolbox].
 Sentinel-1 Toolbox jest opracowywany dla ESA przez firmę Array we współpracy z DLR, Brockmann Consult i OceanDataLab [@sentinel-1-toolbox].
 
 SNAP [@snap], czyli Sentinel Application Platform to platforma oprogramowania rozwijana wspólnie przez firmy Brockmann Consult, SkyWatch i C-S na zlecenie Europejskiej Agencji Kosmicznej, przeznaczona do naukowego wykorzystania misji optycznych i mikrofalowych Sentinel [@snap-desktop; @esa_snap].

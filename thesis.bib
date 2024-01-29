@@ -571,13 +571,23 @@
 	shortauthor  = {ESA}
 }
 @misc{sentinel1_stripmap,
-	title        = {Sentinel-1 Acquisition Modes - Stripmap},
+	title        = {Sentinel-1 Acquisition Modes: Stripmap},
 	author       = {{European Space Agency}},
 	year         = 2023,
 	url          = {
 		https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/acquisition-modes/stripmap
 	},
 	note         = {Accessed on 2023-12-08},
+	shortauthor  = {ESA}
+}
+@misc{sentinel1_ocn,
+	title        = {Sentinel-1 Product Types and Processing Levels: Level-2},
+	author       = {{European Space Agency}},
+	year         = 2024,
+	url          = {
+		https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-1-sar/product-types-processing-levels/level-2
+	},
+	note         = {Accessed on 2024-01-22},
 	shortauthor  = {ESA}
 }
 @manual{sentinel1_lulc,
@@ -1298,10 +1308,10 @@
 }
 @misc{globalpowerplantdb_2021,
 	title        = {Global Power Plant Database v1.3.0},
-	author       = {{
-		Global Energy Observatory and Google and KTH Royal Institute of Technology in
-		Stockholm and Enipedia and World Resources Institute
-	}},
+	author       = {
+		{ Global Energy Observatory and Google and KTH Royal Institute of Technology
+		in Stockholm and Enipedia and World Resources Institute }
+	},
 	year         = 2021,
 	note         = {Accessed through Resource Watch on 2024-01-19},
 	shortauthor  = {WRI},
@@ -1333,4 +1343,74 @@
 	volume       = 7,
 	pages        = 130,
 	doi          = {10.1038/s41597-020-0469-8}
+}
+@article{wang_2012_spatial_sampling,
+	title        = {A review of spatial sampling},
+	author       = {Jin-Feng Wang and A. Stein and Bin-Bo Gao and Yong Ge},
+	year         = 2012,
+	journal      = {Spatial Statistics},
+	volume       = 2,
+	pages        = {1--14},
+	doi          = {https://doi.org/10.1016/j.spasta.2012.08.001},
+	issn         = {2211-6753},
+	url          = {https://www.sciencedirect.com/science/article/pii/S2211675312000255},
+	keywords     = {Design-based, Model-based, Population, Superpopulation, Bias},
+	abstract     = {
+		The main aim of spatial sampling is to collect samples in 1-, 2- or
+		3-dimensional space. It is typically used to estimate the total or mean for a
+		parameter in an area, to optimize parameter estimations for unsampled
+		locations, or to predict the location of a movable object. Some objectives
+		are for populations, representing the “here and now”, whereas other
+		objectives concern superpopulations that generate the populations. Data to be
+		collected are usually spatially autocorrelated and heterogeneous, whereas
+		sampling is usually not repeatable. In various senses it is distinct from the
+		assumption of independent and identically distributed (i.i.d.) data from a
+		population in conventional sampling. The uncertainty for spatial sample
+		estimation propagates along a chain from spatial variation in the stochastic
+		field to sample distribution and statistical tools used to obtain an
+		estimate. This uncertainty is measured using either a design-based or
+		model-based method. Both methods can be used in population and
+		superpopulation studies. An unbiased estimate with the lowest variance is
+		thus a common goal in spatial sampling and inference. Reaching this objective
+		can be addressed by sample allocation in an area to obtain a restricted
+		objective function.
+	}
+}
+@book{krol_2022_podstawy_ml,
+	title        = {Podstawy uczenia maszynowego},
+	author       = {Król-Nowak, Aleksandra and Kotarba, Katarzyna},
+	year         = 2022,
+	publisher    = {Wydawnictwa AGH},
+	isbn         = 9788367427050,
+	url          = {https://books.google.pl/books?id=DZXNzwEACAAJ},
+	keywords     = {
+		Programowanie (informatyka), Python (język programowania), Sztuczna
+		inteligencja, Sztuczna sieć neuronowa, Uczenie maszynowe
+	}
+}
+@book{biecek_2017_przewodnik,
+	title        = {Przewodnik po pakiecie R. Wydanie czwarte rozszerzone.},
+	author       = {Przemysław Biecek},
+	year         = 2017,
+	publisher    = {Oficyna Wydawnicza GiS},
+	pages        = 395,
+	isbn         = {978-83-62780-44-0},
+	url          = {https://pbiecek.github.io/Przewodnik/index.html}
+}
+@inproceedings{svm,
+	title        = {A training algorithm for optimal margin classifiers},
+	author       = {Boser, Bernhard E and Guyon, Isabelle M and Vapnik, Vladimir N},
+	year         = 1992,
+	booktitle    = {Proceedings of the fifth annual workshop on Computational learning theory},
+	pages        = {144--152}
+}
+@inproceedings{xgboost,
+	title        = {Xgboost: A scalable tree boosting system},
+	author       = {Chen, Tianqi and Guestrin, Carlos},
+	year         = 2016,
+	booktitle    = {
+		Proceedings of the 22nd acm sigkdd international conference on knowledge
+		discovery and data mining
+	},
+	pages        = {785--794}
 }

@@ -86,6 +86,60 @@ Keywords: (as stated before)
 \hypertarget{sec-wprowadzenie}{%
 \chapter{Wprowadzenie}\label{sec-wprowadzenie}}
 
+Ludzie od zawsze dążyli do wykorzystywania dostępnych źródeł energii w
+celu zaspokojenia różnorodnych potrzeb. Energia odgrywa przez to
+kluczową rolę w naszym życiu, stanowiąc podstawę funkcjonowania
+społeczeństwa i napędzając rozwój gospodarczy. Istnieje wiele metod
+pozyskiwania energii elektrycznej, włączając w to tradycyjne,
+konwencjonalne sposoby oparte na spalaniu paliw kopalnych, a także
+energię atomową oraz odnawialne źródła energii. Zielona energia, inaczej
+określana jako odnawialne źródła energii, wykorzystuje naturalne
+procesy, takie jak słońce, wiatr czy ciepło wnętrza Ziemi, co czyni ją
+nieograniczonym źródłem energii.
+
+Każdy, kto rozpatruje perspektywę produkcji energii, zdaje sobie sprawę,
+że zasoby surowców wykorzystywanych do produkcji energii konwencjonalnej
+są ograniczone. Dodatkowo, rosnące zainteresowanie ochroną środowiska i
+negatywnymi zmianami klimatu oraz wprowadzane przepisy prawne
+zobowiązują do podejmowania działań mających na celu ograniczenie emisji
+szkodliwych gazów do atmosfery. W obliczu globalnych zmian klimatycznych
+i kryzysu energetycznego, spowodowanego inwazją Rosji na Ukrainę w 2022
+roku, społeczeństwo jest zmuszone do przejścia z produkcji energii
+opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i
+energetyki jądrowej.
+
+Podstawą polityki Unii Europejskiej w obszarze klimatu jest Europejski
+Zielony Ład (ang. \emph{European Green Deal}), czyli zestaw inicjatyw
+politycznych mających na celu przeprowadzenie transformacji ekologicznej
+i osiągnięcie neutralności klimatycznej w UE do 2050 roku. Inicjatywy
+takie jak Gotowi na 55 (ang. \emph{Fit For 55}) oraz rozporządzenie o
+europejskim prawie klimatycznym mają zapewnić redukcję emisji gazów
+cieplarnianych netto o co najmniej 55\% do 2030 roku. Zgodnie z
+ustaleniami Rady UE, Parlamentu Europejskiego oraz Komisji Europejskiej,
+udział energii odnawialnej w ogólnym zużyciu energii w Unii Europejskiej
+ma wynosić 42,5\% do 2030 roku. Plan REPowerEU, przedstawiony przez
+Komisję Europejską w maju 2022 roku, skupia się natomiast na
+inwestycjach w odnawialne źródła energii, uznając je za leżące w
+nadrzędnym interesie publicznym. Celem tego planu jest zmniejszenie
+zależności UE od importu paliw kopalnych z Rosji poprzez zainstalowanie
+niemal 600 GW mocy nowych paneli fotowoltaicznych w całej Unii
+Europejskiej do 2030 roku. Ambitne cele klimatyczne Unii Europejskiej, w
+połączeniu z równoczesnym obniżeniem kosztów instalacji fotowoltaicznych
+sprawiają, że energia elektryczna pochodząca z tego źródła
+prawdopodobnie zacznie odgrywać kluczową rolę w procesie transformacji
+energetycznej Unii Europejskiej.
+
+\begin{itemize}
+\tightlist
+\item
+  dlaczego należy prowadzić statystykę rozwoju OZE? dlaczego
+  monitorowanie tego zjawiska jest tak istotne?
+\item
+  krótkie omówienie badań które już to robiły
+\item
+  cel pracy
+\end{itemize}
+
 \bookmarksetup{startatroot}
 
 \hypertarget{sec-lit}{%
@@ -97,7 +151,7 @@ Keywords: (as stated before)
 \chapter{Materiały}\label{sec-materialy}}
 
 W ramach badania wykorzystano zarówno radarowe, jak i multispektralne
-dane satelitarne pochodzące z programu Copernicus, konkretnie z misji
+dane satelitarne z programu Copernicus, pochodzące odpowiednio z misji
 Sentinel-1 i Sentinel-2. Program Copernicus to unijna inicjatywa
 obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we
 współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną
@@ -122,6 +176,121 @@ rycina \ref{fig-rycina-area}.
 }
 
 \caption{\label{fig-rycina-area}Obszar badań}
+
+\end{figure}
+
+\hypertarget{sec-pv}{%
+\section{Lokalizacje farm fotowoltaicznych}\label{sec-pv}}
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/pv.png}
+
+}
+
+\caption{\label{fig-rycina-pv}Porównanie wyglądu farm fotowoltaicznych w
+Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej
+przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps
+(d) oraz w kompozycji RGB Sentinel-2 (e)}
+
+\end{figure}
+
+W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest
+tworzenie zestawów danych referencyjnych poprzez interpretację wizualną,
+np. w celu walidacji wyników klasyfikacji produktów pokrycia terenu
+\autocite{lesiv_2018_sat_imagery_mosaics}. Do lokalizacji oraz
+digitalizacji istniejących farm fotowoltaicznych wykorzystano
+ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii
+(GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty
+komercyjne. W celu stworzenia zbioru danych testowych i treningowych
+użyto ortomozaik Google Satellite, Bing Aerial oraz Planet Basemaps
+\autocite{planet}, udostępnianych w formie usług sieciowych (WMS, WMTS,
+XYZ Tiles). Mozaiki te są tworzone na podstawie komercyjnych zdjęć
+satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies,
+Airbus czy Planet Labs.
+
+Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w
+standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują
+się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą
+\autocite{ortofotomapa}. Rozdzielczość przestrzenna wykorzystanych
+mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1
+m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft
+cechuje się rozmiarem komórki od 30 do 60 cm \autocite{bing_aerial}.
+Często jednak nie jest możliwie ustalenie dat wykonania zdjęć
+satelitarnych, które posłużyły do stworzenia konkretnej mozaiki
+zobrazowań satelitarnych \autocite{lesiv_2018_sat_imagery_mosaics}.
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych
+wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się
+rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do
+pozostałych wymienionych produktów jest tworzona z miesięczną oraz
+kwartalną częstotliwością \autocite{planet_2019_basemaps}. Pozwala to,
+pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych
+referencyjnych dla konkretnego zakresu czasu. Mozaiki Planet Basemaps
+\autocite{planet} są tworzone na podstawie najlepszych obrazów z
+katalogu Planet w określonym przedziale czasowym, co umożliwia
+generowanie wysokorozdzielczych mozaik, które są dokładne
+radiometrycznie i przestrzennie, a także charakteryzują się
+zminimalizowanym wpływem czynników atmosferycznych
+\autocite{planet_2019_basemaps}.
+
+Na podstawie wyżej wymienionych danych dokonano digitalizacji farm
+fotowoltaicznych na obszarze badania w celu stworzenia zestawu danych
+referencyjnych. Digitalizacja polega na tworzeniu obiektów wektorowych,
+takich jak punkty, linie czy poligony, poprzez rysownie figur
+geometrycznych uwzględniając ich współrzędne geograficzne na podstawie
+obrazów satelitarnych czy zeskanowanych map papierowych. Do tego celu
+wykorzystano narzędzia digitalizacji z oprogramowania QGIS
+\autocite{qgis}, które umożliwiają rysowanie kształtów i edycję danych
+wektorowych.
+
+Na podstawie ortofotomapy oraz mozaik satelitarnych zdigitalizowane
+zostały prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla
+33UWV Sentinel-2 istniejące w czasie wykonywania wykorzystanych
+zobrazowań (8 maja 2023 roku, sekcja \ref{sec-satellite-imagery}).
+Wykorzystane do digitalizacji dane pochodzą z różnych okresów, co
+spowodowało sytuacje, gdzie farmy obecne na najbardziej aktualnej mapie
+podkładowej (Planet Basemaps) nie występowały na mozaikach o wyższej
+rozdzielczości przestrzennej (ortofotomapa, Google Satellite, Bing
+Aerial). Podczas digitalizacji przyjęto, że granice farm
+fotowoltaicznych lub ich segmentów będą ustalane na podstawie mapy
+podkładowej o najwyższej rozdzielczości, na której dana farma
+fotowoltaiczna występuje.
+
+\hypertarget{tbl-tabela-digitizing-results}{}
+\begin{table}
+\caption{\label{tbl-tabela-digitizing-results}Statystki zdigitalizowanych farm fotowoltaicznych na obszarze kafla
+Sentinel-2 o~oznaczeniu 33UWV }\tabularnewline
+
+\centering
+\begin{tabular}{lr}
+\toprule
+Liczba zdigitalizowanych farm PV lub ich segmentów & 226\\
+Suma powierzchni farm fotowoltaicznych [ha] & 346.47\\
+Minimalna powierzchnia farmy PV lub jej segmentu & 0.01\\
+Średnia powierzchnia farmy PV lub jej segmentu [ha] & 1.53\\
+Maksymalna powierzchnia farmy PV lub jej segmentu [ha] & 24.89\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Podstawowe statystki zdigitalizowanych obiektów przedstawia tabela
+\ref{tbl-tabela-digitizing-results}, a lokalizacje oznaczonych farm
+fotowoltaicznych lub ich segmentów przedstawia rycina
+\ref{fig-rycina-pv}. Zauważyć można duże zróżnicowanie w powierzchni
+farm fotowoltaicznych lub ich segmentów, od małych instalacji o
+powierzchni 0,01 ha do znacznie większych konstrukcji o powierzchni
+prawie 25 ha. Rozmieszczenie farm fotowoltaicznych na obszarze kafla
+33UWV Sentinel-2 skupia się głównie w zachodniej i południowej części
+badanego obszaru.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/farmy1.png}
+
+}
+
+\caption{\label{fig-rycina-spatial-distribution-pv}Rozmieszczenie
+zdigitalizowanych farm fotowoltaicznych lub ich segmentów}
 
 \end{figure}
 
@@ -159,26 +328,40 @@ prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od
 warunków pogodowych, przez co czas rewizyty konstelacji dwóch satelitów
 dla obszaru Polski wynosi około 2 dni
 \autocite{attema_2008_s1,sentinel1_revisit}. W grudniu 2021 roku w
-satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem
-elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych
-radarowych \autocite{sentinel_1b}. W wyniku awarii satelita Sentinel-1B
-został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C
-zaplanowano na marzec 2024 roku
-\autocite{sentinel_1b,sentinel1_eoportal}.
+satelicie Sentinel-1B wystąpiła awaria układu zasilania elektroniki
+radaru, uniemożliwiająca dalsze dostarczanie danych radarowych
+\autocite{sentinel_1b}. W wyniku awarii satelita Sentinel-1B został
+wyłączony z użytku, a wystrzelenie platformy Sentinel-1C zaplanowano na
+marzec 2024 roku \autocite{sentinel_1b,sentinel1_eoportal}.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/pv_sen1.png}
+
+}
+
+\caption{\label{fig-rycina-pv-sentinel1}Farma fotowoltaiczna na
+wysokorozdzielczym obrazie satelitarnym (a), kompozycji RGB Sentinel-2
+(b) oraz obrazie rozproszenia wstecznego w polaryzacji VV
+Sentinel‑1~(c)}
+
+\end{figure}
 
 Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia.
-Produkty poziomu 1, Single Look Complex (SLC) i Ground Range Detected
-(GRD), przeznaczone są dla użytkowników końcowych, umożliwiając
-monitorowanie Ziemi, klasyfikację pokrycia terenu oraz aplikacje
-interferometryczne \autocite{hejmanowska_2020_dane}. Interferometria
-radarowa (ang. \emph{Interferometric Synthetic Aperture Radar}, InSAR)
-to technika umożliwiająca generowanie cyfrowych modeli wysokościowych
-(ang. \emph{digital elevation model}, DEM) oraz pomiary deformacji
-terenu na podstawie informacji o fazie sygnału
-\autocite{hanssen_2001_insar,hejmanowska_2020_dane}. Produkty SLC to
-obrazy SAR w geometrii ukośnej, posiadające informację o wartości
-amplitudy i fazie sygnału, co czyni je odpowiednimi do interferometrii
-radarowej \autocite{hejmanowska_2020_dane}. Produkty GRD są rezultatem
+Dane poziomu 0 to surowe, nieobrazowe dane, z których generowane są
+produkty wyższych poziomów przetworzenia. Poziom 1 obejmuje produkty
+Single Look Complex (SLC) oraz Ground Range Detected (GRD) przeznaczone
+do monitorowania Ziemi, klasyfikacji pokrycia terenu oraz aplikacji
+interferometrycznych \footnote{Interferometria radarowa (ang.
+  \emph{Interferometric Synthetic Aperture Radar}, InSAR) to technika
+  umożliwiająca generowanie cyfrowych modeli wysokościowych (ang.
+  \emph{digital elevation model}, DEM) oraz pomiary deformacji terenu na
+  podstawie informacji o fazie sygnału
+  \autocite{hanssen_2001_insar,hejmanowska_2020_dane}.}
+\autocite{hejmanowska_2020_dane}. Produkty SLC to obrazy SAR w geometrii
+ukośnej, posiadające informację o wartości amplitudy i fazie sygnału, co
+czyni je odpowiednimi do interferometrii radarowej
+\autocite{hejmanowska_2020_dane}. Produkty GRD są rezultatem
 przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej
 (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia
 \autocite{hejmanowska_2020_dane}. Przy konwersji SLC do GRD tracimy
@@ -186,14 +369,18 @@ informację fazową sygnału, co wyklucza zastosowanie produktów GRD w
 interferometrii radarowej \autocite{sentinel1_products}. Produkty GRD
 nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z
 użyciem cyfrowego modelu wysokości przed wykorzystaniem w systemach GIS
-\autocite{hejmanowska_2020_dane}.
+\autocite{hejmanowska_2020_dane}. Produkty oceaniczne poziomu drugiego
+(Level-2 Ocean (OCN)) służą natomiast do zastosowań związanych z
+pomiarem wiatrów, fal i prądów morskich \autocite{sentinel1_ocn}.
+Produkty przeznaczone dla użytkowników końcowych to produkty pierwszego
+i drugiego poziomu przetworzenia.
 
-Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide
-Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap
-(SM) - używany do obrazowania małych wysp i na potrzeby zarządzania
-kryzysowego, Extra-Wide Swath (EW) - tryb do monitorowania stref
-polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb
-obrazowania oceanów
+Dane Sentinel-1 rejestrowane są w czterech trybach: Stripmap (SM) -
+używany do obrazowania małych wysp i na potrzeby zarządzania
+kryzysowego, Interferometric Wide Swath (IW) - podstawowy tryb
+obrazowania dla obszarów lądowych, Extra-Wide Swath (EW) - tryb do
+monitorowania stref polarnych i niektórych obszarów morskich oraz Wave
+(WV) - tryb obrazowania oceanów
 \autocite{hejmanowska_2020_dane,sentinel1_instrument_payload,sentinel1_stripmap}.
 Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1
 przedstawia tabela \ref{tbl-tabela-sentinel1}
@@ -202,7 +389,8 @@ przedstawia tabela \ref{tbl-tabela-sentinel1}
 \hypertarget{tbl-tabela-sentinel1}{}
 \begin{table}
 \caption{\label{tbl-tabela-sentinel1}Tryby radaru Sentinel-1 (ESA,
-\href{https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath}{2023}) }\tabularnewline
+\href{https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath}{2023}).
+Pogrubiony wiersz wskazuje tryb wykorzystany w niniejszym badaniu. }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{3cm}>{\centering\arraybackslash}p{1.8cm}>{\centering\arraybackslash}p{2.4cm}>{\centering\arraybackslash}p{2.8cm}>{\centering\arraybackslash}p{2cm}}
@@ -240,7 +428,7 @@ satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych
 rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od
 rejestrowanego kanału. Czas rewizyty konstelacji dwóch satelitów wzrasta
 z 5 dni nad równikiem do 2-3 dni na średnich szerokościach
-geograficznych, obejmujących obszar Polski
+geograficznych, obejmujących również obszar Polski
 \autocite{hejmanowska_2020_dane,sentinel_2_guide}.
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
@@ -266,7 +454,8 @@ danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
 \hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
 \caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA,
-\href{https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral}{2023}) }\tabularnewline
+\href{https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral}{2023}).
+Pogrubione wiersze wskazują kanały wykorzystane w niniejszym badaniu. }\tabularnewline
 
 \centering
 \begin{tabular}{>{\centering\arraybackslash}p{1.5cm}>{\centering\arraybackslash}p{4cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2cm}>{\centering\arraybackslash}p{2.4cm}}
@@ -302,60 +491,6 @@ chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945
 nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania
 chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
 
-\hypertarget{sec-mosaics}{%
-\section{Ortofotomapa i mozaiki zdjęć satelitarnych}\label{sec-mosaics}}
-
-Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych
-wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i
-Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez
-podmioty komercyjne. W teledetekcji jednym z zastosowań mozaik obrazów
-satelitarnych jest tworzenie zestawów danych referencyjnych poprzez
-interpretację wizualną, np. w celu walidacji wyników klasyfikacji
-produktów pokrycia terenu \autocite{lesiv_2018_sat_imagery_mosaics}. Do
-stworzenie zbioru danych testowych i treningowych wykorzystano
-ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps
-\autocite{planet}, udostępniane w formie usług sieciowych (WMS, WMTS,
-XYZ Tiles). Mozaiki te są tworzone na podstawie komercyjnych zdjęć
-satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies,
-Airbus czy Planet Labs.
-
-Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w
-standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują
-się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą
-\autocite{ortofotomapa}. Rozdzielczość przestrzenna wykorzystanych
-mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1
-m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft
-cechuje się wielkością komórki od 30 do 60 cm \autocite{bing_aerial}.
-Często jednak nie jest możliwie ustalenie dat wykonania zdjęć
-satelitarnych, które posłużyły do stworzenia konkretnej mozaiki
-zobrazowań satelitarnych \autocite{lesiv_2018_sat_imagery_mosaics}.
-Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych
-wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się
-rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do
-pozostałych wymienionych produktów jest tworzona z miesięczną oraz
-kwartalną częstotliwością \autocite{planet_2019_basemaps}. Pozwala to,
-pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych
-testowych i treningowych na konkretny okres czasu. Mozaiki Planet
-Basemaps \autocite{planet} są tworzone na podstawie najlepszych obrazów
-z katalogu Planet w określonym przedziale czasowym, co umożliwia
-generowanie wysokorozdzielczych mozaik, które są dokładne
-radiometrycznie i przestrzennie, a także charakteryzują się
-zminimalizowanym wpływem czynników atmosferycznych
-\autocite{planet_2019_basemaps}.
-
-\begin{figure}[t]
-
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/pv.png}
-
-}
-
-\caption{\label{fig-rycina-pv}Porównanie wyglądu farm fotowoltaicznych w
-Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej
-przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps
-(d) oraz w kompozycji RGB Sentinel-2 (e)}
-
-\end{figure}
-
 \bookmarksetup{startatroot}
 
 \hypertarget{sec-metody}{%
@@ -370,21 +505,22 @@ spektralne oraz tekstury obrazu, opisane odpowiednio w sekcjach
 połączenie przetworzonych danych źródłowych i ich produktów pochodnych w
 kilka wariantów zbiorów danych, stworzonych na potrzeby detekcji farm
 fotowoltaicznych. Warianty zbiorów danych przedstawia tabela
-\ref{tbl-tabela-datasets}, a przebieg łączenia danych w wielokanałowe
+\ref{tbl-tabela-datasets}, a przebieg łączenia danych w wielowarstwowe
 rastry został opisany w sekcji \ref{sec-processing-data-merging}. Na
 podstawie uzyskanych rastrów, zgodnie z sekcją \ref{sec-samples},
 utworzono zbiory danych uczących, które zostały wykorzystane do
 tworzenia modeli predykcyjnych. W procesie klasyfikacji wykorzystano
 metodę lasów losowych (ang. \emph{Random Forest}, RF) zaproponowaną
-przez \textcite{breiman_2001_rf}, która została dokładniej przedstawiona
-w sekcji \ref{sec-random-forest}. Następnie zoptymalizowano parametry
-tych modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z
-nich, co opisano odpowiednio w sekcjach \ref{sec-tuning},
-\ref{sec-model-quality-assessment} oraz \ref{sec-variable-importance}.
-Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano
-procesowi przetwarzania końcowego, przedstawionemu w sekcji
-\ref{sec-post-processing}. Wizualną reprezentację przebiegu badania
-przedstawia rycina \textbf{?@fig-rycina-workflow}.
+przez Breimana \autocite*{breiman_2001_rf}, która została dokładniej
+przedstawiona w sekcji \ref{sec-random-forest}. Następnie
+zoptymalizowano parametry tych modeli, oceniono ich jakość oraz ważność
+zmiennych dla każdego z nich, co opisano odpowiednio w sekcjach
+\ref{sec-tuning}, \ref{sec-model-quality-assessment} oraz
+\ref{sec-variable-importance}. Ostatecznie, przeprowadzono predykcje, a
+uzyskane wyniki poddano procesowi przetwarzania końcowego,
+przedstawionemu w sekcji \ref{sec-post-processing}. Wizualną
+reprezentację przebiegu badania przedstawia rycina
+\textbf{?@fig-rycina-workflow}.
 
 Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu
 oprogramowania Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx} i SNAP
@@ -446,19 +582,9 @@ danych Sentinel-1 Ground Range Detected (GRD)}
 \end{figure}
 
 Podczas przetwarzania danych radarowych pominięto etap filtrowania
-plamek (ang. \emph{speckle filtering}), ponieważ nie jest to zalecane w
-kontekście identyfikacji tekstur obrazu
-\autocite{filipponi_2019_s1_workflow}. Zastosowanie filtracji plamek
-może prowadzić do utraty istotnych informacji
-\autocite{filipponi_2019_s1_workflow}. Filtracja plamek polega na
-usunięciu ziarnistych szumów na obszarach, gdzie oczekuje się
-jednorodnej intensywności rozpraszania wstecznego
-\autocite{sentinel1_lulc}. Ziarniste szumy, znane również jako efekty
-soli i pieprzu (ang. \emph{salt-and-pepper effects}), wynikają z
-interferencji fal odbitych od licznych elementarnych rozpraszaczy
-\autocite{lee_1994_speckle_filtering}, czyli wielu niewielkich
-rozpraszaczy charakteryzujących się różnymi mechanizmami rozpraszania w
-jednej komórce rozdzielczości \autocite{sentinel1_lulc}.
+plamek (ang. \emph{speckle filtering}), ponieważ ze względu na możliwość
+utraty istotnych informacji nie jest to zalecane w kontekście
+identyfikacji tekstur obrazu \autocite{filipponi_2019_s1_workflow}.
 
 Dane Sentinel-1 GRD dla obu polaryzacji (VV i VH) przygotowano w sposób
 przedstawiony na rycinie \ref{fig-rycina-s1-workflow} przy użyciu
@@ -466,14 +592,14 @@ narzędzi dostępnych w ESA Sentinel-1 Toolbox \autocite{s1tbx}, a proces
 ten został ułożony w sekwencję operacji przetwarzania za pomocą
 narzędzia GraphBuilder w oprogramowaniu SNAP \autocite{snap}. Kolejne
 etapy przygotowania danych zostały zrealizowane przy wykorzystaniu
-języka R (\textcite{R-base}) oraz pakietu \emph{terra}
-\autocite{R-terra}. Obszar analizy, będący kaflem Sentinel-2 o
-oznaczeniu 33UWV, znajduje się na granicy dwóch sąsiednich produktów
-Sentinel-1 GRD. Na potrzeby dalszego przetwarzania, sąsiadujące produkty
-zostały połączone i odpowiednio ograniczone do obszaru zainteresowania.
-Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń
-bez danych o szerokości jednej komórki, co wymagało wypełnienia tego
-obszaru danymi przy użyciu funkcji \texttt{focal} z pakietu \emph{terra}
+języka R \autocite{R-base} oraz pakietu \emph{terra} \autocite{R-terra}.
+Obszar analizy, będący kaflem Sentinel-2 o oznaczeniu 33UWV, znajduje
+się na granicy dwóch sąsiednich produktów Sentinel-1 GRD. Na potrzeby
+dalszego przetwarzania, sąsiadujące produkty zostały połączone i
+odpowiednio ograniczone do obszaru zainteresowania. Na granicy
+sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez danych o
+szerokości jednej komórki, co wymagało wypełnienia tego obszaru danymi
+przy użyciu funkcji \texttt{focal} z pakietu \emph{terra}
 \autocite{R-terra}.
 
 \begin{figure}[t]
@@ -491,9 +617,9 @@ wykorzystanych produktów Sentinel-1}
 \subsection{Sentinel-2}\label{sec-processing-s2}}
 
 Przetwarzanie danych Sentinel-2 polegało na sprowadzeniu kanałów o
-rozdzielczości 20 m do rozdzielczości i siatki kanałów w rozdzielczości
-10 m. Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone
-przy pomocy funkcji \texttt{resample} z pakietu \emph{terra}
+rozdzielczości przestrzennej 20 m do rozdzielczości 10 m.
+Przepróbkowanie (ang. \emph{resampling}) zostało przeprowadzone przy
+pomocy funkcji \texttt{resample} z pakietu \emph{terra}
 \autocite{R-terra}, stosując interpolację dwuliniową (ang.
 \emph{bilinear interpolation}).
 
@@ -515,8 +641,9 @@ Oprócz surowych współczynników odbicia, w niektórych wariantach
 predykcji zastosowano również wskaźniki spektralne (ang. \emph{spectral
 indices}), które były wykorzystywane w poprzednich badaniach dotyczących
 detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych
-przez \textcite{zhang_2021_texture}, \textcite{plakman_2022_pv},
-\textcite{wang_2022_pv} i innych, takie jak:
+przez Zhanga et al. \autocite*{zhang_2021_texture}, Plakmana et al.
+\autocite*{plakman_2022_pv}, Wanga et al. \autocite*{wang_2022_pv} i
+innych, takie jak:
 
 \begin{itemize}
 \item
@@ -564,8 +691,8 @@ i obszarów zainteresowania na obrazie \autocite{haralick_1973_texture}
 oraz odgrywa dużą rolę w interpretacji wizualnej zdjęć lotniczych i
 satelitarnych \autocite{lewinski_2012_texture}. Gdy różnice widmowe
 pomiędzy klasami są niewielkie, tekstura umożliwia rozróżnienie
-odmiennych typów obiektów na podstawie ich organizacji w terenie, często
-kontrastując przestrzenie naturalne z antropogenicznymi
+odmiennych typów obiektów na podstawie ich ułożenia w przestrzeni,
+często kontrastując obszary naturalne z antropogenicznymi
 \autocite{grass_r_texture}. W zależności od zastosowanej funkcji wybrane
 cechy obrazu zostają uwidocznione w porównaniu z pierwotnym obrazem
 wejściowym \autocite{lewinski_2012_texture}. Informacja o teksturze może
@@ -577,13 +704,15 @@ kierunkowości, regularne wzory i zdefiniowany obszar, na którym
 występują zmiany, określony przez rozmiar okna
 \autocite{hall_beyer_2017_glcm,grass_r_texture}. Można ją opisać za
 pomocą tonu (intensywność poziomu szarości) i struktury (relacje
-przestrzenne) \autocite{grass_r_texture}. Model oparty na macierzy
-współwystępowania poziomów szarości (ang. \emph{Gray Level Co-Occurrence
-Matrix}, GLCM), zaproponowany przez \textcite{haralick_1973_texture},
-jest często używany do obliczania tekstur obrazu. Ta metoda polega na
-tworzeniu macierzy opisującej częstotliwość występowania par wartości w
-określonym fragmencie obrazu, uwzględniając określone sąsiedztwo,
-kierunki i odstępy między komórkami \autocite{kupidura_2019_texture}.
+przestrzenne) \autocite{grass_r_texture}.
+
+Model oparty na macierzy współwystępowania poziomów szarości (ang.
+\emph{Gray Level Co-Occurrence Matrix}, GLCM), zaproponowany przez
+Haralicka et al. \autocite*{haralick_1973_texture}, jest często używany
+do określania tekstur obrazu. Ta metoda polega na tworzeniu macierzy
+opisującej częstotliwość występowania par wartości w określonym
+fragmencie obrazu, uwzględniając określone sąsiedztwo, kierunki i
+odstępy między komórkami \autocite{kupidura_2019_texture}.
 
 Dane teledetekcyjne zazwyczaj reprezentują dane ciągłe o szerokim
 zakresie, które niejednokrotnie mogą przyjmować zarówno wartości
@@ -591,42 +720,45 @@ dodatnie, jak i ujemne, niekoniecznie ograniczając się do liczb
 całkowitych \autocite{R-GLCMTextures}. Obliczanie tekstur obrazu wymaga
 uprzedniego zredukowania zakresu wartości obrazów rastrowych do
 dyskretnej liczby poziomów szarości, co określa się mianem kwantyzacji
-(ang. \emph{quantization}). Zalecana przez
-\textcite{haralick_1973_texture} metoda kwantyzacji danych opiera się na
-równym prawdopodobieństwie (ang. \emph{equal probability}), dokonując
-redukcji poziomów szarości z równym prawdopodobieństwem i wykorzystując
-kwantyle do utworzenia przedziałów zawierających w przybliżeniu równą
-liczbę próbek \autocite{R-GLCMTextures}.
+(ang. \emph{quantization}). Zalecana przez Haralicka et al.
+\autocite*{haralick_1973_texture} metoda kwantyzacji danych opiera się
+na równym prawdopodobieństwie (ang. \emph{equal probability}), dokonując
+redukcji poziomów szarości wykorzystując kwantyle do utworzenia
+przedziałów zawierających w przybliżeniu równą liczbę próbek
+\autocite{R-GLCMTextures}.
 
 Przydatność i wykorzystanie tekstury w dużym stopniu zależy od
-rozdzielczości zdjęć satelitarnych i wielkości zjawiska, które
-ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
+rozdzielczości przestrzennej zdjęć satelitarnych i wielkości zjawiska,
+które ukształtowało teksturę \autocite{grass_r_texture}. Badanie, które
 przeprowadził \textcite{zhang_2021_texture} dotyczące wykorzystania
 filtracji teksturalnych w identyfikacji elektrowni fotowoltaicznych z
-użyciem Random Forest i danych z Landsata-8 wykazało pozytywny wpływ
-tekstur na skuteczność modelu. Według wyników badania najlepiej
+użyciem metody Random Forest i danych z Landsata-8 wykazało pozytywny
+wpływ tekstur na skuteczność modelu. Według wyników badania najlepiej
 dopasowany model wykorzystywał tekstury GLCM o sąsiedztwie 30 pikseli
-(co odpowiada wymiarom ruchomego okna o wymiarach 1800 m na 1800 m),
-natomiast tekstura o rozmiarze jednego sąsiada ma niewielki wpływ na
+(co odpowiada wymiarom ruchomego okna o wymiarach 1830 m na 1830 m),
+natomiast tekstura o rozmiarze jednego sąsiada miała niewielki wpływ na
 poprawę dokładności modelu \autocite{zhang_2021_texture}.
 
-Obliczanie tekstur obrazu może być czasochłonnym procesem, dlatego w
-pracy wykorzystano jedynie teksturę średniej sumy (ang. \emph{Sum
-Average}, SA lub SAVG), wskazaną przez \textcite{zhang_2021_texture} i
-\textcite{wang_2022_pv} jako teksturę niosącą najwięcej informacji w
-kontekście detekcji farm fotowoltaicznych na satelitarnych.
-Przeprowadzono obliczenia sześciu tekstur obrazów dla dwóch kanałów
-Sentinel-2 (B02 i B8A), dwóch wskaźników teledetekcyjnych (NDBI i nMDWI)
-oraz dla obu polaryzacji Sentinel-1 (VV i VH), zgodnie ze wskazaniami
-\textcite{wang_2022_pv}. Z uwagi na rosnący koszt i czas obliczeń wraz
-ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna,
+Obliczanie tekstur obrazu może być procesem wymagajacym obliczeniowo,
+dlatego w pracy wykorzystano jedynie teksturę średniej sumy (ang.
+\emph{Sum Average}, SA lub SAVG), wskazaną przez Zhanga et al.
+\autocite*{zhang_2021_texture} i Wanga et al. \autocite*{wang_2022_pv}
+jako teksturę niosącą najwięcej informacji w kontekście detekcji farm
+fotowoltaicznych na obrazach satelitarnych. Przeprowadzono obliczenia
+sześciu tekstur obrazów dla: dwóch kanałów Sentinel-2 (B02 i B8A), dwóch
+wskaźników teledetekcyjnych (NDBI i nMDWI) oraz dla obu polaryzacji
+Sentinel-1 (VV i VH), zgodnie ze wskazaniami Wanga et al.
+\autocite*{wang_2022_pv}. Z uwagi na rosnący czas obliczeń wraz ze
+zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna,
 zdecydowano się na kwantyzację wartości rastrów do 32 przedziałów oraz
-zastosowanie ruchomego okna o sąsiedztwie 9 komórek.
+zastosowanie ruchomego okna o sąsiedztwie 9 komórek. Odpowiada to
+wymiarom ruchomego okna o wymiarach 19 pikseli na 19 pikseli lub
+kwadratowi o wymiarach 190 m na 190 m.
 
 \hypertarget{sec-processing-data-merging}{%
 \subsection{Łączenie danych}\label{sec-processing-data-merging}}
 
-W celu uzyskania spójnych wielokanałowych rastrów wszystkie zbiory
+W celu uzyskania spójnych wielowarstwowych rastrów wszystkie zbiory
 danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
 Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych
 Sentinel-2 przegotowanych w sposób przedstawiony w sekcji
@@ -637,7 +769,7 @@ co wymagana była transformacja danych Sentinel-1 do siatki danych
 Sentinel-2 w celu zachowania ich zgodności. Przetransformowane dane
 zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników
 teledetekcyjnych. Po uzyskaniu produktów pochodnych, w zależności od
-wariantu, dane zostały scalone w formie kilku wielokanałowych rastrów,
+wariantu, dane zostały scalone w formie kilku wielowarstwowych rastrów,
 które posłużyły do wyodrębnienia próbek obserwacji, niezbędnych do
 stworzenia modelu. Złączone rastry zostały również bezpośrednio
 wykorzystane do przeprowadzenia predykcji w późniejszym etapie analizy.
@@ -654,19 +786,19 @@ detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych }\tabularnew
 \toprule
 Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \midrule
-1 & 10 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12\\
+1 & 10 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12\\
 \addlinespace
-2 & 13 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI\\
+2 & 13 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI\\
 \addlinespace
-3 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+3 & 16 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
 \addlinespace
-4 & 12 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH\\
+4 & 12 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; S1: VV, VH\\
 \addlinespace
-5 & 16 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; S1: VV, VH;
-        tekstury: 02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG\\
+5 & 16 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; S1: VV, VH;
+        tekstury: B02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG\\
 \addlinespace
-6 & 21 & S2: B03, B04, B05, B06, B07, B08, B8A, B09, B10, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
-        tekstury: B02\_SAVG, B8A\_SAVG, VV\_SAVG, VH\_SAVG, NDBI\_SAVG, mNDWI\_SAVG\\
+6 & 21 & S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; S1:VV, VH;
+        tekstury: B02\_SAVG, B8A\_SAVG, NDBI\_SAVG, mNDWI\_SAVG, VV\_SAVG, VH\_SAVG\\
 \bottomrule
 \multicolumn{3}{l}{\textsuperscript{a} Uwaga: S2 oznacza Sentinel-2, podczas gdy S1 oznacza Sentinel-1}\\
 \end{tabular}
@@ -676,30 +808,27 @@ Wariant & Liczba zmiennych & Zmienne \textsuperscript{a}\\
 \section{Próbki treningowe i testowe}\label{sec-samples}}
 
 Na podstawie ortofotomapy oraz mozaik satelitarnych wskazanych w sekcji
-\ref{sec-mosaics} zwektoryzowane zostały prawdopodobnie wszystkie farmy
+\ref{sec-pv} zdigitalizowane zostały prawdopodobnie wszystkie farmy
 fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV
 istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023
-roku). Z każdego zwektoryzowanego poligonu, reprezentującego obszar pod
+roku). Z każdego zdigitalizowanego poligonu, reprezentującego obszar pod
 panelami fotowoltaicznymi pozyskano dwie losowo zlokalizowane próbki,
 stanowiące obserwacje pozytywne. Lokalizacje próbek negatywnych,
 znajdujących się poza obszarami oznaczonymi jako farmy fotowoltaiczne na
-obszarze kafla Sentinel-2 o oznaczeniu 33UWV, zostały wylosowane
+obszarze kafla Sentinel-2 o oznaczeniu 33UWV zostały wylosowane,
 wykorzystując próbkowanie losowe stratyfikowane (ang.
 \emph{stratified}). Próbkowanie losowe stratyfikowane polega na podziale
 obszaru analizy na regularne komórki, a następnie losowaniu lokalizacji
-punktu w każdej komórce \autocite{nowosad_2021_geostatystyka_r}.
+punktu w każdej komórce \autocite{wang_2012_spatial_sampling}.
 
-Po wykonaniu pierwszych testowych predykcji zauważono, że modele
-przeuczały się na niektórych typach pokrycia terenu i użytkowania ziemi,
-wskazując farmy fotowoltaiczne w miejscach, gdzie faktycznie nie
-występowały. W celu poprawy wyników predykcji dodatkowe lokalizacje
-negatywnych próbek zostały wylosowane na obszarach niepoprawnie
-sklasyfikowanych, wykorzystując dane z OpenStreetMap
-\autocite{OpenStreetMap}. OpenStreetMap (OSM) to bezpłatna, otwarta
-geograficzna baza danych aktualizowana i utrzymywana przez społeczność
-wolontariuszy \autocite{bennett_2010_openstreetmap}.
+Po wykonaniu testowych predykcji zauważono, że modele przeuczały się na
+niektórych typach pokrycia terenu i użytkowania ziemi, wskazując farmy
+fotowoltaiczne w miejscach, gdzie faktycznie nie występowały. W celu
+poprawy wyników predykcji dodatkowe lokalizacje negatywnych próbek
+zostały wylosowane na obszarach niepoprawnie sklasyfikowanych,
+wykorzystując dane z OpenStreetMap \autocite{OpenStreetMap}.
 
-Obszary niepoprawnie sklasyfikowane przez pierwsze modele to plaże,
+Obszary niepoprawnie sklasyfikowane przez testowe modele to plaże,
 budynki oraz drogi. W celu poprawy wyników predykcji pobrano z bazy
 danych OpenStreetMap dane przestrzenne o plażach
 (\texttt{tag:natural=beach}), budynkach (\texttt{key:building}) oraz
@@ -708,10 +837,10 @@ drogach (\texttt{key:highway}) na obszarze kafla Sentinel-2 o oznaczeniu
 Dodatkowo, lokalizacje negatywnych obserwacji zostały wylosowane na
 zbiornikach wodnych (jeziorach; \texttt{tag:water=lake}).
 
-Przy tworzeniu kolejnych predykcji zauważono również skłonność do
-regularnego przeuczania się kolejnych, poprawionych modeli na terenach
-oznaczonych w OSM jako kopalnie torfu. W celu eliminacji tych błędnie
-sklasyfikowanych terenów, przy tworzeniu ostatecznych modeli,
+Przy tworzeniu kolejnych testowych predykcji zauważono również skłonność
+do regularnego przeuczania się kolejnych, poprawionych modeli na
+terenach oznaczonych w OSM jako kopalnie torfu. W celu eliminacji tych
+błędnie sklasyfikowanych terenów, przy tworzeniu ostatecznych modeli,
 wykorzystano również negatywne próbki wylosowane na terenach kopalni
 odkrywkowych oznaczonych w bazie OpenStreetMap jako
 \texttt{tag:landuse=quarry}.
@@ -724,49 +853,6 @@ zgodnie z opisem przedstawionym w sekcjach \ref{sec-processing-s1},
 przy tworzeniu modeli uczenia maszynowego umożliwiających wykrywanie
 farm fotowoltaicznych na podstawie danych teledetekcyjnych i ich
 pochodnych.
-
-\hypertarget{sec-post-processing}{%
-\section{Przetwarzanie końcowe}\label{sec-post-processing}}
-
-Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie
-metod przetwarzania końcowego (ang. \emph{post-processing}), mających na
-celu udoskonalenie wyników wykrywania farm fotowoltaicznych. Z
-teoretycznego punktu widzenia, obszar zajmowany przez farmę
-fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia
-pojedynczej komórki lub grupy kilku komórek. W celu usunięcia
-pozytywnych predykcji, które reprezentowały pojedyncze komórki lub
-obszary składające się z 10 lub mniej komórek, o powierzchni
-mniejszej/równej 1000 m\textsuperscript{2}, zastosowano sekwencję
-procesów przetwarzania, dzięki której udało się pozbyć tzw. efektu soli
-i pieprzu (ang. \emph{salt-and-pepper effect}).
-
-\begin{figure}[t]
-
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/postprocessing.png}
-
-}
-
-\caption{\label{fig-rycina-post-processing}Kompozycja RGB Sentinel-2
-(a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV
-wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i
-poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)}
-
-\end{figure}
-
-Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników
-predykcji dla każdego wariantu, a następnie selekcję pozytywnych
-predykcji oraz obliczenie powierzchni każdego wybranego obszaru. Na
-podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje
-reprezentujące pojedyncze komórki lub obszary składające się z 10 lub
-mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
-W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych
-oparty na danych teledetekcyjnych w formie wektorowej.
-
-W celu stworzenia wizualizacji oraz porównania produktów końcowych z
-predykcjami niepoddanymi etapowi przetwarzania końcowego produkty
-wektorowe zostały ponownie przetworzone do formy rastrowej. Efekty
-zastosowanego przetwarzania końcowego przedstawia rycina
-\ref{fig-rycina-post-processing}.
 
 \hypertarget{sec-machine-learning}{%
 \section{Uczenie maszynowe}\label{sec-machine-learning}}
@@ -797,19 +883,9 @@ podzielić na cztery główne podejścia: uczenie nienadzorowane (ang.
 posiłkowane, ang. \emph{reinforcement learning})
 \autocite{sarker_2021_ml}.
 
-W ciągu ostatnich dwudziestu lat zaproponowano stosowanie kilku różnych
-algorytmów uczenia maszynowego do klasyfikacji obrazów satelitarnych
-\autocite{sheykhmousa_2020_svm_vs_rf}, które zazwyczaj wykorzystują
-techniki klasyfikacji bez nadzoru i klasyfikacji nadzorowanej
-\autocite{ismail_2009_classification}.
-
-Uczenie nienadzorowane analizuje nieoznakowane zbiory danych bez
-konieczności ingerencji człowieka. Uczenie bez nadzoru jest powszechnie
-stosowane do eksploracji danych, ekstrakcji cech generatywnych,
-identyfikacji istotnych trendów i struktur oraz grupowania wyników. Ta
-technika uczenia maszynowego jest najczęściej używana do grupowania
-(klastowania), redukcji wielowymiarowości (redukcji cech) oraz
-identyfikacji skojarzeń i relacji \autocite{sarker_2021_ml}.
+W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę
+lasów losowych (ang. \emph{Random Forest}, RF)
+\autocite{breiman_2001_rf}.
 
 Nadzorowane algorytmy uczenia maszynowego wykorzystują oznaczone dane
 treningowe do znajdywania powiązań pomiędzy różnymi zmiennymi. Proces
@@ -818,10 +894,6 @@ osiągnięte na podstawie konkretnego zestawu danych wejściowych
 (treningowych). W uczeniu nadzorowanym wyróżniamy klasyfikację, która
 dzieli dane na klasy, oraz regresję, która umożliwia oszacowanie
 określonych wartości \autocite{sarker_2021_ml}.
-
-W poniższym badaniu do klasyfikacji wykorzystano nadzorowaną metodę
-lasów losowych (ang. \emph{Random Forest}, RF)
-\autocite{breiman_2001_rf}.
 
 \hypertarget{sec-random-forest}{%
 \subsection{Metoda lasów losowych}\label{sec-random-forest}}
@@ -834,10 +906,10 @@ losowych charakteryzuje się pewną odpornością na szumy (ang.
 \emph{noise}) i przeuczenie (ang. \emph{overfitting}), ponieważ nie
 bazuje na ważeniu \autocite{gislason_2006_rf}.
 
-Algorytm Random Forest, będący rozwinięciem koncepcji drzew decyzyjnych,
-operuje na zasadzie uczenia zespołowego (ang. \emph{ensemble learning}),
-czyli łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych)
-w jeden silniejszy model
+Algorytm Random Forest rozwija koncepcję drzew decyzyjnych, operując na
+zasadzie uczenia zespołowego (ang. \emph{ensemble learning}), czyli
+łączenia wielu słabszych modeli (indywidualnych drzew decyzyjnych) w
+jeden silniejszy model
 \autocite{aaron_2018_ml,sekulic_2020_rf_interpolation}. Procedura
 generuje liczne drzewa decyzyjne, opierając się na losowo wybranym
 zestawie danych ze zbioru danych uczących oraz losowo wyselekcjonowanych
@@ -847,70 +919,68 @@ sprawia, że drzewa różnią się od siebie i są mniej dokładne, ale
 jednocześnie są też mniej skorelowane, przez co model złożony z wielu
 drzew będzie bardziej niezawodny
 \autocite{sekulic_2020_rf_interpolation}. W fazie predykcji każde z
-drzew w lesie dokonuje prognozy, a ostateczna decyzja jest formułowana
-na podstawie głosowania większościowego. W przypadku klasyfikacji klasa
+drzew dokonuje prognozy, a ostateczna decyzja jest formułowana na
+podstawie głosowania większościowego. W przypadku klasyfikacji klasa
 wybierana jest na podstawie największej liczby głosów
 \autocite{breiman_2001_rf}.
 
 \hypertarget{sec-tuning}{%
 \subsection{Dostrajanie modeli}\label{sec-tuning}}
 
-Celem optymalizacji hiperparametrów lub dostrajania modelu jest
-znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia
-maszynowego dla danego zadania \autocite{bischl_2024_mlr3}.
-Optymalizacja hiperparametrów (ang. \emph{hyperparameters}) odgrywa
-kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości
-modelu \autocite{schratz_2019_hyperparameters}. Hiperparametry są
-ustawiane przed rozpoczęciem procesu uczenia, a ich optymalna
-konfiguracja jest zwykle znajdowana w określonej przestrzeni poszukiwań
-(ang. \emph{search space}) i ustalana na podstawie zagnieżdżonej
+Większość algorytmów uczenia maszynowego wymaga ustalenia wartości
+pewnych zmiennych konfiguracyjnych zwanych hiperparametrami
+\autocite{krol_2022_podstawy_ml}. Hiperparametry są ustawiane przed
+rozpoczęciem procesu uczenia, nie uzyskuje się ich w wyniku trenowania
+modelu ani nie są modyfikowane w trakcie wykonywania algorytmu
+\autocite{krol_2022_podstawy_ml}. Optymalna konfiguracja hiperparametrów
+jest zwykle znajdowana w określonej przestrzeni poszukiwań (ang.
+\emph{search space}) i może być ustalana np. na podstawie zagnieżdżonej
 walidacji krzyżowej (ang. \emph{nested cross-validation})
-\autocite{lovelace_2019_geocomputation}. Metoda zagnieżdżonej walidacji
-krzyżowej to rozwinięcie walidacji krzyżowej, opisanej w sekcji
-\ref{sec-model-quality-assessment}, przeznaczone do procesu strojenia
-hiperparametrów. Każdy fold utworzony w przestrzennej walidacji
-krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne foldy. W
-zewnętrznym obiegu model jest trenowany na danych z jednego obszaru
-przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy
-do doboru optymalnych hiperparametrów. Cały proces jest następnie
-powtarzany na każdym z \emph{k} zewnętrznych foldów, co prowadzi do
-określenia najlepszego ustawienia hiperparametrów. Wykorzystanie tych
-samych danych do oceny jakości i dostrajania mogłoby potencjalnie
-prowadzić do nadmiernie wysokich wyników oceny jakości, czego można
-uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację. Cały ten
-proces jest nazywany strojeniem hiperparametrów.
+\autocite{lovelace_2019_geocomputation}. Optymalizacja hiperparametrów
+(ang. \emph{hyperparameters}) odgrywa kluczową rolę w osiągnięciu
+najwyższej mocy predykcyjnej i jakości modelu
+\autocite{schratz_2019_hyperparameters}, a jej celem jest znalezienie
+optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego
+dla danego zadania \autocite{bischl_2024_mlr3}.
 
-Lasy losowe często wykazują satysfakcjonujące wyniki nawet z domyślnymi
-wartościami hiperparametrów, co może być jednym z powodów ich dużej
-popularności \autocite{lovelace_2019_geocomputation}. Chociaż
-dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyści ze
-strojenia są znacznie mniejsze w porównaniu do innych algorytmów uczenia
-maszynowego, takich jak maszyny wektorów nośnych (ang. \emph{Support
-Vector Machines}, SVM) \autocite{probst_2019_hyperparameters}.
+Metoda zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji
+krzyżowej (sekcja \ref{sec-model-quality-assessment}), przeznaczone do
+procesu strojenia hiperparametrów. Każdy podzbiór (\emph{fold})
+utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne,
+zewnętrzne i wewnętrzne podzbiory. W zewnętrznym obiegu model jest
+trenowany na danych z jednego obszaru przestrzennego i testowany na
+innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych
+hiperparametrów. Cały proces jest następnie powtarzany na każdym z
+\emph{k} zewnętrznych podzbiorów, co prowadzi do określenia najlepszego
+ustawienia hiperparametrów. Wykorzystanie tych samych danych do oceny
+jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie
+wysokich wyników oceny jakości, czego można uniknąć, stosując
+zagnieżdżoną przestrzenną kroswalidację. Cały ten proces jest nazywany
+strojeniem hiperparametrów.
 
 Hiperparametry \texttt{mtry}, \texttt{sample.fraction} i
 \texttt{min.node.size} są parametrami określającymi stopień losowości
 lasu losowego i powinny zostać odpowiednio dostrojone
 \autocite{probst_2019_hyperparameters}. Liczba losowo wybranych
-zmiennych \texttt{mtry} wskazuje, ile zmiennych predykcyjnych powinno
-zostać użytych w każdym drzewie \autocite{lovelace_2019_geocomputation}.
-Parametr \texttt{sample.fraction} odnosi się do wielkości próbki, czyli
+zmiennych, \texttt{mtry}, wskazuje, ile predyktorów powinno zostać
+użytych w każdym drzewie \autocite{lovelace_2019_geocomputation}.
+Parametr \texttt{sample.fraction} odnosi się do wielkości próby, czyli
 ułamka obserwacji użytego w każdym drzewie
-\autocite{lovelace_2019_geocomputation}. Mniejsze frakcje prowadzą do
-większej różnorodności drzew, a tym samym do mniejszej korelacji między
-nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew
-\autocite{probst_2019_hyperparameters}. Minimalna wielkość węzła
-\texttt{min.node.size} określa minimalną liczbę obserwacji w węźle
-końcowym \autocite{probst_2019_hyperparameters}. W ramach optymalizacji
-uwzględniono również parametry \texttt{num.trees} oraz
-\texttt{max.depth}, odnoszące się odpowiednio do liczby drzew w lesie
-oraz maksymalnej głębokości pojedynczego drzewa.
+\autocite{lovelace_2019_geocomputation}. Mniejsza wielkość próby
+prowadzi do większej różnorodności drzew, a tym samym do mniejszej
+korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy
+agregacji drzew \autocite{probst_2019_hyperparameters}. Minimalna
+wielkość węzła \texttt{min.node.size} określa minimalną liczbę
+obserwacji w węźle końcowym \autocite{probst_2019_hyperparameters}. W
+ramach optymalizacji uwzględniono również parametry \texttt{num.trees}
+oraz \texttt{max.depth}, odnoszące się odpowiednio do liczby drzew w
+lesie oraz maksymalnej głębokości pojedynczego drzewa.
 
-Kombinacje hiperparametrów zostały wybrane losowo, jednak pozostawały w
-określonych granicach strojenia ustalonych za pomocą pakietu
-\emph{paradox} \autocite{R-paradox}. Zasięg przestrzeni strojenia został
-wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie
-\emph{mlr3tuningspaces} \autocite{R-mlr3tuningspaces} lub literaturze
+Kombinacje hiperparametrów zostały wybrane losowo w ramach określonych
+granic strojenia ustalonych za pomocą pakietu \emph{paradox}
+\autocite{R-paradox}. Zasięg przestrzeni strojenia został wybrany
+zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie
+\emph{mlr3tuningspaces} \autocite{R-mlr3tuningspaces} oraz literaturze
 \autocite{probst_2019_hyperparameters,schratz_2019_hyperparameters}.
 \texttt{mtry} powinno przyjmować wartości z przedziału od 1 do liczby
 predyktorów, \texttt{sample.fraction} powinno mieścić się w zakresie od
@@ -918,7 +988,7 @@ predyktorów, \texttt{sample.fraction} powinno mieścić się w zakresie od
 przedziału od 1 do 10. Zgodnie z pakietem \emph{mlr3tuningspaces}
 \autocite{R-mlr3tuningspaces}, hiperparametr \texttt{num.trees} powinien
 być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości
-do przedziału od 50 do 500.
+do przedziału od 50 do 500 w celu zwiększenia wydajności obliczeń.
 
 \hypertarget{tbl-tabela-tuning}{}
 \begin{table}
@@ -939,46 +1009,64 @@ Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees
 6 & 8 & 0.8847 & 5 & 388 & 75 & 0.9905\\
 \bottomrule
 \multicolumn{7}{l}{\textsuperscript{a} Patrz: tabela 4.1}\\
-\multicolumn{7}{l}{\textsuperscript{b} Patrz: sekcja 4.3.3}\\
+\multicolumn{7}{l}{\textsuperscript{b} Patrz: przypis}\\
 \end{tabular}
 \end{table}
 
 Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów
 losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną
-jakości AUC zostały przedstawione w tabeli \ref{tbl-tabela-tuning}.
-Warto zauważyć, że warianty 3 i 6 wykazują identyczne wartości dla
-parametrów \texttt{sample.fraction}, \texttt{min.node.size},
-\texttt{num.trees} i \texttt{max.depth}. Podczas losowania
-hiperparametrów dla każdego wariantu wykorzystano to samo ziarno
-losowości (ang. \emph{random seed}), ustawione za pomocą funkcji
+jakości AUC\footnote{Pole powierzchni pod krzywą (ang. \emph{Area Under
+  Curve} lub \emph{Area Under the ROC Curve}, AUC lub AUROC) to miara
+  jakości modelu, obliczająca obszar pod krzywą ROC (ang. \emph{receiver
+  operating characteristic curve}), która graficznie przedstawia
+  zależność pomiędzy czułością (\emph{true positive rate}) a
+  specyficznością (\emph{false positive rate})
+  \autocite{jaworski_2013_perfomance_measures}. AUC reprezentuje
+  zdolność klasyfikatora binarnego do oddzielania klas pozytywnych od
+  klas negatywnych. Wartości AUC mieszczą się w zakresie od 0 do 1,
+  gdzie wartość 0,5 lub niższa oznacza model nie lepszy od losowego, a
+  1,0 -- doskonałe przewidywanie obu klas.} zostały przedstawione w
+tabeli \ref{tbl-tabela-tuning}. Warto zauważyć, że warianty 3 i 6
+wykazują identyczne wartości dla parametrów \texttt{sample.fraction},
+\texttt{min.node.size}, \texttt{num.trees} i \texttt{max.depth}. Podczas
+losowania hiperparametrów dla każdego wariantu wykorzystano to samo
+ziarno losowości (ang. \emph{random seed}), ustawione za pomocą funkcji
 \texttt{set.seed()}. Dla dwóch wspomnianych wariantów najlepsze wyniki
 zostały osiągnięte przy wykorzystaniu identycznego zestawu czterech z
 pięciu optymalizowanych hiperparametrów.
 
+Warto dodać, że lasy losowe często wykazują satysfakcjonujące wyniki
+nawet z domyślnymi wartościami hiperparametrów, co może być jednym z
+powodów ich dużej popularności \autocite{lovelace_2019_geocomputation}.
+Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli,
+korzyści ze strojenia są znacznie mniejsze w porównaniu do innych
+algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych
+(ang. \emph{Support Vector Machines}, SVM \autocite{svm})
+\autocite{probst_2019_hyperparameters} czy XGBoost \autocite{xgboost}.
+
 \hypertarget{sec-model-quality-assessment}{%
 \subsection{Ocena jakości modeli}\label{sec-model-quality-assessment}}
 
-Ważnym krokiem w zastosowaniach uczenia maszynowego jest ocena jakości
-modelu w rozważanym zadaniu. W tym celu można zastosować \emph{k}-krotną
-walidację krzyżową (ang. \emph{k-fold cross-validation}, CV), która
-zakłada, że obserwacje są od siebie niezależne
-\autocite{pohjankukka_2017_scv}. W standardowej \emph{k}-krotnej
-walidacji krzyżowej dostępny zbiór uczący jest dzielony na \emph{k}
-podzbiorów podobnej wielkości, gdzie \emph{fold} odnosi się do liczby
-powstałych podzbiorów. Podział ten przeprowadza się poprzez losowe
-próbkowanie obserwacji ze zbioru uczącego się bez zastępowania. Model
-jest uczony na \emph{k} - 1 podzbiorach, które razem tworzą zbiór
+Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
+W tym celu można zastosować \emph{k}-krotną walidację krzyżową (ang.
+\emph{k-fold cross-validation}, CV), która zakłada, że obserwacje są od
+siebie niezależne \autocite{pohjankukka_2017_scv}. W standardowej
+\emph{k}-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony
+na \emph{k} podzbiorów podobnej wielkości, gdzie \emph{fold} odnosi się
+do liczby powstałych podzbiorów. Podział ten przeprowadza się poprzez
+losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
+Model jest uczony na \emph{k} - 1 podzbiorach, które razem tworzą zbiór
 uczący. Następnie model jest testowany na pozostałym podzbiorze,
-określanym jako zbiór walidacyjny i mierzona jest jego jakość. Procedurę
-tę powtarza się, aż każdy z \emph{k} podzbiorów zostanie użyty jako
-zbiór walidacyjny \autocite{berrar_2018_cv}. Kroswalidacja pozwala na
-ocenę ogólnej wydajności modelu, uwzględniając różnorodność danych i
+określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
+Procedurę tę powtarza się, aż każdy z \emph{k} podzbiorów zostanie użyty
+jako zbiór walidacyjny \autocite{berrar_2018_cv}. Kroswalidacja pozwala
+na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i
 pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od
 konkretnego podziału danych.
 
 Obserwacje geograficzne, posiadające określone współrzędne, nie
 spełniają założenia niezależności danych ze względu na autokorelację
-przestrzenną (ang. \emph{spatial autocorrelation}, SAC)
+przestrzenną (ang. \emph{spatial autocorrelation})
 \autocite{pohjankukka_2017_scv}. Ogólnie rzecz biorąc, dane przestrzenne
 wykazują autokorelację przestrzenną zgodnie z pierwszym prawem
 geografii, będącym jednocześnie podstawowym założeniem analizy
@@ -990,15 +1078,17 @@ optymistycznych wyników oceny jakości modeli
 \autocite{brenning_2005_scv}. Konsekwencją autokorelacji przestrzennej
 dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
 obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są
-niezależne od zbioru uczącego \autocite{brenning_2012_scv}. Przestrzenna
-walidacja krzyżowa (ang. \emph{spatial cross-validation}) jest
-modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie
-jakości modelu wynikającym z bliskości danych testowych i treningowych.
-Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w
-ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie
-odseparowane podzbiory danych, wprowadzając przestrzenną odległość
-pomiędzy zbiorem treningowym a testowym \autocite{pohjankukka_2017_scv}.
-Przykład takiego podejścia przedstawia rycina \ref{fig-rycina-spcv}.
+niezależne od zbioru uczącego \autocite{brenning_2012_scv}.
+
+Przestrzenna walidacja krzyżowa (ang. \emph{spatial cross-validation})
+jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w
+ocenie jakości modelu wynikającym z bliskości danych testowych i
+treningowych. Aby ograniczyć stronniczość w wynikach oceny dokładności
+predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje
+się przestrzennie odseparowane podzbiory danych, wprowadzając
+przestrzenną odległość pomiędzy zbiorem treningowym a testowym
+\autocite{pohjankukka_2017_scv}. Przykład takiego podejścia przedstawia
+rycina \ref{fig-rycina-spcv}.
 
 \begin{figure}[t]
 
@@ -1011,19 +1101,19 @@ podziału zbioru danych na potrzeby walidacji krzyżowej jednego
 powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
 Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane
 testowe. Opracowanie własne na podstawie Schratz,
-\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2024}}
+\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2021}}
 
 \end{figure}
 
-Macierz pomyłek (ang. \emph{error matrix} lub \emph{confusion matrix})
-to tablica prezentująca wyniki klasyfikatora binarnego, podając
-informację o liczbie obiektów przypisanych do każdej z klas. Macierz
-pomyłek jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi
-danymi, składając się z czterech wartości reprezentujących różne
-kombinacje przewidywanych i rzeczywistych klas.
+Macierz błędów (ang. \emph{error matrix} lub \emph{confusion matrix}) to
+tablica prezentująca wyniki klasyfikatora binarnego, podając informację
+o liczbie obiektów przypisanych do każdej z klas. Macierz błędów jest
+wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi,
+składając się z czterech wartości reprezentujących różne kombinacje
+przewidywanych i rzeczywistych klas.
 
-W macierzy pomyłek dwie wartości reprezentują trafienia pozytywne:
-przypadki prawdziwie pozytywne (ang. \emph{true positive}, TP) opisuje
+W macierzy błędów dwie wartości reprezentują trafienia pozytywne:
+przypadki prawdziwie pozytywne (ang. \emph{true positive}, TP) opisują
 sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako
 pozytywną, natomiast przypadki prawdziwie negatywne (ang. \emph{true
 negative}, TN) opisują poprawne przewidywanie klasy negatywnej. Dwie
@@ -1035,58 +1125,38 @@ negatywne (ang. \emph{false negative}, FN) to natomiast sytuacje, w
 których klasyfikator błędnie przewidział klasę jako negatywną, gdy
 faktycznie była ona pozytywna.
 
-Zliczenia tych czterech przypadków formują macierz pomyłek, stanowiącą
-podstawę dla obliczeń miar oceny jakości klasyfikatora.
-
 Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono
-przy użyciu przestrzennej walidacji krzyżowej, macierzy pomyłek oraz
-pięciu miar jakości dostosowanych do klasyfikatorów binarnych:
+przy użyciu przestrzennej walidacji krzyżowej, macierzy błędów oraz
+trzech miar jakości dostosowanych do klasyfikatorów binarnych:
 
 \begin{itemize}
 \item
   precyzja (ang. \emph{precision}, inaczej \emph{positive predictive
   value}) - określa jaka część wyników wskazanych przez klasyfikator
-  jako dodatnie jest faktycznie dodatnia
+  jako pozytywne jest faktycznie pozytywna
   \autocite{jaworski_2013_perfomance_measures}
 \item
   czułość (ang. \emph{sensitivity}, inaczej \emph{recall} lub \emph{true
-  positive rate}) - określa jaką część dodatnich wyników wykrył
-  klasyfikator \autocite{jaworski_2013_perfomance_measures}
+  positive rate}) - określa jaką część prawdziwie pozytywnych wyników
+  wykrył klasyfikator \autocite{jaworski_2013_perfomance_measures}
 \item
-  specyficzność (ang. \emph{specificity}, inaczej \emph{true negative
-  rate}) - określa jaką część ujemnych wyników wykrył klasyfikator
-  \autocite{jaworski_2013_perfomance_measures}
-\item
-  pole powierzchni pod krzywą (ang. \emph{Area Under Curve} lub
-  \emph{Area Under the ROC Curve}, AUC lub AUROC) - oblicza obszar pod
-  krzywą ROC, która graficznie przedstawia zależność pomiędzy czułością
-  a specyficznością \autocite{jaworski_2013_perfomance_measures}. AUC
-  ocenia prawdopodobieństwo, że losowo wybrana obserwacja pozytywna ma
-  wyższe przewidywane prawdopodobieństwo niż losowo wybrana jednostka
-  negatywna \autocite{R-mlr3measures}
-\item
-  \(F_{\beta}\) score (F-beta score) - ważona średnia harmoniczna
-  pomiędzy precyzją i czułością, umożliwiająca ocenę balansu między
-  czułością a precyzją, która w pewnym stopniu opisuje całościowo wynik.
-  Miara ta nie uwzględnia wyników prawdziwie negatywnych
-  \autocite{zygierewicz_2021_ml}
+  F1-score - średnia harmoniczna pomiędzy precyzją i czułością,
+  umożliwiająca ocenę równowagi między tymi miarami, która w pewnym
+  stopniu opisuje całościowo wynik. Miara ta nie uwzględnia wyników
+  prawdziwie negatywnych \autocite{zygierewicz_2021_ml}.
 \end{itemize}
 
 Wartości każdej z wymienionych miar jakości modelu zawierają się w
 zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu,
-natomiast wartość 1 odzwierciedla wysoki poziom jakości. Wartości AUC
-mieszczą się w zakresie od 0 do 1, gdzie wartość 0,5 lub niższa oznacza
-model nie lepszy od losowego, a 1,0 -- doskonałe przewidywanie obu klas.
-Wyższa wartość AUC wskazuje na lepszą moc predykcyjną modelu
-\autocite{lovelace_2019_geocomputation}.
+natomiast wartość 1 odzwierciedla wysoki poziom jakości.
 
 \hypertarget{sec-variable-importance}{%
 \section{Ważność zmiennych}\label{sec-variable-importance}}
 
-Ocena ważności zmiennych (ang. \emph{variable importance}) może zostać
-wykorzystana do poprawy i oceny jakości stworzonych modeli. Analizowanie
-wpływu poszczególnych zmiennych na dokładność modelu umożliwia ocenę ich
-istotności dla przewidywań. Stosowanie zmiennych o niskiej mocy
+Ocena ważności zmiennych (ang. \emph{variable importance}) jest
+elementem oceny jakości stworzonych modeli. Analiza wpływu
+poszczególnych zmiennych na dokładność modelu pozwala ocenić, które
+zmienne są istotne dla przewidywań. Stosowanie zmiennych o niskiej mocy
 predykcyjnej może prowadzić do nadmiernego dopasowania (ang.
 \emph{overfitting}) modelu lub obniżenia jego jakości. Dlatego ważny
 jest wybór odpowiednich zmiennych do trenowania modelu, unikając na
@@ -1098,7 +1168,7 @@ poprzez identyfikację silnie skorelowanych z nim zmiennych.
 W lasach losowych ważność zmiennych można ocenić różnymi metodami, z
 których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang.
 \emph{Gini impurity}) oraz metoda oparta na permutacji
-\autocite{R-Przewodnik}. W celu określenia wartości zmiennych
+\autocite{biecek_2017_przewodnik}. W celu określenia wartości zmiennych
 wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie
 danych teledetekcyjnych zastosowano metodę permutacji (ang.
 \emph{permutation}), która może być również używana do upraszczania i
@@ -1110,13 +1180,82 @@ zmieni się dopasowanie modelu, gdy usunięty zostanie wpływ wybranej
 zmiennej lub grupy zmiennych. Jeśli zmienna jest istotna, permutacja jej
 wartości skutkuje pogorszeniem jakości modelu. Im większa zmiana
 dopasowania modelu, tym istotniejsza jest permutowana zmienna
-\autocite{biecek_2021_model_analysis}.
-
-Metoda oparta na permutacji została pierwotnie zaproponowana przez
-\textcite{breiman_2001_rf} dla lasów losowych, jednak jej prostota
+\autocite{biecek_2021_model_analysis}. Metoda oparta na permutacji
+została pierwotnie zaproponowana przez Breimana
+\autocite*{breiman_2001_rf} dla lasów losowych, jednak jej prostota
 umożliwia zastosowanie permutacji do dowolnego modelu, a także
 porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach
 \autocite{biecek_2021_model_analysis}.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/corrplot1.png}
+
+}
+
+\caption{\label{fig-variables-correlation}Macierz korelacji wszystkich
+zmiennych wykorzystanych w badaniu}
+
+\end{figure}
+
+W przypadku silnie skorelowanych ze sobą zmiennych, brak jednej z nich
+niekoniecznie będzie negatywnie wpływać na jakość modelu, ponieważ inna,
+silnie skorelowana zmienna może zastąpić tę brakującą informację
+\autocite{biecek_2021_model_analysis}. Macierz korelacji zmiennych
+użytych w tym badaniu (rycina \ref{fig-variables-correlation}) ukazuje
+silne związki między niektórymi zmiennymi. Wysoka korelacja występuje
+szczególnie między pasmami Sentinel-2 w zakresie widzialnym (kanały
+B02-04) a pasmami średniej podczerwieni (kanały B11-12). Zauważalna jest
+również wysoka korelacja między pasmami czerwieni krawędziowej (kanały
+B05-07) oraz bliskiej podczerwieni (kanały B08 i B8A). Wykorzystane
+polaryzacje Sentinel-1 również są ze sobą silnie skorelowane. Wskaźniki
+teledetekcyjne wykazują zazwyczaj znaczną dodatnią lub ujemną korelację
+z pasmami, które zostały wykorzystane do ich obliczenia. Tekstury obrazu
+charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla
+których zostały one określone.
+
+\hypertarget{sec-post-processing}{%
+\section{Przetwarzanie końcowe}\label{sec-post-processing}}
+
+Ostatnim etapem procesu detekcji farm fotowoltaicznych było określenie
+metod przetwarzania końcowego (ang. \emph{post-processing}), mających na
+celu udoskonalenie wyników wykrywania farm fotowoltaicznych. Z
+teoretycznego punktu widzenia, obszar zajmowany przez farmę
+fotowoltaiczną lub jej fragmenty powinien być większy niż powierzchnia
+pojedynczej komórki lub grupy kilku komórek. W celu usunięcia
+pozytywnych predykcji, które reprezentowały pojedyncze komórki lub
+obszary składające się z 10 lub mniej komórek (czyli o powierzchni
+mniejszej/równej 1000 m\textsuperscript{2}) zastosowano sekwencję
+procesów przetwarzania, dzięki której udało się pozbyć tzw. efektu soli
+i pieprzu (ang. \emph{salt-and-pepper effect}).
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/postprocessing_pl.png}
+
+}
+
+\caption{\label{fig-rycina-post-processing}Kompozycja RGB Sentinel-2
+(a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV
+wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i
+poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)}
+
+\end{figure}
+
+Przetwarzanie końcowe obejmowało wektoryzację rastrowych wyników
+predykcji dla każdego wariantu, a następnie selekcję pozytywnych
+predykcji oraz obliczenie powierzchni każdego wybranego obszaru. Na
+podstawie obliczonej powierzchni usunięto wszystkie pozytywne predykcje
+reprezentujące pojedyncze komórki lub obszary składające się z 10 lub
+mniej komórek, dzięki czemu wiele błędnych predykcji zostało usuniętych.
+W rezultacie uzyskano końcowy produkt wykrywania farm fotowoltaicznych
+oparty na danych teledetekcyjnych w formie wektorowej.
+
+W celu stworzenia wizualizacji oraz porównania produktów końcowych z
+predykcjami niepoddanymi etapowi przetwarzania końcowego produkty
+wektorowe zostały ponownie przetworzone do formy rastrowej. Efekty
+zastosowanego przetwarzania końcowego przedstawia rycina
+\ref{fig-rycina-post-processing}.
 
 \hypertarget{oprogramowanie}{%
 \section{Oprogramowanie}\label{oprogramowanie}}
@@ -1138,22 +1277,23 @@ możliwość korzystania z wielu zewnętrznych programów, tzw. wtyczek (ang.
 narzędzia do zarządzania danymi, przetwarzania obrazów, wizualizacji,
 czy wykonania dodatkowych zadań, takich jak np. nadawanie georeferencji
 czy klasyfikacja zobrazowań satelitarnych
-\autocite{hejmanowska_2020_dane}.
-
-Oprogramowanie QGIS zostało wykorzystane w tej pracy do stworzenia
-zestawu danych referencyjnych poprzez wizualną interpretację
-ortofotomapy oraz mozaik satelitarnych. QGIS dostarcza zaawansowane
+\autocite{hejmanowska_2020_dane}. QGIS dostarcza także zaawansowane
 narzędzia do digitalizacji, umożliwiające rysowanie i edytowanie
 obiektów wektorowych oraz pozwala na przeglądanie danych przestrzennych
 dostępnych w Internecie za pomocą usług sieciowych, takich jak WMS, WMTS
 czy XYZ Tiles.
 
+Oprogramowanie QGIS zostało wykorzystane w tej pracy do stworzenia
+zestawu danych referencyjnych poprzez wizualną interpretację
+ortofotomapy oraz mozaik satelitarnych, na podstawie których dokonano
+digitalizacji farm fotowoltaicznych istniejących na obszarze badań.
+
 \hypertarget{sentinel-1-toolbox-i-snap}{%
 \subsection{Sentinel-1 Toolbox i SNAP}\label{sentinel-1-toolbox-i-snap}}
 
 Przetwarzanie danych pochodzących z misji Sentinel-1 umożliwia zestaw
-narzędzi S1TBX \autocite{s1tbx}, przeznaczony do przetwarzania danych
-radarowych. Zestaw narzędzi Sentinel-1 Toolbox zawiera narzędzia do
+narzędzi Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx}, przeznaczony do
+obsługi danych radarowych. Zestaw narzędzi S1TBX zawiera narzędzia do
 kalibracji, filtrowania plamek (tzw. efektu pieprzu i soli),
 koregistracji, ortorektyfikacji, mozaikowania, konwersji danych,
 polarymetrii czy interferometrii \autocite{sentinel-1-toolbox}.
@@ -1217,16 +1357,20 @@ w stosunku do przetwarzania sekwencyjnego.
 \section{Ocena jakości
 modeli}\label{sec-results-model-quality-assessment}}
 
-Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli
-\ref{tbl-tabela-datasets} przeprowadzono osobną zagnieżdżoną
-\emph{k}-krotną przestrzenną walidację krzyżową, zgodnie z sekcją
-\ref{sec-model-quality-assessment}. Zagnieżdżona przestrzenna walidacja
-krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących
+Dla każdego z sześciu wariantów zestawów danych przeprowadzono osobną
+zagnieżdżoną \emph{k}-krotną przestrzenną walidację krzyżową, zgodnie z
+procedurą przestawioną w sekcji \ref{sec-model-quality-assessment}.
+Warianty odnoszą się do różnych zestawów zmiennych stworzonych w celu
+ustalenia optymalnego zestawu danych na potrzeby detekcji farm
+fotowoltaicznych przy wykorzystaniu danych teledetekcyjnych. Informacje
+na temat zmiennych zawartych w każdym wariancie przedstawia tabela
+\ref{tbl-tabela-datasets}. Zagnieżdżona przestrzenna walidacja krzyżowa
+dla jednego wariantu składała się z kilku etapów, obejmujących
 optymalizację hiperparametrów oraz ocenę jakości.
 
 Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli
-dla jednego foldu w celu określenia optymalnych hiperparametrów.
-Powtarzając tę procedurę dla każdego z pięciu ustalonych foldów,
+dla jednego podzbioru w celu określenia optymalnych hiperparametrów.
+Powtarzając tę procedurę dla każdego z pięciu ustalonych podzbiorów,
 uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia. W celu
 identyfikacji optymalnych hiperparametrów założono dwadzieścia iteracji
 wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100
@@ -1234,82 +1378,119 @@ wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100
 
 Zoptymalizowane parametry modelu zostały następnie wykorzystane do
 oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100
-modeli (5 foldów * 20 powtórzeń). W rezultacie całkowita liczba
+modeli (5 podzbiorów * 20 powtórzeń). W rezultacie całkowita liczba
 stworzonych modeli wykorzystanych do oceny jakości i dostrajania
 hiperparametrów dla jednego wariantu wynosi 100 100.
 
 \hypertarget{tbl-tabela-performance-measures}{}
 \begin{table}
-\caption{\label{tbl-tabela-performance-measures}Śrdenie wyniki oceny jakości modeli uzyskane podczas przestrzennej
+\caption{\label{tbl-tabela-performance-measures}Średnie wyniki oceny jakości modeli uzyskane podczas przestrzennej
 walidacji krzyżowej }\tabularnewline
 
 \centering
 \begin{tabular}{lcccccc}
 \toprule
-  & Dataset 1 & Dataset 2 & Dataset 3 & Dataset 4 & Dataset 5 & Dataset 6\\
+  & Wariant 1 & Wariant 2 & Wariant 3 & Wariant 4 & Wariant 5 & Wariant 6\\
 \midrule
-precision & 0.8852 & 0.9001 & 0.8746 & 0.9112 & 0.9034 & 0.9180\\
-sensitivity & 0.7413 & 0.7296 & 0.7181 & 0.7134 & 0.7081 & 0.7151\\
-specificity & 0.9929 & 0.9942 & 0.9924 & 0.9950 & 0.9948 & 0.9956\\
-AUC & 0.9818 & 0.9862 & 0.9844 & 0.9802 & 0.9812 & 0.9867\\
-F-beta score & 0.7872 & 0.7875 & 0.7691 & 0.7855 & 0.7837 & 0.7929\\
+Precyzja & 0.8852 & 0.9001 & 0.8746 & 0.9112 & 0.9034 & 0.9180\\
+Czułość & 0.7413 & 0.7296 & 0.7181 & 0.7134 & 0.7081 & 0.7151\\
+F1-score & 0.7872 & 0.7875 & 0.7691 & 0.7855 & 0.7837 & 0.7929\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Ocenę klasyfikatorów stworzonych dla każdego z sześciu wariantów (tabela
-\ref{tbl-tabela-datasets}) przeprowadzono przy użyciu pięciu miar
+\ref{tbl-tabela-datasets}) przeprowadzono przy użyciu trzech miar
 jakości opisanych w sekcji \ref{sec-model-quality-assessment}. Średnie
-wyniki miar jakości modeli oszacowane na podstawie przestrzennej
-walidacji krzyżowej przedstawia tabela
-\ref{tbl-tabela-performance-measures}.
+wyniki tych miar, oszacowane na podstawie przestrzennej walidacji
+krzyżowej, przedstawia tabela \ref{tbl-tabela-performance-measures}.
 
 Ogólnie średnie wartości miar jakości dla każdego z wariantów są
 zbliżone. Prawdopodobnie wynika to z faktu, że w każdym wariancie
-dziesięć klasyfikatorów uwzględniało dane dotyczące reflektancji
-Sentinel-2 w poszczególnych kanałach. Każdy wariant różnił się jednak od
+dziesięć predyktorów uwzględniało dane dotyczące reflektancji Sentinel-2
+w jego poszczególnych kanałach. Każdy wariant różnił się jednak od
 pozostałych zestawem dodatkowych zmiennych.
 
 Na podstawie średnich wartości miar jakości przedstawionych w tabeli
 \ref{tbl-tabela-performance-measures}, najlepsze dopasowanie uzyskano,
 wykorzystując wszystkie predyktory (wariant nr 6). Ten wariant osiągnął
-najwyższe średnie oceny w czterech z pięciu zastosowanych miar
-(precyzja, specyficzność, AUC i \(F_{\beta}\) score). Najlepszy wynik
-czułości uzyskał natomiast wariant nr 1. W przypadku trzech z pięciu
-miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja,
-specyficzność i \(F_{\beta}\) score). Najgorszą czułością cechuje się
-natomiast wariant nr 5, a najniższym wynikiem miary AUC - wariant nr 4.
+najwyższe średnie oceny w dwóch z trzech zastosowanych miar (precyzja i
+F1-score). Najlepszy wynik czułości uzyskał natomiast wariant nr 1. W
+przypadku dwóch z trzech miar najniższe wyniki odnotowano dla wariantu
+nr 3 (precyzja i F1-score), a najgorszą czułością cechuje się natomiast
+wariant nr 5.
 
-Średnie wyniki czułości i miary AUC dla wszystkich klasyfikatorów są
-bardzo zbliżone, a różnice pomiędzy najlepszym a najgorszym wynikiem są
-niewielkie. Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla
-precyzji wynosi 0,0434, dla czułości 0,0332, a dla \(F_{\beta}\) score
-0,0238, co wskazuje na bardziej znaczące różnice. Średnie wyniki
+Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla precyzji wynosi
+0,0434, dla czułości 0,0332, a dla F1-score 0,0238. Średnie wyniki
 precyzji czterech z sześciu klasyfikatorów przekroczyły wartość 0,90
 (0,8746 dla najgorszego wariantu nr 3, 0,9180 dla najlepszego wariantu
-nr 6). Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników
-(True negative), uzyskując bardzo wysokie wyniki specyficzności (zakres
-wartości od 0,9924 do 0,9956). Niższe wyniki czułości wskazują jednak na
-mniej efektywne radzenie sobie z wykrywaniem wyników dodatnich (True
-positive). Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie
+nr 6). Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie
 wyższym niż 0,70, kształtując się w zakresie od 0,7081 do 0,7413.
-Podobnie jak w przypadku specyficzności, wszystkie klasyfikatory
-uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł
-0,9802, a najlepszy 0,9867. Wyniki miary \(F_{\beta}\) score dla każdego
-wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy
-0,7691, a 0,7929.
+Niemniej jednak, takie wyniki czułości wskazują na dość przeciętne
+radzenie sobie z wykrywaniem wyników prawdziwie pozytywnych (ang.
+\emph{true positive}). Średnie wyniki miary F1-score opisującej
+całościowo jakość modelu poprzez ocenę balansu pomiędzy precyzją a
+czułością przekroczyły wartość 0,75 dla każdego wariantu, mieszcząc się
+w zakresie pomiędzy 0,7691, a 0,7929.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/f1_score_boxplot.png}
+
+}
+
+\caption{\label{fig-rycina-f1-score-boxplot}Rozkład wyników miary
+F1-score na podstawie 100 modeli dla każdego wariantu. Czerwony punkt
+reprezentuje średnią wyników F1-score dla danego wariantu, a~czarne
+punkty wyniki dla poszczególnych modeli}
+
+\end{figure}
+
+Stabilność klasyfikatora można ocenić na podstawie rozrzutu wyników
+oceny jakości poszczególnych modeli. Im mniej różnorodne są wyniki oceny
+jakości modeli w klasyfikatorze, tym bardziej jest on stabilny. Wykres
+pudełkowy (rycina \ref{fig-rycina-f1-score-boxplot}) wskazuje, że
+wariant o najniższym średnim wyniku F1-score charakteryzuje się również
+największym rozrzutem wyników dla poszczególnych modeli. Największą
+stabilnością przewidywań charakteryzuje się natomiast wariant nr 6.
+
+Wykres pudełkowy przedstawiający rozkład wyników miary F1-score na
+podstawie 100 modeli dla każdego wariantu (rycina
+\ref{fig-rycina-f1-score-boxplot}) ujawnia jej bimodalny rozkład wyników
+w każdym z wariantów. Charakteryzuje się on grupowaniem wyników wokół
+dwóch wartości oddzielonych od siebie, przy czym grupy te nie są równe
+pod względem liczebności, ale są wyraźnie większe od pozostałych. Miara
+F1-score, będąc średnią harmoniczną precyzji i czułości modelu, jest
+silnie zależna od tych dwóch niezależnych miar.
+
+Analiza wyników precyzji ujawniła, że wartości odstające w wynikach tej
+miary pochodzą z modeli, gdzie podzbiór testowy składał się głównie z
+obserwacji negatywnych, przy niewielkiej liczbie obserwacji pozytywnych.
+W przypadku gdy odsetek obserwacji pozytywnych był wyższy, wyniki
+precyzji dla danego modelu były bliskie lub równe maksymalnej wartości
+jaką może osiągnąć ta miara.
+
+W przeciwieństwie do precyzji, czułość wydaje się być mniej podatna na
+wpływ proporcji obserwacji pozytywnych do negatywnych w zbiorze
+treningowym. Wyniki czułości dla poszczególnych modeli w każdym z
+wariantów, podobnie jak w przypadku F1-score, mają rozkład bimodalny. Na
+ogół rozkład wyników czułości jest bardzo zbliżony do rozkładu wyników
+miary F1-score, a największą różnicą jest obecność wartości odstających
+w wynikach czułości dla dwóch wariantów, co nie ma miejsca w przypadku
+F1-score. Oznacza to prawdopodobnie, że bimodalny rozkład wyników
+F1-score jest definiowany przez rozkład wyników czułości.
 
 \hypertarget{sec-results-variable-importance}{%
 \section{Ważność zmiennych}\label{sec-results-variable-importance}}
 
 \begin{figure}[t]
 
-{\centering \includegraphics[width=1.05\textwidth,height=\textheight]{figures/importance_cowplot.png}
+{\centering \includegraphics[width=1.05\textwidth,height=\textheight]{figures/importance_cowplot_pl.png}
 
 }
 
-\caption{\label{fig-rycina-variance-importance_cowplot}Permutowane
-znaczenie 10 najważniejszych zmiennych dla każdego wariantu}
+\caption{\label{fig-rycina-variance-importance_cowplot}Permutowana
+ważność 10 najważniejszych zmiennych dla każdego wariantu}
 
 \end{figure}
 
@@ -1329,7 +1510,7 @@ zmienne (21 predyktorów).
 
 \begin{figure}[t]
 
-{\centering \includegraphics[width=4.6875in,height=\textheight]{figures/importance_plot_dataset6.png}
+{\centering \includegraphics[width=4.6875in,height=\textheight]{figures/importance_plot_dataset6_pl.png}
 
 }
 
@@ -1364,57 +1545,56 @@ oraz wskaźnika NDBI (B8A SAVG, VH SAVG i NDBI SAVG).
 Uzyskane wyniki oceny ważności zmiennych wskazują na dość spore znacznie
 wskaźników spektralnych, głównie mNDWI oraz NDBI w kontekście wykrywania
 farm fotowoltaicznych. Niskie znaczenie w tym zastosowaniu wykazują
-natomiast dane radarowe pochodzące z misji Sentienl-1 oraz tekstury
+natomiast dane radarowe pochodzące z misji Sentinel-1 oraz tekstury
 średniej sumy dla tych zmiennych.
 
-Spośród sześciu obliczonych tekstur średniej sumy wskazanych przez
-\textcite{wang_2022_pv} jako istotne przy detekcji farm fotowoltaicznych
-na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest,
-jedynie tekstura średniej sumy dla kanału niebieskiego wykazywała się
-znaczącym wpływem na wynik klasyfikacji. Pozostałe tekstury wskazywały
-przeciętną lub niską istotność w tym konkretnym zadaniu. Ważność trzech
-z obliczonych tekstur (B02 SAVG, VV SAVG i VH SAVG) była wyższa niż
-ocena ważności odpowiadających im danych pierwotnych. W przypadku
-pozostałych trzech tekstur (B8A SAVG, mNDWI SAVG i NDBI SAVG), uzyskane
-wyniki były niższe niż wyniki pierwotnych danych teledetekcyjnych.
+Spośród sześciu obliczonych tekstur średniej sumy wskazanych przez Wanga
+et al. \autocite*{wang_2022_pv} jako istotne przy detekcji farm
+fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu
+Random Forest, jedynie tekstura średniej sumy dla kanału niebieskiego
+wykazywała się znaczącym wpływem na wynik klasyfikacji. Pozostałe
+tekstury wskazywały przeciętną lub niską istotność w tym konkretnym
+zadaniu. Ważność trzech z obliczonych tekstur (B02 SAVG, VV SAVG i VH
+SAVG) była wyższa niż ocena ważności odpowiadających im danych
+pierwotnych. W przypadku pozostałych trzech tekstur (B8A SAVG, mNDWI
+SAVG i NDBI SAVG), uzyskane wyniki były niższe niż wyniki pierwotnych
+danych teledetekcyjnych.
 
-\textbf{W tym miejscu można też wstawić rycinę (corplot) z korelacją
-między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych
-klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć
-umieszczenie tych rycin w sekcji \ref{sec-variable-importance}.}
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/spectral_curves_plot2.png}
+
+}
+
+\caption{\label{fig-rycina-spectral-curves}Krzywa odbicia spektralnego
+farm fotowoltaicznych na tle innych typów pokrycia terenu}
+
+\end{figure}
+
+Charakterystyka spektralna farm fotowoltaicznych (rycina
+\ref{fig-rycina-spectral-curves}) wyjaśnia znaczenie kanałów B02, B11 i
+B12 w kontekście detekcji farm fotowoltaicznych na podstawie danych
+teledetekcyjnych. Krzywa spektralna instalacji fotowoltaicznych wskazuje
+na spektralne zróżnicowanie tej powierzchni względem innych typów
+pokrycia terenu w zakresie pasm średniej podczerwieni, do których należą
+kanały B11 (1610 nm) i B12 (2190 nm). Farmy fotowoltaiczne
+charakteryzują się wyższym współczynnikiem odbicia od większości innych
+powierzchni w zakresie fal niebieskich (kanał B02, 493 nm). Oznacza to,
+że odpowiedź spektralna instalacji fotowoltaicznych w tym zakresie
+różnicuje je od innych typów pokrycia terenu.
 
 \hypertarget{sec-classification-results}{%
-\section{Wyniki klasyfikacji}\label{sec-classification-results}}
+\section{Wyniki klasyfikacji po przetwarzaniu
+końcowym}\label{sec-classification-results}}
 
 Wyniki klasyfikacji dotyczące liczby wykrytych farm fotowoltaicznych lub
-ich oddzielnych segmentów oraz sumy wykrytej powierzchni, zostały
-przedstawione w tabeli \ref{tbl-tabela-classification-results}. Pierwszy
-wiersz odnosi się do zbioru referencyjnego, który obejmował
-prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla
-Sentinel-2 o oznaczeniu 33UWV istniejące w czasie wykonania
-wykorzystanych zobrazowań (8 maja 2023 roku). Zbiór referencyjny został
-zwektoryzowany na podstawie ortofotomapy i mozaik satelitarnych.
-
-Analiza wyników w tabeli wskazuje na znaczne zróżnicowanie zarówno pod
-względem liczby wykrytych poligonów (odpowiadających poszczególnym
-segmentom farm fotowoltaicznych), jak i sumy wykrytej powierzchni.
-Warianty nr 2 i 3 osiągnęły wyniki najbardziej zbliżone do
-rzeczywistych, prezentując zbliżoną sumę powierzchni wskazanej jako
-farmy fotowoltaiczne. Niemniej jednak oba warianty różnią się znacząco
-pod względem liczby wykrytych poligonów.
-
-Pod względem poprawnie wykrytej powierzchni elektrowni fotowoltaicznych,
-ustalonej na podstawie macierzy pomyłek, wyniki poszczególnych wariantów
-są stosunkowo zbliżone i mieszczą się w zakresie od 286,20 ha do 290,90
-ha. Wariant nr 6 okazał się najlepszy pod względem wykrytej powierzchni,
-natomiast najgorszy wynik uzyskał wariant nr 5.
-
-Warto jednak zaznaczyć, że wyniki predykcji po etapie przetwarzania
-końcowego są dość mocno niekompletne, ponieważ każdemu z wariantów
-brakuje około 55 ha powierzchni farm fotowoltaicznych względem zbioru
-referencyjnego. Powierzchnia ta stanowi ponad 15\% powierzchni
-elektrowni fotowoltaicznych na obszarze badań i sygnalizuje pewne
-ograniczenia w precyzji klasyfikacji.
+ich oddzielnych segmentów oraz sumy wykrytej powierzchni po procesie
+przetwarzania końcowego zostały przedstawione w tabeli
+\ref{tbl-tabela-classification-results}. Pierwszy wiersz odnosi się do
+zbioru referencyjnego, który obejmował wszystkie farmy fotowoltaiczne
+określone na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie
+wykonania użytych zobrazowań (8 maja 2023 roku). Zbiór referencyjny
+został zdigitalizowany na podstawie ortofotomapy i mozaik satelitarnych.
 
 \hypertarget{tbl-tabela-classification-results}{}
 \begin{table}
@@ -1426,68 +1606,85 @@ ograniczenia w precyzji klasyfikacji.
 Wariant \textsuperscript{a} & Liczba wykrytych poligonów & Suma wykrytej powierzchni [ha] & Poprawnie wykryta powierzchnia farm na podstawie macierzy pomyłek [ha]\\
 \midrule
 Zbiór referencyjny \textsuperscript{b} & 210 & 345.04 & -\\
-1 & 650 & 516.57 & 290.6\\
-2 & 263 & 335.71 & 290.73\\
-3 & 294 & 344.28 & 289.19\\
-4 & 733 & 487.05 & 287.05\\
-5 & 505 & 406.26 & 286.2\\
-6 & 323 & 394.95 & 290.99\\
+1 & 650 & 516.57 & 290.86\\
+2 & 263 & 335.71 & 291.01\\
+3 & 294 & 344.28 & 289.30\\
+4 & 733 & 487.05 & 287.24\\
+5 & 505 & 406.26 & 286.29\\
+6 & 323 & 394.95 & 291.10\\
 \bottomrule
 \multicolumn{4}{l}{\textsuperscript{a} Patrz: tabela 4.1}\\
-\multicolumn{4}{l}{\textsuperscript{b} Zwektoryzowane farmy fotowoltaiczne na podstawie ortofotomapy i mozaik satelitarnych}\\
+\multicolumn{4}{l}{\textsuperscript{b} Zdigitalizowane farmy fotowoltaiczne na podstawie ortofotomapy i mozaik satelitarnych}\\
 \end{tabular}
 \end{table}
 
-Porównując wyniki najlepszych wariantów z istniejącymi bazami danych
-dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej
-zadowalające. Globalna baza danych elektrowni (\emph{Global Power Plant
-Database}) \autocite{globalpowerplantdb_2021}, stworzona przez
-\textcite{byers_2018_globalpowerplantdb} i udostępniona w czerwcu 2021
-roku, wskazuje na istnienie zaledwie x elektrowni fotowoltaicznych w
-całej Polsce na wspomniany okres. Ujednolicone globalne zbiory danych
-dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy
-produkowanej (\emph{Harmonised global datasets of wind and solar farm
-locations and power}), opracowane na podstawie danych OpenStreetMap
-przez \textcite{dunnet_2020_wind_solar}, sugerują, że do końca roku 2018
-na obszarze badania występowało jedynie x instalacji fotowoltaicznych,
-które zajmowały powierzchnię x hektarów. Istnieje również jeden zbiór
-danych, którego sposób stworzenia był najbardziej zbliżony do omawianego
-w niniejszym badaniu. \textcite{kruitwagen_2021_pv}, wykorzystując
-zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami
-uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na
-świecie na dzień 30 września 2018 roku. Według wyników tego badania, na
-obszarze badań znajduje się x poligonów reprezentujących segmenty farm
-fotowoltaicznych o łącznej powierzchni x hektarów.
+Analiza wyników w tabeli wskazuje na znaczne zróżnicowanie zarówno pod
+względem liczby wykrytych poligonów (odpowiadających poszczególnym
+segmentom farm fotowoltaicznych), jak i sumy wykrytej powierzchni.
+Warianty nr 2 i 3 osiągnęły wyniki najbardziej zbliżone do
+rzeczywistych, prezentując zbliżoną sumę powierzchni wskazanej jako
+farmy fotowoltaiczne. Niemniej jednak oba warianty różnią się znacząco
+pod względem liczby wykrytych poligonów.
+
+Pod względem poprawnie wykrytej powierzchni elektrowni fotowoltaicznych,
+ustalonej na podstawie macierzy pomyłek, wyniki poszczególnych wariantów
+są stosunkowo zbliżone i mieszczą się w zakresie od 286,29 ha do 291,10
+ha. Wariant nr 6 okazał się najlepszy pod względem wykrytej powierzchni,
+natomiast najgorszy wynik uzyskał wariant nr 5.
+
+Warto jednak zaznaczyć, że wyniki predykcji po etapie przetwarzania
+końcowego są dość mocno niekompletne, ponieważ każdemu z wariantów
+brakuje około 55 ha powierzchni farm fotowoltaicznych względem zbioru
+referencyjnego. Wartość ta stanowi ponad 15\% powierzchni elektrowni
+fotowoltaicznych na obszarze badań i sygnalizuje pewne ograniczenia w
+skuteczności klasyfikacji.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/poprawne_niepoprawne_wskazania_dataset2.png}
+
+}
+
+\caption{\label{fig-rycina-classification-results-dataset2}Lokalizacje
+poprawnie i niepoprawnie wykrytych farm fotowoltaicznych lub ich
+segmentów dla wariantu nr 2}
+
+\end{figure}
+
+Rozmieszczenie poprawnie i niepoprawnie wykrytych farm fotowoltaicznych
+dla wariantu drugiego przedstawia rycina
+\ref{fig-rycina-classification-results-dataset2}. Z ilustracji wynika,
+że większość elektrowni fotowoltaicznych lub ich segmentów została
+właściwie zidentyfikowana, a błędnie sklasyfikowane lokalizacje farm
+fotowoltaicznych występują głównie w północnej części badanego obszaru.
 
 \hypertarget{sec-population-quality-assessment}{%
 \subsection{Ocena jakości klasyfikacji dla
 populacji}\label{sec-population-quality-assessment}}
 
-Sekcja \ref{sec-results-model-quality-assessment} omawia wyniki jakości
-klasyfikacji na podstawie próby, a wyniki oceny jakości modelu uzyskane
-na podzbiorze populacji mogą znacznie różnić się od rezultatów
-uzyskanych podczas klasyfikacji całej populacji, obejmującej wszystkie
-obserwacje na badanym obszarze.
+Sekcja \ref{sec-results-model-quality-assessment} omawiała wyniki
+jakości klasyfikacji na podstawie próby, a wyniki oceny jakości modelu
+uzyskane na niewielkiej części populacji mogą znacznie różnić się od
+rezultatów uzyskanych podczas klasyfikacji całej populacji, obejmującej
+wszystkie obserwacje na badanym obszarze.
 
 W celu oceny rzeczywistej jakości klasyfikacji dla całej populacji po
 procesie przetwarzania końcowego dokonano porównania wyników predykcji
 każdego wariantu (tabela \ref{tbl-tabela-datasets}) ze zbiorem
-referencyjnym. Referencyjny zbiór danych obejmował prawdopodobnie
-wszystkie farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu
-33UWV istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja
-2023 roku), zwektoryzowane na podstawie ortofotomapy i mozaik
-satelitarnych. Porównanie wymagało przekształcenia zwektoryzowanych farm
-fotowoltaicznych do postaci rastrowej, przyjmując siatkę 10-metrowych
-kanałów wykorzystanej sceny Sentinel-2.
+referencyjnym. Referencyjny zbiór danych obejmował wszystkie farmy
+fotowoltaiczne, które udało się określić na obszarze kafla Sentinel-2 o
+oznaczeniu 33UWV w czasie wykonywania użytych zobrazowań (8 maja 2023
+roku). Dane te zostały zdigitalizowane na podstawie ortofotomapy oraz
+mozaik satelitarnych. Porównanie wymagało przekształcenia
+zdigitalizowanych farm fotowoltaicznych do postaci rastrowej, przyjmując
+siatkę 10-metrowych kanałów wykorzystanej sceny Sentinel-2.
 
 Ocena jakości klasyfikacji dla całego obszaru badań (populacji) została
 przeprowadzona zgodnie z podejściem opisanym w sekcji
-\ref{sec-model-quality-assessment}. Wykorzystane podejście ponownie
-opiera się na analizie macierzy pomyłek, która umożliwiła obliczenie
-trzech miarach jakości: precyzji, czułości oraz F1 score. Miara F1 score
-jest odmianą miary \(F_{\beta}\) score, gdzie \({\beta}\) wynosi 1.
-Oznacza to, że jest to średnia harmoniczna pomiędzy precyzją a
-czułością, używana w sytuacjach, gdy obie te miary są równie istotne.
+\ref{sec-model-quality-assessment}. Wykorzystane podejście, podobnie jak
+ocena jakości modeli, opiera się na analizie macierzy błędów, która
+umożliwiła obliczenie trzech miar jakości: precyzji, czułości oraz
+F1-score.
 
 \hypertarget{tbl-tabela-population-quality-assessment}{}
 \begin{table}
@@ -1496,7 +1693,7 @@ czułością, używana w sytuacjach, gdy obie te miary są równie istotne.
 \centering
 \begin{tabular}{cccc}
 \toprule
-Wariant \textsuperscript{a} & Precyzja & Czułość & F1 score\\
+Wariant \textsuperscript{a} & Precyzja & Czułość & F1-score\\
 \midrule
 1 & 0.5631 & 0.8414 & 0.6747\\
 2 & 0.8668 & 0.8419 & 0.8542\\
@@ -1513,8 +1710,8 @@ Wyniki oceny jakości klasyfikacji dla populacji każdego wariantu
 przedstawia tabela \ref{tbl-tabela-population-quality-assessment}, która
 wskazuje na znaczne rozbieżności w kontekście precyzji. Precyzja ocenia
 w pewnym sensie skłonność modelu do przeuczania się, określając jaka
-część wyników wskazanych przez klasyfikator jako dodatnie jest
-faktycznie dodatnia w rzeczywistości. Przeuczanie występuję w sytuacji,
+część wyników wskazanych przez klasyfikator jako pozytywne jest
+faktycznie pozytywne w rzeczywistości. Przeuczanie występuję w sytuacji,
 gdy klasyfikator wskazuje farmy fotowoltaiczne w miejscach, gdzie
 faktycznie one nie występowały. Najlepszą precyzję osiągnęły warianty nr
 2 i 3, gdzie wartości tej miary wynoszą odpowiednio 0,8668 i 0,8403.
@@ -1540,16 +1737,17 @@ przypadków wykrył klasyfikator, czyli jaki ułamek farm znajdujących się
 w referencyjnym zbiorze danych został wykryty. Najwyższy wynik czułości
 osiągnął wariant nr 6, a najniższy - wariant nr 5.
 
-Jak wspomniano wcześniej, miara F1 jest średnią harmoniczną precyzji i
-czułości, używaną, gdy obie te miary są równie istotne. Miara F1 score w
-pewnym sensie opisuje całościowo wynik, a ponieważ wyniki czułości dla
-poszczególnych wariantów są zbliżone do siebie, to precyzja będzie miała
-kluczowy wpływ na ostateczną ocenę jakości klasyfikacji. Najwyższym
-wynikiem miary F1 score charakteryzuje się wariant nr 2 (0,8542), a próg
-wartości 0,80 przekroczył również wariant nr 3. Stosując wyłącznie
-surowe dane teledetekcyjne, warianty nr 1 i 4 nie przekraczają progu
-0,70 dla miary F1 score, podczas gdy pozostałe warianty, zawierające
-dane pochodne, uzyskały znacznie wyższe wartości.
+Jak wspomniano w sekcji \ref{sec-model-quality-assessment}, miara
+F1-score jest średnią harmoniczną precyzji i czułości, używaną, gdy obie
+te miary są równie istotne. Miara F1-score opisuje całościowo wynik, a
+ponieważ wyniki czułości dla poszczególnych wariantów są zbliżone do
+siebie, to precyzja będzie miała kluczowy wpływ na ostateczną ocenę
+jakości klasyfikacji. Najwyższym wynikiem miary F1-score charakteryzuje
+się wariant nr 2 (0,8542), a próg wartości 0,80 przekroczył również
+wariant nr 3. Stosując wyłącznie surowe dane teledetekcyjne, warianty nr
+1 i 4 nie przekraczają progu 0,70 dla miary F1-score, podczas gdy
+pozostałe warianty, zawierające dane pochodne, uzyskały znacznie wyższe
+wartości.
 
 Ogólnie rzecz biorąc, wyniki sugerują, że korzystanie z pochodnych
 danych teledetekcyjnych istotnie redukuje skłonność modelu do
@@ -1564,26 +1762,26 @@ Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja
 \ref{sec-population-quality-assessment}), modele stworzone w ramach
 niniejszego badania wykazują dobrą skuteczność w identyfikacji farm
 fotowoltaicznych, co ilustruje również rycina
-\ref{fig-rycina-truepositive-dataset6}, przedstawiająca przykłady
-poprawnych przewidywań dla wariantu nr 6. Dla porównania, na rycinie
+\ref{fig-rycina-truepositive-dataset2}, przedstawiająca przykłady
+poprawnych przewidywań dla wariantu nr 2. Dla porównania, na rycinie
 przedstawiono także instalacje fotowoltaiczne generujące energię
-elektryczną, pochodzące z badania przeprowadzonego przez
-\textcite{kruitwagen_2021_pv}, wskazującego istniejące konstrukcje
+elektryczną, pochodzące z badania przeprowadzonego przez Kruitwagena et
+al. \autocite*{kruitwagen_2021_pv}, wskazującego istniejące konstrukcje
 fotowoltaiczne na świecie na dzień 30 września 2018 roku.
 Wysokorozdzielcze obrazy satelitarne na rycinie
-\ref{fig-rycina-truepositive-dataset6} (kolumna a) pochodzą z różnych
+\ref{fig-rycina-truepositive-dataset2} (kolumna a) pochodzą z różnych
 okresów. Obraz satelitarny 2a został pozyskany później niż dane użyte do
 detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku),
 natomiast obrazy 4a i 4b pochodzą sprzed tego okresu.
 
 W niektórych przypadkach wewnątrz wykrytych instalacji fotowoltaicznych
-pojawiły się fałszywie ujemne predykcje (ang. \emph{False negative}), co
-przedstawiają ryciny \ref{fig-rycina-truepositive-dataset6} 1c i
+pojawiły się fałszywie negatywne predykcje (ang. \emph{false negative}),
+co przedstawiają ryciny \ref{fig-rycina-truepositive-dataset2} 1c i
 \ref{fig-rycina-post-processing} 2c. Na kompozycji RGB Sentinel-2 możemy
 zaobserwować w miejscach tych błędnych wskazań różnice w jasności
 komórek względem otaczającej instalacji fotowoltaicznej lub
 zróżnicowanie powierzchni pod panelami fotowoltaicznymi. Rycina
-\ref{fig-rycina-truepositive-dataset6} 5c pokazuje, że w niektórych
+\ref{fig-rycina-truepositive-dataset2} 5c pokazuje, że w niektórych
 przypadkach poprawne wskazania powierzchni farm fotowoltaicznych są
 niepełne, pomimo jednolitego wyglądu instalacji na kompozycji RGB
 Sentinel-2.
@@ -1594,30 +1792,29 @@ szerzej opisane w sekcji dotyczącej losowania próbek (sekcja
 \ref{sec-samples}). Zaproponowane metody przetwarzania końcowego,
 omówione w sekcji \ref{sec-post-processing}, poprawiają wyniki
 predykcji. Niemniej jednak, w zależności od wariantu, nadal występują
-mniejsze lub większe błędy w klasyfikacji. Przykłady fałszywie dodatnich
-przewidywań (ang. \emph{False positive}) zostały przedstawione na
-rycinach \ref{fig-rycina-falsepositive-dataset6} (dla wariantu nr 6)
-oraz \ref{fig-rycina-post-processing} (dla wariantu nr 1). Wybrane
-lokalizacje ilustrują typowe błędy modeli na różnych typach pokrycia
-terenu i użytkowania ziemi.
+mniejsze lub większe błędy w klasyfikacji. Przykłady fałszywie
+pozytywnych przewidywań (ang. \emph{false positive}) zostały
+przedstawione na rycinach \ref{fig-rycina-falsepositive-dataset2} (dla
+wariantu nr 2) oraz \ref{fig-rycina-post-processing} (dla wariantu nr
+1). Wybrane lokalizacje ilustrują typowe błędy modeli na różnych typach
+pokrycia terenu i użytkowania ziemi.
 
-Mimo zastosowania dodatkowych próbek negatywnych na drogach oraz
-kopalniach torfu, jak wskazano w sekcji \ref{sec-samples}, błędne
-pozytywne przewidywania na tych obszarach nadal występują, co ilustrują
-odpowiednio pierwszy i czwarty rząd ryciny
-\ref{fig-rycina-falsepositive-dataset6}. Trzeci rząd ryciny
-\ref{fig-rycina-falsepositive-dataset6} oraz drugi rząd ryciny
+Mimo zastosowania dodatkowych próbek negatywnych na drogach, jak
+wskazano w sekcji \ref{sec-samples}, błędne pozytywne przewidywania w
+tych miejscach nadal występują, co ilustruje pierwszy rząd ryciny
+\ref{fig-rycina-falsepositive-dataset2}. Pierwszy, drugi oraz czwarty
+rząd ryciny \ref{fig-rycina-falsepositive-dataset2} oraz pierwszy rząd
+ryciny \ref{fig-rycina-post-processing} pokazują natomiast, że błędne
+predykcje obejmują także obszary użytków rolnych (pola uprawne, łąki i
+pastwiska) oraz nieużytków, szczególnie w miejscach, gdzie istnieje
+gęsta sieć melioracyjna. W wyniku klasyfikacji wariantu nr 2 pojawił się
+nietypowy przypadek błędnego sklasyfikowania boiska sportowego jako
+instalacji fotowoltaicznej, które ze względu na powierzchnię większą niż
+1000 m\textsuperscript{2} nie zostało skorygowane przez zastosowane
+metody przetwarzania końcowego. Trzeci rząd ryciny
+\ref{fig-rycina-falsepositive-dataset2} oraz drugi rząd ryciny
 \ref{fig-rycina-post-processing} sugerują, że błędne predykcje mogą
-występować również na obszarach zachmurzonych. Drugi rząd ryciny
-\ref{fig-rycina-falsepositive-dataset6} oraz pierwszy rząd ryciny
-\ref{fig-rycina-post-processing} pokazują natomiast, że błędne predykcje
-obejmują także obszary użytków rolnych (pola uprawne, łąki i pastwiska)
-oraz nieużytków, szczególnie w miejscach, gdzie istnieje gęsta sieć
-melioracyjna. W wyniku klasyfikacji wariantu nr 6 pojawił się nietypowy
-przypadek błędnego sklasyfikowania boiska sportowego jako instalacji
-fotowoltaicznej, które ze względu na powierzchnię większą niż 1000
-m\textsuperscript{2} nie zostało skorygowane przez zastosowane metody
-przetwarzania końcowego.
+występować również na obszarach zachmurzonych.
 
 Należy zaznaczyć, że pomimo wykorzystania próbek z tych samych
 lokalizacji do trenowania każdego z wariantów, różne modele wykazują
@@ -1627,42 +1824,31 @@ różnych zmiennych, gdzie niektóre z nich wspomagały decyzje w przypadku
 konkretnego typu pokrycia terenu, podczas gdy inne miały przeciwny
 efekt.
 
-\textbf{DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach
-potwierdziła, że modele w większości przepadków skutecznie dokonują
-rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas
-klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka
-powtarzających się błędów. W celu poprawy wyników identyfikacji farm
-fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów
-chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego
-etapu w procesie przetwarzania końcowego, który wykluczałby predykcje
-wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z
-sugestią Ortiz et al.~(2022).}
-
 \begin{figure}[t]
 
-{\centering \includegraphics[width=0.91\textwidth,height=\textheight]{figures/pv_dataset6.png}
+{\centering \includegraphics[width=0.87\textwidth,height=\textheight]{figures/pv_dataset2.png}
 
 }
 
-\caption{\label{fig-rycina-truepositive-dataset6}Wyniki klasyfikacji
-wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów
-prawdziwie dodatnich przewidywań (ang. True positive) (c) z
-wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB
-Sentinel-2 (b)}
+\caption{\label{fig-rycina-truepositive-dataset2}Wyniki klasyfikacji
+wariantu nr 2 po procesie przetwarzania końcowego. Porównanie
+wysokorozdzielczych obrazów satelitarnych (a) oraz kompozycji RGB
+Sentinel-2 (b) z~przykładami prawdziwie pozytywnych przewidywań (ang.
+true positive)}
 
 \end{figure}
 
 \begin{figure}[t]
 
-{\centering \includegraphics[width=0.91\textwidth,height=\textheight]{figures/incorrect_dataset6.png}
+{\centering \includegraphics[width=0.89\textwidth,height=\textheight]{figures/incorrect_dataset2.png}
 
 }
 
-\caption{\label{fig-rycina-falsepositive-dataset6}Wyniki klasyfikacji
-wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów
-fałszywie dodatnich przewidywań (ang. False positive) (c) z
-wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB
-Sentinel-2 (b)}
+\caption{\label{fig-rycina-falsepositive-dataset2}Wyniki klasyfikacji
+wariantu nr 2 po procesie przetwarzania końcowego. Porównanie
+wysokorozdzielczych obrazów satelitarnych (a) oraz kompozycji RGB
+Sentinel-2 (b) z~przykładami fałszywie pozytywnych przewidywań (ang.
+false positive) (c)}
 
 \end{figure}
 
@@ -1671,16 +1857,38 @@ Sentinel-2 (b)}
 \hypertarget{podsumowanie}{%
 \chapter{Podsumowanie}\label{podsumowanie}}
 
-Podsumowanie pracy jest w pewnym sensie znacznie rozbudowanym
-abstraktem. Należy wyliczyć i opisać osiągnięcia uzyskane w pracy
-dyplomowej. Tutaj jednak (w przeciwieństwie do np. rozdziału
-\ref{sec-wprowadzenie}) należy przechodzić od szczegółu do ogółu - co
-zostało stworzone/określone, jak zostało to zrobione, jakie ma to
-konsekwencje, itd.
+Porównując wyniki najlepszych wariantów z istniejącymi bazami danych
+dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej
+zadowalające. Globalna baza danych elektrowni (\emph{Global Power Plant
+Database}) \autocite{globalpowerplantdb_2021}, stworzona przez Byersa et
+al. \autocite*{byers_2018_globalpowerplantdb} i udostępniona w czerwcu
+2021 roku, wskazuje na istnienie zaledwie x elektrowni fotowoltaicznych
+w całej Polsce na wspomniany okres. Ujednolicone globalne zbiory danych
+dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy
+produkowanej (\emph{Harmonised global datasets of wind and solar farm
+locations and power}), opracowane na podstawie danych OpenStreetMap
+przez Dunnetta et al. \autocite*{dunnet_2020_wind_solar}, sugerują, że
+do końca roku 2018 na obszarze badania występowało jedynie x instalacji
+fotowoltaicznych, które zajmowały powierzchnię x hektarów. Istnieje
+również jeden zbiór danych, którego sposób stworzenia był najbardziej
+zbliżony do omawianego w niniejszym badaniu.
+\textcite{kruitwagen_2021_pv}, wykorzystując zdjęcia satelitarne
+SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego,
+wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30
+września 2018 roku. Według wyników tego badania, na obszarze badań
+znajduje się x poligonów reprezentujących segmenty farm fotowoltaicznych
+o łącznej powierzchni x hektarów.
 
-Ten rozdział powinien też zawierać opis kwestii, których nie udało się
-rozwiązać w pracy dyplomowej (i dlaczego się nie udało) oraz pomysły na
-przyszłe ulepszenie uzyskanych wyników lub dalsze badania.
+DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach
+potwierdziła, że modele w większości przepadków skutecznie dokonują
+rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas
+klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka
+powtarzających się błędów. W celu poprawy wyników identyfikacji farm
+fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów
+chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego
+etapu w procesie przetwarzania końcowego, który wykluczałby predykcje
+wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z
+sugestią Ortiz et al.~(2022).
 
 \printbibliography[heading=bibintoc, title=Bibliografia]
 

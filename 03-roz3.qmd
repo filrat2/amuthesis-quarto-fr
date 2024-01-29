@@ -6,7 +6,7 @@ editor:
 
 # Materiały {#sec-materialy}
 
-W ramach badania wykorzystano zarówno radarowe, jak i multispektralne dane satelitarne pochodzące z programu Copernicus, konkretnie z misji Sentinel-1 i Sentinel-2.
+W ramach badania wykorzystano zarówno radarowe, jak i multispektralne dane satelitarne z programu Copernicus, pochodzące odpowiednio z misji Sentinel-1 i Sentinel-2.
 Program Copernicus to unijna inicjatywa obserwacji Ziemi, koordynowana i zarządzana przez Komisję Europejską we współpracy z różnymi partnerami, w tym Europejską Agencją Kosmiczną (ang. *European Space Agency*, ESA).
 Zarówno dane radarowe z misji Sentinel-1 oraz multispektralne zdjęcia satelitarne z misji Sentinel-2 zostały pozyskane 8 maja 2023 roku, gdy współczynnik zachmurzenia na obszarze badań wynosił mniej niż 1%.
 W badaniu wykorzystano dane Sentinel-1 Ground Range Detected (GRD) oraz skorygowane atmosferycznie dane Sentinel-2 L2A, reprezentujące współczynnik odbicia na powierzchni Ziemi.
@@ -22,6 +22,66 @@ Powierzchnia obszaru analizy wynosi w przybliżeniu 12000 km^2^, a jego lokaliza
 knitr::include_graphics("figures/sen2_extent.png")
 ```
 
+## Lokalizacje farm fotowoltaicznych {#sec-pv}
+
+```{r}
+#| label: fig-rycina-pv
+#| echo: false
+#| fig-cap: "Porównanie wyglądu farm fotowoltaicznych w Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps (d) oraz w kompozycji RGB Sentinel-2 (e)"
+#| out-width: 100%
+knitr::include_graphics("figures/pv.png")
+```
+
+W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
+w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics].
+Do lokalizacji oraz digitalizacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
+W celu stworzenia zbioru danych testowych i treningowych użyto ortomozaik Google Satellite, Bing Aerial oraz Planet Basemaps [@planet], udostępnianych w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
+Mozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
+
+Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą [@ortofotomapa].
+Rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1 m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft cechuje się rozmiarem komórki od 30 do 60 cm [@bing_aerial].
+Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics].
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
+Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych referencyjnych dla konkretnego zakresu czasu.
+Mozaiki Planet Basemaps [@planet] są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym, co umożliwia generowanie wysokorozdzielczych mozaik, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
+
+Na podstawie wyżej wymienionych danych dokonano digitalizacji farm fotowoltaicznych na obszarze badania w celu stworzenia zestawu danych referencyjnych.
+Digitalizacja polega na tworzeniu obiektów wektorowych, takich jak punkty, linie czy poligony, poprzez rysownie figur geometrycznych uwzględniając ich współrzędne geograficzne na podstawie obrazów satelitarnych czy zeskanowanych map papierowych.
+Do tego celu wykorzystano narzędzia digitalizacji z oprogramowania QGIS [@qgis], które umożliwiają rysowanie kształtów i edycję danych wektorowych.
+
+Na podstawie ortofotomapy oraz mozaik satelitarnych zdigitalizowane zostały prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla 33UWV Sentinel-2 istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku, sekcja [-@sec-satellite-imagery]).
+Wykorzystane do digitalizacji dane pochodzą z różnych okresów, co spowodowało sytuacje, gdzie farmy obecne na najbardziej aktualnej mapie podkładowej (Planet Basemaps) nie występowały na mozaikach o wyższej rozdzielczości przestrzennej (ortofotomapa, Google Satellite, Bing Aerial).
+Podczas digitalizacji przyjęto, że granice farm fotowoltaicznych lub ich segmentów będą ustalane na podstawie mapy podkładowej o najwyższej rozdzielczości, na której dana farma fotowoltaiczna występuje.
+
+```{r tabela1, echo=FALSE}
+#| label: tbl-tabela-digitizing-results
+#| echo: false
+#| tbl-cap: "Statystki zdigitalizowanych farm fotowoltaicznych na obszarze kafla Sentinel-2 o oznaczeniu 33UWV"
+df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/pv_stat.rds")
+names(df) = c("Liczba zdigitalizowanych farm PV lub ich segmentów",
+              "Suma powierzchni farm fotowoltaicznych [ha]",
+              "Minimalna powierzchnia farmy PV lub jej segmentu",
+              "Średnia powierzchnia farmy PV lub jej segmentu [ha]",
+              "Maksymalna powierzchnia farmy PV lub jej segmentu [ha]")
+
+df = t(df)
+df[1] = as.character(as.integer(df[1]))
+
+kableExtra::kable(df, align = "r", booktabs = TRUE)
+```
+
+Podstawowe statystki zdigitalizowanych obiektów przedstawia tabela [-@tbl-tabela-digitizing-results], a lokalizacje oznaczonych farm fotowoltaicznych lub ich segmentów przedstawia rycina [-@fig-rycina-pv].
+Zauważyć można duże zróżnicowanie w powierzchni farm fotowoltaicznych lub ich segmentów, od małych instalacji o powierzchni 0,01 ha do znacznie większych konstrukcji o powierzchni prawie 25 ha.
+Rozmieszczenie farm fotowoltaicznych na obszarze kafla 33UWV Sentinel-2 skupia się głównie w zachodniej i południowej części badanego obszaru.
+
+```{r}
+#| label: fig-rycina-spatial-distribution-pv
+#| echo: false
+#| fig-cap: "Rozmieszczenie zdigitalizowanych farm fotowoltaicznych lub ich segmentów"
+#| out-width: 100%
+knitr::include_graphics("figures/farmy1.png")
+```
+
 ## Zdjęcia satelitarne {#sec-satellite-imagery}
 
 ### Sentinel-1 {#sec-sentinel1}
@@ -33,24 +93,34 @@ Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang. *Synthetic 
 Częstotliwość radaru Sentinel-1, mieszcząca się w pasmie C (od 4 do 8 GHz), determinuje jego zdolność do penetracji jedynie górnych warstw koron drzew, roślinności oraz gleby [@sentinel_1_user_guide].
 Radar jest najczęściej wykorzystywany w trybie podwójnej polaryzacji, emitując fale pionowe i mierząc zarówno fale pionowe (ang. *vertical*), jak i poziome (ang. *horizontal*) po ich powrocie do czujnika, dzięki czemu otrzymujemy dane o intensywności rozproszenia wstecznego VV i VH [@sentinel1_lulc].
 Radar z syntetyzowaną aperturą umożliwia prowadzenie obserwacji zarówno w nocy, jak i w dzień, niezależnie od warunków pogodowych, przez co czas rewizyty konstelacji dwóch satelitów dla obszaru Polski wynosi około 2 dni [@attema_2008_s1; @sentinel1_revisit].
-W grudniu 2021 roku w satelicie Sentinel-1B wystąpiła anomalia związana z zasilaniem elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych radarowych [@sentinel_1b].
+W grudniu 2021 roku w satelicie Sentinel-1B wystąpiła awaria układu zasilania elektroniki radaru, uniemożliwiająca dalsze dostarczanie danych radarowych [@sentinel_1b].
 W wyniku awarii satelita Sentinel-1B został wyłączony z użytku, a wystrzelenie platformy Sentinel-1C zaplanowano na marzec 2024 roku [@sentinel_1b; @sentinel1_eoportal].
 
-Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia.
-Produkty poziomu 1, Single Look Complex (SLC) i Ground Range Detected (GRD), przeznaczone są dla użytkowników końcowych, umożliwiając monitorowanie Ziemi, klasyfikację pokrycia terenu oraz aplikacje interferometryczne  [@hejmanowska_2020_dane].
-Interferometria radarowa (ang. *Interferometric Synthetic Aperture Radar*, InSAR) to technika umożliwiająca generowanie cyfrowych modeli wysokościowych (ang. *digital elevation model*, DEM) oraz pomiary deformacji terenu na podstawie informacji o fazie sygnału [@hanssen_2001_insar; @hejmanowska_2020_dane].
+```{r}
+#| label: fig-rycina-pv-sentinel1
+#| echo: false
+#| fig-cap: "Farma fotowoltaiczna na wysokorozdzielczym obrazie satelitarnym (a), kompozycji RGB Sentinel-2 (b) oraz obrazie rozproszenia wstecznego w polaryzacji VV Sentinel&#8209;1 (c)"
+#| out-width: 100%
+knitr::include_graphics("figures/pv_sen1.png")
+```
+
+Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia. 
+Dane poziomu 0 to surowe, nieobrazowe dane, z których generowane są produkty wyższych poziomów przetworzenia.
+Poziom 1 obejmuje produkty Single Look Complex (SLC) oraz Ground Range Detected (GRD) przeznaczone do monitorowania Ziemi, klasyfikacji pokrycia terenu oraz aplikacji interferometrycznych ^[Interferometria radarowa (ang. *Interferometric Synthetic Aperture Radar*, InSAR) to technika umożliwiająca generowanie cyfrowych modeli wysokościowych (ang. *digital elevation model*, DEM) oraz pomiary deformacji terenu na podstawie informacji o fazie sygnału [@hanssen_2001_insar; @hejmanowska_2020_dane].] [@hejmanowska_2020_dane].
 Produkty SLC to obrazy SAR w geometrii ukośnej, posiadające informację o wartości amplitudy i fazie sygnału, co czyni je odpowiednimi do interferometrii radarowej [@hejmanowska_2020_dane].
 Produkty GRD są rezultatem przepróbkowania obrazów SLC do jednolitej rozdzielczości przestrzennej (10 × 10 m) i rzutowania na powierzchnię elipsoidy odniesienia [@hejmanowska_2020_dane].
 Przy konwersji SLC do GRD tracimy informację fazową sygnału, co wyklucza zastosowanie produktów GRD w interferometrii radarowej [@sentinel1_products].
 Produkty GRD nie posiadają cech ortofotomapy i wymagają dodatkowego przepróbkowania z użyciem cyfrowego modelu wysokości przed wykorzystaniem w systemach GIS [@hejmanowska_2020_dane].
+Produkty oceaniczne poziomu drugiego (Level-2 Ocean (OCN)) służą natomiast do zastosowań związanych z pomiarem wiatrów, fal i prądów morskich [@sentinel1_ocn]. 
+Produkty przeznaczone dla użytkowników końcowych to produkty pierwszego i drugiego poziomu przetworzenia.
 
-Dane Sentinel-1 rejestrowane są w czterech trybach: Interferometric Wide Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Stripmap (SM) - używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Extra-Wide Swath (EW) - tryb do monitorowania stref polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
+Dane Sentinel-1 rejestrowane są w czterech trybach: Stripmap (SM) - używany do obrazowania małych wysp i na potrzeby zarządzania kryzysowego, Interferometric Wide Swath (IW) - podstawowy tryb obrazowania dla obszarów lądowych, Extra-Wide Swath (EW) - tryb do monitorowania stref polarnych i niektórych obszarów morskich oraz Wave (WV) - tryb obrazowania oceanów [@hejmanowska_2020_dane; @sentinel1_instrument_payload; @sentinel1_stripmap].
 Charakterystykę konkretnych trybów akwizycji radaru Sentinel-1 przedstawia tabela [-@tbl-tabela-sentinel1] [@sentinel1_resolution_swath].
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-sentinel1
 #| echo: false
-#| tbl-cap: "Tryby radaru Sentinel-1 (ESA, [2023](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath))"
+#| tbl-cap: "Tryby radaru Sentinel-1 (ESA, [2023](https://sentinels.copernicus.eu/web/sentinel/missions/sentinel-1/instrument-payload/resolution-swath)). Pogrubiony wiersz wskazuje tryb wykorzystany w niniejszym badaniu."
 df = data.frame(
   a = c("Stripmap", "Interferometric Wide Swath", "Extra Wide Swath", "Wave"),
   b = c("20 - 45", "29 - 46", "19 - 47", "22 - 35   35 - 38"),
@@ -80,7 +150,7 @@ Użyty zestaw danych został utworzony poprzez połączenie dwóch sąsiednich p
 
 Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjnie prowadzona przez Europejską Agencję Kosmiczną w ramach programu Copernicus.
 Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
-Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem do 2-3 dni na średnich szerokościach geograficznych, obejmujących obszar Polski [@hejmanowska_2020_dane; @sentinel_2_guide].
+Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem do 2-3 dni na średnich szerokościach geograficznych, obejmujących również obszar Polski [@hejmanowska_2020_dane; @sentinel_2_guide].
 
 Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia na powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
 
@@ -91,7 +161,7 @@ Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosfery
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-sentinel2
 #| echo: false
-#| tbl-cap: "Kanały spektralne satelitów Sentinel-2 (ESA, [2023](https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral))"
+#| tbl-cap: "Kanały spektralne satelitów Sentinel-2 (ESA, [2023](https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/resolutions/spectral)). Pogrubione wiersze wskazują kanały wykorzystane w niniejszym badaniu."
 df = data.frame(
   a = c("B01","B02","B03","B04","B05","B06","B07","B08","B8A","B09","B10","B11","B12"),
   b = c("Coastal Aerosol","Blue","Green","Red","Vegetation RedEdge","Vegetation RedEdge","Vegetation RedEdge","NIR","NIR","Water Vapour","Cirrus","SWIR","SWIR"),
@@ -115,26 +185,3 @@ Obszar analizy obejmuje kafel (ang. *tile*) o oznaczeniu 33UWV, dla którego wsp
 Użyte zostały dane na poziomie przetworzenia L2A.
 Z dostępnych kanałów spektralnych (tabela [-@tbl-tabela-sentinel2] [@sentinel_2_user_guide]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur.
 Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945 nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].
-
-## Ortofotomapa i mozaiki zdjęć satelitarnych {#sec-mosaics}
-
-Do lokalizacji oraz wektoryzacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
-W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
-w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics].
-Do stworzenie zbioru danych testowych i treningowych wykorzystano ortomozaiki Google Satellite, Bing Aerial oraz Planet Basemaps [@planet], udostępniane w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
-Mozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
-
-Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą [@ortofotomapa].
-Rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1 m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft cechuje się wielkością komórki od 30 do 60 cm [@bing_aerial].
-Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics].
-Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
-Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych testowych i treningowych na konkretny okres czasu.
-Mozaiki Planet Basemaps [@planet] są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym, co umożliwia generowanie wysokorozdzielczych mozaik, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
-
-```{r}
-#| label: fig-rycina-pv
-#| echo: false
-#| fig-cap: "Porównanie wyglądu farm fotowoltaicznych w Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps (d) oraz w kompozycji RGB Sentinel-2 (e)"
-#| out-width: 100%
-knitr::include_graphics("figures/pv.png")
-```

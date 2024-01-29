@@ -1,77 +1,83 @@
 # Wyniki {#sec-wyniki}
 
-<!--
-Część **Wyniki** może składać się z jednego lub więcej rozdziałów. 
-Każdy z tych rozdziałów powinien mieć tytuł adekwatny do swojej treści.
-
-Rozdziały wynikowe powinny korzystać z wiedzy opisanej w poprzednich rozdziałach (Rozdziały [-@sec-lit], [-@sec-materialy], [-@sec-metody]).
-W przypadku prac analitycznych, ich treść powinna przedstawiać kolejne etapy eksploracji i analizy danych.
-W przypadku prac technicznych, treść tych rozdziałów powinna opisywać stworzone narzędzia, a następnie pokazywać ich zastosowanie/a.
-
-W przypadku prac technicznych warto pokazywać fragmenty napisanego rozwiązania lub jego wywołania używając bloków kodu.
-
-```{r}
-moja_funkcja = function(x){
-  cat(x, "rządzi!")
-}
-moja_funkcja("Autor tej pracy")
-```
--->
-
 ## Ocena jakości modeli {#sec-results-model-quality-assessment}
 
-Dla każdego z sześciu wariantów zestawów danych wskazanych w tabeli [-@tbl-tabela-datasets] przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z sekcją [-@sec-model-quality-assessment].
+Dla każdego z sześciu wariantów zestawów danych przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z procedurą przestawioną w sekcji [-@sec-model-quality-assessment].
+Warianty odnoszą się do różnych zestawów zmiennych stworzonych w celu ustalenia optymalnego zestawu danych na potrzeby detekcji farm fotowoltaicznych przy wykorzystaniu danych teledetekcyjnych.
+Informacje na temat zmiennych zawartych w każdym wariancie przedstawia tabela [-@tbl-tabela-datasets].
 Zagnieżdżona przestrzenna walidacja krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
 
-Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli dla jednego foldu w celu określenia optymalnych hiperparametrów.
-Powtarzając tę procedurę dla każdego z pięciu ustalonych foldów, uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia.
+Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli dla jednego podzbioru w celu określenia optymalnych hiperparametrów.
+Powtarzając tę procedurę dla każdego z pięciu ustalonych podzbiorów, uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia.
 W celu identyfikacji optymalnych hiperparametrów założono dwadzieścia iteracji wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100 000 modeli.
 
-Zoptymalizowane parametry modelu zostały następnie wykorzystane do oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100 modeli (5 foldów * 20 powtórzeń).
+Zoptymalizowane parametry modelu zostały następnie wykorzystane do oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100 modeli (5 podzbiorów * 20 powtórzeń).
 W rezultacie całkowita liczba stworzonych modeli wykorzystanych do oceny jakości i dostrajania hiperparametrów dla jednego wariantu wynosi 100 100.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-performance-measures
 #| echo: false
-#| tbl-cap: "Śrdenie wyniki oceny jakości modeli uzyskane podczas przestrzennej walidacji krzyżowej"
+#| tbl-cap: "Średnie wyniki oceny jakości modeli uzyskane podczas przestrzennej walidacji krzyżowej"
 df = readRDS("C:/Users/Filip/Desktop/inzynierka/rds/performance_scores_df_12_01.rds")
-rownames(df) = gsub("classif.", '', rownames(df))
-colnames(df) = gsub('dataset', 'Dataset ', colnames(df))
-rownames(df)[4] = "AUC"
-rownames(df)[5] = "F-beta score"
+df = df[!(rownames(df) %in% c("classif.auc", "classif.specificity")), ]
+colnames(df) = gsub('dataset', 'Wariant ', colnames(df))
+rownames(df)[1] = "Precyzja"
+rownames(df)[2] = "Czułość"
+rownames(df)[3] = "F1-score"
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "")
 ```
 
-Ocenę klasyfikatorów stworzonych dla każdego z sześciu wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy użyciu pięciu miar jakości opisanych w sekcji [-@sec-model-quality-assessment].
-Średnie wyniki miar jakości modeli oszacowane na podstawie przestrzennej walidacji krzyżowej przedstawia tabela [-@tbl-tabela-performance-measures].
+Ocenę klasyfikatorów stworzonych dla każdego z sześciu wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono przy użyciu trzech miar jakości opisanych w sekcji [-@sec-model-quality-assessment].
+Średnie wyniki tych miar, oszacowane na podstawie przestrzennej walidacji krzyżowej, przedstawia tabela [-@tbl-tabela-performance-measures].
 
 Ogólnie średnie wartości miar jakości dla każdego z wariantów są zbliżone.
-Prawdopodobnie wynika to z faktu, że w każdym wariancie dziesięć klasyfikatorów uwzględniało dane dotyczące reflektancji Sentinel-2 w poszczególnych kanałach.
+Prawdopodobnie wynika to z faktu, że w każdym wariancie dziesięć predyktorów uwzględniało dane dotyczące reflektancji Sentinel-2 w jego poszczególnych kanałach.
 Każdy wariant różnił się jednak od pozostałych zestawem dodatkowych zmiennych.
 
 Na podstawie średnich wartości miar jakości przedstawionych w tabeli [-@tbl-tabela-performance-measures], najlepsze dopasowanie uzyskano, wykorzystując wszystkie predyktory (wariant nr 6).
-Ten wariant osiągnął najwyższe średnie oceny w czterech z pięciu zastosowanych miar (precyzja, specyficzność, AUC i $F_{\beta}$ score).
+Ten wariant osiągnął najwyższe średnie oceny w dwóch z trzech zastosowanych miar (precyzja i F1-score).
 Najlepszy wynik czułości uzyskał natomiast wariant nr 1.
-W przypadku trzech z pięciu miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja, specyficzność i $F_{\beta}$ score).
-Najgorszą czułością cechuje się natomiast wariant nr 5, a najniższym wynikiem miary AUC - wariant nr 4.
+W przypadku dwóch z trzech miar najniższe wyniki odnotowano dla wariantu nr 3 (precyzja i F1-score), a najgorszą czułością cechuje się natomiast wariant nr 5.
 
-Średnie wyniki czułości i miary AUC dla wszystkich klasyfikatorów są bardzo zbliżone, a różnice pomiędzy najlepszym a najgorszym wynikiem są niewielkie.
-Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla precyzji wynosi 0,0434, dla czułości 0,0332, a dla $F_{\beta}$ score 0,0238, co wskazuje na bardziej znaczące różnice.
+Rozrzut pomiędzy najlepszym a najgorszym wynikiem dla precyzji wynosi 0,0434, dla czułości 0,0332, a dla F1-score 0,0238.
 Średnie wyniki precyzji czterech z sześciu klasyfikatorów przekroczyły wartość 0,90 (0,8746 dla najgorszego wariantu nr 3, 0,9180 dla najlepszego wariantu nr 6).
-Klasyfikatory wzorowo radziły sobie w wykrywaniu ujemnych wyników (True negative), uzyskując bardzo wysokie wyniki specyficzności (zakres wartości od 0,9924 do 0,9956).
-Niższe wyniki czułości wskazują jednak na mniej efektywne radzenie sobie z wykrywaniem wyników dodatnich (True positive). 
 Wszystkie klasyfikatory uzyskały wyniki czułości na poziomie wyższym niż 0,70, kształtując się w zakresie od 0,7081 do 0,7413.
-Podobnie jak w przypadku specyficzności, wszystkie klasyfikatory uzyskały wysokie oceny dla miary AUC, gdzie najgorszy wynik wyniósł 0,9802, a najlepszy 0,9867.
-Wyniki miary $F_{\beta}$ score dla każdego wariantu przekroczyły wartość 0,75, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
+Niemniej jednak, takie wyniki czułości wskazują na dość przeciętne radzenie sobie z wykrywaniem wyników prawdziwie pozytywnych (ang. *true positive*).
+Średnie wyniki miary F1-score opisującej całościowo jakość modelu poprzez ocenę balansu pomiędzy precyzją a czułością przekroczyły wartość 0,75 dla każdego wariantu, mieszcząc się w zakresie pomiędzy 0,7691, a 0,7929.
+
+```{r}
+#| label: fig-rycina-f1-score-boxplot
+#| echo: false
+#| fig-cap: "Rozkład wyników miary F1-score na podstawie 100 modeli dla każdego wariantu. Czerwony punkt reprezentuje średnią wyników F1-score dla danego wariantu, a czarne punkty wyniki dla poszczególnych modeli"
+#| out-width: 100%
+knitr::include_graphics("figures/f1_score_boxplot.png")
+```
+
+Stabilność klasyfikatora można ocenić na podstawie rozrzutu wyników oceny jakości poszczególnych modeli.
+Im mniej różnorodne są wyniki oceny jakości modeli w klasyfikatorze, tym bardziej jest on stabilny.
+Wykres pudełkowy (rycina [-@fig-rycina-f1-score-boxplot]) wskazuje, że wariant o najniższym średnim wyniku F1-score charakteryzuje się również największym rozrzutem wyników dla poszczególnych modeli.
+Największą stabilnością przewidywań charakteryzuje się natomiast wariant nr 6.
+
+Wykres pudełkowy przedstawiający rozkład wyników miary F1-score na podstawie 100 modeli dla każdego wariantu (rycina [-@fig-rycina-f1-score-boxplot]) ujawnia jej bimodalny rozkład wyników w każdym z wariantów.
+Charakteryzuje się on grupowaniem wyników wokół dwóch wartości oddzielonych od siebie, przy czym grupy te nie są równe pod względem liczebności, ale są wyraźnie większe od pozostałych.
+Miara F1-score, będąc średnią harmoniczną precyzji i czułości modelu, jest silnie zależna od tych dwóch niezależnych miar.
+
+Analiza wyników precyzji ujawniła, że wartości odstające w wynikach tej miary pochodzą z modeli, gdzie podzbiór testowy składał się głównie z obserwacji negatywnych, przy niewielkiej liczbie obserwacji pozytywnych.
+W przypadku gdy odsetek obserwacji pozytywnych był wyższy, wyniki precyzji dla danego modelu były bliskie lub równe maksymalnej wartości jaką może osiągnąć ta miara.
+
+W przeciwieństwie do precyzji, czułość wydaje się być mniej podatna na wpływ proporcji obserwacji pozytywnych do negatywnych w zbiorze treningowym.
+Wyniki czułości dla poszczególnych modeli w każdym z wariantów, podobnie jak w przypadku F1-score, mają rozkład bimodalny.
+Na ogół rozkład wyników czułości jest bardzo zbliżony do rozkładu wyników miary F1-score, a największą różnicą jest obecność wartości odstających w wynikach czułości dla dwóch wariantów, co nie ma miejsca w przypadku F1-score.
+Oznacza to prawdopodobnie, że bimodalny rozkład wyników F1-score jest definiowany przez rozkład wyników czułości.
 
 ## Ważność zmiennych {#sec-results-variable-importance}
 
 ```{r}
 #| label: fig-rycina-variance-importance_cowplot
 #| echo: false
-#| fig-cap: "Permutowane znaczenie 10 najważniejszych zmiennych dla każdego wariantu"
+#| fig-cap: "Permutowana ważność 10 najważniejszych zmiennych dla każdego wariantu"
 #| out-width: 105%
-knitr::include_graphics("figures/importance_cowplot.png")
+knitr::include_graphics("figures/importance_cowplot_pl.png")
 ```
 
 Dla każdego z sześciu wariantów (tabela [-@tbl-tabela-datasets]) przeprowadzono ocenę ważności zmiennych z wykorzystaniem metody opartej na permutacji, szczegółowo opisanej w sekcji [-@sec-variable-importance].
@@ -84,7 +90,7 @@ Rycina [-@fig-rycina-variance-importance-dataset6] ilustruje permutowaną ważno
 #| echo: false
 #| fig-cap: "Permutowana ważność zmiennych dla wariantu nr 6"
 #| out-width: 450px
-knitr::include_graphics("figures/importance_plot_dataset6.png")
+knitr::include_graphics("figures/importance_plot_dataset6_pl.png")
 ```
 
 Pomijając aspekt związków i interakcji pomiędzy zmiennymi, które powodowały subtelne różnice w kolejności znaczenia zmiennych dla poszczególnych wariantów, zauważalny jest podział zmiennych na pięć grup według ich istotności w detekcji farm fotowoltaicznych.
@@ -94,41 +100,48 @@ Trzecią grupę stanowiły dwie zmienne: znormalizowany różnicowy wskaźnik we
 Najmniejsze znaczenie przy detekcji farm fotowoltaicznych miały kanał zielony (B03), pozostałe kanały czerwieni krawędziowej (B06 i B07),  kanał bliskiej podczerwieni (B08), obie wykorzystane polaryzacje (VV i VH) oraz tekstury średniej sumy dla kanału B8A, polaryzacji VH oraz wskaźnika NDBI (B8A SAVG, VH SAVG i NDBI SAVG).
 
 Uzyskane wyniki oceny ważności zmiennych wskazują na dość spore znacznie wskaźników spektralnych, głównie mNDWI oraz NDBI w kontekście wykrywania farm fotowoltaicznych.
-Niskie znaczenie w tym zastosowaniu wykazują natomiast dane radarowe pochodzące z misji Sentienl-1 oraz tekstury średniej sumy dla tych zmiennych.
+Niskie znaczenie w tym zastosowaniu wykazują natomiast dane radarowe pochodzące z misji Sentinel-1 oraz tekstury średniej sumy dla tych zmiennych.
 
-Spośród sześciu obliczonych tekstur średniej sumy wskazanych przez @wang_2022_pv jako istotne przy detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest, jedynie tekstura średniej sumy dla kanału niebieskiego wykazywała się znaczącym wpływem na wynik klasyfikacji.
+Spośród sześciu obliczonych tekstur średniej sumy wskazanych przez Wanga et al. [-@wang_2022_pv] jako istotne przy detekcji farm fotowoltaicznych na podstawie danych Sentinel-1, Sentinel-2 i algorytmu Random Forest, jedynie tekstura średniej sumy dla kanału niebieskiego wykazywała się znaczącym wpływem na wynik klasyfikacji.
 Pozostałe tekstury wskazywały przeciętną lub niską istotność w tym konkretnym zadaniu.
 Ważność trzech z obliczonych tekstur (B02 SAVG, VV SAVG i VH SAVG) była wyższa niż ocena ważności odpowiadających im danych pierwotnych.
 W przypadku pozostałych trzech tekstur (B8A SAVG, mNDWI SAVG i NDBI SAVG), uzyskane wyniki były niższe niż wyniki pierwotnych danych teledetekcyjnych.
 
-**W tym miejscu można też wstawić rycinę (corplot) z korelacją między zmiennymi oraz/lub rycinę z krzywymi spektralnymi dla różnych klas pokrycia terenu, w tym farm fotowoltaicznych. Można także rozważyć umieszczenie tych rycin w sekcji [-@sec-variable-importance].**
+```{r}
+#| label: fig-rycina-spectral-curves
+#| echo: false
+#| fig-cap: "Krzywa odbicia spektralnego farm fotowoltaicznych na tle innych typów pokrycia terenu"
+#| out-width: 100%
+knitr::include_graphics("figures/spectral_curves_plot2.png")
+```
 
-## Wyniki klasyfikacji {#sec-classification-results}
+Charakterystyka spektralna farm fotowoltaicznych (rycina [-@fig-rycina-spectral-curves]) wyjaśnia znaczenie kanałów B02, B11 i B12 w kontekście detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych.
+Krzywa spektralna instalacji fotowoltaicznych wskazuje na spektralne zróżnicowanie tej powierzchni względem innych typów pokrycia terenu w zakresie pasm średniej podczerwieni, do których należą kanały B11 (1610 nm) i B12 (2190 nm).
+Farmy fotowoltaiczne charakteryzują się wyższym współczynnikiem odbicia od większości innych powierzchni w zakresie fal niebieskich (kanał B02, 493 nm).
+Oznacza to, że odpowiedź spektralna instalacji fotowoltaicznych w tym zakresie różnicuje je od innych typów pokrycia terenu.
 
-Wyniki klasyfikacji dotyczące liczby wykrytych farm fotowoltaicznych lub ich oddzielnych segmentów oraz sumy wykrytej powierzchni, zostały przedstawione w tabeli [-@tbl-tabela-classification-results].
-Pierwszy wiersz odnosi się do zbioru referencyjnego, który obejmował prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV istniejące w czasie wykonania wykorzystanych zobrazowań (8 maja 2023 roku).
-Zbiór referencyjny został zwektoryzowany na podstawie ortofotomapy i mozaik satelitarnych.
+## Wyniki klasyfikacji po przetwarzaniu końcowym {#sec-classification-results}
 
-Analiza wyników w tabeli wskazuje na znaczne zróżnicowanie zarówno pod względem liczby wykrytych poligonów (odpowiadających poszczególnym segmentom farm fotowoltaicznych), jak i sumy wykrytej powierzchni.
-Warianty nr 2 i 3 osiągnęły wyniki najbardziej zbliżone do rzeczywistych, prezentując zbliżoną sumę powierzchni wskazanej jako farmy fotowoltaiczne.
-Niemniej jednak oba warianty różnią się znacząco pod względem liczby wykrytych poligonów.
-
-Pod względem poprawnie wykrytej powierzchni elektrowni fotowoltaicznych, ustalonej na podstawie macierzy pomyłek, wyniki poszczególnych wariantów są stosunkowo zbliżone i mieszczą się w zakresie od 286,20 ha do 290,90 ha.
-Wariant nr 6 okazał się najlepszy pod względem wykrytej powierzchni, natomiast najgorszy wynik uzyskał wariant nr 5.
-
-Warto jednak zaznaczyć, że wyniki predykcji po etapie przetwarzania końcowego są dość mocno niekompletne, ponieważ każdemu z wariantów brakuje około 55 ha powierzchni farm fotowoltaicznych względem zbioru referencyjnego.
-Powierzchnia ta stanowi ponad 15% powierzchni elektrowni fotowoltaicznych na obszarze badań i sygnalizuje pewne ograniczenia w precyzji klasyfikacji.
+Wyniki klasyfikacji dotyczące liczby wykrytych farm fotowoltaicznych lub ich oddzielnych segmentów oraz sumy wykrytej powierzchni po procesie przetwarzania końcowego zostały przedstawione w tabeli [-@tbl-tabela-classification-results].
+Pierwszy wiersz odnosi się do zbioru referencyjnego, który obejmował wszystkie farmy fotowoltaiczne określone na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie wykonania użytych zobrazowań (8 maja 2023 roku).
+Zbiór referencyjny został zdigitalizowany na podstawie ortofotomapy i mozaik satelitarnych.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-classification-results
 #| echo: false
 #| tbl-cap: "Wyniki klasyfikacji uzyskane po procesie przetwarzania końcowego"
 df = readRDS(
-  "C:/Users/Filip/Desktop/inzynierka/spatial_results/11_results/prediction_accuracy_assessment.rds")
+  "C:/Users/Filip/Desktop/inzynierka/spatial_results/11_results/merged_results_confusionMatrix_intersection.rds")
 
+df$area_difference = NULL
+df$correct_predictions_area = NULL
 df$sensitivity = NULL
 df$precision = NULL
-df$area_difference = NULL
+df$F1_score_intersection = NULL
+df$precision_UA = NULL
+df$recall_sensitivity_PA = NULL
+df$F1_score = NULL
+df$tp = NULL
 
 df[1, 1] = "Zbiór referencyjny [note]"
 df[1, 4] = "-"
@@ -142,28 +155,41 @@ kableExtra::kable(df, align = "c", booktabs = TRUE, linesep = "") |>
   kableExtra::column_spec(c(2, 3), width = "3cm") |> 
   kableExtra::column_spec(4, width = "4cm") |>
   kableExtra::add_footnote(c("Patrz: tabela 4.1",
-                             "Zwektoryzowane farmy fotowoltaiczne na podstawie ortofotomapy i mozaik satelitarnych"))
+                             "Zdigitalizowane farmy fotowoltaiczne na podstawie ortofotomapy i mozaik satelitarnych"))
 ```
 
-Porównując wyniki najlepszych wariantów z istniejącymi bazami danych dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej zadowalające.
-Globalna baza danych elektrowni (*Global Power Plant Database*) [@globalpowerplantdb_2021], stworzona przez @byers_2018_globalpowerplantdb i udostępniona w czerwcu 2021 roku, wskazuje na istnienie zaledwie x elektrowni fotowoltaicznych w całej Polsce na wspomniany okres.
-Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez @dunnet_2020_wind_solar, sugerują, że do końca roku 2018 na obszarze badania występowało jedynie x instalacji fotowoltaicznych, które zajmowały powierzchnię x hektarów.
-Istnieje również jeden zbiór danych, którego sposób stworzenia był najbardziej zbliżony do omawianego w niniejszym badaniu.
-@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-Według wyników tego badania, na obszarze badań znajduje się x poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni x hektarów.
+Analiza wyników w tabeli wskazuje na znaczne zróżnicowanie zarówno pod względem liczby wykrytych poligonów (odpowiadających poszczególnym segmentom farm fotowoltaicznych), jak i sumy wykrytej powierzchni.
+Warianty nr 2 i 3 osiągnęły wyniki najbardziej zbliżone do rzeczywistych, prezentując zbliżoną sumę powierzchni wskazanej jako farmy fotowoltaiczne.
+Niemniej jednak oba warianty różnią się znacząco pod względem liczby wykrytych poligonów.
+
+Pod względem poprawnie wykrytej powierzchni elektrowni fotowoltaicznych, ustalonej na podstawie macierzy pomyłek, wyniki poszczególnych wariantów są stosunkowo zbliżone i mieszczą się w zakresie od 286,29 ha do 291,10 ha.
+Wariant nr 6 okazał się najlepszy pod względem wykrytej powierzchni, natomiast najgorszy wynik uzyskał wariant nr 5.
+
+Warto jednak zaznaczyć, że wyniki predykcji po etapie przetwarzania końcowego są dość mocno niekompletne, ponieważ każdemu z wariantów brakuje około 55 ha powierzchni farm fotowoltaicznych względem zbioru referencyjnego.
+Wartość ta stanowi ponad 15% powierzchni elektrowni fotowoltaicznych na obszarze badań i sygnalizuje pewne ograniczenia w skuteczności klasyfikacji.
+
+```{r}
+#| label: fig-rycina-classification-results-dataset2
+#| echo: false
+#| fig-cap: "Lokalizacje poprawnie i niepoprawnie wykrytych farm fotowoltaicznych lub ich segmentów dla wariantu nr 2"
+#| out-width: 100% 
+knitr::include_graphics("figures/poprawne_niepoprawne_wskazania_dataset2.png")
+```
+
+Rozmieszczenie poprawnie i niepoprawnie wykrytych farm fotowoltaicznych dla wariantu drugiego przedstawia rycina [-@fig-rycina-classification-results-dataset2].
+Z ilustracji wynika, że większość elektrowni fotowoltaicznych lub ich segmentów została właściwie zidentyfikowana, a błędnie sklasyfikowane lokalizacje farm fotowoltaicznych występują głównie w północnej części badanego obszaru.
 
 ### Ocena jakości klasyfikacji dla populacji {#sec-population-quality-assessment}
 
-Sekcja [-@sec-results-model-quality-assessment] omawia wyniki jakości klasyfikacji na podstawie próby, a wyniki oceny jakości modelu uzyskane na podzbiorze populacji mogą znacznie różnić się od rezultatów uzyskanych podczas klasyfikacji całej populacji, obejmującej wszystkie obserwacje na badanym obszarze.
+Sekcja [-@sec-results-model-quality-assessment] omawiała wyniki jakości klasyfikacji na podstawie próby, a wyniki oceny jakości modelu uzyskane na niewielkiej części populacji mogą znacznie różnić się od rezultatów uzyskanych podczas klasyfikacji całej populacji, obejmującej wszystkie obserwacje na badanym obszarze.
 
 W celu oceny rzeczywistej jakości klasyfikacji dla całej populacji po procesie przetwarzania końcowego dokonano porównania wyników predykcji każdego wariantu (tabela [-@tbl-tabela-datasets]) ze zbiorem referencyjnym.
-Referencyjny zbiór danych obejmował prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla Sentinel-2 o oznaczeniu 33UWV istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku), zwektoryzowane na podstawie ortofotomapy i mozaik satelitarnych.
-Porównanie wymagało przekształcenia zwektoryzowanych farm fotowoltaicznych do postaci rastrowej, przyjmując siatkę 10-metrowych kanałów wykorzystanej sceny Sentinel-2.
+Referencyjny zbiór danych obejmował wszystkie farmy fotowoltaiczne, które udało się określić na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie wykonywania użytych zobrazowań (8 maja 2023 roku).
+Dane te zostały zdigitalizowane na podstawie ortofotomapy oraz mozaik satelitarnych.
+Porównanie wymagało przekształcenia zdigitalizowanych farm fotowoltaicznych do postaci rastrowej, przyjmując siatkę 10-metrowych kanałów wykorzystanej sceny Sentinel-2.
 
 Ocena jakości klasyfikacji dla całego obszaru badań (populacji) została przeprowadzona zgodnie z podejściem opisanym w sekcji [-@sec-model-quality-assessment].
-Wykorzystane podejście ponownie opiera się na analizie macierzy pomyłek, która umożliwiła obliczenie trzech miarach jakości: precyzji, czułości oraz F1 score.
-Miara F1 score jest odmianą miary $F_{\beta}$ score, gdzie ${\beta}$ wynosi 1.
-Oznacza to, że jest to średnia harmoniczna pomiędzy precyzją a czułością, używana w sytuacjach, gdy obie te miary są równie istotne.
+Wykorzystane podejście, podobnie jak ocena jakości modeli, opiera się na analizie macierzy błędów, która umożliwiła obliczenie trzech miar jakości: precyzji, czułości oraz F1-score.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-population-quality-assessment
@@ -172,6 +198,7 @@ Oznacza to, że jest to średnia harmoniczna pomiędzy precyzją a czułością,
 df = readRDS(
   "C:/Users/Filip/Desktop/inzynierka/spatial_results/11_results/map_accuracy_assessment.rds")
 
+df$tp = NULL
 df = df[df$dataset != "Reference", ]
 
 df$dataset = gsub("Dataset ", '', df$dataset)
@@ -179,7 +206,7 @@ df$dataset = gsub("Dataset ", '', df$dataset)
 colnames(df) = c("Wariant [note]",
                  "Precyzja",
                  "Czułość",
-                 "F1 score")
+                 "F1-score")
 
 kableExtra::kable(df, align = "c", booktabs = TRUE,
                   linesep = "", row.names = FALSE) |>
@@ -188,7 +215,7 @@ kableExtra::kable(df, align = "c", booktabs = TRUE,
 ```
 
 Wyniki oceny jakości klasyfikacji dla populacji każdego wariantu przedstawia tabela [-@tbl-tabela-population-quality-assessment], która wskazuje na znaczne rozbieżności w kontekście precyzji.
-Precyzja ocenia w pewnym sensie skłonność modelu do przeuczania się, określając jaka część wyników wskazanych przez klasyfikator jako dodatnie jest faktycznie dodatnia w rzeczywistości.
+Precyzja ocenia w pewnym sensie skłonność modelu do przeuczania się, określając jaka część wyników wskazanych przez klasyfikator jako pozytywne jest faktycznie pozytywne w rzeczywistości.
 Przeuczanie występuję w sytuacji, gdy klasyfikator wskazuje farmy fotowoltaiczne w miejscach, gdzie faktycznie one nie występowały.
 Najlepszą precyzję osiągnęły warianty nr 2 i 3, gdzie wartości tej miary wynoszą odpowiednio 0,8668 i 0,8403.
 Warianty nr 4 i 1 prezentują natomiast niską precyzję, wynoszącą odpowiednio 0,5898 i 0,5631, co sugeruje duże przeuczenie tych dwóch klasyfikatorów.
@@ -202,52 +229,50 @@ W zakresie czułości wyniki są znacznie mniej zróżnicowane, utrzymując się
 Czułość określa, jaką część rzeczywistych przypadków wykrył klasyfikator, czyli jaki ułamek farm znajdujących się w referencyjnym zbiorze danych został wykryty.
 Najwyższy wynik czułości osiągnął wariant nr 6, a najniższy - wariant nr 5.
 
-Jak wspomniano wcześniej, miara F1 jest średnią harmoniczną precyzji i czułości, używaną, gdy obie te miary są równie istotne.
-Miara F1 score w pewnym sensie opisuje całościowo wynik, a ponieważ wyniki czułości dla poszczególnych wariantów są zbliżone do siebie, to precyzja będzie miała kluczowy wpływ na ostateczną ocenę jakości klasyfikacji.
-Najwyższym wynikiem miary F1 score charakteryzuje się wariant nr 2 (0,8542), a próg wartości 0,80 przekroczył również wariant nr 3.
-Stosując wyłącznie surowe dane teledetekcyjne, warianty nr 1 i 4 nie przekraczają progu 0,70 dla miary F1 score, podczas gdy pozostałe warianty, zawierające dane pochodne, uzyskały znacznie wyższe wartości.
+Jak wspomniano w sekcji [-@sec-model-quality-assessment], miara F1-score jest średnią harmoniczną precyzji i czułości, używaną, gdy obie te miary są równie istotne.
+Miara F1-score opisuje całościowo wynik, a ponieważ wyniki czułości dla poszczególnych wariantów są zbliżone do siebie, to precyzja będzie miała kluczowy wpływ na ostateczną ocenę jakości klasyfikacji.
+Najwyższym wynikiem miary F1-score charakteryzuje się wariant nr 2 (0,8542), a próg wartości 0,80 przekroczył również wariant nr 3.
+Stosując wyłącznie surowe dane teledetekcyjne, warianty nr 1 i 4 nie przekraczają progu 0,70 dla miary F1-score, podczas gdy pozostałe warianty, zawierające dane pochodne, uzyskały znacznie wyższe wartości.
 
 Ogólnie rzecz biorąc, wyniki sugerują, że korzystanie z pochodnych danych teledetekcyjnych istotnie redukuje skłonność modelu do przeuczenia, poprawiając jednocześnie jego jakość w kontekście detekcji farm fotowoltaicznych.
 
 ### Wizualna kontrola wyników klasyfikacji {#sec-visual-quality-assessment}
 
-Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja [-@sec-population-quality-assessment]), modele stworzone w ramach niniejszego badania wykazują dobrą skuteczność w identyfikacji farm fotowoltaicznych, co ilustruje również rycina [-@fig-rycina-truepositive-dataset6], przedstawiająca przykłady poprawnych przewidywań dla wariantu nr 6.
-Dla porównania, na rycinie przedstawiono także instalacje fotowoltaiczne generujące energię elektryczną, pochodzące z badania przeprowadzonego przez @kruitwagen_2021_pv, wskazującego istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-Wysokorozdzielcze obrazy satelitarne na rycinie [-@fig-rycina-truepositive-dataset6] (kolumna a) pochodzą z różnych okresów.
+Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja [-@sec-population-quality-assessment]), modele stworzone w ramach niniejszego badania wykazują dobrą skuteczność w identyfikacji farm fotowoltaicznych, co ilustruje również rycina [-@fig-rycina-truepositive-dataset2], przedstawiająca przykłady poprawnych przewidywań dla wariantu nr 2.
+Dla porównania, na rycinie przedstawiono także instalacje fotowoltaiczne generujące energię elektryczną, pochodzące z badania przeprowadzonego przez Kruitwagena et al. [-@kruitwagen_2021_pv], wskazującego istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Wysokorozdzielcze obrazy satelitarne na rycinie [-@fig-rycina-truepositive-dataset2] (kolumna a) pochodzą z różnych okresów.
 Obraz satelitarny 2a został pozyskany później niż dane użyte do detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku), natomiast obrazy 4a i 4b pochodzą sprzed tego okresu.
 
-W niektórych przypadkach wewnątrz wykrytych instalacji fotowoltaicznych pojawiły się fałszywie ujemne predykcje (ang. *False negative*), co przedstawiają ryciny [-@fig-rycina-truepositive-dataset6] 1c i [-@fig-rycina-post-processing] 2c.
+W niektórych przypadkach wewnątrz wykrytych instalacji fotowoltaicznych pojawiły się fałszywie negatywne predykcje (ang. *false negative*), co przedstawiają ryciny [-@fig-rycina-truepositive-dataset2] 1c i [-@fig-rycina-post-processing] 2c.
 Na kompozycji RGB Sentinel-2 możemy zaobserwować w miejscach tych błędnych wskazań różnice w jasności komórek względem otaczającej instalacji fotowoltaicznej lub zróżnicowanie powierzchni pod panelami fotowoltaicznymi.
-Rycina [-@fig-rycina-truepositive-dataset6] 5c pokazuje, że w niektórych przypadkach poprawne wskazania powierzchni farm fotowoltaicznych są niepełne, pomimo jednolitego wyglądu instalacji na kompozycji RGB Sentinel-2.
+Rycina [-@fig-rycina-truepositive-dataset2] 5c pokazuje, że w niektórych przypadkach poprawne wskazania powierzchni farm fotowoltaicznych są niepełne, pomimo jednolitego wyglądu instalacji na kompozycji RGB Sentinel-2.
 
 Problemem stworzonych modeli jest ich tendencja do przeuczania się na niektórych typach pokrycia terenu i użytkowania ziemi, co zostało szerzej opisane w sekcji dotyczącej losowania próbek (sekcja [-@sec-samples]).
 Zaproponowane metody przetwarzania końcowego, omówione w sekcji [-@sec-post-processing], poprawiają wyniki predykcji.
 Niemniej jednak, w zależności od wariantu, nadal występują mniejsze lub większe błędy w klasyfikacji.
-Przykłady fałszywie dodatnich przewidywań (ang. *False positive*) zostały przedstawione na rycinach [-@fig-rycina-falsepositive-dataset6] (dla wariantu nr 6) oraz [-@fig-rycina-post-processing] (dla wariantu nr 1).
+Przykłady fałszywie pozytywnych przewidywań (ang. *false positive*) zostały przedstawione na rycinach [-@fig-rycina-falsepositive-dataset2] (dla wariantu nr 2) oraz [-@fig-rycina-post-processing] (dla wariantu nr 1).
 Wybrane lokalizacje ilustrują typowe błędy modeli na różnych typach pokrycia terenu i użytkowania ziemi.
 
-Mimo zastosowania dodatkowych próbek negatywnych na drogach oraz kopalniach torfu, jak wskazano w sekcji [-@sec-samples], błędne pozytywne przewidywania na tych obszarach nadal występują, co ilustrują odpowiednio pierwszy i czwarty rząd ryciny [-@fig-rycina-falsepositive-dataset6].
-Trzeci rząd ryciny [-@fig-rycina-falsepositive-dataset6] oraz drugi rząd ryciny [-@fig-rycina-post-processing] sugerują, że błędne predykcje mogą występować również na obszarach zachmurzonych.
-Drugi rząd ryciny [-@fig-rycina-falsepositive-dataset6] oraz pierwszy rząd ryciny [-@fig-rycina-post-processing] pokazują natomiast, że błędne predykcje obejmują także obszary użytków rolnych (pola uprawne, łąki i pastwiska) oraz nieużytków, szczególnie w miejscach, gdzie istnieje gęsta sieć melioracyjna.
-W wyniku klasyfikacji wariantu nr 6 pojawił się nietypowy przypadek błędnego sklasyfikowania boiska sportowego jako instalacji fotowoltaicznej, które ze względu na powierzchnię większą niż 1000 m^2^ nie zostało skorygowane przez zastosowane metody przetwarzania końcowego.
+Mimo zastosowania dodatkowych próbek negatywnych na drogach, jak wskazano w sekcji [-@sec-samples], błędne pozytywne przewidywania w tych miejscach nadal występują, co ilustruje pierwszy rząd ryciny [-@fig-rycina-falsepositive-dataset2].
+Pierwszy, drugi oraz czwarty rząd ryciny [-@fig-rycina-falsepositive-dataset2] oraz pierwszy rząd ryciny [-@fig-rycina-post-processing] pokazują natomiast, że błędne predykcje obejmują także obszary użytków rolnych (pola uprawne, łąki i pastwiska) oraz nieużytków, szczególnie w miejscach, gdzie istnieje gęsta sieć melioracyjna.
+W wyniku klasyfikacji wariantu nr 2 pojawił się nietypowy przypadek błędnego sklasyfikowania boiska sportowego jako instalacji fotowoltaicznej, które ze względu na powierzchnię większą niż 1000 m^2^ nie zostało skorygowane przez zastosowane metody przetwarzania końcowego.
+Trzeci rząd ryciny [-@fig-rycina-falsepositive-dataset2] oraz drugi rząd ryciny [-@fig-rycina-post-processing] sugerują, że błędne predykcje mogą występować również na obszarach zachmurzonych.
 
 Należy zaznaczyć, że pomimo wykorzystania próbek z tych samych lokalizacji do trenowania każdego z wariantów, różne modele wykazują zróżnicowaną skuteczność klasyfikacji w zależności od typów pokrycia terenu i użytkowania ziemi.
 Jest to prawdopodobnie rezultat wpływów różnych zmiennych, gdzie niektóre z nich wspomagały decyzje w przypadku konkretnego typu pokrycia terenu, podczas gdy inne miały przeciwny efekt.
 
-**DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów. W celu poprawy wyników identyfikacji farm fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania końcowego, który wykluczałby predykcje wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z sugestią Ortiz et al. (2022).**
-
 ```{r}
-#| label: fig-rycina-truepositive-dataset6
+#| label: fig-rycina-truepositive-dataset2
 #| echo: false
-#| fig-cap: "Wyniki klasyfikacji wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów prawdziwie dodatnich przewidywań (ang. True positive) (c) z wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB Sentinel-2 (b)"
-#| out-width: 91%
-knitr::include_graphics("figures/pv_dataset6.png")
+#| fig-cap: "Wyniki klasyfikacji wariantu nr 2 po procesie przetwarzania końcowego. Porównanie wysokorozdzielczych obrazów satelitarnych (a) oraz kompozycji RGB Sentinel-2 (b) z przykładami prawdziwie pozytywnych przewidywań (ang. true positive)"
+#| out-width: 87%
+knitr::include_graphics("figures/pv_dataset2.png")
 ```
 
 ```{r}
-#| label: fig-rycina-falsepositive-dataset6
+#| label: fig-rycina-falsepositive-dataset2
 #| echo: false
-#| fig-cap: "Wyniki klasyfikacji wariantu nr 6 po procesie przetwarzania końcowego. Porównanie przykładów fałszywie dodatnich przewidywań (ang. False positive) (c) z wysokorozdzielczymi obrazami satelitarnymi (a) oraz kompozycją RGB Sentinel-2 (b)"
-#| out-width: 91%
-knitr::include_graphics("figures/incorrect_dataset6.png")
+#| fig-cap: "Wyniki klasyfikacji wariantu nr 2 po procesie przetwarzania końcowego. Porównanie wysokorozdzielczych obrazów satelitarnych (a) oraz kompozycji RGB Sentinel-2 (b) z przykładami fałszywie pozytywnych przewidywań (ang. false positive) (c)"
+#| out-width: 89%
+knitr::include_graphics("figures/incorrect_dataset2.png")
 ```

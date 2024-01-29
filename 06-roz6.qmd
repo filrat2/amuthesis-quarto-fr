@@ -1,7 +1,16 @@
 # Podsumowanie {#podsumowanie}
 
-Podsumowanie pracy jest w pewnym sensie znacznie rozbudowanym abstraktem. 
+<!-- Podsumowanie pracy jest w pewnym sensie znacznie rozbudowanym abstraktem. 
 Należy wyliczyć i opisać osiągnięcia uzyskane w pracy dyplomowej.
 Tutaj jednak (w przeciwieństwie do np. rozdziału [-@sec-wprowadzenie]) należy przechodzić od szczegółu do ogółu - co zostało stworzone/określone, jak zostało to zrobione, jakie ma to konsekwencje, itd.
 
-Ten rozdział powinien też zawierać opis kwestii, których nie udało się rozwiązać w pracy dyplomowej (i dlaczego się nie udało) oraz pomysły na przyszłe ulepszenie uzyskanych wyników lub dalsze badania.
+Ten rozdział powinien też zawierać opis kwestii, których nie udało się rozwiązać w pracy dyplomowej (i dlaczego się nie udało) oraz pomysły na przyszłe ulepszenie uzyskanych wyników lub dalsze badania. -->
+
+Porównując wyniki najlepszych wariantów z istniejącymi bazami danych dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej zadowalające.
+Globalna baza danych elektrowni (*Global Power Plant Database*) [@globalpowerplantdb_2021], stworzona przez Byersa et al. [-@byers_2018_globalpowerplantdb] i udostępniona w czerwcu 2021 roku, wskazuje na istnienie zaledwie x elektrowni fotowoltaicznych w całej Polsce na wspomniany okres.
+Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez Dunnetta et al. [-@dunnet_2020_wind_solar], sugerują, że do końca roku 2018 na obszarze badania występowało jedynie x instalacji fotowoltaicznych, które zajmowały powierzchnię x hektarów.
+Istnieje również jeden zbiór danych, którego sposób stworzenia był najbardziej zbliżony do omawianego w niniejszym badaniu.
+@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Według wyników tego badania, na obszarze badań znajduje się x poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni x hektarów.
+
+DO WNIOSKÓW: Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji. Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów. W celu poprawy wyników identyfikacji farm fotowoltaicznych, zaleca się zastosowanie masek do eliminacji obszarów chmur i ich cieni. Dodatkowo, warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania końcowego, który wykluczałby predykcje wzdłuż dróg na podstawie danych z OpenStreetMap (OSM), zgodnie z sugestią Ortiz et al. (2022).
