@@ -79,12 +79,14 @@ Każdy, kto rozpatruje perspektywę produkcji energii, zdaje sobie sprawę, że 
 Dodatkowo, rosnące zainteresowanie ochroną środowiska i negatywnymi zmianami klimatu oraz wprowadzane przepisy prawne zobowiązują do podejmowania działań mających na celu ograniczenie emisji szkodliwych gazów do atmosfery.
 W obliczu globalnych zmian klimatycznych i kryzysu energetycznego, spowodowanego inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i energetyki jądrowej.
 
-Podstawą polityki Unii Europejskiej w obszarze klimatu jest Europejski Zielony Ład (ang. *European Green Deal*), czyli zestaw inicjatyw politycznych mających na celu przeprowadzenie transformacji ekologicznej i osiągnięcie neutralności klimatycznej w UE do 2050 roku.
-Inicjatywy takie jak Gotowi na 55 (ang. *Fit For 55*) oraz rozporządzenie o europejskim prawie klimatycznym mają zapewnić redukcję emisji gazów cieplarnianych netto o co najmniej 55% do 2030 roku.
-Zgodnie z ustaleniami Rady UE, Parlamentu Europejskiego oraz Komisji Europejskiej, udział energii odnawialnej w ogólnym zużyciu energii w Unii Europejskiej ma wynosić 42,5% do 2030 roku.
-Plan REPowerEU, przedstawiony przez Komisję Europejską w maju 2022 roku, skupia się natomiast na inwestycjach w odnawialne źródła energii, uznając je za leżące w nadrzędnym interesie publicznym.
-Celem tego planu jest zmniejszenie zależności UE od importu paliw kopalnych z Rosji poprzez zainstalowanie niemal 600 GW mocy nowych paneli fotowoltaicznych w całej Unii Europejskiej do 2030 roku.
-Ambitne cele klimatyczne Unii Europejskiej, w połączeniu z równoczesnym obniżeniem kosztów instalacji fotowoltaicznych sprawiają, że energia elektryczna pochodząca z tego źródła prawdopodobnie zacznie odgrywać kluczową rolę w procesie transformacji energetycznej Unii Europejskiej.
+Ambitne cele klimatyczne Unii Europejskiej, których podstawę stanowi Europejski Zielony Ład (ang. *European Green Deal*), sprawiają, że energia elektryczna pochodząca z odnawialnych źródeł energii zacznie odgrywać kluczową rolę w procesie transformacji energetycznej Unii Europejskiej.
+Europejski Zielony Ład to zestaw inicjatyw politycznych mających na celu przeprowadzenie transformacji ekologicznej i osiągnięcie neutralności klimatycznej w UE do 2050 roku [@european_green_deal].
+Inicjatywy takie jak Gotowi na 55 (ang. *Fit For 55*) oraz rozporządzenie o europejskim prawie klimatycznym mają zapewnić redukcję emisji gazów cieplarnianych o co najmniej 55% do 2030 roku [@european_green_deal].
+Jednocześnie, zgodnie z ustaleniami Rady Unii Europejskiej, Parlamentu Europejskiego oraz Komisji Europejskiej, udział energii odnawialnej w ogólnym zużyciu energii w Unii Europejskiej ma wynosić 42,5% do 2030 roku [@renewable_energy_eu].
+Inną inicjatywą organów Unii Europejskiej jest plan REPowerEU, czyli unijny plan transformacji energetycznej i uniezależnienia od rosyjskich paliw kopalnych przedstawiony przez Komisję Europejską w maju 2022 roku [@repowerEU2022].
+Przedsięwzięcie to skupia się na inwestycjach w odnawialne źródła energii, zakładając instalację niemal 600 GW mocy nowych instalacji fotowoltaicznych w całej Unii Europejskiej do 2030 roku [@repowerEU2022].
+Działania te uznaje się za nadrzędne z punktu widzenia interesu publicznego.
+
 
 - dlaczego należy prowadzić statystykę rozwoju OZE? dlaczego monitorowanie tego zjawiska jest tak istotne?
 - krótkie omówienie badań które już to robiły
