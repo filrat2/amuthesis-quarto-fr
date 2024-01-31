@@ -252,7 +252,7 @@ names(df)[names(df) == 'dataset'] = 'Wariant [note]'
 names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
   kableExtra::add_header_above(c(" ", "Optymalizowane parametry" = 5, " ")) |>
-  kableExtra::add_footnote(c("Patrz: tabela 4.1",
+  kableExtra::add_footnote(c("Patrz: tabela 3.1",
                              "Patrz: przypis"))
 ```
 

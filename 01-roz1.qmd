@@ -1,5 +1,4 @@
 # Wprowadzenie {#sec-wprowadzenie}
-
 <!--
 Wprowadzenie powinno mieć charakter opisu od ogółu do szczegółu (np. trzy-pięć paragrafów).
 Pierwszy paragraf powinien być najbardziej ogólny, a kolejne powinny przybliżać czytelnika do problemu.
@@ -7,67 +6,6 @@ Przedostatni paragraf powinien określić jaki jest problem (są problemy), któ
 
 Wprowadzenie powinno być zakończone stwierdzeniem celu pracy.
 Dodatkowo tutaj może znaleźć się również krótki opis co zostało zrealizowane w pracy.
--->
-<!--
-
-Wykorzystanie odnawialnych źródeł energii jako alternatywy dla źródeł kopalnych jest jednym
-z priorytetów w kontekście zachodzących zmian klimatu. 
-
-3
-Uwarunkowania prawne
-Europejski Zielony Ład (European Green Deal)
-inicjatywy chodzi „Gotowi na 55” (Fit For 55)
-
-Po renegocjacji ustaleń Rady UE, Parlamentu Europejskiego oraz Komisji Europejskiej w Unii
-Europejskiej w 2030 roku udział odnawialnych źródeł energii w miksie energetycznym ma
-wynosić 42,5%. Ze względu na fakt, iż koszt instalacji fotowoltaicznych spada przy
-jednoczesnym dynamicznym wzroście ilości mocy zainstalowanej, jest to źródło energii
-elektrycznej o ogromnym wpływie na ostateczny wynik starań i na transformację energetyczną
-jako taką.
-Podstawą polityki unijnej w aspekcie rolnictwa oraz klimatu jest Europejski Zielony Ład –
-pakiet inicjatyw politycznych mających na celu osiągnięcie przez UE neutralności klimatycznej
-do 2050 r. Został zainicjowany przez Komisję Europejską w grudniu 2019 roku. Do inicjatyw tych należy „Fit For 55”, stanowiący propozycje zmian przepisów związanych z klimatem,
-energetyką i transportem, czy też rozporządzenie o europejskim prawie klimatycznym, które
-zmienia zobowiązanie do zmniejszenia emisji gazów cieplarnianych netto o co najmniej 55%
-do 2030 r. oraz do osiągnięcia neutralności klimatycznej do 2050 r. w prawnie wiążące.
-Ponadto, pakiet inicjatyw uzupełnia strategia UE w zakresie przystosowania się do zmiany
-klimatu, strategia na rzecz bioróżnorodności 2030, strategia „od pola do stołu”, europejska
-strategia przemysłowa i wiele innych. 
-REPowerEU to plan zaprezentowany przez Komisję Europejską w maju 2022 roku, identyfikujący inwestycje w OZE jako leżące w nadrzędnym interesie publicznym. Głównym motywem planu jest uniezależnienie się od importu paliw kopalnych z Rosji. REPowerEU zakłada prawie 600 GW mocy nowych paneli fotowoltaicznych zainstalowanych w Unii Europejskiej do 2030 roku. Dodatkowo, Komisja Europejska w tegorocznym komunikacie „Strategia UE na rzecz energii słonecznej” zauważa
-potencjał połączenia rolniczego wykorzystania gruntów z wytwarzaniem energii z fotowoltaiki. 
-
-
-4
-dlaczego należy prowadzić statystykę oze?
-czy można to robić na podstawie danych teledetekcyjnych?
-czy na ich podstawie jest możliwe śledzenie rozwoju energetyki odnawialnej (rozwoj energetyki pochodzącej z farm fotowoltaicznych)?
-
-Transformacja energetyczna jest procesem bardzo dynamicznym, którego monitorowanie ma istotny wpływ na rozwój kolejnych projektów dotyczących energetyki niekonwencjonalnej.
-
-Odnawialne źródła energii towarzyszą ludziom od początku dziejów. Energię wiatru uży‐
-wano do napędzania łodzi czy spalanie biomasy jako źródło ciepła. Nasilające się zmiany kli‐
-matyczne wymusiły na rządach przyspieszenie dążenia do neutralności klimatycznej. Również
-Polska zdeklarowała się znacząco zwiększyć udział energii ze źródeł odnawialnych, dążąc do
-neutralności klimatycznej w 2050 roku.
-Osiągnięcie powyższych celów będzie jedynie możliwe w momencie dokładnego monitoro‐
-wania wyników oraz posiadania najaktualniejszych informacji dotyczących odnawialnych źródeł
-energii. 
-
-Jednakże, aby ten cel osiągnąć istotne jest monitorowanie oraz posiadanie aktualnych źródeł danych w zakresie wykorzystania odnawialnych źródeł energii.
-
-5 
-badania które już to robiły
-Globalna baza danych elektrowni (*Global Power Plant Database*) [@globalpowerplantdb_2021], stworzona przez Byersa et al. [-@byers_2018_globalpowerplantdb] i udostępniona w czerwcu 2021 roku, wskazuje na istnienie zaledwie x elektrowni fotowoltaicznych w całej Polsce na wspomniany okres.
-Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez Dunnetta et al. [-@dunnet_2020_wind_solar], sugerują, że do końca roku 2018 na obszarze badania występowało jedynie x instalacji fotowoltaicznych, które zajmowały powierzchnię x hektarów.
-Istnieje również jeden zbiór danych, którego sposób stworzenia był najbardziej zbliżony do omawianego w niniejszym badaniu.
-
-@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-
-w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez Zhanga et al. [-@zhang_2021_texture], Plakmana et al. [-@plakman_2022_pv], Wanga et al. [-@wang_2022_pv] i innych, takie jak:
-
-6
-cel pracy
-Praca inżynierska podejmuje się określenia optymalnych metod uczenia maszynowego do wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych
 -->
 
 Ludzie od zawsze dążyli do wykorzystywania dostępnych źródeł energii w celu zaspokojenia różnorodnych potrzeb.
@@ -87,7 +25,21 @@ Inną inicjatywą organów Unii Europejskiej jest plan REPowerEU, czyli unijny p
 Przedsięwzięcie to skupia się na inwestycjach w odnawialne źródła energii, zakładając instalację niemal 600 GW mocy nowych instalacji fotowoltaicznych w całej Unii Europejskiej do 2030 roku [@repowerEU2022].
 Działania te uznaje się za nadrzędne z punktu widzenia interesu publicznego.
 
+Osiągnięcie wymienionych celów będzie możliwe jedynie poprzez dokładne monitorowanie wyników oraz posiadanie aktualnych informacji dotyczących odnawialnych źródeł energii.
+Transformacja energetyczna w przyszłych latach będzie prawdopodobnie bardzo dynamicznym procesem, którego monitorowanie będzie miało znaczący wpływ na rozwój kolejnych projektów z zakresu energetyki niekonwencjonalnej.
+Niejednolita organizacja działania władz samorządowych w Polsce oraz występowanie na terenie kraju różnych operatorów energetycznych utrudnia jednak śledzenie rozwoju polskiej branży OZE.
+W oficjalnych, dostępnych w Polsce danych brakuje aktualnych informacji na temat lokalizacji elektrowni fotowoltaicznych.
+Wśród nieoficjalnych źródeł danych informacje na ten temat można znaleźć m.in. w projekcie społeczności internetowej OpenStreetMap, gdzie są one oznaczone jako `tag:plant:source=solar`, jednak dane te są nieformalne, niepełne i zazwyczaj nieaktualne.
+W związku z brakiem jednolitych danych na temat lokalizacji elektrowni fotowoltaicznych w oficjalnych źródłach w Polsce, wykorzystanie danych satelitarnych staje się potencjalnym narzędziem do detekcji farm fotowoltaicznych, umożliwiając pozyskiwanie aktualnych informacji na ten temat.
+Obserwacje satelitarne pozwalają również regularnie monitorować rozwój farm fotowoltaicznych, co umożliwia analizę postępów w tym sektorze energii odnawialnej.
 
-- dlaczego należy prowadzić statystykę rozwoju OZE? dlaczego monitorowanie tego zjawiska jest tak istotne?
-- krótkie omówienie badań które już to robiły
-- cel pracy
+Celem niniejszej pracy jest określenie optymalnych metod uczenia maszynowego do wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych.
+W pracy wykorzystano dane radarowe z misji Sentinel-1 oraz dane multispektralne z misji Sentinel-2, wraz z ich pochodnymi, takimi jak wskaźniki teledetekcyjne i tekstury obrazu.
+W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*) zaproponowaną przez Breimana [-@breiman_2001_rf].
+Cały proces oparty został na otwartym oprogramowaniu GIS, takim jak SNAP [@snap], S1TBX [@s1tbx], QGIS [@qgis] oraz środowisku programistycznym języka R [@R-base].
+
+Na przestrzeni ostatnich kilku lat podejmowano kilka prób detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przy wykorzystaniu metod uczenia maszynowego.
+@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Inne badania, takie jak te przeprowadzone przez Zhanga et al. [-@zhang_2021_texture], Plakmana et al. [-@plakman_2022_pv] i Wanga et al. [-@wang_2022_pv], również koncentrowały się na detekcji instalacji fotowoltaicznych, lecz nie obejmowały obszaru Polski.
+Aby skutecznie śledzić dynamikę rozwoju polskiej branży OZE, konieczne jest przeprowadzanie częstszych badań na terenie kraju.
+Wykorzystane do tego celu mogą zastać efekty niniejszej pracy, która zgodnie z wiedzą autora oraz promotora, jest pierwszym opracowaniem w Polsce polegającym na detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych i metod uczenia maszynowego.

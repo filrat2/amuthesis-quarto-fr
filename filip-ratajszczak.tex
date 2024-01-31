@@ -132,16 +132,55 @@ nowych instalacji fotowoltaicznych w całej Unii Europejskiej do 2030
 roku \autocite{repowerEU2022}. Działania te uznaje się za nadrzędne z
 punktu widzenia interesu publicznego.
 
-\begin{itemize}
-\tightlist
-\item
-  dlaczego należy prowadzić statystykę rozwoju OZE? dlaczego
-  monitorowanie tego zjawiska jest tak istotne?
-\item
-  krótkie omówienie badań które już to robiły
-\item
-  cel pracy
-\end{itemize}
+Osiągnięcie wymienionych celów będzie możliwe jedynie poprzez dokładne
+monitorowanie wyników oraz posiadanie aktualnych informacji dotyczących
+odnawialnych źródeł energii. Transformacja energetyczna w przyszłych
+latach będzie prawdopodobnie bardzo dynamicznym procesem, którego
+monitorowanie będzie miało znaczący wpływ na rozwój kolejnych projektów
+z zakresu energetyki niekonwencjonalnej. Niejednolita organizacja
+działania władz samorządowych w Polsce oraz występowanie na terenie
+kraju różnych operatorów energetycznych utrudnia jednak śledzenie
+rozwoju polskiej branży OZE. W oficjalnych, dostępnych w Polsce danych
+brakuje aktualnych informacji na temat lokalizacji elektrowni
+fotowoltaicznych. Wśród nieoficjalnych źródeł danych informacje na ten
+temat można znaleźć m.in. w projekcie społeczności internetowej
+OpenStreetMap, gdzie są one oznaczone jako
+\texttt{tag:plant:source=solar}, jednak dane te są nieformalne, niepełne
+i zazwyczaj nieaktualne. W związku z brakiem jednolitych danych na temat
+lokalizacji elektrowni fotowoltaicznych w oficjalnych źródłach w Polsce,
+wykorzystanie danych satelitarnych staje się potencjalnym narzędziem do
+detekcji farm fotowoltaicznych, umożliwiając pozyskiwanie aktualnych
+informacji na ten temat. Obserwacje satelitarne pozwalają również
+regularnie monitorować rozwój farm fotowoltaicznych, co umożliwia
+analizę postępów w tym sektorze energii odnawialnej.
+
+Celem niniejszej pracy jest określenie optymalnych metod uczenia
+maszynowego do wykrywania farm fotowoltaicznych na podstawie danych
+teledetekcyjnych. W pracy wykorzystano dane radarowe z misji Sentinel-1
+oraz dane multispektralne z misji Sentinel-2, wraz z ich pochodnymi,
+takimi jak wskaźniki teledetekcyjne i tekstury obrazu. W procesie
+klasyfikacji wykorzystano metodę lasów losowych (ang. \emph{Random
+Forest}) zaproponowaną przez Breimana \autocite*{breiman_2001_rf}. Cały
+proces oparty został na otwartym oprogramowaniu GIS, takim jak SNAP
+\autocite{snap}, S1TBX \autocite{s1tbx}, QGIS \autocite{qgis} oraz
+środowisku programistycznym języka R \autocite{R-base}.
+
+Na przestrzeni ostatnich kilku lat podejmowano kilka prób detekcji farm
+fotowoltaicznych na podstawie danych teledetekcyjnych przy wykorzystaniu
+metod uczenia maszynowego. \textcite{kruitwagen_2021_pv}, wykorzystując
+zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami
+uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na
+świecie na dzień 30 września 2018 roku. Inne badania, takie jak te
+przeprowadzone przez Zhanga et al. \autocite*{zhang_2021_texture},
+Plakmana et al. \autocite*{plakman_2022_pv} i Wanga et al.
+\autocite*{wang_2022_pv}, również koncentrowały się na detekcji
+instalacji fotowoltaicznych, lecz nie obejmowały obszaru Polski. Aby
+skutecznie śledzić dynamikę rozwoju polskiej branży OZE, konieczne jest
+przeprowadzanie częstszych badań na terenie kraju. Wykorzystane do tego
+celu mogą zastać efekty niniejszej pracy, która zgodnie z wiedzą autora
+oraz promotora, jest pierwszym opracowaniem w Polsce polegającym na
+detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych i
+metod uczenia maszynowego.
 
 \bookmarksetup{startatroot}
 
@@ -1006,7 +1045,7 @@ Wariant \textsuperscript{a} & mtry & sample.fraction & min.node.size & num.trees
 5 & 5 & 0.6898 & 1 & 234 & 99 & 0.9850\\
 6 & 8 & 0.8847 & 5 & 388 & 75 & 0.9905\\
 \bottomrule
-\multicolumn{7}{l}{\textsuperscript{a} Patrz: tabela 4.1}\\
+\multicolumn{7}{l}{\textsuperscript{a} Patrz: tabela 3.1}\\
 \multicolumn{7}{l}{\textsuperscript{b} Patrz: przypis}\\
 \end{tabular}
 \end{table}
