@@ -77,7 +77,7 @@ Po standaryzacji wszystkich kanałów Sentinel-2 do wspólnej rozdzielczości, d
 
 ### Wskaźniki spektralne {#sec-spectral-indices}
 
-Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez Zhanga et al. [-@zhang_2021_texture], Plakmana et al. [-@plakman_2022_pv], Wanga et al. [-@wang_2022_pv] i innych, takie jak:
+Oprócz surowych współczynników odbicia, w niektórych wariantach predykcji zastosowano również wskaźniki spektralne (ang. *spectral indices*), które były wykorzystywane w poprzednich badaniach dotyczących detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przez Zhanga et al. [-@zhang_2021_texture], Plakman et al. [-@plakman_2022_pv], Wanga et al. [-@wang_2022_pv] i innych, takie jak:
 
 -   znormalizowany różnicowy wskaźnik wegetacji (ang. *Normalized Difference Vegetation Index*, NDVI) [@ndvi], monitorujący zawartość biomasy i kondycję roślinności na danym obszarze:
 
@@ -224,24 +224,22 @@ Optymalna konfiguracja hiperparametrów jest zwykle znajdowana w określonej prz
 na podstawie zagnieżdżonej walidacji krzyżowej (ang. *nested cross-validation*) [@lovelace_2019_geocomputation].
 Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters], a jej celem jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
 
-Metoda zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej (sekcja [-@sec-model-quality-assessment]), przeznaczone do procesu strojenia hiperparametrów.
+Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości, czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
+Metoda przestrzennej zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej (sekcja [-@sec-model-quality-assessment]), przeznaczone do procesu strojenia hiperparametrów.
 Każdy podzbiór (*fold*) utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne podzbiory.
 W zewnętrznym obiegu model jest trenowany na danych z jednego obszaru przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych hiperparametrów.
 Cały proces jest następnie powtarzany na każdym z *k* zewnętrznych podzbiorów, co prowadzi do określenia najlepszego ustawienia hiperparametrów.
-Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości, czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
-Cały ten proces jest nazywany strojeniem hiperparametrów.
 
 Hiperparametry `mtry`, `sample.fraction` i `min.node.size` są parametrami określającymi stopień losowości lasu losowego i powinny zostać odpowiednio dostrojone [@probst_2019_hyperparameters].
-Liczba losowo wybranych zmiennych, `mtry`, wskazuje, ile predyktorów powinno zostać użytych w każdym drzewie [@lovelace_2019_geocomputation].
-Parametr `sample.fraction` odnosi się do wielkości próby, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
+Liczba losowo wybranych zmiennych, `mtry`, wskazuje, ile predyktorów powinno zostać użytych w każdym drzewie, a parametr `sample.fraction` odnosi się do wielkości próby, czyli ułamka obserwacji użytego w każdym drzewie [@lovelace_2019_geocomputation].
 Mniejsza wielkość próby prowadzi do większej różnorodności drzew, a tym samym do mniejszej korelacji między nimi, co pozytywnie wpływa na dokładność predykcji przy agregacji drzew [@probst_2019_hyperparameters].
 Minimalna wielkość węzła `min.node.size` określa minimalną liczbę obserwacji w węźle końcowym [@probst_2019_hyperparameters].
 W ramach optymalizacji uwzględniono również parametry `num.trees` oraz `max.depth`, odnoszące się odpowiednio do liczby drzew w lesie oraz maksymalnej głębokości pojedynczego drzewa.
 
-Kombinacje hiperparametrów zostały wybrane losowo w ramach określonych granic strojenia ustalonych za pomocą pakietu *paradox* [@R-paradox].
-Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie *mlr3tuningspaces* [@R-mlr3tuningspaces] oraz literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
+Kombinacje hiperparametrów zostały wybrane losowo w ramach określonych granic strojenia ustalonych za pomocą pakietu R *paradox* [@R-paradox].
+Zasięg przestrzeni strojenia został wybrany zgodnie z wartościami zalecanymi w dedykowanym do tego pakiecie R *mlr3tuningspaces* [@R-mlr3tuningspaces] oraz literaturze [@probst_2019_hyperparameters; @schratz_2019_hyperparameters].
 `mtry` powinno przyjmować wartości z przedziału od 1 do liczby predyktorów, `sample.fraction` powinno mieścić się w zakresie od 0,2 do 0,9, a `min.node.size` powinno przybierać wartości z przedziału od 1 do 10.
-Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees` powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500 w celu zwiększenia wydajności obliczeń.
+Zgodnie z pakietem R *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.trees` powinien być ustawiony w zakresie od 1 do 2000, jednak ograniczono jego wartości do przedziału od 50 do 500 w celu zwiększenia wydajności obliczeń.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-tuning
@@ -249,11 +247,10 @@ Zgodnie z pakietem *mlr3tuningspaces* [@R-mlr3tuningspaces], hiperparametr `num.
 #| tbl-cap: "Optymalne hiperparametry otrzymane w wyniku dostrajania modeli RF"
 df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/df_tuning_results_08_01.rds")
 names(df)[names(df) == 'dataset'] = 'Wariant [note]'
-names(df)[names(df) == 'classif.auc'] = 'AUC[note]'
+names(df)[names(df) == 'classif.auc'] = 'AUC'
 kableExtra::kable(df, align = "c", booktabs = TRUE, digits = 4, linesep = "") |>
   kableExtra::add_header_above(c(" ", "Optymalizowane parametry" = 5, " ")) |>
-  kableExtra::add_footnote(c("Patrz: tabela 3.1",
-                             "Patrz: przypis"))
+  kableExtra::add_footnote("Patrz: tabela 3.1")
 ```
 
 Optymalne hiperparametry uzyskane w wyniku dostrajania modeli lasów losowych dla poszczególnych wariantów (zbiorów danych) razem z oceną jakości AUC[^04-roz4-1] zostały przedstawione w tabeli [-@tbl-tabela-tuning].
@@ -297,15 +294,15 @@ knitr::include_graphics("figures/spcv_plot.png")
 Macierz błędów (ang. *error matrix* lub *confusion matrix*) to tablica prezentująca wyniki klasyfikatora binarnego, podając informację o liczbie obiektów przypisanych do każdej z klas.
 Macierz błędów jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi, składając się z czterech wartości reprezentujących różne kombinacje przewidywanych i rzeczywistych klas.
 
-W macierzy błędów dwie wartości reprezentują trafienia pozytywne: przypadki prawdziwie pozytywne (ang. *true positive*, TP) opisują sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako pozytywną, natomiast przypadki prawdziwie negatywne (ang. *true negative*, TN) opisują poprawne przewidywanie klasy negatywnej.
+W macierzy błędów dwie wartości reprezentują predykcje pozytywne: przypadki prawdziwie pozytywne (ang. *true positive*, TP) opisują sytuacje, w których klasyfikator poprawnie przewidział daną klasę jako pozytywną, natomiast przypadki prawdziwie negatywne (ang. *true negative*, TN) opisują poprawne przewidywanie klasy negatywnej.
 Dwie pozostałe wartości informują o błędnie sklasyfikowanych przypadkach: przypadki fałszywie pozytywne (ang. *false positive*, FP) opisują sytuacje, w których klasyfikator błędnie wskazał klasę pozytywną, podczas gdy rzeczywiście była ona negatywna.
 Przypadki fałszywie negatywne (ang. *false negative*, FN) to natomiast sytuacje, w których klasyfikator błędnie przewidział klasę jako negatywną, gdy faktycznie była ona pozytywna.
 
 Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu przestrzennej walidacji krzyżowej, macierzy błędów oraz trzech miar jakości dostosowanych do klasyfikatorów binarnych:
 
--   precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako pozytywne jest faktycznie pozytywna [@jaworski_2013_perfomance_measures]
+-   Precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako pozytywne jest faktycznie pozytywna [@jaworski_2013_perfomance_measures]
 
--   czułość (ang. *sensitivity*, inaczej *recall* lub *true positive rate*) - określa jaką część prawdziwie pozytywnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
+-   Czułość (ang. *sensitivity*, inaczej *recall* lub *true positive rate*) - określa jaką część prawdziwie pozytywnych wyników wykrył klasyfikator [@jaworski_2013_perfomance_measures]
 
 -   F1-score - średnia harmoniczna pomiędzy precyzją i czułością, umożliwiająca ocenę równowagi między tymi miarami, która w pewnym stopniu opisuje całościowo wynik.
     Miara ta nie uwzględnia wyników prawdziwie negatywnych [@zygierewicz_2021_ml].
@@ -317,11 +314,10 @@ Wartości każdej z wymienionych miar jakości modelu zawierają się w zakresie
 Ocena ważności zmiennych (ang. *variable importance*) jest elementem oceny jakości stworzonych modeli.
 Analiza wpływu poszczególnych zmiennych na dokładność modelu pozwala ocenić, które zmienne są istotne dla przewidywań.
 Stosowanie zmiennych o niskiej mocy predykcyjnej może prowadzić do nadmiernego dopasowania (ang. *overfitting*) modelu lub obniżenia jego jakości.
-Dlatego ważny jest wybór odpowiednich zmiennych do trenowania modelu, unikając na przykład kolinearności predyktorów, czyli wysokiej korelacji między zmiennymi.
-Celem określania ważności zmiennych i ich selekcji jest zwiększenie mocy predykcyjnej modelu w kontekście analizowanego zjawiska poprzez identyfikację silnie skorelowanych z nim zmiennych.
+Dlatego istotny jest wybór odpowiednich zmiennych do trenowania modelu, unikając na przykład kolinearności predyktorów, czyli wysokiej korelacji między zmiennymi.
 
 W lasach losowych ważność zmiennych można ocenić różnymi metodami, z których dwie najpopularniejsze to miara zanieczyszczenia Giniego (ang. *Gini impurity*) oraz metoda oparta na permutacji [@biecek_2017_przewodnik].
-W celu określenia wartości zmiennych wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie danych teledetekcyjnych zastosowano metodę permutacji (ang. *permutation*), która może być również używana do upraszczania i eksploracji modeli lub generowania wiedzy [@biecek_2021_model_analysis].
+W celu określenia wartości zmiennych wykorzystywanych do identyfikacji farm fotowoltaicznych na podstawie danych teledetekcyjnych zastosowano metodę permutacji, która może być również używana do upraszczania i eksploracji modeli lub generowania wiedzy [@biecek_2021_model_analysis].
 
 Główną ideą metody opartej na permutacji jest pomiar tego, jak bardzo zmieni się dopasowanie modelu, gdy usunięty zostanie wpływ wybranej zmiennej lub grupy zmiennych.
 Jeśli zmienna jest istotna, permutacja jej wartości skutkuje pogorszeniem jakości modelu.
@@ -340,7 +336,7 @@ W przypadku silnie skorelowanych ze sobą zmiennych, brak jednej z nich niekonie
 Macierz korelacji zmiennych użytych w tym badaniu (rycina [-@fig-variables-correlation]) ukazuje silne związki między niektórymi zmiennymi.
 Wysoka korelacja występuje szczególnie między pasmami Sentinel-2 w zakresie widzialnym (kanały B02-04) a pasmami średniej podczerwieni (kanały B11-12). 
 Zauważalna jest również wysoka korelacja między pasmami czerwieni krawędziowej (kanały B05-07) oraz bliskiej podczerwieni (kanały B08 i B8A).
-Wykorzystane polaryzacje Sentinel-1 również są ze sobą silnie skorelowane.
+Wykorzystane polaryzacje Sentinel-1 również są ze sobą skorelowane.
 Wskaźniki teledetekcyjne wykazują zazwyczaj znaczną dodatnią lub ujemną korelację z pasmami, które zostały wykorzystane do ich obliczenia. 
 Tekstury obrazu charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla których zostały one określone.
 
@@ -354,7 +350,7 @@ efektu soli i pieprzu (ang. *salt-and-pepper effect*).
 ```{r}
 #| label: fig-rycina-post-processing
 #| echo: false
-#| fig-cap: "Kompozycja RGB Sentinel-2 (a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i poprawnej (2) predykcji pierwszego zestawu danych (wariant 1)"
+#| fig-cap: "Kompozycja RGB Sentinel-2 (a), wstępne wyniki detekcji PV przed przetwarzaniem końcowym (b), PV wykryte po przetwarzaniu końcowym (c) w przypadku niepoprawnej (1) i poprawnej (2) predykcji dla wariantu nr 1"
 #| out-width: 100%
 knitr::include_graphics("figures/postprocessing_pl.png")
 ```

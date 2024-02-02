@@ -2,17 +2,16 @@
 
 ## Ocena jakości modeli {#sec-results-model-quality-assessment}
 
-Dla każdego z sześciu wariantów zestawów danych przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z procedurą przestawioną w sekcji [-@sec-model-quality-assessment].
-Warianty odnoszą się do różnych zestawów zmiennych stworzonych w celu ustalenia optymalnego zestawu danych na potrzeby detekcji farm fotowoltaicznych przy wykorzystaniu danych teledetekcyjnych.
-Informacje na temat zmiennych zawartych w każdym wariancie przedstawia tabela [-@tbl-tabela-datasets].
-Zagnieżdżona przestrzenna walidacja krzyżowa dla jednego wariantu składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
+Dla każdego z sześciu wariantów (zestawów danych) przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z procedurą przestawioną w sekcji [-@sec-model-quality-assessment].
+Warianty odnoszą się do różnych zestawów zmiennych stworzonych w celu ustalenia optymalnego zestawu danych na potrzeby detekcji farm fotowoltaicznych przy wykorzystaniu danych teledetekcyjnych (tabela [-@tbl-tabela-datasets]).
+Zagnieżdżona przestrzenna walidacja krzyżowa dla każdego z wariantów składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
 
 Proces strojenia został skonfigurowany tak, aby generować 1 000 modeli dla jednego podzbioru w celu określenia optymalnych hiperparametrów.
 Powtarzając tę procedurę dla każdego z pięciu ustalonych podzbiorów, uzyskano łącznie 5 000 modeli w ramach jednego powtórzenia.
 W celu identyfikacji optymalnych hiperparametrów założono dwadzieścia iteracji wymienionych powyżej działań, co doprowadziło do stworzenia łącznie 100 000 modeli.
 
 Zoptymalizowane parametry modelu zostały następnie wykorzystane do oszacowania jakości modelu, co wymagało dopasowania dodatkowych 100 modeli (5 podzbiorów * 20 powtórzeń).
-W rezultacie całkowita liczba stworzonych modeli wykorzystanych do oceny jakości i dostrajania hiperparametrów dla jednego wariantu wynosi 100 100.
+W rezultacie całkowita liczba stworzonych modeli wykorzystanych do oceny jakości i dostrajania hiperparametrów dla jednego wariantu wyniosła 100 100.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-performance-measures
@@ -122,9 +121,15 @@ Oznacza to, że odpowiedź spektralna instalacji fotowoltaicznych w tym zakresie
 
 ## Wyniki klasyfikacji po przetwarzaniu końcowym {#sec-classification-results}
 
+Sekcja [-@sec-results-model-quality-assessment] omawiała wyniki jakości klasyfikacji na podstawie próby, a wyniki oceny jakości modelu uzyskane na niewielkiej części populacji mogą znacznie różnić się od rezultatów uzyskanych podczas klasyfikacji całej populacji, obejmującej wszystkie obserwacje na badanym obszarze.
+
+W celu oceny rzeczywistej jakości klasyfikacji dla całej populacji po procesie przetwarzania końcowego dokonano porównania wyników predykcji każdego wariantu (tabela [-@tbl-tabela-datasets]) ze zbiorem referencyjnym.
+Referencyjny zbiór danych obejmował wszystkie farmy fotowoltaiczne, które udało się określić na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie wykonywania użytych zobrazowań (8 maja 2023 roku).
+Dane te zostały zdigitalizowane na podstawie ortofotomapy oraz mozaik satelitarnych.
+Porównanie wymagało przekształcenia zdigitalizowanych farm fotowoltaicznych do postaci rastrowej, przyjmując siatkę 10-metrowych kanałów wykorzystanej sceny Sentinel-2.
+
 Wyniki klasyfikacji dotyczące liczby wykrytych farm fotowoltaicznych lub ich oddzielnych segmentów oraz sumy wykrytej powierzchni po procesie przetwarzania końcowego zostały przedstawione w tabeli [-@tbl-tabela-classification-results].
 Pierwszy wiersz odnosi się do zbioru referencyjnego, który obejmował wszystkie farmy fotowoltaiczne określone na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie wykonania użytych zobrazowań (8 maja 2023 roku).
-Zbiór referencyjny został zdigitalizowany na podstawie ortofotomapy i mozaik satelitarnych.
 
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-classification-results
@@ -180,13 +185,6 @@ Rozmieszczenie poprawnie i niepoprawnie wykrytych farm fotowoltaicznych dla wari
 Z ilustracji wynika, że większość elektrowni fotowoltaicznych lub ich segmentów została właściwie zidentyfikowana, a błędnie sklasyfikowane lokalizacje farm fotowoltaicznych występują głównie w północnej części badanego obszaru.
 
 ### Ocena jakości klasyfikacji dla populacji {#sec-population-quality-assessment}
-
-Sekcja [-@sec-results-model-quality-assessment] omawiała wyniki jakości klasyfikacji na podstawie próby, a wyniki oceny jakości modelu uzyskane na niewielkiej części populacji mogą znacznie różnić się od rezultatów uzyskanych podczas klasyfikacji całej populacji, obejmującej wszystkie obserwacje na badanym obszarze.
-
-W celu oceny rzeczywistej jakości klasyfikacji dla całej populacji po procesie przetwarzania końcowego dokonano porównania wyników predykcji każdego wariantu (tabela [-@tbl-tabela-datasets]) ze zbiorem referencyjnym.
-Referencyjny zbiór danych obejmował wszystkie farmy fotowoltaiczne, które udało się określić na obszarze kafla Sentinel-2 o oznaczeniu 33UWV w czasie wykonywania użytych zobrazowań (8 maja 2023 roku).
-Dane te zostały zdigitalizowane na podstawie ortofotomapy oraz mozaik satelitarnych.
-Porównanie wymagało przekształcenia zdigitalizowanych farm fotowoltaicznych do postaci rastrowej, przyjmując siatkę 10-metrowych kanałów wykorzystanej sceny Sentinel-2.
 
 Ocena jakości klasyfikacji dla całego obszaru badań (populacji) została przeprowadzona zgodnie z podejściem opisanym w sekcji [-@sec-model-quality-assessment].
 Wykorzystane podejście, podobnie jak ocena jakości modeli, opiera się na analizie macierzy błędów, która umożliwiła obliczenie trzech miar jakości: precyzji, czułości oraz F1-score.

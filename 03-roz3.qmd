@@ -24,33 +24,34 @@ knitr::include_graphics("figures/sen2_extent.png")
 
 ## Lokalizacje farm fotowoltaicznych {#sec-pv}
 
-```{r}
-#| label: fig-rycina-pv
-#| echo: false
-#| fig-cap: "Porównanie wyglądu farm fotowoltaicznych w Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps (d) oraz w kompozycji RGB Sentinel-2 (e)"
-#| out-width: 100%
-knitr::include_graphics("figures/pv.png")
-```
-
-W teledetekcji jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
+Jednym z zastosowań mozaik obrazów satelitarnych jest tworzenie zestawów danych referencyjnych poprzez interpretację wizualną, np.
 w celu walidacji wyników klasyfikacji produktów pokrycia terenu [@lesiv_2018_sat_imagery_mosaics].
 Do lokalizacji oraz digitalizacji istniejących farm fotowoltaicznych wykorzystano ortofotomapę udostępnianą przez Główny Urząd Geodezji i Kartografii (GUGiK) oraz mozaiki zdjęć satelitarnych dostarczane przez podmioty komercyjne.
 W celu stworzenia zbioru danych testowych i treningowych użyto ortomozaik Google Satellite, Bing Aerial oraz Planet Basemaps [@planet], udostępnianych w formie usług sieciowych (WMS, WMTS, XYZ Tiles).
 Mozaiki te są tworzone na podstawie komercyjnych zdjęć satelitarnych wykonywanych przez podmioty takie jak Maxar Technologies, Airbus czy Planet Labs.
 
+```{r}
+#| label: fig-rycina-pv
+#| echo: false
+#| fig-cap: "Porównanie wyglądu farm fotowoltaicznych w Kulicach k. Nowogardu (1) i Wałczu (2) na ortofotomapie udostępnianej przez GUGiK (a), Google Satellite (b), Bing Aerial (c), Planet Basemaps (d) oraz w kompozycji RGB Sentinel-2 (e)"
+#| out-width: 100%
+#| fig-pos: "H"
+knitr::include_graphics("figures/pv.png")
+```
+
 Większość ortofotomap dostarczanych przez GUGiK jest zrealizowana w standardzie 25 x 25 cm, jednakże na obszarach miejskich charakteryzują się one rozdzielczością przestrzenną wynoszącą 10 cm lub nawet wyższą [@ortofotomapa].
 Rozdzielczość przestrzenna wykorzystanych mozaik obrazów satelitarnych (oprócz Planet Basemaps) jest wyższa niż 1 m, na przykład mozaika Bing Aerial dostarczana przez firmę Microsoft cechuje się rozmiarem komórki od 30 do 60 cm [@bing_aerial].
 Często jednak nie jest możliwie ustalenie dat wykonania zdjęć satelitarnych, które posłużyły do stworzenia konkretnej mozaiki zobrazowań satelitarnych [@lesiv_2018_sat_imagery_mosaics].
-Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się rozdzielczością przestrzenną 4,77 m na równiku, jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
-Pozwala to, pomimo niższej rozdzielczości przestrzennej na stworzenie zbioru danych referencyjnych dla konkretnego zakresu czasu.
+Mozaika tworzona przez Planet na podstawie zdjęć satelitarnych wykonywanych przez konstelację satelitów PlanetScope charakteryzuje się niższą rozdzielczością przestrzenną (4,77 m na równiku), jednak w porównaniu do pozostałych wymienionych produktów jest tworzona z miesięczną oraz kwartalną częstotliwością [@planet_2019_basemaps].
+Pozwala to, pomimo niższej rozdzielczości przestrzennej, na stworzenie zbioru danych referencyjnych dla konkretnego zakresu czasu.
 Mozaiki Planet Basemaps [@planet] są tworzone na podstawie najlepszych obrazów z katalogu Planet w określonym przedziale czasowym, co umożliwia generowanie wysokorozdzielczych mozaik, które są dokładne radiometrycznie i przestrzennie, a także charakteryzują się zminimalizowanym wpływem czynników atmosferycznych [@planet_2019_basemaps].
 
 Na podstawie wyżej wymienionych danych dokonano digitalizacji farm fotowoltaicznych na obszarze badania w celu stworzenia zestawu danych referencyjnych.
 Digitalizacja polega na tworzeniu obiektów wektorowych, takich jak punkty, linie czy poligony, poprzez rysownie figur geometrycznych uwzględniając ich współrzędne geograficzne na podstawie obrazów satelitarnych czy zeskanowanych map papierowych.
 Do tego celu wykorzystano narzędzia digitalizacji z oprogramowania QGIS [@qgis], które umożliwiają rysowanie kształtów i edycję danych wektorowych.
 
-Na podstawie ortofotomapy oraz mozaik satelitarnych zdigitalizowane zostały prawdopodobnie wszystkie farmy fotowoltaiczne na obszarze kafla 33UWV Sentinel-2 istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku, sekcja [-@sec-satellite-imagery]).
-Wykorzystane do digitalizacji dane pochodzą z różnych okresów, co spowodowało sytuacje, gdzie farmy obecne na najbardziej aktualnej mapie podkładowej (Planet Basemaps) nie występowały na mozaikach o wyższej rozdzielczości przestrzennej (ortofotomapa, Google Satellite, Bing Aerial).
+Na podstawie ortofotomapy oraz mozaik satelitarnych zdigitalizowane zostały wszystkie znalezione farmy fotowoltaiczne na obszarze kafla 33UWV Sentinel-2, istniejące w czasie wykonywania wykorzystanych zobrazowań (8 maja 2023 roku, sekcja [-@sec-satellite-imagery]).
+Użyte do digitalizacji dane pochodzą z różnych okresów, co spowodowało sytuacje, gdzie farmy obecne na najbardziej aktualnej mapie podkładowej (Planet Basemaps) nie występowały na mozaikach o wyższej rozdzielczości przestrzennej (ortofotomapa, Google Satellite, Bing Aerial).
 Podczas digitalizacji przyjęto, że granice farm fotowoltaicznych lub ich segmentów będą ustalane na podstawie mapy podkładowej o najwyższej rozdzielczości, na której dana farma fotowoltaiczna występuje.
 
 ```{r tabela1, echo=FALSE}
@@ -70,23 +71,24 @@ df[1] = as.character(as.integer(df[1]))
 kableExtra::kable(df, align = "r", booktabs = TRUE)
 ```
 
-Podstawowe statystki zdigitalizowanych obiektów przedstawia tabela [-@tbl-tabela-digitizing-results], a lokalizacje oznaczonych farm fotowoltaicznych lub ich segmentów przedstawia rycina [-@fig-rycina-pv].
+Podstawowe statystki zdigitalizowanych obiektów przedstawia tabela [-@tbl-tabela-digitizing-results], a lokalizacje oznaczonych farm fotowoltaicznych lub ich segmentów przedstawia rycina [-@fig-rycina-spatial-distribution-pv].
 Zauważyć można duże zróżnicowanie w powierzchni farm fotowoltaicznych lub ich segmentów, od małych instalacji o powierzchni 0,01 ha do znacznie większych konstrukcji o powierzchni prawie 25 ha.
-Rozmieszczenie farm fotowoltaicznych na obszarze kafla 33UWV Sentinel-2 skupia się głównie w zachodniej i południowej części badanego obszaru.
+Rozmieszczenie farm fotowoltaicznych na obszarze kafla 33UWV Sentinel-2 skupia się głównie w zachodniej i południowej części badanego obszaru (rycina [-@fig-rycina-spatial-distribution-pv]).
 
 ```{r}
 #| label: fig-rycina-spatial-distribution-pv
 #| echo: false
 #| fig-cap: "Rozmieszczenie zdigitalizowanych farm fotowoltaicznych lub ich segmentów"
-#| out-width: 100%
-knitr::include_graphics("figures/farmy1.png")
+#| out-width: 76%
+#| fig-pos: "H"
+knitr::include_graphics("figures/farmy2.png")
 ```
 
 ## Zdjęcia satelitarne {#sec-satellite-imagery}
 
 ### Sentinel-1 {#sec-sentinel1}
 
-Misja Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej Agencji Kosmicznej w ramach programu Copernicus, mająca na celu dostarczanie danych radarowych obejmujących globalną powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
+Misja Sentinel-1 to wspólna inicjatywa Komisji Europejskiej i Europejskiej Agencji Kosmicznej w ramach programu Copernicus, mająca na celu dostarczanie danych radarowych obejmujących powierzchnię Ziemi, w tym lądów, europejskich stref przybrzeżnych, tras żeglugowych, stref lodu morskiego, mórz i oceanów [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 Misja odpowiada na potrzeby monitorowania obszarów morskich i lądowych, w tym przemieszczania kry lodowej, transportu morskiego, deformacji i przemieszczeń terenu, a także obserwacji zmian klimatu i klęsk żywiołowych [@hejmanowska_2020_dane; @sentinel1_mission_objectives].
 
 Sentinel-1 posiada pojedynczy radar z syntetyzowaną aperturą (ang. *Synthetic Aperture Radar*, SAR), który działa na jednej częstotliwości środkowej 5,405 GHz, odpowiadającej długości fali 5,6 cm [@sentinel1_lulc; @sentinel1_instrument_payload].
@@ -99,9 +101,9 @@ W wyniku awarii satelita Sentinel-1B został wyłączony z użytku, a wystrzelen
 ```{r}
 #| label: fig-rycina-pv-sentinel1
 #| echo: false
-#| fig-cap: "Farma fotowoltaiczna na wysokorozdzielczym obrazie satelitarnym (a), kompozycji RGB Sentinel-2 (b) oraz obrazie rozproszenia wstecznego w polaryzacji VV Sentinel&#8209;1 (c)"
+#| fig-cap: "Farma fotowoltaiczna na wysokorozdzielczym obrazie satelitarnym PlanetScope (a), kompozycji RGB Sentinel-2 (b) oraz obrazie rozproszenia wstecznego w polaryzacji VV Sentinel&#8209;1 (c)"
 #| out-width: 100%
-knitr::include_graphics("figures/pv_sen1.png")
+knitr::include_graphics("figures/pv_sentinel1.png")
 ```
 
 Dane radarowe Sentinel-1 są dostępne na trzech poziomach przetworzenia. 
