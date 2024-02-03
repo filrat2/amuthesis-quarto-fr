@@ -17,7 +17,7 @@ Powierzchnia obszaru analizy wynosi w przybliżeniu 12000 km^2^, a jego lokaliza
 ```{r}
 #| label: fig-rycina-area
 #| echo: false
-#| fig-cap: "Obszar badań"
+#| fig-cap: "Obszar badań (zaznaczony kolorem czerwonym) na tle województw w Polsce"
 #| out-width: 100% 
 knitr::include_graphics("figures/sen2_extent.png")
 ```
@@ -154,12 +154,6 @@ Misja Sentinel-2 stanowi inicjatywę Komisji Europejskiej, która jest operacyjn
 Celem tej misji jest dostarczanie obrazów satelitarnych, obejmujących trzynaście zakresów spektralnych o różnych rozdzielczościach przestrzennych: 10, 20 lub 60 metrów, zależnie od rejestrowanego kanału.
 Czas rewizyty konstelacji dwóch satelitów wzrasta z 5 dni nad równikiem do 2-3 dni na średnich szerokościach geograficznych, obejmujących również obszar Polski [@hejmanowska_2020_dane; @sentinel_2_guide].
 
-Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia na powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
-
-Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i geometrycznym, prezentowane jako sceny (ang. *tile*, *granule*) o zasięgu 100 x 100 km w projekcji UTM/WGS84 [@esa_2015_sentinel2handbook].
-Skuteczne wykorzystanie tych danych w zastosowaniach związanych z terenami lądowymi wymaga precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych [@main-knorn_2017_Sen2Cor].
-Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor [@main-knorn_2017_Sen2Cor].
-
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-sentinel2
 #| echo: false
@@ -182,8 +176,14 @@ knitr::kable(df, booktabs = TRUE, align = "c", linesep = "") |>
   kableExtra::row_spec(row = c(2, 3, 4, 5, 6, 7, 8, 9, 12, 13), bold = TRUE)
 ```
 
+Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map pokrycia terenu i użytkowania ziemi (ang. *Land Use/Land Cover*, LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części atmosfery; ang. *Top-of-Atmospheric reflectance*, TOA) oraz 2A (współczynnik odbicia na powierzchni Ziemi; ang. *Bottom-of-Atmospheric reflectance*, BOA) [@phiri_2020_sentinel2].
+
+Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i geometrycznym, prezentowane jako sceny (ang. *tile*, *granule*) o zasięgu 100 x 100 km w projekcji UTM/WGS84 [@esa_2015_sentinel2handbook].
+Skuteczne wykorzystanie tych danych w zastosowaniach związanych z terenami lądowymi wymaga precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów atmosferycznych [@main-knorn_2017_Sen2Cor].
+Produkty poziomu 2A powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor [@main-knorn_2017_Sen2Cor].
+
 Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały dostarczone przez satelitę Sentinel-2B.
 Obszar analizy obejmuje kafel (ang. *tile*) o oznaczeniu 33UWV, dla którego współczynnik zachmurzenia w tym dniu wynosił 0,7%.
 Użyte zostały dane na poziomie przetworzenia L2A.
-Z dostępnych kanałów spektralnych (tabela [-@tbl-tabela-sentinel2] [@sentinel_2_user_guide]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur.
+Z dostępnych kanałów spektralnych (tabela [-@tbl-tabela-sentinel2]) wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji chmur.
 Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945 nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania chmur typu cirrus [@drusch_2012_sen2GMES].

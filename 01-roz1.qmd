@@ -8,14 +8,14 @@ Wprowadzenie powinno być zakończone stwierdzeniem celu pracy.
 Dodatkowo tutaj może znaleźć się również krótki opis co zostało zrealizowane w pracy.
 -->
 
-Energia elektryczna odgrywa kluczową rolę w życiu większości ludzi, stanowiąc podstawę funkcjonowania społeczeństwa i napędzając rozwój gospodarczy [ref].
+Energia elektryczna odgrywa kluczową rolę w życiu większości ludzi, stanowiąc podstawę funkcjonowania społeczeństwa i napędzając rozwój gospodarczy [@iea2021].
 Istnieje wiele metod pozyskiwania energii elektrycznej, włączając w to tradycyjne, konwencjonalne sposoby oparte na spalaniu paliw kopalnych, a także energię atomową oraz odnawialne źródła energii (OZE).
 Odnawialne źródła energii, określane inaczej jako zielona energia, wykorzystują naturalne procesy, takie jak promieniowanie słoneczne, siła wiatru czy ciepło wnętrza Ziemi, w celu generowania energii elektrycznej.
 
 Zasoby surowców wykorzystywanych do produkcji energii konwencjonalnej są ograniczone.
-Statystyczny przegląd światowej energetyki (*Statistical Review of World Energy*) opracowany przez firmę BP w 2021 roku wskazuje, że obecne zasoby paliw kopalnych, takich jak ropa naftowa, gaz ziemny i węgiel, wystarczą odpowiednio na 50, 48,8 i 139 lat obecnej produkcji [@bp_2021_world_energy].
+Statystyczny przegląd światowej energetyki (*Statistical Review of World Energy*) opracowany przez firmę BP w 2021 roku wskazuje, że obecne zasoby paliw kopalnych, takich jak ropa naftowa, gaz ziemny i węgiel, wystarczą odpowiednio na 50, 48,8 i 139 lat przy utrzymaniu obecnego poziomu produkcji [@bp_2021_world_energy].
 Dodatkowo, rosnące zainteresowanie ochroną środowiska i negatywnymi skutkami zmian klimatu oraz wprowadzane przepisy prawne zobowiązują do podejmowania działań mających na celu ograniczenie emisji szkodliwych gazów do atmosfery.
-W obliczu globalnych zmian klimatycznych i kryzysu energetycznego, spowodowanego między innymi inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i energetyki jądrowej [ref].
+W obliczu globalnych zmian klimatycznych i kryzysu energetycznego, spowodowanego między innymi inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i energetyki jądrowej [@iea2021; @iea2022].
 
 Ambitne cele klimatyczne Unii Europejskiej, których podstawę stanowi Europejski Zielony Ład (ang. *European Green Deal*), sprawiają, że energia elektryczna pochodząca z odnawialnych źródeł energii zaczyna odgrywać kluczową rolę w procesie transformacji energetycznej Unii Europejskiej.
 Europejski Zielony Ład to zestaw inicjatyw politycznych mających na celu przeprowadzenie transformacji ekologicznej i osiągnięcie neutralności klimatycznej w UE do 2050 roku [@european_green_deal].

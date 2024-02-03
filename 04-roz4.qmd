@@ -13,15 +13,12 @@ Warianty zbiorów danych przedstawia tabela [-@tbl-tabela-datasets], a przebieg 
 Na podstawie uzyskanych rastrów, zgodnie z sekcją [-@sec-samples], utworzono zbiory danych uczących, które zostały wykorzystane do tworzenia modeli predykcyjnych.
 W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*, RF) zaproponowaną przez Breimana [-@breiman_2001_rf], która została dokładniej przedstawiona w sekcji [-@sec-random-forest].
 Następnie zoptymalizowano parametry tych modeli, oceniono ich jakość oraz ważność zmiennych dla każdego z nich, co opisano odpowiednio w sekcjach [-@sec-tuning], [-@sec-model-quality-assessment] oraz [-@sec-variable-importance].
-Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano procesowi przetwarzania końcowego, przedstawionemu w sekcji [-@sec-post-processing].
-Wizualną reprezentację przebiegu badania przedstawia rycina [-@fig-rycina-workflow].
+Ostatecznie, przeprowadzono predykcje, a uzyskane wyniki poddano procesowi przetwarzania końcowego, przedstawionemu w sekcji [-@sec-post-processing] ^[Wizualną reprezentację przebiegu badania można znaleźć pod adresem https://github.com/filrat2/wykrywanie-farm-fotowoltaicznych-2024 .].
 
 Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu oprogramowania Sentinel-1 Toolbox (S1TBX) [@s1tbx] i SNAP [@snap], udostępnianego przez Europejską Agencję Kosmiczną.
 Każdy z kolejnych etapów został wykonany przy użyciu języka R [@R-base] oraz pakietów rozszerzających funkcjonalności tego języka.
 Końcowe wizualizacje zostały stworzone w oprogramowaniu QGIS [@qgis].
 Zarówno oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i środowisko programistyczne R stanowią oprogramowanie o otwartym kodzie źródłowym (ang. *open-source software*).
-
-**RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)**
 
 ## Przygotowanie danych {#sec-processing}
 
@@ -61,7 +58,7 @@ Na granicy sąsiednich produktów Sentinel-1 GRD występowała przestrzeń bez d
 ```{r}
 #| label: fig-rycina-s1-extents
 #| echo: false
-#| fig-cap: "Obszar badań i zasięg wykorzystanych produktów Sentinel-1"
+#| fig-cap: "Obszar badań (oznaczony kolorem czerwonym) i zasięg wykorzystanych produktów Sentinel-1 (oznaczonych kolorem niebieskim) na tle województw w Polsce"
 #| out-width: 100%
 knitr::include_graphics("figures/sen1_extents.png")
 ```
@@ -216,6 +213,34 @@ Pojedyncze drzewo korzysta ze zredukowanej liczby danych treningowych i zmiennyc
 W fazie predykcji każde z drzew dokonuje prognozy, a ostateczna decyzja jest formułowana na podstawie głosowania większościowego.
 W przypadku klasyfikacji klasa wybierana jest na podstawie największej liczby głosów [@breiman_2001_rf].
 
+### Walidacja przestrzenna {#sec-spcv}
+
+Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
+W tym celu można zastosować *k*-krotną walidację krzyżową (ang. *k-fold cross-validation*, CV), która zakłada, że obserwacje są od siebie niezależne [@pohjankukka_2017_scv].
+W standardowej *k*-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony na *k* podzbiorów podobnej wielkości, gdzie *fold* odnosi się do liczby powstałych podzbiorów.
+Podział ten przeprowadza się poprzez losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
+Model jest uczony na *k* - 1 podzbiorach, które razem tworzą zbiór uczący.
+Następnie model jest testowany na pozostałym podzbiorze, określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
+Procedurę tę powtarza się, aż każdy z *k* podzbiorów zostanie użyty jako zbiór walidacyjny [@berrar_2018_cv].
+Kroswalidacja pozwala na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
+
+Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*) [@pohjankukka_2017_scv].
+Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, będącym jednocześnie podstawowym założeniem analizy geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography].
+Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników oceny jakości modeli [@brenning_2005_scv].
+Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
+
+Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych.
+Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie odseparowane podzbiory danych, wprowadzając przestrzenną odległość pomiędzy zbiorem treningowym a testowym [@pohjankukka_2017_scv].
+Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
+
+```{r}
+#| label: fig-rycina-spcv
+#| echo: false
+#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane testowe. Opracowanie własne na podstawie Schratz, [2021](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
+#| out-width: 100%
+knitr::include_graphics("figures/spcv_plot.png")
+```
+
 ### Dostrajanie modeli {#sec-tuning}
 
 Większość algorytmów uczenia maszynowego wymaga ustalenia wartości pewnych zmiennych konfiguracyjnych zwanych hiperparametrami [@krol_2022_podstawy_ml].
@@ -225,7 +250,7 @@ na podstawie zagnieżdżonej walidacji krzyżowej (ang. *nested cross-validation
 Optymalizacja hiperparametrów (ang. *hyperparameters*) odgrywa kluczową rolę w osiągnięciu najwyższej mocy predykcyjnej i jakości modelu [@schratz_2019_hyperparameters], a jej celem jest znalezienie optymalnej konfiguracji hiperparametrów algorytmu uczenia maszynowego dla danego zadania [@bischl_2024_mlr3].
 
 Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości, czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
-Metoda przestrzennej zagnieżdżonej walidacji krzyżowej to rozwinięcie walidacji krzyżowej (sekcja [-@sec-model-quality-assessment]), przeznaczone do procesu strojenia hiperparametrów.
+Metoda przestrzennej zagnieżdżonej walidacji krzyżowej to rozwinięcie przestrzennej walidacji krzyżowej (sekcja [-@sec-spcv]), przeznaczone do procesu strojenia hiperparametrów.
 Każdy podzbiór (*fold*) utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne, zewnętrzne i wewnętrzne podzbiory.
 W zewnętrznym obiegu model jest trenowany na danych z jednego obszaru przestrzennego i testowany na innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych hiperparametrów.
 Cały proces jest następnie powtarzany na każdym z *k* zewnętrznych podzbiorów, co prowadzi do określenia najlepszego ustawienia hiperparametrów.
@@ -265,32 +290,6 @@ Chociaż dostrojenie lasów losowych powinno poprawiać jakość modeli, korzyś
 
 ### Ocena jakości modeli {#sec-model-quality-assessment}
 
-Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
-W tym celu można zastosować *k*-krotną walidację krzyżową (ang. *k-fold cross-validation*, CV), która zakłada, że obserwacje są od siebie niezależne [@pohjankukka_2017_scv].
-W standardowej *k*-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony na *k* podzbiorów podobnej wielkości, gdzie *fold* odnosi się do liczby powstałych podzbiorów.
-Podział ten przeprowadza się poprzez losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
-Model jest uczony na *k* - 1 podzbiorach, które razem tworzą zbiór uczący.
-Następnie model jest testowany na pozostałym podzbiorze, określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
-Procedurę tę powtarza się, aż każdy z *k* podzbiorów zostanie użyty jako zbiór walidacyjny [@berrar_2018_cv].
-Kroswalidacja pozwala na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od konkretnego podziału danych.
-
-Obserwacje geograficzne, posiadające określone współrzędne, nie spełniają założenia niezależności danych ze względu na autokorelację przestrzenną (ang. *spatial autocorrelation*) [@pohjankukka_2017_scv].
-Ogólnie rzecz biorąc, dane przestrzenne wykazują autokorelację przestrzenną zgodnie z pierwszym prawem geografii, będącym jednocześnie podstawowym założeniem analizy geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe” [@tobler_1970_first_law_of_geography].
-Traktowanie zbiorów danych przestrzennych jak nieprzestrzennych prowadzi do zbyt optymistycznych wyników oceny jakości modeli [@brenning_2005_scv].
-Konsekwencją autokorelacji przestrzennej dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są niezależne od zbioru uczącego [@brenning_2012_scv].
-
-Przestrzenna walidacja krzyżowa (ang. *spatial cross-validation*) jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w ocenie jakości modelu wynikającym z bliskości danych testowych i treningowych.
-Aby ograniczyć stronniczość w wynikach oceny dokładności predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje się przestrzennie odseparowane podzbiory danych, wprowadzając przestrzenną odległość pomiędzy zbiorem treningowym a testowym [@pohjankukka_2017_scv].
-Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
-
-```{r}
-#| label: fig-rycina-spcv
-#| echo: false
-#| fig-cap: "Porównanie przestrzennego i losowego podziału zbioru danych na potrzeby walidacji krzyżowej jednego powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd). Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane testowe. Opracowanie własne na podstawie Schratz, [2021](https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html)"
-#| out-width: 100%
-knitr::include_graphics("figures/spcv_plot.png")
-```
-
 Macierz błędów (ang. *error matrix* lub *confusion matrix*) to tablica prezentująca wyniki klasyfikatora binarnego, podając informację o liczbie obiektów przypisanych do każdej z klas.
 Macierz błędów jest wynikiem porównania prognozy (klasyfikacji) z rzeczywistymi danymi, składając się z czterech wartości reprezentujących różne kombinacje przewidywanych i rzeczywistych klas.
 
@@ -324,14 +323,6 @@ Jeśli zmienna jest istotna, permutacja jej wartości skutkuje pogorszeniem jako
 Im większa zmiana dopasowania modelu, tym istotniejsza jest permutowana zmienna [@biecek_2021_model_analysis].
 Metoda oparta na permutacji została pierwotnie zaproponowana przez Breimana [-@breiman_2001_rf] dla lasów losowych, jednak jej prostota umożliwia zastosowanie permutacji do dowolnego modelu, a także porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach [@biecek_2021_model_analysis].
 
-```{r}
-#| label: fig-variables-correlation
-#| echo: false
-#| fig-cap: "Macierz korelacji wszystkich zmiennych wykorzystanych w badaniu"
-#| out-width: 100% 
-knitr::include_graphics("figures/corrplot1.png")
-```
-
 W przypadku silnie skorelowanych ze sobą zmiennych, brak jednej z nich niekoniecznie będzie negatywnie wpływać na jakość modelu, ponieważ inna, silnie skorelowana zmienna może zastąpić tę brakującą informację [@biecek_2021_model_analysis].
 Macierz korelacji zmiennych użytych w tym badaniu (rycina [-@fig-variables-correlation]) ukazuje silne związki między niektórymi zmiennymi.
 Wysoka korelacja występuje szczególnie między pasmami Sentinel-2 w zakresie widzialnym (kanały B02-04) a pasmami średniej podczerwieni (kanały B11-12). 
@@ -339,6 +330,15 @@ Zauważalna jest również wysoka korelacja między pasmami czerwieni krawędzio
 Wykorzystane polaryzacje Sentinel-1 również są ze sobą skorelowane.
 Wskaźniki teledetekcyjne wykazują zazwyczaj znaczną dodatnią lub ujemną korelację z pasmami, które zostały wykorzystane do ich obliczenia. 
 Tekstury obrazu charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla których zostały one określone.
+
+```{r}
+#| label: fig-variables-correlation
+#| echo: false
+#| fig-cap: "Macierz korelacji wszystkich zmiennych wykorzystanych w badaniu"
+#| out-width: 100% 
+#| fig-pos: "H"
+knitr::include_graphics("figures/corrplot1.png")
+```
 
 ## Przetwarzanie końcowe {#sec-post-processing}
 

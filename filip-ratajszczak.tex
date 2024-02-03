@@ -107,11 +107,11 @@ Keywords: (as stated before)
 
 Energia elektryczna odgrywa kluczową rolę w życiu większości ludzi,
 stanowiąc podstawę funkcjonowania społeczeństwa i napędzając rozwój
-gospodarczy {[}ref{]}. Istnieje wiele metod pozyskiwania energii
-elektrycznej, włączając w to tradycyjne, konwencjonalne sposoby oparte
-na spalaniu paliw kopalnych, a także energię atomową oraz odnawialne
-źródła energii (OZE). Odnawialne źródła energii, określane inaczej jako
-zielona energia, wykorzystują naturalne procesy, takie jak
+gospodarczy \autocite{iea2021}. Istnieje wiele metod pozyskiwania
+energii elektrycznej, włączając w to tradycyjne, konwencjonalne sposoby
+oparte na spalaniu paliw kopalnych, a także energię atomową oraz
+odnawialne źródła energii (OZE). Odnawialne źródła energii, określane
+inaczej jako zielona energia, wykorzystują naturalne procesy, takie jak
 promieniowanie słoneczne, siła wiatru czy ciepło wnętrza Ziemi, w celu
 generowania energii elektrycznej.
 
@@ -120,15 +120,16 @@ ograniczone. Statystyczny przegląd światowej energetyki
 (\emph{Statistical Review of World Energy}) opracowany przez firmę BP w
 2021 roku wskazuje, że obecne zasoby paliw kopalnych, takich jak ropa
 naftowa, gaz ziemny i węgiel, wystarczą odpowiednio na 50, 48,8 i 139
-lat obecnej produkcji \autocite{bp_2021_world_energy}. Dodatkowo,
-rosnące zainteresowanie ochroną środowiska i negatywnymi skutkami zmian
-klimatu oraz wprowadzane przepisy prawne zobowiązują do podejmowania
-działań mających na celu ograniczenie emisji szkodliwych gazów do
-atmosfery. W obliczu globalnych zmian klimatycznych i kryzysu
-energetycznego, spowodowanego między innymi inwazją Rosji na Ukrainę w
-2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii
-opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i
-energetyki jądrowej {[}ref{]}.
+lat przy utrzymaniu obecnego poziomu produkcji
+\autocite{bp_2021_world_energy}. Dodatkowo, rosnące zainteresowanie
+ochroną środowiska i negatywnymi skutkami zmian klimatu oraz wprowadzane
+przepisy prawne zobowiązują do podejmowania działań mających na celu
+ograniczenie emisji szkodliwych gazów do atmosfery. W obliczu globalnych
+zmian klimatycznych i kryzysu energetycznego, spowodowanego między
+innymi inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone
+do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz
+odnawialnych źródeł energii i energetyki jądrowej
+\autocite{iea2021,iea2022}.
 
 Ambitne cele klimatyczne Unii Europejskiej, których podstawę stanowi
 Europejski Zielony Ład (ang. \emph{European Green Deal}), sprawiają, że
@@ -230,7 +231,8 @@ rycina \ref{fig-rycina-area}.
 
 }
 
-\caption{\label{fig-rycina-area}Obszar badań}
+\caption{\label{fig-rycina-area}Obszar badań (zaznaczony kolorem
+czerwonym) na tle województw w Polsce}
 
 \end{figure}
 
@@ -486,26 +488,6 @@ z 5 dni nad równikiem do 2-3 dni na średnich szerokościach
 geograficznych, obejmujących również obszar Polski
 \autocite{hejmanowska_2020_dane,sentinel_2_guide}.
 
-Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
-poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map
-pokrycia terenu i użytkowania ziemi (ang. \emph{Land Use/Land Cover},
-LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części
-atmosfery; ang. \emph{Top-of-Atmospheric reflectance}, TOA) oraz 2A
-(współczynnik odbicia na powierzchni Ziemi; ang.
-\emph{Bottom-of-Atmospheric reflectance}, BOA)
-\autocite{phiri_2020_sentinel2}.
-
-Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i
-geometrycznym, prezentowane jako sceny (ang. \emph{tile},
-\emph{granule}) o zasięgu 100 x 100 km w projekcji UTM/WGS84
-\autocite{esa_2015_sentinel2handbook}. Skuteczne wykorzystanie tych
-danych w zastosowaniach związanych z terenami lądowymi wymaga
-precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów
-atmosferycznych \autocite{main-knorn_2017_Sen2Cor}. Produkty poziomu 2A
-powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla
-danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
-\autocite{main-knorn_2017_Sen2Cor}.
-
 \hypertarget{tbl-tabela-sentinel2}{}
 \begin{table}
 \caption{\label{tbl-tabela-sentinel2}Kanały spektralne satelitów Sentinel-2 (ESA,
@@ -534,17 +516,37 @@ B10 & Cirrus & 1374 & 1360–1390 & 60\\
 \end{tabular}
 \end{table}
 
+Dane pozyskiwane przez satelity Sentinel-2 są dostępne na różnych
+poziomach przetworzenia, lecz najczęściej używane przy tworzeniu map
+pokrycia terenu i użytkowania ziemi (ang. \emph{Land Use/Land Cover},
+LULC) są produkty 1C (współczynnik odbicia na poziomie górnej części
+atmosfery; ang. \emph{Top-of-Atmospheric reflectance}, TOA) oraz 2A
+(współczynnik odbicia na powierzchni Ziemi; ang.
+\emph{Bottom-of-Atmospheric reflectance}, BOA)
+\autocite{phiri_2020_sentinel2}.
+
+Produkty poziomu 1C to dane poddane korekcjom radiometrycznym i
+geometrycznym, prezentowane jako sceny (ang. \emph{tile},
+\emph{granule}) o zasięgu 100 x 100 km w projekcji UTM/WGS84
+\autocite{esa_2015_sentinel2handbook}. Skuteczne wykorzystanie tych
+danych w zastosowaniach związanych z terenami lądowymi wymaga
+precyzyjnej korekcji zdjęć satelitarnych pod kątem efektów
+atmosferycznych \autocite{main-knorn_2017_Sen2Cor}. Produkty poziomu 2A
+powstają poprzez zastosowanie dodatkowej korekcji atmosferycznej dla
+danych poziomu 1C za pomocą procesora korekcji atmosferycznej Sen2Cor
+\autocite{main-knorn_2017_Sen2Cor}.
+
 Dane wykorzystane w analizie pochodzą z dnia 8 maja 2023 roku i zostały
 dostarczone przez satelitę Sentinel-2B. Obszar analizy obejmuje kafel
 (ang. \emph{tile}) o oznaczeniu 33UWV, dla którego współczynnik
 zachmurzenia w tym dniu wynosił 0,7\%. Użyte zostały dane na poziomie
 przetworzenia L2A. Z dostępnych kanałów spektralnych (tabela
-\ref{tbl-tabela-sentinel2} \autocite{sentinel_2_user_guide})
-wykorzystano 10 zakresów, ponieważ pasma rejestrowane w rozdzielczości
-60 metrów są przeznaczone głównie do korekcji atmosferycznych i detekcji
-chmur. Kanał 1 (443 nm) służy do korekcji wpływu aerozoli, kanał 9 (945
-nm) do korekcji wpływu pary wodnej, a kanał 10 (1374 nm) do wykrywania
-chmur typu cirrus \autocite{drusch_2012_sen2GMES}.
+\ref{tbl-tabela-sentinel2}) wykorzystano 10 zakresów, ponieważ pasma
+rejestrowane w rozdzielczości 60 metrów są przeznaczone głównie do
+korekcji atmosferycznych i detekcji chmur. Kanał 1 (443 nm) służy do
+korekcji wpływu aerozoli, kanał 9 (945 nm) do korekcji wpływu pary
+wodnej, a kanał 10 (1374 nm) do wykrywania chmur typu cirrus
+\autocite{drusch_2012_sen2GMES}.
 
 \bookmarksetup{startatroot}
 
@@ -573,9 +575,9 @@ zmiennych dla każdego z nich, co opisano odpowiednio w sekcjach
 \ref{sec-tuning}, \ref{sec-model-quality-assessment} oraz
 \ref{sec-variable-importance}. Ostatecznie, przeprowadzono predykcje, a
 uzyskane wyniki poddano procesowi przetwarzania końcowego,
-przedstawionemu w sekcji \ref{sec-post-processing}. Wizualną
-reprezentację przebiegu badania przedstawia rycina
-\textbf{?@fig-rycina-workflow}.
+przedstawionemu w sekcji \ref{sec-post-processing} \footnote{Wizualną
+  reprezentację przebiegu badania można znaleźć pod adresem
+  https://github.com/filrat2/wykrywanie-farm-fotowoltaicznych-2024 .}.
 
 Przetwarzanie danych Sentinel-1 GRD zostało przeprowadzane przy użyciu
 oprogramowania Sentinel-1 Toolbox (S1TBX) \autocite{s1tbx} i SNAP
@@ -586,8 +588,6 @@ języka. Końcowe wizualizacje zostały stworzone w oprogramowaniu QGIS
 \autocite{qgis}. Zarówno oprogramowanie GIS (SNAP, S1TBX, QGIS), jak i
 środowisko programistyczne R stanowią oprogramowanie o otwartym kodzie
 źródłowym (ang. \emph{open-source software}).
-
-\textbf{RYCINA - OGÓLNY SCHEMAT PRZEBIEGU BADANIA (WORKFLOW)}
 
 \hypertarget{sec-processing}{%
 \section{Przygotowanie danych}\label{sec-processing}}
@@ -663,8 +663,9 @@ przy użyciu funkcji \texttt{focal} z pakietu \emph{terra}
 
 }
 
-\caption{\label{fig-rycina-s1-extents}Obszar badań i zasięg
-wykorzystanych produktów Sentinel-1}
+\caption{\label{fig-rycina-s1-extents}Obszar badań (oznaczony kolorem
+czerwonym) i zasięg wykorzystanych produktów Sentinel-1 (oznaczonych
+kolorem niebieskim) na tle województw w Polsce}
 
 \end{figure}
 
@@ -979,6 +980,67 @@ podstawie głosowania większościowego. W przypadku klasyfikacji klasa
 wybierana jest na podstawie największej liczby głosów
 \autocite{breiman_2001_rf}.
 
+\hypertarget{sec-spcv}{%
+\subsection{Walidacja przestrzenna}\label{sec-spcv}}
+
+Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
+W tym celu można zastosować \emph{k}-krotną walidację krzyżową (ang.
+\emph{k-fold cross-validation}, CV), która zakłada, że obserwacje są od
+siebie niezależne \autocite{pohjankukka_2017_scv}. W standardowej
+\emph{k}-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony
+na \emph{k} podzbiorów podobnej wielkości, gdzie \emph{fold} odnosi się
+do liczby powstałych podzbiorów. Podział ten przeprowadza się poprzez
+losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
+Model jest uczony na \emph{k} - 1 podzbiorach, które razem tworzą zbiór
+uczący. Następnie model jest testowany na pozostałym podzbiorze,
+określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
+Procedurę tę powtarza się, aż każdy z \emph{k} podzbiorów zostanie użyty
+jako zbiór walidacyjny \autocite{berrar_2018_cv}. Kroswalidacja pozwala
+na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i
+pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od
+konkretnego podziału danych.
+
+Obserwacje geograficzne, posiadające określone współrzędne, nie
+spełniają założenia niezależności danych ze względu na autokorelację
+przestrzenną (ang. \emph{spatial autocorrelation})
+\autocite{pohjankukka_2017_scv}. Ogólnie rzecz biorąc, dane przestrzenne
+wykazują autokorelację przestrzenną zgodnie z pierwszym prawem
+geografii, będącym jednocześnie podstawowym założeniem analizy
+geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim
+innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
+\autocite{tobler_1970_first_law_of_geography}. Traktowanie zbiorów
+danych przestrzennych jak nieprzestrzennych prowadzi do zbyt
+optymistycznych wyników oceny jakości modeli
+\autocite{brenning_2005_scv}. Konsekwencją autokorelacji przestrzennej
+dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
+obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są
+niezależne od zbioru uczącego \autocite{brenning_2012_scv}.
+
+Przestrzenna walidacja krzyżowa (ang. \emph{spatial cross-validation})
+jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w
+ocenie jakości modelu wynikającym z bliskości danych testowych i
+treningowych. Aby ograniczyć stronniczość w wynikach oceny dokładności
+predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje
+się przestrzennie odseparowane podzbiory danych, wprowadzając
+przestrzenną odległość pomiędzy zbiorem treningowym a testowym
+\autocite{pohjankukka_2017_scv}. Przykład takiego podejścia przedstawia
+rycina \ref{fig-rycina-spcv}.
+
+\begin{figure}[t]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/spcv_plot.png}
+
+}
+
+\caption{\label{fig-rycina-spcv}Porównanie przestrzennego i losowego
+podziału zbioru danych na potrzeby walidacji krzyżowej jednego
+powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
+Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane
+testowe. Opracowanie własne na podstawie Schratz,
+\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2021}}
+
+\end{figure}
+
 \hypertarget{sec-tuning}{%
 \subsection{Dostrajanie modeli}\label{sec-tuning}}
 
@@ -1002,15 +1064,15 @@ Wykorzystanie tych samych danych do oceny jakości i dostrajania mogłoby
 potencjalnie prowadzić do nadmiernie wysokich wyników oceny jakości,
 czego można uniknąć, stosując zagnieżdżoną przestrzenną kroswalidację.
 Metoda przestrzennej zagnieżdżonej walidacji krzyżowej to rozwinięcie
-walidacji krzyżowej (sekcja \ref{sec-model-quality-assessment}),
-przeznaczone do procesu strojenia hiperparametrów. Każdy podzbiór
-(\emph{fold}) utworzony w przestrzennej walidacji krzyżowej jest
-dzielony na kolejne, zewnętrzne i wewnętrzne podzbiory. W zewnętrznym
-obiegu model jest trenowany na danych z jednego obszaru przestrzennego i
-testowany na innym, podczas gdy wewnętrzny obieg służy do doboru
-optymalnych hiperparametrów. Cały proces jest następnie powtarzany na
-każdym z \emph{k} zewnętrznych podzbiorów, co prowadzi do określenia
-najlepszego ustawienia hiperparametrów.
+przestrzennej walidacji krzyżowej (sekcja \ref{sec-spcv}), przeznaczone
+do procesu strojenia hiperparametrów. Każdy podzbiór (\emph{fold})
+utworzony w przestrzennej walidacji krzyżowej jest dzielony na kolejne,
+zewnętrzne i wewnętrzne podzbiory. W zewnętrznym obiegu model jest
+trenowany na danych z jednego obszaru przestrzennego i testowany na
+innym, podczas gdy wewnętrzny obieg służy do doboru optymalnych
+hiperparametrów. Cały proces jest następnie powtarzany na każdym z
+\emph{k} zewnętrznych podzbiorów, co prowadzi do określenia najlepszego
+ustawienia hiperparametrów.
 
 Hiperparametry \texttt{mtry}, \texttt{sample.fraction} i
 \texttt{min.node.size} są parametrami określającymi stopień losowości
@@ -1099,64 +1161,6 @@ algorytmów uczenia maszynowego, takich jak maszyny wektorów nośnych
 \hypertarget{sec-model-quality-assessment}{%
 \subsection{Ocena jakości modeli}\label{sec-model-quality-assessment}}
 
-Ważnym krokiem w procesie uczenia maszynowego jest ocena jakości modelu.
-W tym celu można zastosować \emph{k}-krotną walidację krzyżową (ang.
-\emph{k-fold cross-validation}, CV), która zakłada, że obserwacje są od
-siebie niezależne \autocite{pohjankukka_2017_scv}. W standardowej
-\emph{k}-krotnej walidacji krzyżowej dostępny zbiór uczący jest dzielony
-na \emph{k} podzbiorów podobnej wielkości, gdzie \emph{fold} odnosi się
-do liczby powstałych podzbiorów. Podział ten przeprowadza się poprzez
-losowe próbkowanie obserwacji ze zbioru uczącego się bez zastępowania.
-Model jest uczony na \emph{k} - 1 podzbiorach, które razem tworzą zbiór
-uczący. Następnie model jest testowany na pozostałym podzbiorze,
-określanym jako zbiór walidacyjny, po czym mierzona jest jego jakość.
-Procedurę tę powtarza się, aż każdy z \emph{k} podzbiorów zostanie użyty
-jako zbiór walidacyjny \autocite{berrar_2018_cv}. Kroswalidacja pozwala
-na ocenę ogólnej jakości modelu, uwzględniając różnorodność danych i
-pomaga uniknąć sytuacji, w której wyniki są mocno uzależnione od
-konkretnego podziału danych.
-
-Obserwacje geograficzne, posiadające określone współrzędne, nie
-spełniają założenia niezależności danych ze względu na autokorelację
-przestrzenną (ang. \emph{spatial autocorrelation})
-\autocite{pohjankukka_2017_scv}. Ogólnie rzecz biorąc, dane przestrzenne
-wykazują autokorelację przestrzenną zgodnie z pierwszym prawem
-geografii, będącym jednocześnie podstawowym założeniem analizy
-geostatystycznej, według którego „Wszystko jest powiązane ze wszystkim
-innym, ale rzeczy bliskie są bardziej powiązane niż rzeczy odległe''
-\autocite{tobler_1970_first_law_of_geography}. Traktowanie zbiorów
-danych przestrzennych jak nieprzestrzennych prowadzi do zbyt
-optymistycznych wyników oceny jakości modeli
-\autocite{brenning_2005_scv}. Konsekwencją autokorelacji przestrzennej
-dla oceny jakości jest nadmierne dopasowanie klasyfikatorów do
-obserwacji uczących, jeśli obserwacje testowe (lub walidacyjne) nie są
-niezależne od zbioru uczącego \autocite{brenning_2012_scv}.
-
-Przestrzenna walidacja krzyżowa (ang. \emph{spatial cross-validation})
-jest modyfikacją standardowej kroswalidacji, która zapobiega błędom w
-ocenie jakości modelu wynikającym z bliskości danych testowych i
-treningowych. Aby ograniczyć stronniczość w wynikach oceny dokładności
-predykcyjnej, w ramach przestrzennej walidacji krzyżowej wykorzystuje
-się przestrzennie odseparowane podzbiory danych, wprowadzając
-przestrzenną odległość pomiędzy zbiorem treningowym a testowym
-\autocite{pohjankukka_2017_scv}. Przykład takiego podejścia przedstawia
-rycina \ref{fig-rycina-spcv}.
-
-\begin{figure}[t]
-
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/spcv_plot.png}
-
-}
-
-\caption{\label{fig-rycina-spcv}Porównanie przestrzennego i losowego
-podziału zbioru danych na potrzeby walidacji krzyżowej jednego
-powtórzenia. Podział przestrzenny (górny rząd) i losowy (dolny rząd).
-Niebieskie punkty reprezentują dane treningowe, a pomarańczowe dane
-testowe. Opracowanie własne na podstawie Schratz,
-\href{https://mlr.mlr-org.com/articles/tutorial/handling_of_spatial_data.html}{2021}}
-
-\end{figure}
-
 Macierz błędów (ang. \emph{error matrix} lub \emph{confusion matrix}) to
 tablica prezentująca wyniki klasyfikatora binarnego, podając informację
 o liczbie obiektów przypisanych do każdej z klas. Macierz błędów jest
@@ -1236,17 +1240,6 @@ umożliwia zastosowanie permutacji do dowolnego modelu, a także
 porównywanie ważności zmiennych pomiędzy modelami o różnych strukturach
 \autocite{biecek_2021_model_analysis}.
 
-\begin{figure}[t]
-
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/corrplot1.png}
-
-}
-
-\caption{\label{fig-variables-correlation}Macierz korelacji wszystkich
-zmiennych wykorzystanych w badaniu}
-
-\end{figure}
-
 W przypadku silnie skorelowanych ze sobą zmiennych, brak jednej z nich
 niekoniecznie będzie negatywnie wpływać na jakość modelu, ponieważ inna,
 silnie skorelowana zmienna może zastąpić tę brakującą informację
@@ -1262,6 +1255,17 @@ teledetekcyjne wykazują zazwyczaj znaczną dodatnią lub ujemną korelację
 z pasmami, które zostały wykorzystane do ich obliczenia. Tekstury obrazu
 charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla
 których zostały one określone.
+
+\begin{figure}[H]
+
+{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/corrplot1.png}
+
+}
+
+\caption{\label{fig-variables-correlation}Macierz korelacji wszystkich
+zmiennych wykorzystanych w badaniu}
+
+\end{figure}
 
 \hypertarget{sec-post-processing}{%
 \section{Przetwarzanie końcowe}\label{sec-post-processing}}
@@ -1923,32 +1927,29 @@ misji Sentinel-2, wraz z ich pochodnymi, wykazały się kluczowym
 elementem detekcji farm fotowoltaicznych przy wykorzystaniu danych
 satelitarnych.
 
-Optymalnym wariantem okazał się wariant nr 2, składający się z kanałów
-Sentinel-2 oraz trzech wykorzystanych wskaźników teledetekcyjnych (NDVI,
-NDBI i mNDWI), który uzyskał najwyższe wyniki oceny jakości po
-ostatecznej klasyfikacji i przetwarzaniu końcowym. Zbliżone wyniki
-jakości uzyskał wariant nr 3, który był rozszerzeniem wariantu drugiego
-o dodatkowe zmienne w postaci tekstur obrazu dwóch kanałów Sentinel-2 i
-dwóch wskaźników teledetekcyjnych. Jeżeli dwa klasyfikatory
-charakteryzują się zbliżonymi wynikami jakości, to zazwyczaj lepszym
-wyborem jest ten prostszy, czyli zawierający mniej zmiennych. W tym
-kontekście wariant nr 2 również wypada lepiej od wariantu nr 3, ponieważ
-ma mniejszą liczbę predyktorów.
+Optymalnym wariantem zbioru predyktorów okazał się ten składający z
+kanałów Sentinel-2 oraz trzech wykorzystanych wskaźników
+teledetekcyjnych (NDVI, NDBI i mNDWI), który uzyskał najwyższe wyniki
+oceny jakości po ostatecznej klasyfikacji i przetwarzaniu końcowym.
+Zbliżone wyniki jakości uzyskał wariant, który był rozszerzeniem
+najlepszego wariantu o dodatkowe zmienne w postaci tekstur obrazu dwóch
+kanałów Sentinel-2 i dwóch wskaźników teledetekcyjnych. Jeżeli dwa
+klasyfikatory charakteryzują się zbliżonymi wynikami jakości, to
+zazwyczaj lepszym wyborem jest ten prostszy, czyli zawierający mniej
+zmiennych.
 
 Warto zwrócić uwagę na istotne różnice między oceną jakości modeli na
 próbie a ostateczną oceną klasyfikacji na całej populacji po procesie
-przetwarzania końcowego. Chociaż wyniki oceny jakości modeli (tabela
-\ref{tbl-tabela-performance-measures}) sugerują bardzo zbliżoną
-skuteczność wszystkich modeli, to ocena przeprowadzona na pełnej
-populacji ujawnia duże różnice między poszczególnymi wariantami (tabela
-\ref{tbl-tabela-population-quality-assessment}). Największe różnice
-zauważyć można w wynikach precyzji, która ostatecznie warunkuje
-ostateczną ocenę jakości klasyfikatora po przeprowadzeniu predykcji i
-przetwarzaniu końcowym dla każdego wariantu. Jeśli ocena jakości modeli
-dla klasyfikacji nie zostałaby przeprowadzona, moglibyśmy sądzić, że
-dodatkowe zmienne, czyli produkty pochodne dostępne w poszczególnych
-wariantach, nie mają znaczącego wpływu na wyniki detekcji farm
-fotowoltaicznych.
+przetwarzania końcowego. Chociaż wyniki oceny jakości modeli sugerują
+bardzo zbliżoną skuteczność wszystkich modeli, to ocena przeprowadzona
+na pełnej populacji ujawnia duże różnice między poszczególnymi
+wariantami. Największe różnice zauważyć można w wynikach precyzji, która
+ostatecznie warunkuje ostateczną ocenę jakości klasyfikatora po
+przeprowadzeniu predykcji i przetwarzaniu końcowym dla każdego wariantu.
+Jeśli ocena jakości modeli dla klasyfikacji nie zostałaby
+przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty
+pochodne dostępne w poszczególnych wariantach, nie mają znaczącego
+wpływu na wyniki detekcji farm fotowoltaicznych.
 
 Kwestią, której nie udało się rozwiązać w badaniu, jest obecność
 bimodalnego rozkładu wyników czułości w każdym z wariantów. Bimodalny
@@ -1989,7 +1990,7 @@ Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że
 modele w większości przepadków skutecznie dokonują rozróżnienia farm
 fotowoltaicznych i pozostałych obszarów podczas klasyfikacji. Niemniej
 jednak, w wynikach predykcji pojawiło się kilka powtarzających się
-błędów, które można w prosty sposób wyeliminować. W celu poprawy wyników
+błędów, które można częściowo wyeliminować. W celu poprawy wyników
 identyfikacji farm fotowoltaicznych w kolejnych badaniach, zaleca się
 zastosowanie masek eliminujących obszary chmur i ich cieni. Dodatkowo,
 warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania
@@ -1997,22 +1998,20 @@ końcowego, który wykluczałby pozytywne predykcje wzdłuż dróg, zgodnie z
 sugestią Ortiza et al. \autocite*{ortiz_2022_pv}.
 
 W celu rozszerzenia obszaru detekcji farm fotowoltaicznych do obszaru
-całej Polski w przyszłych badaniach, zaleca się wykorzystanie platformy
-obliczeniowej Google Earth Engine \autocite{gorelick_2017_gee},
-umożliwiającej przeprowadzanie analiz geoprzestrzennych w
-infrastrukturze Google. Platforma Google Earth Engine gromadzi
-ogólnodostępne dane satelitarne z ponad trzydziestu lat, a jej zasób
-jest codziennie aktualizowany i rozszerzany. Zaimplementowane w Google
-Earth Engine algorytmy dostarczają kompleksowy zestaw narzędzi,
-umożliwiając odtworzenie i rozwinięcie niniejszego badania na obszar
-całego kraju. Dodatkowo, wykorzystanie obliczeń w chmurze pozwoli na
-rozszerzenie badania o wykorzystanie dodatkowych tekstur obrazu,
-umożliwiając jednocześnie testowanie różnych konfiguracji rozmiarów
-ruchomego okna i liczby poziomów kwantyzacji w celu znalezienia
-optymalnych ustawień tych parametrów. Z uwagi na rosnący czas obliczeń
-wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego
-okna, w niniejszej pracy nie zdecydowano się na sprawdzenie działania
-innych tekstur obrazu z różnymi konfiguracjami powyższych parametrów.
+całej Polski w przyszłych badaniach, zaleca się wykorzystanie
+technologii chmurowych umożliwiających przeprowadzanie analiz
+geoprzestrzennych, takich jak Google Earth Engine
+\autocite{gorelick_2017_gee}, Microsoft Planetary Computer
+\autocite{microsoft_planetary_computer} czy openEO Platform
+\autocite{openEO_platform}. Dodatkowo, wykorzystanie obliczeń w chmurze
+pozwoli na rozszerzenie badania o wykorzystanie dodatkowych tekstur
+obrazu, umożliwiając jednocześnie testowanie różnych konfiguracji
+rozmiarów ruchomego okna i liczby poziomów kwantyzacji w celu
+znalezienia optymalnych ustawień tych parametrów. Z uwagi na rosnący
+czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz
+rozmiarów ruchomego okna, w niniejszej pracy nie zdecydowano się na
+sprawdzenie działania innych tekstur obrazu z różnymi konfiguracjami
+powyższych parametrów.
 
 \printbibliography[heading=bibintoc, title=Bibliografia]
 

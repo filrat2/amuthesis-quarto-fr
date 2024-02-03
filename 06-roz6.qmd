@@ -33,13 +33,12 @@ Wykorzystanie dodatkowych zmiennych, takich jak wskaźniki teledetekcyjne czy te
 Dane radarowe z misji Sentinel-1 i ich pochodne nie okazały się istotne w procesie detekcji farm fotowoltaicznych.
 W odróżnieniu od tego, multispektralne dane z misji Sentinel-2, wraz z ich pochodnymi, wykazały się kluczowym elementem detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych.
 
-Optymalnym wariantem okazał się wariant nr 2, składający się z kanałów Sentinel-2 oraz trzech wykorzystanych wskaźników teledetekcyjnych (NDVI, NDBI i mNDWI), który uzyskał najwyższe wyniki oceny jakości po ostatecznej klasyfikacji i przetwarzaniu końcowym.
-Zbliżone wyniki jakości uzyskał wariant nr 3, który był rozszerzeniem wariantu drugiego o dodatkowe zmienne w postaci tekstur obrazu dwóch kanałów Sentinel-2 i dwóch wskaźników teledetekcyjnych.
-Jeżeli dwa klasyfikatory charakteryzują się zbliżonymi wynikami jakości, to zazwyczaj lepszym wyborem jest ten prostszy, czyli zawierający mniej zmiennych. 
-W tym kontekście wariant nr 2 również wypada lepiej od wariantu nr 3, ponieważ ma mniejszą liczbę predyktorów.
+Optymalnym wariantem zbioru predyktorów okazał się ten składający z kanałów Sentinel-2 oraz trzech wykorzystanych wskaźników teledetekcyjnych (NDVI, NDBI i mNDWI), który uzyskał najwyższe wyniki oceny jakości po ostatecznej klasyfikacji i przetwarzaniu końcowym.
+Zbliżone wyniki jakości uzyskał wariant, który był rozszerzeniem najlepszego wariantu o dodatkowe zmienne w postaci tekstur obrazu dwóch kanałów Sentinel-2 i dwóch wskaźników teledetekcyjnych.
+Jeżeli dwa klasyfikatory charakteryzują się zbliżonymi wynikami jakości, to zazwyczaj lepszym wyborem jest ten prostszy, czyli zawierający mniej zmiennych.
 
 Warto zwrócić uwagę na istotne różnice między oceną jakości modeli na próbie a ostateczną oceną klasyfikacji na całej populacji po procesie przetwarzania końcowego.
-Chociaż wyniki oceny jakości modeli (tabela [-@tbl-tabela-performance-measures]) sugerują bardzo zbliżoną skuteczność wszystkich modeli, to ocena przeprowadzona na pełnej populacji ujawnia duże różnice między poszczególnymi wariantami (tabela [-@tbl-tabela-population-quality-assessment]).
+Chociaż wyniki oceny jakości modeli sugerują bardzo zbliżoną skuteczność wszystkich modeli, to ocena przeprowadzona na pełnej populacji ujawnia duże różnice między poszczególnymi wariantami.
 Największe różnice zauważyć można w wynikach precyzji, która ostatecznie warunkuje ostateczną ocenę jakości klasyfikatora po przeprowadzeniu predykcji i przetwarzaniu końcowym dla każdego wariantu.
 Jeśli ocena jakości modeli dla klasyfikacji nie zostałaby przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty pochodne dostępne w poszczególnych wariantach, nie mają znaczącego wpływu na wyniki detekcji farm fotowoltaicznych.
 
@@ -56,12 +55,10 @@ Istnieje również jeden zbiór danych, którego sposób stworzenia był najbard
 Według wyników tego badania, na obszarze niniejszego badania znajdowało się w tamtym momencie jedynie 10 poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni 14,67 hektara.
 
 Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji.
-Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów, które można w prosty sposób wyeliminować. 
+Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów, które można częściowo wyeliminować. 
 W celu poprawy wyników identyfikacji farm fotowoltaicznych w kolejnych badaniach, zaleca się zastosowanie masek eliminujących obszary chmur i ich cieni. 
 Dodatkowo, warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania końcowego, który wykluczałby pozytywne predykcje wzdłuż dróg, zgodnie z sugestią Ortiza et al. [-@ortiz_2022_pv].
 
-W celu rozszerzenia obszaru detekcji farm fotowoltaicznych do obszaru całej Polski w przyszłych badaniach, zaleca się wykorzystanie platformy obliczeniowej Google Earth Engine [@gorelick_2017_gee], umożliwiającej przeprowadzanie analiz geoprzestrzennych w infrastrukturze Google.
-Platforma Google Earth Engine gromadzi ogólnodostępne dane satelitarne z ponad trzydziestu lat, a jej zasób jest codziennie aktualizowany i rozszerzany.
-Zaimplementowane w Google Earth Engine algorytmy dostarczają kompleksowy zestaw narzędzi, umożliwiając odtworzenie i rozwinięcie niniejszego badania na obszar całego kraju.
+W celu rozszerzenia obszaru detekcji farm fotowoltaicznych do obszaru całej Polski w przyszłych badaniach, zaleca się wykorzystanie technologii chmurowych umożliwiających przeprowadzanie analiz geoprzestrzennych, takich jak Google Earth Engine [@gorelick_2017_gee], Microsoft Planetary Computer [@microsoft_planetary_computer] czy openEO Platform [@openEO_platform].
 Dodatkowo, wykorzystanie obliczeń w chmurze pozwoli na rozszerzenie badania o wykorzystanie dodatkowych tekstur obrazu, umożliwiając jednocześnie testowanie różnych konfiguracji rozmiarów ruchomego okna i liczby poziomów kwantyzacji w celu znalezienia optymalnych ustawień tych parametrów.
 Z uwagi na rosnący czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, w niniejszej pracy nie zdecydowano się na sprawdzenie działania innych tekstur obrazu z różnymi konfiguracjami powyższych parametrów.
