@@ -64,9 +64,9 @@ Energia pozyskiwana z odnawialnych źródeł odgrywa kluczową rolę w
 ograniczaniu emisji gazów cieplarnianych do atmosfery. Szybki wzrost
 liczby wielkoskalowych instalacji fotowoltaicznych, czyli farm
 fotowoltaicznych, powoduje konieczność monitorowania ich ilości i
-lokalizacji w celu analizy postępów w tym sektorze energii odnawialnej.
-Celem pracy było określenie optymalnych metod detekcji farm
-fotowoltaicznych na podstawie danych teledetekcyjnych. W procesie
+lokalizacji w celu analizy postępów w tym sektorze energetyki
+odnawialnej. Celem pracy było określenie optymalnych metod wykrywania
+farm fotowoltaicznych na podstawie danych teledetekcyjnych. W procesie
 detekcji wykorzystano dane radarowe z misji Sentinel-1 oraz dane
 multispektralne z misji Sentinel-2, wraz z ich pochodnymi, takimi jak
 wskaźniki teledetekcyjne i tekstury obrazu. Na podstawie tych zmiennych
@@ -92,9 +92,32 @@ obrazu
 
 \textbf{Abstract}
 
-The abstract must be consistent with the above text.
+Energy derived from renewable sources plays a crucial role in reducing
+the emission of greenhouse gases into the atmosphere. The rapid growth
+in the number of large-scale photovoltaic installations, commonly known
+as solar farms, necessitates the monitoring of their quantity and
+locations for the analysis of progress in this renewable energy sector.
+The goal of this study was to determine optimal methods for detecting
+photovoltaic farms based on remote sensing data. The detection process
+utilized radar data from the Sentinel-1 mission and multispectral data
+from the Sentinel-2 mission, along with their derivatives, such as
+spectral indices and image textures. Several Random Forest models were
+trained and validated using these variables to indicate the optimal
+predictor configuration. The obtained results confirmed the possibility
+of detecting photovoltaic farms based on remote sensing data. The best
+results in the final classification after the post-processing were
+achieved by the model based on Sentinel-2 channels and the spectral
+indices used (NDVI, NDBI, and mNDWI). After post-processing, this model
+demonstrated precision at the level of 87\% and sensitivity at the level
+of 84\%, which resulted in a final result of 85\% for the F1-score
+measure. Furthermore, the study showed that radar data from the
+Sentinel-1 mission and their derivatives were not important in the
+process of detecting photovoltaic farms. The study results may
+constitute the basis for future work on monitoring the development of
+photovoltaic farms in Poland.
 
-Keywords: (as stated before)
+Keywords: renewable energy sources, satellite data, land use and land
+cover, machine learning, random forests, image classification
 
 \newpage
 
@@ -1041,6 +1064,10 @@ testowe. Opracowanie własne na podstawie Schratz,
 
 \end{figure}
 
+W niniejszej pracy przestrzenna walidacja krzyżowa została wykorzystana
+do dwóch celów: optymalizacji hiperparametrów (sekcja \ref{sec-tuning})
+oraz oceny jakości modeli (sekcja \ref{sec-model-quality-assessment}).
+
 \hypertarget{sec-tuning}{%
 \subsection{Dostrajanie modeli}\label{sec-tuning}}
 
@@ -1182,8 +1209,8 @@ których klasyfikator błędnie przewidział klasę jako negatywną, gdy
 faktycznie była ona pozytywna.
 
 Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono
-przy użyciu przestrzennej walidacji krzyżowej, macierzy błędów oraz
-trzech miar jakości dostosowanych do klasyfikatorów binarnych:
+przy użyciu macierzy błędów oraz trzech miar jakości dostosowanych do
+klasyfikatorów binarnych:
 
 \begin{itemize}
 \item
@@ -1205,6 +1232,11 @@ trzech miar jakości dostosowanych do klasyfikatorów binarnych:
 Wartości każdej z wymienionych miar jakości modelu zawierają się w
 zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu,
 natomiast wartość 1 odzwierciedla wysoki poziom jakości.
+
+Macierz błędów oraz wymienione miary jakości zostały zastosowane zarówno
+w ocenie jakości modeli na podstawie próby (danych treningowych), jak i
+w ocenie ostatecznych wyników klasyfikacji dla całego obszaru badań
+(populacji).
 
 \hypertarget{sec-variable-importance}{%
 \section{Ważność zmiennych}\label{sec-variable-importance}}
@@ -1256,9 +1288,9 @@ z pasmami, które zostały wykorzystane do ich obliczenia. Tekstury obrazu
 charakteryzują się natomiast wysoką dodatnią korelacją ze zmiennymi, dla
 których zostały one określone.
 
-\begin{figure}[H]
+\begin{figure}[t]
 
-{\centering \includegraphics[width=1\textwidth,height=\textheight]{figures/corrplot1.png}
+{\centering \includegraphics[width=0.9\textwidth,height=\textheight]{figures/corrplot1.png}
 
 }
 
@@ -1531,12 +1563,13 @@ jaką może osiągnąć ta miara.
 W przeciwieństwie do precyzji, czułość wydaje się być mniej podatna na
 wpływ proporcji obserwacji pozytywnych do negatywnych w zbiorze
 treningowym. Wyniki czułości dla poszczególnych modeli w każdym z
-wariantów, podobnie jak w przypadku F1-score, mają rozkład bimodalny. Na
-ogół rozkład wyników czułości jest bardzo zbliżony do rozkładu wyników
-miary F1-score, a największą różnicą jest obecność wartości odstających
-w wynikach czułości dla dwóch wariantów, co nie ma miejsca w przypadku
-F1-score. Oznacza to prawdopodobnie, że bimodalny rozkład wyników
-F1-score jest definiowany przez rozkład wyników czułości.
+wariantów, podobnie jak w przypadku F1-score, mają rozkład bimodalny. Z
+uwagi na nierównomierne rozmieszczenie próbek reprezentujących farmy
+fotowoltaiczne na obszarze badania (rycina
+\ref{fig-rycina-spatial-distribution-pv}), zastosowana metoda walidacji
+przestrzennej prawdopodobnie nie najlepiej oddaje właściwości
+stworzonych modeli, co może stanowić przyczynę bimodalnego rozkładu
+wyników czułości i F1-score dla każdego z wariantów.
 
 \hypertarget{sec-results-variable-importance}{%
 \section{Ważność zmiennych}\label{sec-results-variable-importance}}
@@ -1731,6 +1764,12 @@ dla wariantu drugiego przedstawia rycina
 że większość elektrowni fotowoltaicznych lub ich segmentów została
 właściwie zidentyfikowana, a błędnie sklasyfikowane lokalizacje farm
 fotowoltaicznych występują głównie w północnej części badanego obszaru.
+Niewłaściwe wskazania w północno-zachodniej części obszaru badań
+koncentrują się głównie na obszarach łąk, pastwisk oraz nieużytków,
+szczególnie tam, gdzie występuje gęsta sieć melioracyjna, podczas gdy
+błędne lokalizacje farm fotowoltaicznych w części północno-wschodniej
+związane są głównie z predykcjami występującymi na obszarach
+zachmurzonych.
 
 \hypertarget{sec-population-quality-assessment}{%
 \subsection{Ocena jakości klasyfikacji dla
@@ -1785,8 +1824,10 @@ Wyniki wariantów zawierających pochodne danych teledetekcyjnych
 (wskaźniki teledetekcyjne, tekstury obrazu) uzyskały znacznie wyższe
 wyniki precyzji, co wskazuje na duże znaczenie informacji pochodnej w
 kontekście wykrywania farm fotowoltaicznych na podstawie danych
-teledetekcyjnych. Sugeruje to również, że wykorzystanie danych
-pochodnych zmniejsza tendencję modeli do przeuczania się.
+teledetekcyjnych. Sugeruje to, że wykorzystanie danych pochodnych
+zmniejsza tendencję modeli do przeuczania, jednak należy zauważyć, że
+wariant zawierający wszystkie zmienne pochodne nie uzyskał najlepszych
+wyników precyzji.
 
 W zakresie czułości wyniki są znacznie mniej zróżnicowane, utrzymując
 się między 0,8282 a 0,8421. Czułość określa, jaką część rzeczywistych
@@ -1820,12 +1861,14 @@ Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja
 niniejszego badania wykazują dobrą skuteczność w identyfikacji farm
 fotowoltaicznych, co ilustruje również rycina
 \ref{fig-rycina-truepositive-dataset2}, przedstawiająca przykłady
-poprawnych przewidywań dla wariantu nr 2. Dla porównania, na rycinie
-przedstawiono także instalacje fotowoltaiczne generujące energię
-elektryczną, pochodzące z badania przeprowadzonego przez Kruitwagena et
-al. \autocite*{kruitwagen_2021_pv}, wskazującego istniejące konstrukcje
-fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-Wysokorozdzielcze obrazy satelitarne na rycinie
+poprawnych przewidywań dla wariantu nr 2 \footnote{Wyniki klasyfikacji
+  tego wariantu w formie danych przestrzennych można znaleźć pod adresem
+  https://github.com/filrat2/wykrywanie-farm-fotowoltaicznych-2024 .}.
+Dla porównania, na rycinie przedstawiono także instalacje fotowoltaiczne
+generujące energię elektryczną, pochodzące z badania przeprowadzonego
+przez Kruitwagena et al. \autocite*{kruitwagen_2021_pv}, wskazującego
+istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września
+2018 roku. Wysokorozdzielcze obrazy satelitarne na rycinie
 \ref{fig-rycina-truepositive-dataset2} (kolumna a) pochodzą z różnych
 okresów. Obraz satelitarny 2a został pozyskany później niż dane użyte do
 detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku),
@@ -1951,17 +1994,17 @@ przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty
 pochodne dostępne w poszczególnych wariantach, nie mają znaczącego
 wpływu na wyniki detekcji farm fotowoltaicznych.
 
-Kwestią, której nie udało się rozwiązać w badaniu, jest obecność
-bimodalnego rozkładu wyników czułości w każdym z wariantów. Bimodalny
-rozkład wyników miary F1-score, będącej średnią harmoniczną precyzji i
-czułości modelu, prawdopodobnie wynika z obecności bimodalnego układu
-wyników czułości. Dalsze badania związane z detekcją farm
-fotowoltaicznych na podstawie danych satelitarnych będą wymagały
-wyjaśnienia tej kwestii, ponieważ może ona istotnie wpływać na otrzymane
-wyniki jakości modeli. W przypadku kontynuacji prac w tej tematyce ważne
-będzie również ustawienie minimalnego odsetka obserwacji pozytywnych w
-podzbiorze testowym, aby uniknąć występowania wartości odstających w
-wynikach precyzji.
+Z powodu nierównomiernego rozmieszczenia próbek reprezentujących farmy
+fotowoltaiczne na obszarze badania, wyniki czułości oraz miary F1-score
+w każdym z wariantów wykazują rozkład bimodalny. W kontekście dalszych
+badań nad detekcją farm fotowoltaicznych na podstawie danych
+satelitarnych warto rozważyć inne metody walidacji przestrzennej, takie
+jak te sugerowane w pracy Schratza et al.
+\autocite*{schratz_2022_mlr3spatiotempcv}, w celu eliminacji bimodalnego
+rozkładu wyników tych miar jakości. W przypadku kontynuacji prac w tej
+tematyce ważne będzie również ustawienie minimalnego odsetka obserwacji
+pozytywnych w podzbiorze testowym, aby uniknąć występowania wartości
+odstających w wynikach precyzji.
 
 Porównując wyniki najlepszych wariantów z istniejącymi bazami danych
 dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej
@@ -1984,7 +2027,8 @@ wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30
 września 2018 roku. Według wyników tego badania, na obszarze niniejszego
 badania znajdowało się w tamtym momencie jedynie 10 poligonów
 reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni
-14,67 hektara.
+14,67 hektara, z czego zaledwie 8,66 ha pokrywa się z wynikami
+najlepszego wariantu.
 
 Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że
 modele w większości przepadków skutecznie dokonują rozróżnienia farm

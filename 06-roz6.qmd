@@ -42,9 +42,8 @@ Chociaż wyniki oceny jakości modeli sugerują bardzo zbliżoną skuteczność 
 Największe różnice zauważyć można w wynikach precyzji, która ostatecznie warunkuje ostateczną ocenę jakości klasyfikatora po przeprowadzeniu predykcji i przetwarzaniu końcowym dla każdego wariantu.
 Jeśli ocena jakości modeli dla klasyfikacji nie zostałaby przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty pochodne dostępne w poszczególnych wariantach, nie mają znaczącego wpływu na wyniki detekcji farm fotowoltaicznych.
 
-Kwestią, której nie udało się rozwiązać w badaniu, jest obecność bimodalnego rozkładu wyników czułości w każdym z wariantów.
-Bimodalny rozkład wyników miary F1-score, będącej średnią harmoniczną precyzji i czułości modelu, prawdopodobnie wynika z obecności bimodalnego układu wyników czułości.
-Dalsze badania związane z detekcją farm fotowoltaicznych na podstawie danych satelitarnych będą wymagały wyjaśnienia tej kwestii, ponieważ może ona istotnie wpływać na otrzymane wyniki jakości modeli.
+Z powodu nierównomiernego rozmieszczenia próbek reprezentujących farmy fotowoltaiczne na obszarze badania, wyniki czułości oraz miary F1-score w każdym z wariantów wykazują rozkład bimodalny.
+W kontekście dalszych badań nad detekcją farm fotowoltaicznych na podstawie danych satelitarnych warto rozważyć inne metody walidacji przestrzennej, takie jak te sugerowane w pracy Schratza et al. [-@schratz_2022_mlr3spatiotempcv], w celu eliminacji bimodalnego rozkładu wyników tych miar jakości. 
 W przypadku kontynuacji prac w tej tematyce ważne będzie również ustawienie minimalnego odsetka obserwacji pozytywnych w podzbiorze testowym, aby uniknąć występowania wartości odstających w wynikach precyzji.
 
 Porównując wyniki najlepszych wariantów z istniejącymi bazami danych dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej zadowalające.
@@ -52,7 +51,7 @@ Globalna baza danych elektrowni (*Global Power Plant Database*) [@globalpowerpla
 Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez Dunnetta et al. [-@dunnet_2020_wind_solar], sugerują, że do końca roku 2018 na obszarze badania występowały jedynie 2 instalacje fotowoltaiczne, które zajmowały łącznie powierzchnię 1,99 hektara.
 Istnieje również jeden zbiór danych, którego sposób stworzenia był najbardziej zbliżony do omawianego w niniejszym badaniu.
 @kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-Według wyników tego badania, na obszarze niniejszego badania znajdowało się w tamtym momencie jedynie 10 poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni 14,67 hektara.
+Według wyników tego badania, na obszarze niniejszego badania znajdowało się w tamtym momencie jedynie 10 poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni 14,67 hektara, z czego zaledwie 8,66 ha pokrywa się z wynikami najlepszego wariantu.
 
 Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji.
 Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów, które można częściowo wyeliminować. 

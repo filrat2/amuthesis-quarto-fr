@@ -3,8 +3,8 @@
 **Abstrakt**
 
 Energia pozyskiwana z odnawialnych źródeł odgrywa kluczową rolę w ograniczaniu emisji gazów cieplarnianych do atmosfery.
-Szybki wzrost liczby wielkoskalowych instalacji fotowoltaicznych, czyli farm fotowoltaicznych, powoduje konieczność monitorowania ich ilości i lokalizacji w celu analizy postępów w tym sektorze energii odnawialnej.
-Celem pracy było określenie optymalnych metod detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych.
+Szybki wzrost liczby wielkoskalowych instalacji fotowoltaicznych, czyli farm fotowoltaicznych, powoduje konieczność monitorowania ich ilości i lokalizacji w celu analizy postępów w tym sektorze energetyki odnawialnej.
+Celem pracy było określenie optymalnych metod wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych.
 W procesie detekcji wykorzystano dane radarowe z misji Sentinel-1 oraz dane multispektralne z misji Sentinel-2, wraz z ich pochodnymi, takimi jak wskaźniki teledetekcyjne i tekstury obrazu.
 Na podstawie tych zmiennych dokonano uczenia i walidacji kilku modeli lasów losowych (ang. *Random Forest*) w celu wskazania optymalnej konfiguracji predyktorów.
 Uzyskane wyniki potwierdziły możliwość detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych.
@@ -19,9 +19,17 @@ Słowa kluczowe: odnawialne źródła energii, dane satelitarne, pokrycie terenu
 
 **Abstract**
 
-The abstract must be consistent with the above text.
+Energy derived from renewable sources plays a crucial role in reducing the emission of greenhouse gases into the atmosphere.
+The rapid growth in the number of large-scale photovoltaic installations, commonly known as solar farms, necessitates the monitoring of their quantity and locations for the analysis of progress in this renewable energy sector.
+The goal of this study was to determine optimal methods for detecting photovoltaic farms based on remote sensing data. The detection process utilized radar data from the Sentinel-1 mission and multispectral data from the Sentinel-2 mission, along with their derivatives, such as spectral indices and image textures.
+Several Random Forest models were trained and validated using these variables to indicate the optimal predictor configuration.
+The obtained results confirmed the possibility of detecting photovoltaic farms based on remote sensing data.
+The best results in the final classification after the post-processing were achieved by the model based on Sentinel-2 channels and the spectral indices used (NDVI, NDBI, and mNDWI).
+After post-processing, this model demonstrated precision at the level of 87% and sensitivity at the level of 84%, which resulted in a final result of 85% for the F1-score measure.
+Furthermore, the study showed that radar data from the Sentinel-1 mission and their derivatives were not important in the process of detecting photovoltaic farms.
+The study results may constitute the basis for future work on monitoring the development of photovoltaic farms in Poland.
 
-Keywords: (as stated before)
+Keywords: renewable energy sources, satellite data, land use and land cover, machine learning, random forests, image classification
 
 \newpage
 

@@ -66,8 +66,7 @@ W przypadku gdy odsetek obserwacji pozytywnych był wyższy, wyniki precyzji dla
 
 W przeciwieństwie do precyzji, czułość wydaje się być mniej podatna na wpływ proporcji obserwacji pozytywnych do negatywnych w zbiorze treningowym.
 Wyniki czułości dla poszczególnych modeli w każdym z wariantów, podobnie jak w przypadku F1-score, mają rozkład bimodalny.
-Na ogół rozkład wyników czułości jest bardzo zbliżony do rozkładu wyników miary F1-score, a największą różnicą jest obecność wartości odstających w wynikach czułości dla dwóch wariantów, co nie ma miejsca w przypadku F1-score.
-Oznacza to prawdopodobnie, że bimodalny rozkład wyników F1-score jest definiowany przez rozkład wyników czułości.
+Z uwagi na nierównomierne rozmieszczenie próbek reprezentujących farmy fotowoltaiczne na obszarze badania (rycina [-@fig-rycina-spatial-distribution-pv]), zastosowana metoda walidacji przestrzennej prawdopodobnie nie najlepiej oddaje właściwości stworzonych modeli, co może stanowić przyczynę bimodalnego rozkładu wyników czułości i F1-score dla każdego z wariantów.
 
 ## Ważność zmiennych {#sec-results-variable-importance}
 
@@ -183,6 +182,7 @@ knitr::include_graphics("figures/poprawne_niepoprawne_wskazania_dataset2.png")
 
 Rozmieszczenie poprawnie i niepoprawnie wykrytych farm fotowoltaicznych dla wariantu drugiego przedstawia rycina [-@fig-rycina-classification-results-dataset2].
 Z ilustracji wynika, że większość elektrowni fotowoltaicznych lub ich segmentów została właściwie zidentyfikowana, a błędnie sklasyfikowane lokalizacje farm fotowoltaicznych występują głównie w północnej części badanego obszaru.
+Niewłaściwe wskazania w północno-zachodniej części obszaru badań koncentrują się głównie na obszarach łąk, pastwisk oraz nieużytków, szczególnie tam, gdzie występuje gęsta sieć melioracyjna, podczas gdy błędne lokalizacje farm fotowoltaicznych w części północno-wschodniej związane są głównie z predykcjami występującymi na obszarach zachmurzonych.
 
 ### Ocena jakości klasyfikacji dla populacji {#sec-population-quality-assessment}
 
@@ -221,7 +221,7 @@ Wyniki precyzji poniżej wartości 0,60 wskazują, że ponad 40% obszarów wskaz
 Oba warianty z najniższymi wynikami precyzji oparte były wyłącznie na pierwotnych danych teledetekcyjnych.
 Wariant nr 1 składał się wyłącznie ze zmiennych będących reflektancją kanałów Sentinel-2, natomiast wariant nr 4 oprócz reflektancji zawierał surowe dane o współczynniku rozproszenia wstecznego dla obu polaryzacji Sentinel-1.
 Wyniki wariantów zawierających pochodne danych teledetekcyjnych (wskaźniki teledetekcyjne, tekstury obrazu) uzyskały znacznie wyższe wyniki precyzji, co wskazuje na duże znaczenie informacji pochodnej w kontekście wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych.
-Sugeruje to również, że wykorzystanie danych pochodnych zmniejsza tendencję modeli do przeuczania się.
+Sugeruje to, że wykorzystanie danych pochodnych zmniejsza tendencję modeli do przeuczania, jednak należy zauważyć, że wariant zawierający wszystkie zmienne pochodne nie uzyskał najlepszych wyników precyzji.
 
 W zakresie czułości wyniki są znacznie mniej zróżnicowane, utrzymując się między 0,8282 a 0,8421.
 Czułość określa, jaką część rzeczywistych przypadków wykrył klasyfikator, czyli jaki ułamek farm znajdujących się w referencyjnym zbiorze danych został wykryty.
@@ -236,7 +236,7 @@ Ogólnie rzecz biorąc, wyniki sugerują, że korzystanie z pochodnych danych te
 
 ### Wizualna kontrola wyników klasyfikacji {#sec-visual-quality-assessment}
 
-Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja [-@sec-population-quality-assessment]), modele stworzone w ramach niniejszego badania wykazują dobrą skuteczność w identyfikacji farm fotowoltaicznych, co ilustruje również rycina [-@fig-rycina-truepositive-dataset2], przedstawiająca przykłady poprawnych przewidywań dla wariantu nr 2.
+Zgodnie z sekcją dotyczącą przestrzennej oceny jakości (sekcja [-@sec-population-quality-assessment]), modele stworzone w ramach niniejszego badania wykazują dobrą skuteczność w identyfikacji farm fotowoltaicznych, co ilustruje również rycina [-@fig-rycina-truepositive-dataset2], przedstawiająca przykłady poprawnych przewidywań dla wariantu nr 2 ^[Wyniki klasyfikacji tego wariantu w formie danych przestrzennych można znaleźć pod adresem https://github.com/filrat2/wykrywanie-farm-fotowoltaicznych-2024 .].
 Dla porównania, na rycinie przedstawiono także instalacje fotowoltaiczne generujące energię elektryczną, pochodzące z badania przeprowadzonego przez Kruitwagena et al. [-@kruitwagen_2021_pv], wskazującego istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
 Wysokorozdzielcze obrazy satelitarne na rycinie [-@fig-rycina-truepositive-dataset2] (kolumna a) pochodzą z różnych okresów.
 Obraz satelitarny 2a został pozyskany później niż dane użyte do detekcji farm fotowoltaicznych w niniejszym badaniu (8 maja 2023 roku), natomiast obrazy 4a i 4b pochodzą sprzed tego okresu.

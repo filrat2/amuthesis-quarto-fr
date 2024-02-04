@@ -241,6 +241,8 @@ Przykład takiego podejścia przedstawia rycina [-@fig-rycina-spcv].
 knitr::include_graphics("figures/spcv_plot.png")
 ```
 
+W niniejszej pracy przestrzenna walidacja krzyżowa została wykorzystana do dwóch celów: optymalizacji hiperparametrów (sekcja [-@sec-tuning]) oraz oceny jakości modeli (sekcja [-@sec-model-quality-assessment]).
+
 ### Dostrajanie modeli {#sec-tuning}
 
 Większość algorytmów uczenia maszynowego wymaga ustalenia wartości pewnych zmiennych konfiguracyjnych zwanych hiperparametrami [@krol_2022_podstawy_ml].
@@ -297,7 +299,7 @@ W macierzy błędów dwie wartości reprezentują predykcje pozytywne: przypadki
 Dwie pozostałe wartości informują o błędnie sklasyfikowanych przypadkach: przypadki fałszywie pozytywne (ang. *false positive*, FP) opisują sytuacje, w których klasyfikator błędnie wskazał klasę pozytywną, podczas gdy rzeczywiście była ona negatywna.
 Przypadki fałszywie negatywne (ang. *false negative*, FN) to natomiast sytuacje, w których klasyfikator błędnie przewidział klasę jako negatywną, gdy faktycznie była ona pozytywna.
 
-Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu przestrzennej walidacji krzyżowej, macierzy błędów oraz trzech miar jakości dostosowanych do klasyfikatorów binarnych:
+Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy użyciu macierzy błędów oraz trzech miar jakości dostosowanych do klasyfikatorów binarnych:
 
 -   Precyzja (ang. *precision*, inaczej *positive predictive value*) - określa jaka część wyników wskazanych przez klasyfikator jako pozytywne jest faktycznie pozytywna [@jaworski_2013_perfomance_measures]
 
@@ -307,6 +309,8 @@ Ocenę klasyfikatorów stworzonych w niniejszym badaniu przeprowadzono przy uży
     Miara ta nie uwzględnia wyników prawdziwie negatywnych [@zygierewicz_2021_ml].
 
 Wartości każdej z wymienionych miar jakości modelu zawierają się w zakresie od 0 do 1, gdzie wartość 0 reprezentuje niską jakość modelu, natomiast wartość 1 odzwierciedla wysoki poziom jakości.
+
+Macierz błędów oraz wymienione miary jakości zostały zastosowane zarówno w ocenie jakości modeli na podstawie próby (danych treningowych), jak i w ocenie ostatecznych wyników klasyfikacji dla całego obszaru badań (populacji).
 
 ## Ważność zmiennych {#sec-variable-importance}
 
@@ -335,8 +339,8 @@ Tekstury obrazu charakteryzują się natomiast wysoką dodatnią korelacją ze z
 #| label: fig-variables-correlation
 #| echo: false
 #| fig-cap: "Macierz korelacji wszystkich zmiennych wykorzystanych w badaniu"
-#| out-width: 100% 
-#| fig-pos: "H"
+#| out-width: 90% 
+# #| fig-pos: "H"
 knitr::include_graphics("figures/corrplot1.png")
 ```
 
