@@ -1,11 +1,19 @@
+---
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
 # Podsumowanie {#podsumowanie}
 
+```{=html}
 <!-- Podsumowanie pracy jest w pewnym sensie znacznie rozbudowanym abstraktem. 
 Należy wyliczyć i opisać osiągnięcia uzyskane w pracy dyplomowej.
 Tutaj jednak (w przeciwieństwie do np. rozdziału [-@sec-wprowadzenie]) należy przechodzić od szczegółu do ogółu - co zostało stworzone/określone, jak zostało to zrobione, jakie ma to konsekwencje, itd.
 
 Ten rozdział powinien też zawierać opis kwestii, których nie udało się rozwiązać w pracy dyplomowej (i dlaczego się nie udało) oraz pomysły na przyszłe ulepszenie uzyskanych wyników lub dalsze badania. -->
-
+```
+```{=html}
 <!-- 
 1 wskazanie, ze udało się określić metody  do wykrywania farm fotowoltaicznych na danych teledetekcyjnych
 2 najlepszy wynik 2, dodatkowo ma mniej zmiennych niż wariant 3 co czyni go lepszym, prostszym
@@ -26,38 +34,37 @@ wytlumaczenie sytacji z rozkładem bimodalnym
 
 - wykorzystanie wyników badania do wskazywania obszarów potencjalnie odpowiednich pod nowe farmy fotowoltaiczne
 -->
-
+```
 Badanie wykazało, że możliwe jest wykrywanie farm fotowoltaicznych na podstawie danych teledetekcyjnych, wykorzystując do tego celu dane satelitarne z misji Sentinel-1 i Sentinel-2.
-Wyniki uzyskane z wariantów zawierających tylko pierwotne dane teledetekcyjne z tych misji uzyskały dość przeciętne wyniki detekcji farm fotowoltaicznych. 
-Wykorzystanie dodatkowych zmiennych, takich jak wskaźniki teledetekcyjne czy tekstury obrazu, istotnie poprawiło wyniki klasyfikacji.
-Dane radarowe z misji Sentinel-1 i ich pochodne nie okazały się istotne w procesie detekcji farm fotowoltaicznych.
-W odróżnieniu od tego, multispektralne dane z misji Sentinel-2, wraz z ich pochodnymi, wykazały się kluczowym elementem detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych.
+Wyniki uzyskane z wariantów zawierających tylko pierwotne dane teledetekcyjne z tych misji uzyskały dość przeciętne wyniki detekcji farm fotowoltaicznych, a wykorzystanie dodatkowych zmiennych, takich jak wskaźniki teledetekcyjne czy tekstury obrazu, istotnie poprawiło wyniki klasyfikacji.
+Dane radarowe z misji Sentinel-1 i ich pochodne nie okazały się istotne w procesie detekcji farm fotowoltaicznych.
+W odróżnieniu od tego, multispektralne dane z misji Sentinel-2, wraz z ich pochodnymi, wykazały się kluczowym elementem detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych.
 
 Optymalnym wariantem zbioru predyktorów okazał się ten składający z kanałów Sentinel-2 oraz trzech wykorzystanych wskaźników teledetekcyjnych (NDVI, NDBI i mNDWI), który uzyskał najwyższe wyniki oceny jakości po ostatecznej klasyfikacji i przetwarzaniu końcowym.
-Zbliżone wyniki jakości uzyskał wariant, który był rozszerzeniem najlepszego wariantu o dodatkowe zmienne w postaci tekstur obrazu dwóch kanałów Sentinel-2 i dwóch wskaźników teledetekcyjnych.
-Jeżeli dwa klasyfikatory charakteryzują się zbliżonymi wynikami jakości, to zazwyczaj lepszym wyborem jest ten prostszy, czyli zawierający mniej zmiennych.
+Zbliżone wyniki jakości uzyskał wariant, który był rozszerzeniem najlepszego wariantu o dodatkowe zmienne w postaci tekstur obrazu dwóch kanałów Sentinel-2 i dwóch wskaźników teledetekcyjnych.
+Jeżeli dwa klasyfikatory charakteryzują się zbliżonymi wynikami jakości, to zazwyczaj lepszym wyborem jest ten prostszy, czyli zawierający mniej zmiennych.
 
 Warto zwrócić uwagę na istotne różnice między oceną jakości modeli na próbie a ostateczną oceną klasyfikacji na całej populacji po procesie przetwarzania końcowego.
-Chociaż wyniki oceny jakości modeli sugerują bardzo zbliżoną skuteczność wszystkich modeli, to ocena przeprowadzona na pełnej populacji ujawnia duże różnice między poszczególnymi wariantami.
+Chociaż wyniki oceny jakości modeli sugerują bardzo zbliżoną skuteczność wszystkich modeli, to ocena przeprowadzona na pełnej populacji ujawnia duże różnice między poszczególnymi wariantami.
 Największe różnice zauważyć można w wynikach precyzji, która ostatecznie warunkuje ostateczną ocenę jakości klasyfikatora po przeprowadzeniu predykcji i przetwarzaniu końcowym dla każdego wariantu.
-Jeśli ocena jakości modeli dla klasyfikacji nie zostałaby przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty pochodne dostępne w poszczególnych wariantach, nie mają znaczącego wpływu na wyniki detekcji farm fotowoltaicznych.
+Jeśli ocena jakości modeli dla klasyfikacji nie zostałaby przeprowadzona, moglibyśmy sądzić, że dodatkowe zmienne, czyli produkty pochodne dostępne w poszczególnych wariantach, nie mają znaczącego wpływu na wyniki detekcji farm fotowoltaicznych.
 
 Z powodu nierównomiernego rozmieszczenia próbek reprezentujących farmy fotowoltaiczne na obszarze badania, wyniki czułości oraz miary F1-score w każdym z wariantów wykazują rozkład bimodalny.
-W kontekście dalszych badań nad detekcją farm fotowoltaicznych na podstawie danych satelitarnych warto rozważyć inne metody walidacji przestrzennej, takie jak te sugerowane w pracy Schratza et al. [-@schratz_2022_mlr3spatiotempcv], w celu eliminacji bimodalnego rozkładu wyników tych miar jakości. 
-W przypadku kontynuacji prac w tej tematyce ważne będzie również ustawienie minimalnego odsetka obserwacji pozytywnych w podzbiorze testowym, aby uniknąć występowania wartości odstających w wynikach precyzji.
+W celu eliminacji bimodalnego rozkładu wyników tych miar jakości, w dalszych badaniach warto rozważyć inne metody walidacji przestrzennej, takie jak `spcv_disc` czy `spcv_tiles` z pakietu R *sperrorest* [@R-sperrorest].
+W przypadku kontynuacji prac w tej tematyce ważne będzie również ustawienie minimalnego odsetka obserwacji pozytywnych w podzbiorze testowym, aby uniknąć występowania wartości odstających w wynikach precyzji.
 
 Porównując wyniki najlepszych wariantów z istniejącymi bazami danych dotyczącymi elektrowni fotowoltaicznych, uzyskane wyniki są raczej zadowalające.
 Globalna baza danych elektrowni (*Global Power Plant Database*) [@globalpowerplantdb_2021], stworzona przez Byersa et al. [-@byers_2018_globalpowerplantdb] i udostępniona w czerwcu 2021 roku, wskazuje na istnienie zaledwie 9 elektrowni fotowoltaicznych w całej Polsce na wspomniany okres.
-Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez Dunnetta et al. [-@dunnet_2020_wind_solar], sugerują, że do końca roku 2018 na obszarze badania występowały jedynie 2 instalacje fotowoltaiczne, które zajmowały łącznie powierzchnię 1,99 hektara.
+Ujednolicone globalne zbiory danych dotyczące lokalizacji farm wiatrowych i słonecznych oraz mocy produkowanej (*Harmonised global datasets of wind and solar farm locations and power*), opracowane na podstawie danych OpenStreetMap przez Dunnetta et al. [-@dunnet_2020_wind_solar], sugerują, że do końca roku 2018 na obszarze badania występowały jedynie 2 instalacje fotowoltaiczne, które zajmowały łącznie powierzchnię 1,99 hektara.
 Istnieje również jeden zbiór danych, którego sposób stworzenia był najbardziej zbliżony do omawianego w niniejszym badaniu.
-@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
-Według wyników tego badania, na obszarze niniejszego badania znajdowało się w tamtym momencie jedynie 10 poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni 14,67 hektara, z czego zaledwie 8,66 ha pokrywa się z wynikami najlepszego wariantu.
+@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące konstrukcje fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+Według wyników tego badania, na obszarze niniejszego badania znajdowało się w tamtym momencie jedynie 10 poligonów reprezentujących segmenty farm fotowoltaicznych o łącznej powierzchni 14,67 hektara, z czego zaledwie 8,66 ha pokrywa się z wynikami najlepszego wariantu.
 
 Wizualna kontrola obszarów wskazanych na rycinach potwierdziła, że modele w większości przepadków skutecznie dokonują rozróżnienia farm fotowoltaicznych i pozostałych obszarów podczas klasyfikacji.
-Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów, które można częściowo wyeliminować. 
-W celu poprawy wyników identyfikacji farm fotowoltaicznych w kolejnych badaniach, zaleca się zastosowanie masek eliminujących obszary chmur i ich cieni. 
+Niemniej jednak, w wynikach predykcji pojawiło się kilka powtarzających się błędów, które można częściowo wyeliminować.
+W celu poprawy wyników identyfikacji farm fotowoltaicznych w kolejnych badaniach, zaleca się zastosowanie masek eliminujących obszary chmur i ich cieni.
 Dodatkowo, warto rozważyć wprowadzenie dodatkowego etapu w procesie przetwarzania końcowego, który wykluczałby pozytywne predykcje wzdłuż dróg, zgodnie z sugestią Ortiza et al. [-@ortiz_2022_pv].
 
-W celu rozszerzenia obszaru detekcji farm fotowoltaicznych do obszaru całej Polski w przyszłych badaniach, zaleca się wykorzystanie technologii chmurowych umożliwiających przeprowadzanie analiz geoprzestrzennych, takich jak Google Earth Engine [@gorelick_2017_gee], Microsoft Planetary Computer [@microsoft_planetary_computer] czy openEO Platform [@openEO_platform].
-Dodatkowo, wykorzystanie obliczeń w chmurze pozwoli na rozszerzenie badania o wykorzystanie dodatkowych tekstur obrazu, umożliwiając jednocześnie testowanie różnych konfiguracji rozmiarów ruchomego okna i liczby poziomów kwantyzacji w celu znalezienia optymalnych ustawień tych parametrów.
-Z uwagi na rosnący czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, w niniejszej pracy nie zdecydowano się na sprawdzenie działania innych tekstur obrazu z różnymi konfiguracjami powyższych parametrów.
+W celu rozszerzenia obszaru detekcji farm fotowoltaicznych do obszaru całej Polski w przyszłych badaniach, zaleca się wykorzystanie technologii chmurowych umożliwiających przeprowadzanie analiz geoprzestrzennych, takich jak Google Earth Engine [@gorelick_2017_gee], Microsoft Planetary Computer [@microsoft_planetary_computer] czy openEO Platform [@openEO_platform].
+Z uwagi na rosnący czas obliczeń wraz ze zwiększaniem liczby poziomów szarości oraz rozmiarów ruchomego okna, w niniejszej pracy nie zdecydowano się na sprawdzenie działania innych tekstur obrazu z różnymi konfiguracjami wymienionych parametrów.
+Wykorzystanie obliczeń w chmurze pozwoli na rozszerzenie badania o wykorzystanie dodatkowych tekstur obrazu, umożliwiając jednocześnie testowanie różnych konfiguracji rozmiarów ruchomego okna i liczby poziomów kwantyzacji w celu znalezienia optymalnych ustawień tych parametrów.

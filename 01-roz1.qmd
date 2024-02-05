@@ -9,36 +9,36 @@ Dodatkowo tutaj może znaleźć się również krótki opis co zostało zrealizo
 -->
 
 Energia elektryczna odgrywa kluczową rolę w życiu większości ludzi, stanowiąc podstawę funkcjonowania społeczeństwa i napędzając rozwój gospodarczy [@iea2021].
-Istnieje wiele metod pozyskiwania energii elektrycznej, włączając w to tradycyjne, konwencjonalne sposoby oparte na spalaniu paliw kopalnych, a także energię atomową oraz odnawialne źródła energii (OZE).
-Odnawialne źródła energii, określane inaczej jako zielona energia, wykorzystują naturalne procesy, takie jak promieniowanie słoneczne, siła wiatru czy ciepło wnętrza Ziemi, w celu generowania energii elektrycznej.
+Istnieje wiele metod pozyskiwania energii elektrycznej, włączając w to tradycyjne, konwencjonalne sposoby oparte na spalaniu paliw kopalnych, a także energię atomową oraz odnawialne źródła energii (OZE).
+Odnawialne źródła energii, określane inaczej jako zielona energia, wykorzystują naturalne procesy, takie jak promieniowanie słoneczne, siła wiatru czy ciepło wnętrza Ziemi, w celu generowania energii elektrycznej.
 
 Zasoby surowców wykorzystywanych do produkcji energii konwencjonalnej są ograniczone.
-Statystyczny przegląd światowej energetyki (*Statistical Review of World Energy*) opracowany przez firmę BP w 2021 roku wskazuje, że obecne zasoby paliw kopalnych, takich jak ropa naftowa, gaz ziemny i węgiel, wystarczą odpowiednio na 50, 48,8 i 139 lat przy utrzymaniu obecnego poziomu produkcji [@bp_2021_world_energy].
-Dodatkowo, rosnące zainteresowanie ochroną środowiska i negatywnymi skutkami zmian klimatu oraz wprowadzane przepisy prawne zobowiązują do podejmowania działań mających na celu ograniczenie emisji szkodliwych gazów do atmosfery.
-W obliczu globalnych zmian klimatycznych i kryzysu energetycznego, spowodowanego między innymi inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i energetyki jądrowej [@iea2021; @iea2022].
+Statystyczny przegląd światowej energetyki (*Statistical Review of World Energy*) opracowany przez firmę BP w 2021 roku wskazuje, że obecne zasoby paliw kopalnych, takich jak ropa naftowa, gaz ziemny i węgiel, wystarczą odpowiednio na 50, 48,8 i 139 lat przy utrzymaniu obecnego poziomu ich produkcji [@bp_2021_world_energy].
+Dodatkowo, rosnące zainteresowanie ochroną środowiska i negatywnymi skutkami zmian klimatu oraz wprowadzane przepisy prawne zobowiązują do podejmowania działań mających na celu ograniczenie emisji szkodliwych gazów do atmosfery.
+W obliczu globalnych zmian klimatycznych i kryzysu energetycznego, spowodowanego między innymi inwazją Rosji na Ukrainę w 2022 roku, społeczeństwo jest zmuszone do przejścia z produkcji energii opartej na paliwach kopalnych na rzecz odnawialnych źródeł energii i energetyki jądrowej [@iea2021; @iea2022].
 
-Ambitne cele klimatyczne Unii Europejskiej, których podstawę stanowi Europejski Zielony Ład (ang. *European Green Deal*), sprawiają, że energia elektryczna pochodząca z odnawialnych źródeł energii zaczyna odgrywać kluczową rolę w procesie transformacji energetycznej Unii Europejskiej.
-Europejski Zielony Ład to zestaw inicjatyw politycznych mających na celu przeprowadzenie transformacji ekologicznej i osiągnięcie neutralności klimatycznej w UE do 2050 roku [@european_green_deal].
+Ambitne cele klimatyczne Unii Europejskiej sprawiają, że energia elektryczna pochodząca z odnawialnych źródeł energii zaczyna odgrywać kluczową rolę w procesie transformacji energetycznej Unii Europejskiej.
+Ich podstawę stanowi Europejski Zielony Ład (ang. *European Green Deal*), czyli zestaw inicjatyw politycznych mających na celu przeprowadzenie transformacji ekologicznej i osiągnięcie neutralności klimatycznej w UE do 2050 roku [@european_green_deal].
 Inicjatywy takie jak Gotowi na 55 (ang. *Fit For 55*) oraz rozporządzenie o europejskim prawie klimatycznym mają zapewnić redukcję emisji gazów cieplarnianych o co najmniej 55% do 2030 roku [@european_green_deal].
 Jednocześnie, zgodnie z ustaleniami Rady Unii Europejskiej, Parlamentu Europejskiego oraz Komisji Europejskiej, udział energii odnawialnej w ogólnym zużyciu energii w Unii Europejskiej ma wynosić 42,5% do 2030 roku [@renewable_energy_eu].
-Inną inicjatywą organów Unii Europejskiej jest plan REPowerEU, czyli unijny plan transformacji energetycznej i uniezależnienia od rosyjskich paliw kopalnych przedstawiony przez Komisję Europejską w maju 2022 roku [@repowerEU2022].
+Inną inicjatywą organów Unii Europejskiej jest plan REPowerEU, czyli unijny plan transformacji energetycznej i uniezależnienia od rosyjskich paliw kopalnych przedstawiony przez Komisję Europejską w maju 2022 roku [@repowerEU2022].
 Przedsięwzięcie to skupia się na inwestycjach w odnawialne źródła energii, zakładając uruchomienie niemal 600 GW mocy nowych instalacji fotowoltaicznych w całej Unii Europejskiej do 2030 roku [@repowerEU2022].
 Działania te uznaje się za kluczowe z punktu widzenia interesu publicznego.
 
 Osiągnięcie wymienionych celów będzie możliwe jedynie poprzez dokładne monitorowanie wyników działań oraz posiadanie aktualnych informacji dotyczących odnawialnych źródeł energii.
 Transformacja energetyczna jest dynamicznym procesem, którego monitorowanie będzie miało znaczący wpływ na rozwój kolejnych projektów z zakresu energetyki odnawialnej.
-Niejednolita organizacja działania władz samorządowych w Polsce oraz występowanie na terenie kraju różnych operatorów energetycznych utrudnia jednak śledzenie rozwoju polskiej branży OZE.
+Niejednolita organizacja działania władz samorządowych w Polsce oraz występowanie na terenie kraju różnych operatorów energetycznych utrudnia jednak śledzenie rozwoju polskiej branży OZE.
 W oficjalnych, dostępnych w Polsce źródłach danych brakuje aktualnych informacji na temat lokalizacji elektrowni słonecznych.
-Wśród nieoficjalnych źródeł danych informacje na ten temat można znaleźć m.in. w projekcie społeczności internetowej OpenStreetMap [@OpenStreetMap], gdzie są one oznaczone jako `tag:plant:source=solar`, jednak dane te są nieformalne, niepełne i zazwyczaj nieaktualne.
-W związku z brakiem jednolitych danych na temat lokalizacji farm fotowoltaicznych w oficjalnych źródłach w Polsce, wykorzystanie danych satelitarnych staje się potencjalnym narzędziem do ich detekcji, umożliwiając pozyskiwanie aktualnych informacji na ten temat.
+Wśród nieoficjalnych źródeł danych informacje na ten temat można znaleźć m.in. w projekcie społeczności internetowej OpenStreetMap [@OpenStreetMap], jednak dane te są nieformalne, niepełne i zazwyczaj nieaktualne.
+W związku z brakiem jednolitych danych na temat lokalizacji farm fotowoltaicznych w oficjalnych źródłach w Polsce, wykorzystanie danych satelitarnych staje się potencjalnym narzędziem do ich detekcji.
 Obserwacje satelitarne pozwalają również regularnie monitorować rozwój farm fotowoltaicznych, co umożliwia analizę postępów w tym sektorze energetyki odnawialnej.
 
 Na przestrzeni ostatnich kilku lat podejmowano kilka prób detekcji farm fotowoltaicznych na podstawie danych teledetekcyjnych przy wykorzystaniu metod uczenia maszynowego.
-@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące farmy fotowoltaiczne na świecie na dzień 30 września 2018 roku.
+@kruitwagen_2021_pv, wykorzystując zdjęcia satelitarne SPOT-6/7 i Sentinel-2 w połączeniu z metodami uczenia maszynowego, wskazał istniejące farmy fotowoltaiczne na świecie na dzień 30 września 2018 roku.
 Inne badania, takie jak te przeprowadzone przez Zhanga et al. [-@zhang_2021_texture], Plakman et al. [-@plakman_2022_pv] i Wanga et al. [-@wang_2022_pv], również koncentrowały się na detekcji instalacji fotowoltaicznych, lecz nie obejmowały obszaru Polski.
 
-Celem niniejszej pracy jest określenie optymalnych metod uczenia maszynowego do wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych.
+Celem niniejszej pracy jest określenie optymalnych metod uczenia maszynowego do wykrywania farm fotowoltaicznych na podstawie danych teledetekcyjnych.
 W pracy wykorzystano dane radarowe z misji Sentinel-1 oraz dane multispektralne z misji Sentinel-2, wraz z ich pochodnymi, takimi jak wskaźniki teledetekcyjne i tekstury obrazu.
 W procesie klasyfikacji wykorzystano metodę lasów losowych (ang. *Random Forest*) zaproponowaną przez Breimana [-@breiman_2001_rf].
 Cały proces oparty został na otwartym oprogramowaniu GIS, takim jak SNAP [@snap], S1TBX [@s1tbx], QGIS [@qgis] oraz środowisku programistycznym języka R [@R-base].
-Zgodnie z wiedzą autora niniejsza praca jest pierwszym opracowaniem w Polsce dotyczącym detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych i metod uczenia maszynowego.
+Zgodnie z wiedzą autora, niniejsza praca jest pierwszym opracowaniem w Polsce dotyczącym detekcji farm fotowoltaicznych przy wykorzystaniu danych satelitarnych i metod uczenia maszynowego.
