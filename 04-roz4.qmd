@@ -131,7 +131,7 @@ Odpowiada to wymiarom ruchomego okna o wymiarach 19 pikseli na 19 pikseli lub kw
 W celu uzyskania spójnych wielowarstwowych rastrów wszystkie zbiory danych zostały sprowadzone do wspólnej rozdzielczości i siatki.
 Rozdzielczość przestrzenna danych Sentinel-1 GRD, analogicznie do danych Sentinel-2 przegotowanych w sposób przedstawiony w sekcji [-@sec-processing-s2] wynosi 10 m.
 Mimo że rozdzielczość przestrzenna danych Sentinel-1 GRD jest identyczna z rozdzielczością danych Sentinel-2, siatki przestrzenne obu zbiorów różniły się od siebie, przez co wymagana była transformacja danych Sentinel-1 do siatki danych Sentinel-2 w celu zachowania ich zgodności.
-Przetransformowane dane zostały wykorzystane do obliczeń tekstur obrazu oraz wskaźników teledetekcyjnych.
+Przetransformowane dane zostały wykorzystane do obliczeń wskaźników teledetekcyjnych oraz tekstur obrazu.
 Po uzyskaniu produktów pochodnych, w zależności od wariantu, dane zostały scalone w formie kilku wielowarstwowych rastrów, które posłużyły do wyodrębnienia próbek obserwacji, niezbędnych do stworzenia modelu.
 Złączone rastry zostały również bezpośrednio wykorzystane do przeprowadzenia predykcji w późniejszym etapie analizy.
 Warianty zestawów danych zostały szczegółowo przedstawione w tabeli [-@tbl-tabela-datasets].

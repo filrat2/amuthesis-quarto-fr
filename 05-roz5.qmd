@@ -2,7 +2,7 @@
 
 ## Ocena jakości modeli {#sec-results-model-quality-assessment}
 
-Dla każdego z sześciu wariantów (zestawów danych) przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z procedurą przestawioną w sekcji [-@sec-model-quality-assessment].
+Dla każdego z sześciu wariantów (zestawów danych) przeprowadzono osobną zagnieżdżoną *k*-krotną przestrzenną walidację krzyżową, zgodnie z procedurą przestawioną w sekcjach [-@sec-spcv] i [-@sec-tuning].
 Warianty odnoszą się do różnych zestawów zmiennych stworzonych w celu ustalenia optymalnego zestawu danych na potrzeby detekcji farm fotowoltaicznych przy wykorzystaniu danych teledetekcyjnych (tabela [-@tbl-tabela-datasets]).
 Zagnieżdżona przestrzenna walidacja krzyżowa dla każdego z wariantów składała się z kilku etapów, obejmujących optymalizację hiperparametrów oraz ocenę jakości.
 
