@@ -13,7 +13,7 @@ Po przetwarzaniu końcowym model ten wykazał precyzję na poziomie 87% i czu�
 Dodatkowo badanie wykazało, że dane radarowe z misji Sentinel-1 i ich pochodne nie były istotne w procesie detekcji farm fotowoltaicznych.
 Wyniki badania mogą stanowić podstawę dla przyszłych prac nad monitorowaniem rozwoju farm fotowoltaicznych w Polsce.
 
-Słowa kluczowe: odnawialne źródła energii, dane satelitarne, pokrycie terenu i użytkowania ziemi, uczenie maszynowe, lasy losowe, klasyfikacja obrazu
+Słowa kluczowe: odnawialne źródła energii, dane satelitarne, pokrycie terenu i użytkowanie ziemi, uczenie maszynowe, lasy losowe, klasyfikacja obrazu
 
 \newpage
 
