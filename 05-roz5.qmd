@@ -177,7 +177,8 @@ Wartość ta stanowi ponad 15% powierzchni elektrowni fotowoltaicznych na obszar
 #| echo: false
 #| fig-cap: "Lokalizacje poprawnie i niepoprawnie wykrytych farm fotowoltaicznych lub ich segmentów dla wariantu nr 2"
 #| out-width: 100% 
-knitr::include_graphics("figures/poprawne_niepoprawne_wskazania_dataset2.png")
+knitr::include_graphics(
+  "figures/poprawne_niepoprawne_wskazania_dataset2_v2.png")
 ```
 
 Rozmieszczenie poprawnie i niepoprawnie wykrytych farm fotowoltaicznych dla wariantu drugiego przedstawia rycina [-@fig-rycina-classification-results-dataset2].

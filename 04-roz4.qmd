@@ -143,7 +143,7 @@ Warianty zestawów danych zostały szczegółowo przedstawione w tabeli [-@tbl-t
 #| warning: false
 df <- data.frame(
   a = c(1, 2, 3, 4, 5, 6),
-  b = c(10, 13, 16, 12, 16, 21),
+  b = c(10, 13, 17, 12, 16, 21),
   c = c("S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12",
         "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI",
         "S2: B02, B03, B04, B05, B06, B07, B08, B8A, B11, B12; wskaźniki spektralne: NDVI, NDBI, mNDWI; tekstury: B02_SAVG, B8A_SAVG, NDBI_SAVG, mNDWI_SAVG",
