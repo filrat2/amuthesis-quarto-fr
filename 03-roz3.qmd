@@ -61,7 +61,7 @@ Podczas digitalizacji przyjęto, że granice farm fotowoltaicznych lub ich segm
 df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/pv_stat.rds")
 names(df) = c("Liczba zdigitalizowanych farm PV lub ich segmentów",
               "Suma powierzchni farm fotowoltaicznych [ha]",
-              "Minimalna powierzchnia farmy PV lub jej segmentu",
+              "Minimalna powierzchnia farmy PV lub jej segmentu [ha]",
               "Średnia powierzchnia farmy PV lub jej segmentu [ha]",
               "Maksymalna powierzchnia farmy PV lub jej segmentu [ha]")
 
