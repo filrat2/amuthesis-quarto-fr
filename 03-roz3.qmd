@@ -57,7 +57,7 @@ Podczas digitalizacji przyjęto, że granice farm fotowoltaicznych lub ich segm
 ```{r tabela1, echo=FALSE}
 #| label: tbl-tabela-digitizing-results
 #| echo: false
-#| tbl-cap: "Statystki zdigitalizowanych farm fotowoltaicznych na obszarze kafla Sentinel-2 o oznaczeniu 33UWV"
+#| tbl-cap: "Statystyki zdigitalizowanych farm fotowoltaicznych na obszarze kafla Sentinel-2 o oznaczeniu 33UWV"
 df = readRDS("C:/Users/Filip/Desktop/inzynierka/other_scripts/pv_stat.rds")
 names(df) = c("Liczba zdigitalizowanych farm PV lub ich segmentów",
               "Suma powierzchni farm fotowoltaicznych [ha]",
